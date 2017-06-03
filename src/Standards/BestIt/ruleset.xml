@@ -2,6 +2,8 @@
 <ruleset name="best it">
     <description>The best it coding standard.</description>
 
+    <arg name="tab-width" value="4" />
+
     <rule ref="PSR1" />
     <rule ref="PSR2" />
     <rule ref="Generic.Files.ByteOrderMark" />
