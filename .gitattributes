@@ -1,0 +1,8 @@
+.gitignore export-ignore
+.gitattributes export-ignore
+phpunit.xml.dist export-ignore
+phpcs.xml.dist export-ignore
+tests export-ignore
+CONTRIBUTING.md export-ignore
+bitbucket-pipelines.yml export-ignore
+phpmd.xml.dist export-ignore

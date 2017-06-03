@@ -1,0 +1,17 @@
+image:
+    name: bestitdocker/build:pipelines
+    username: $DOCKER_HUB_USER
+    password: $DOCKER_HUB_PASSWORD
+    email: $DOCKER_HUB_MAIL
+clone:
+  depth: 1
+
+pipelines:
+  default:
+    - step:
+        script:
+          - composer install
+          - ./vendor/bin/phpcs
+          - ./vendor/bin/phpunit
+          - ./vendor/bin/phpmd src text phpmd.xml.dist
+          - ./vendor/bin/phpcpd src

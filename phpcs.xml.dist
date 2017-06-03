@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<ruleset name="best it - PHP_CodeSniffer">
+    <description>The coding standard for our PHP_CodeSniffer itself.</description>
+
+    <rule ref="./src/Standards/BestIt/ruleset.xml" />
+
+    <file>src/</file>
+    <file>tests/</file>
+</ruleset>
