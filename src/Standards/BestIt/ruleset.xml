@@ -3,4 +3,5 @@
     <description>The best it coding standard.</description>
 
     <rule ref="PSR1" />
+    <rule ref="PSR2" />
 </ruleset>
