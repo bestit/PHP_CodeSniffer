@@ -1,5 +1,5 @@
 {
-    "name": "bestit/phpcodesniffer",
+    "name": "bestit/php_codesniffer",
     "description": "PHP_CodeSniffer ruleset and custom rules from best it.",
     "type": "library",
     "authors": [
