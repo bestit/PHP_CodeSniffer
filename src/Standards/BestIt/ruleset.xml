@@ -6,4 +6,6 @@
 
     <rule ref="PSR1" />
     <rule ref="PSR2" />
+
+    <rule ref="Generic.Arrays.DisallowLongArraySyntax" />
 </ruleset>
