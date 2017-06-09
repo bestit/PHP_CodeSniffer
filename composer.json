@@ -9,7 +9,9 @@
         }
     ],
     "autoload": {
-        "psr-4": {"BestIt\\": "src/Standards/BestIt"}
+        "psr-4": {
+          "BestIt\\": "src/Standards/BestIt"
+        }
     },
     "prefer-stable": true,
     "require": {
