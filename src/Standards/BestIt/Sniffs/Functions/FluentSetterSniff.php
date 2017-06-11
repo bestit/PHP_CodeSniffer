@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BestIt\Sniffs\Functions;
 
 use PHP_CodeSniffer_File;
@@ -95,12 +97,12 @@ class FluentSetterSniff extends PHP_CodeSniffer_Standards_AbstractScopeSniff
         $errorData = sprintf('%s::%s', $className, $methodName);
 
         $functionToken = $tokens[$stackPtr];
-        $openBracePointer = $functionToken['scope_opener'];
-        $closeBracePointer = $functionToken['scope_closer'];
+        $openBracePtr = $functionToken['scope_opener'];
+        $closeBracePtr = $functionToken['scope_closer'];
 
-        $returnPointer = $phpcsFile->findNext(T_RETURN, $openBracePointer, $closeBracePointer);
+        $returnPtr = $phpcsFile->findNext(T_RETURN, $openBracePtr, $closeBracePtr);
 
-        if ($returnPointer === false) {
+        if ($returnPtr === false) {
             $fixNoReturnFound = $phpcsFile->addFixableError(
                 self::ERROR_NO_RETURN_FOUND,
                 $stackPtr,
@@ -109,19 +111,19 @@ class FluentSetterSniff extends PHP_CodeSniffer_Standards_AbstractScopeSniff
             );
 
             if ($fixNoReturnFound) {
-                $this->fixNoReturnFound($phpcsFile, $closeBracePointer);
+                $this->fixNoReturnFound($phpcsFile, $closeBracePtr);
             }
 
             return;
         }
 
-        $followingReturnPointer = $phpcsFile->findNext(
+        $nextReturnPtr = $phpcsFile->findNext(
             T_RETURN,
-            $returnPointer + 1,
-            $closeBracePointer
+            $returnPtr + 1,
+            $closeBracePtr
         );
 
-        if ($followingReturnPointer !== false) {
+        if ($nextReturnPtr !== false) {
             $phpcsFile->addError(
                 self::ERROR_MULTIPLE_RETURN_FOUND,
                 $stackPtr,
@@ -131,9 +133,9 @@ class FluentSetterSniff extends PHP_CodeSniffer_Standards_AbstractScopeSniff
             return;
         }
 
-        $thisVariablePointer = $phpcsFile->findNext(T_VARIABLE, $returnPointer, null, false, '$this', true);
+        $thisVariablePtr = $phpcsFile->findNext(T_VARIABLE, $returnPtr, null, false, '$this', true);
 
-        if ($thisVariablePointer === false) {
+        if ($thisVariablePtr === false) {
             $fixMustReturnThis = $phpcsFile->addFixableError(
                 self::ERROR_MUST_RETURN_THIS,
                 $stackPtr,
@@ -142,7 +144,7 @@ class FluentSetterSniff extends PHP_CodeSniffer_Standards_AbstractScopeSniff
             );
 
             if ($fixMustReturnThis) {
-                $this->fixMustReturnThis($phpcsFile, $returnPointer);
+                $this->fixMustReturnThis($phpcsFile, $returnPtr);
             }
 
             return;
@@ -162,30 +164,30 @@ class FluentSetterSniff extends PHP_CodeSniffer_Standards_AbstractScopeSniff
      */
     private function checkIfSetterFunction($methodName)
     {
-        $firstUpperCasePosition = strcspn($methodName, 'ABCDEFGHJIJKLMNOPQRSTUVWXYZ');
+        $firstMatch = strcspn($methodName, 'ABCDEFGHJIJKLMNOPQRSTUVWXYZ');
 
-        return substr($methodName, 0, $firstUpperCasePosition) === 'set';
+        return substr($methodName, 0, $firstMatch) === 'set';
     }
 
     /**
      * Fixes if no return statement is found.
      *
      * @param PHP_CodeSniffer_File $phpcsFile
-     * @param int $closingCurlyBracePointer
+     * @param int $closingBracePtr
      *
      * @return void
      */
-    private function fixNoReturnFound(PHP_CodeSniffer_File $phpcsFile, $closingCurlyBracePointer)
+    private function fixNoReturnFound(PHP_CodeSniffer_File $phpcsFile, $closingBracePtr)
     {
         $tokens = $phpcsFile->getTokens();
-        $closingCurlyBraceToken = $tokens[$closingCurlyBracePointer];
+        $closingBraceToken = $tokens[$closingBracePtr];
 
-        $expectedReturnSpaces = str_repeat($this->identation, $closingCurlyBraceToken['level'] + 1);
+        $expectedReturnSpaces = str_repeat($this->identation, $closingBraceToken['level'] + 1);
 
         $phpcsFile->fixer->beginChangeset();
-        $phpcsFile->fixer->addNewlineBefore($closingCurlyBracePointer - 1);
-        $phpcsFile->fixer->addContentBefore($closingCurlyBracePointer - 1, $expectedReturnSpaces . 'return $this;');
-        $phpcsFile->fixer->addNewlineBefore($closingCurlyBracePointer - 1);
+        $phpcsFile->fixer->addNewlineBefore($closingBracePtr - 1);
+        $phpcsFile->fixer->addContentBefore($closingBracePtr - 1, $expectedReturnSpaces . 'return $this;');
+        $phpcsFile->fixer->addNewlineBefore($closingBracePtr - 1);
         $phpcsFile->fixer->endChangeset();
     }
 
@@ -193,21 +195,21 @@ class FluentSetterSniff extends PHP_CodeSniffer_Standards_AbstractScopeSniff
      * Fixes the return value of a function to $this.
      *
      * @param PHP_CodeSniffer_File $phpcsFile
-     * @param int $returnPointer
+     * @param int $returnPtr
      *
      * @return void
      */
-    private function fixMustReturnThis(PHP_CodeSniffer_File $phpcsFile, $returnPointer)
+    private function fixMustReturnThis(PHP_CodeSniffer_File $phpcsFile, $returnPtr)
     {
-        $returnSemicolonPointer = $phpcsFile->findEndOfStatement($returnPointer);
+        $returnSemicolonPtr = $phpcsFile->findEndOfStatement($returnPtr);
 
-        for ($i = $returnPointer + 1; $i < $returnSemicolonPointer; $i++) {
+        for ($i = $returnPtr + 1; $i < $returnSemicolonPtr; $i++) {
             $phpcsFile->fixer->replaceToken($i, '');
         }
 
         $phpcsFile->fixer->beginChangeset();
         $phpcsFile->fixer->addContentBefore(
-            $returnSemicolonPointer,
+            $returnSemicolonPtr,
             ' $this'
         );
         $phpcsFile->fixer->endChangeset();

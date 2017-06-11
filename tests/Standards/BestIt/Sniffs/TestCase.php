@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\BestIt\Sniffs;
 
 use PHP_CodeSniffer_File;

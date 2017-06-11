@@ -1,0 +1,18 @@
+filter:
+    excluded_paths:
+        - 'tests/*'
+checks:
+    php:
+        code_rating: true
+        duplication: true
+build:
+    dependencies:
+        override:
+            - 'composer install --prefer-source'
+    tests:
+        override:
+            -
+                command: 'vendor/bin/phpunit --coverage-clover=build/phpunit-report'
+                coverage:
+                    file: 'build/phpunit-report'
+                    format: 'clover'

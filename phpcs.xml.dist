@@ -4,6 +4,8 @@
 
     <rule ref="./src/Standards/BestIt/ruleset.xml" />
 
-    <file>src/</file>
-    <file>tests/</file>
+    <file>./src/</file>
+    <file>./tests/</file>
+
+     <exclude-pattern>*/Fixtures/*.php</exclude-pattern>
 </ruleset>
