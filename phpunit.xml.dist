@@ -7,13 +7,16 @@
 >
     <testsuites>
         <testsuite name="phpcodesniffer">
-            <directory suffix="Test.php">./tests/</directory>
+            <directory suffix="Test.php">./tests</directory>
         </testsuite>
     </testsuites>
 
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
             <directory>./src</directory>
+            <exclude>
+                <directory>./tests</directory>
+            </exclude>
         </whitelist>
     </filter>
 </phpunit>
