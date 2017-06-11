@@ -44,6 +44,7 @@ Execute the PHP_CodeSniffer (path can vary on your composer configuration):
 | Generic.WhiteSpace.ScopeIndent | PSR-2 | Code MUST use an indent of 4 spaces. |
 | Generic.WhiteSpace.DisallowTabIndent | PSR-2 | Code MUST NOT use tabs for indenting. |
 | Generic.PHP.LowerCaseKeyword | PSR-2 | The PHP constants true, false, and null MUST be in lower case. |
+| SlevomatCodingStandard.TypeHints.DeclareStrictTypes | SlevomatCodingStandard | Every file MUST have "declare(strict_types=1);" two line breaks after the opening tag. There MUST be no spaces aroung the equal-sign. |
 | Squiz.Strings.DoubleQuoteUsage | Squiz | Every String MUST be wrapped with single quotes. |
 | Generic.Formatting.SpaceAfterCast | BestIt | There MUST be a space after cast. |
 | Generic.Files.LineLength | PSR-2 | Every line MUST not be longer than 120 chars. |
