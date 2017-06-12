@@ -13,10 +13,15 @@
           "BestIt\\": "src/Standards/BestIt"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+          "Tests\\BestIt\\": "tests/Standards/BestIt"
+        }
+    },
     "prefer-stable": true,
     "require": {
-        "squizlabs/php_codesniffer": "^2.0|^3.0",
-        "slevomat/coding-standard": "^2.4"
+        "slevomat/coding-standard": "^2.4",
+        "squizlabs/php_codesniffer": "^2.0|^3.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^6.0",
