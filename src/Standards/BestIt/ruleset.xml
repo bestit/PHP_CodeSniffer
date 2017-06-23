@@ -25,4 +25,6 @@
     </rule>
 
     <rule ref="Generic.Arrays.DisallowLongArraySyntax" />
+
+    <rule ref="BestIt.Commenting.MethodDoc" />
 </ruleset>

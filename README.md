@@ -54,6 +54,7 @@ Execute the PHP_CodeSniffer (path can vary on your composer configuration):
 | Generic.Files.LineLength | PSR-2 | Every line MUST not be longer than 120 chars. |
 | Generic.Arrays.DisallowLongArraySyntax | BestIt | Every array syntax MUST be in short array syntax. |
 | BestIt.Formatting.OpenTagSniff | BestIt | After the open tag there MUST be an empty line. |
+| MethodDocSniff | BestIt | Every method docblock MUST have a short description that starts capitalized and is followed by an empty line |
 
 ## Testing
 To be able to test our written sniffs ensure that composer is installed with the option `--prefer-source`.
