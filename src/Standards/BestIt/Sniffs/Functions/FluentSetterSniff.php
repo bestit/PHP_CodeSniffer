@@ -84,11 +84,6 @@ class FluentSetterSniff extends PHP_CodeSniffer_Standards_AbstractScopeSniff
         $className = $phpcsFile->getDeclarationName($currScope);
         $methodName = $phpcsFile->getDeclarationName($stackPtr);
 
-        //Ignore closure functions
-        if ($methodName === null) {
-            return;
-        }
-
         if (!$this->checkIfSetterFunction($methodName)) {
             return;
         }
