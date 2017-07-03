@@ -19,6 +19,10 @@
 
     <rule ref="Generic.Formatting.SpaceAfterCast" />
 
+    <rule ref="BestIt.Formatting.SpaceAfterDeclare" />
+    <rule ref="BestIt.Formatting.OpenTag" />
+    <rule ref="BestIt.Functions.FluentSetter" />
+
     <rule ref="Generic.Files.LineLength">
         <properties>
             <property name="lineLimit" value="120"/>
