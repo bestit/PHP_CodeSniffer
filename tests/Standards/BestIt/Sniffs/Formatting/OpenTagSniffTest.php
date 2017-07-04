@@ -6,7 +6,7 @@ namespace Tests\BestIt\Sniffs\Formatting;
 
 use BestIt\Sniffs\Formatting\OpenTagSniff;
 use PHP_CodeSniffer_File;
-use Tests\BestIt\Sniffs\TestCase;
+use Tests\BestIt\SniffTestCase;
 
 /**
  * Class OpenTagSniffTest
@@ -15,25 +15,29 @@ use Tests\BestIt\Sniffs\TestCase;
  *
  * @author Nick Lubisch <nick.lubisch@bestit-online.de>
  */
-class OpenTagSniffTest extends TestCase
+class OpenTagSniffTest extends SniffTestCase
 {
     /**
      * Test empty line after open tag with no errors.
+     *
+     * @return void
      */
-    public function testCorrectSpaceAfterOpenTag()
+    public function testCorrectSpaceAfterOpenTag(): void
     {
         $this->assertNoSniffErrorInFile(
-            $this->checkOpenTagFile(__DIR__ . '/Fixtures/OpenTagSniff.Correct.php')
+            $this->checkSniffFile($this->getFixtureFilePath('Correct.php'))
         );
     }
 
     /**
      * Test empty line after open tag line not empty error and fix.
+     *
+     * @return void
      */
-    public function testLineNotEmpty()
+    public function testLineNotEmpty(): void
     {
-        $report = $this->checkOpenTagFile(
-            __DIR__ . '/Fixtures/OpenTagSniff.LineNotEmpty.php'
+        $report = $this->checkSniffFile(
+            $this->getFixtureFilePath('LineNotEmpty.php')
         );
 
         $this->assertSniffError(
@@ -47,11 +51,13 @@ class OpenTagSniffTest extends TestCase
 
     /**
      * Test empty line after open tag no space after open tag error and fix.
+     *
+     * @return void
      */
-    public function testNoSpaceAfterOpenTag()
+    public function testNoSpaceAfterOpenTag(): void
     {
-        $report = $this->checkOpenTagFile(
-            __DIR__ . '/Fixtures/OpenTagSniff.NoSpaceAfterOpenTag.php'
+        $report = $this->checkSniffFile(
+            $this->getFixtureFilePath('NoSpaceAfterOpenTag.php')
         );
 
         $this->assertSniffError(
@@ -65,11 +71,13 @@ class OpenTagSniffTest extends TestCase
 
     /**
      * Test empty line after open tag not first statement error and fix.
+     *
+     * @return void
      */
-    public function testNotFirstStatement()
+    public function testNotFirstStatement(): void
     {
-        $report = $this->checkOpenTagFile(
-            __DIR__ . '/Fixtures/OpenTagSniff.NotFirstStatement.php'
+        $report = $this->checkSniffFile(
+            $this->getFixtureFilePath('NotFirstStatement.php')
         );
 
         $this->assertSniffError(
@@ -82,17 +90,18 @@ class OpenTagSniffTest extends TestCase
     }
 
     /**
-     * Return a PHP_CodeSniffer_File with only needed sniff codes.
+     * Checks the given file with defined error codes.
      *
-     * @param string $file
+     * @param string $file Filename of the fixture
+     * @param array $sniffProperties Array of sniff properties
      *
-     * @return PHP_CodeSniffer_File
+     * @return PHP_CodeSniffer_File The php cs file
      */
-    private function checkOpenTagFile($file)
+    protected function checkSniffFile(string $file, array $sniffProperties = []): PHP_CodeSniffer_File
     {
         return $this->checkFile(
             $file,
-            [],
+            $sniffProperties,
             [
                 OpenTagSniff::CODE_LINE_NOT_EMPTY,
                 OpenTagSniff::CODE_NO_SPACE_AFTER_OPEN_TAG,

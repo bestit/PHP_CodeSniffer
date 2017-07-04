@@ -6,178 +6,261 @@ namespace Tests\BestIt\Sniffs\Commenting;
 
 use BestIt\Sniffs\Commenting\MethodDocSniff;
 use PHP_CodeSniffer_File;
-use Tests\BestIt\Sniffs\TestCase;
+use Tests\BestIt\Sniffs\Filename;
+use Tests\BestIt\SniffTestCase;
 
 /**
  * Class MethodDocSniffTest
  *
- * @package Tests\BestIt\Sniffs\Functions
- *
- * @author Nils Hardeweg <nils.hardeweg@bestit-online.de>
+ * @package Tests\BestIt\Sniffs\Commenting
+ * @author Nick Lubisch <nick.lubisch@bestit-online.de>
  */
-class MethodDocSniffTest extends TestCase
+class MethodDocSniffTest extends SniffTestCase
 {
     /**
-     * Test fluent setter with no errors.
+     * Test that the given files contain no errors.
+     *
+     * @param string $file Provided file to test
      *
      * @return void
+     *
+     * @dataProvider getCorrectFileList
      */
-    public function testCorrectShortSummary()
+    public function testCorrect(string $file): void
     {
-        $this->assertNoSniffErrorInFile(
-            $this->checkMethodDocSniff(__DIR__ . '/Fixtures/MethodDocSniff.Correct.php')
+        $this->assertFileCorrect($file);
+    }
+
+    /**
+     * Tests non fixable errors.
+     *
+     * @param string $file Fixture file
+     * @param string $error Error code
+     * @param int[] $lines Lines where the error code occurs
+     * @param array $sniffProperties Array of sniff properties
+     *
+     * @return void
+     *
+     * @dataProvider getErrorData
+     */
+    public function testErrors(string $file, string $error, array $lines, array $sniffProperties = []): void
+    {
+        $this->assertErrorsInFile($file, $error, $lines, $sniffProperties);
+    }
+
+    /**
+     * Tests fixable errors.
+     *
+     * @param string $file Fixture file
+     * @param string $error Error code
+     * @param int[] $lines Lines where the error code occurs
+     * @param array $sniffProperties Array of sniff properties
+     *
+     * @return void
+     *
+     * @dataProvider getFixableErrorData
+     */
+    public function testFixableErrors(string $file, string $error, array $lines, array $sniffProperties = []): void
+    {
+        $this->assertFixableErrorsInFile($file, $error, $lines, $sniffProperties);
+    }
+
+    /**
+     * Returns data for not fixable errors.
+     *
+     * @return array List of error data
+     */
+    public function getErrorData(): array
+    {
+        $fixableErrors = $this->getFixableErrorData();
+
+        $errors =  [
+            MethodDocSniff::CODE_NO_IMMEDIATE_DOC_FOUND => [
+                'NoImmediateDocFound.php',
+                MethodDocSniff::CODE_NO_IMMEDIATE_DOC_FOUND,
+                [25, 42]
+            ],
+
+            MethodDocSniff::CODE_COMMENT_NOT_MULTI_LINE => [
+                'CommentNotMultiLine.php',
+                MethodDocSniff::CODE_COMMENT_NOT_MULTI_LINE,
+                [13]
+            ],
+
+            MethodDocSniff::CODE_NO_SUMMARY => [
+                'NoSummary.php',
+                MethodDocSniff::CODE_NO_SUMMARY,
+                [13, 24]
+            ],
+
+            MethodDocSniff::CODE_SUMMARY_TOO_LONG => [
+                'SummaryTooLong.php',
+                MethodDocSniff::CODE_SUMMARY_TOO_LONG,
+                [14, 30]
+            ],
+
+            MethodDocSniff::CODE_DESCRIPTION_TOO_LONG => [
+                'DescriptionTooLong.php',
+                MethodDocSniff::CODE_DESCRIPTION_TOO_LONG,
+                [16, 32, 33]
+            ],
+
+            MethodDocSniff::CODE_DESCRIPTION_NOT_FOUND => [
+                'DescriptionNotFound.php',
+                MethodDocSniff::CODE_DESCRIPTION_NOT_FOUND,
+                [14, 27],
+                [
+                    'descriptionRequired' => true
+                ]
+            ],
+
+            MethodDocSniff::CODE_TAG_NOT_ALLOWED => [
+                'TagNotAllowed.php',
+                MethodDocSniff::CODE_TAG_NOT_ALLOWED,
+                [
+                    24,
+                    25,
+                    26,
+                    27,
+                    28,
+                    29,
+                    30,
+                    31,
+                    32,
+                    33,
+                    34,
+                    35,
+                    36,
+                    37,
+                    38,
+                    39,
+                    40,
+                    41,
+                    42,
+                    43,
+                    44,
+                    45,
+                    46,
+                    47
+                ]
+            ],
+
+            MethodDocSniff::CODE_TAG_OCCURRENCE_MIN => [
+                'TagOccurrenceMin.php',
+                MethodDocSniff::CODE_TAG_OCCURRENCE_MIN,
+                [13]
+            ],
+
+            MethodDocSniff::CODE_TAG_OCCURRENCE_MAX => [
+                'TagOccurrenceMax.php',
+                MethodDocSniff::CODE_TAG_OCCURRENCE_MAX,
+                [13]
+            ],
+        ];
+
+        return array_merge(
+            $fixableErrors,
+            $errors
         );
     }
 
     /**
-     * Test fluent setter with no errors.
+     * Returns data for fixable errors.
      *
-     * @return void
+     * @return array List of fixable error data
      */
-    public function testInheritDoc()
+    public function getFixableErrorData(): array
     {
-        $this->assertNoSniffErrorInFile(
-            $this->checkMethodDocSniff(__DIR__ . '/Fixtures/MethodDocSniff.Inheritdoc.php')
-        );
+        return [
+            MethodDocSniff::CODE_SUMMARY_NOT_FIRST => [
+                'SummaryNotFirst.php',
+                MethodDocSniff::CODE_SUMMARY_NOT_FIRST,
+                [15, 32]
+            ],
+
+            MethodDocSniff::CODE_NO_LINE_AFTER_SUMMARY => [
+                'NoLineAfterSummary.php',
+                MethodDocSniff::CODE_NO_LINE_AFTER_SUMMARY,
+                [14, 29]
+            ],
+
+            MethodDocSniff::CODE_NO_LINE_AFTER_DESCRIPTION => [
+                'NoLineAfterDescription.php',
+                MethodDocSniff::CODE_NO_LINE_AFTER_DESCRIPTION,
+                [17, 32]
+            ],
+
+            MethodDocSniff::CODE_MUCH_LINES_AFTER_DESCRIPTION => [
+                'MuchLinesAfterDescription.php',
+                MethodDocSniff::CODE_MUCH_LINES_AFTER_DESCRIPTION,
+                [17, 35]
+            ],
+
+            MethodDocSniff::CODE_MUCH_LINES_AFTER_DESCRIPTION . '.WithoutTags' => [
+                'MuchLinesAfterDescription.WithoutTags.php',
+                MethodDocSniff::CODE_MUCH_LINES_AFTER_DESCRIPTION,
+                [17]
+            ],
+
+            MethodDocSniff::CODE_SUMMARY_UC_FIRST => [
+                'SummaryUcFirst.php',
+                MethodDocSniff::CODE_SUMMARY_UC_FIRST,
+                [14, 30]
+            ],
+
+            MethodDocSniff::CODE_DESCRIPTION_UC_FIRST => [
+                'DescriptionUcFirst.php',
+                MethodDocSniff::CODE_DESCRIPTION_UC_FIRST,
+                [16, 32]
+            ],
+
+            MethodDocSniff::CODE_NO_LINE_AFTER_TAG => [
+                'NoLineAfterTag.php',
+                MethodDocSniff::CODE_NO_LINE_AFTER_TAG,
+                [20]
+            ],
+
+            MethodDocSniff::CODE_MUCH_LINES_AFTER_TAG => [
+                'MuchLinesAfterTag.php',
+                MethodDocSniff::CODE_MUCH_LINES_AFTER_TAG,
+                [19, 22, 27]
+            ],
+        ];
     }
 
     /**
-     * Test fluent setter with no errors.
+     * Checks the given file with defined error codes.
      *
-     * @return void
+     * @param string $file Filename of the fixture
+     * @param array $sniffProperties Array of sniff properties
+     *
+     * @return PHP_CodeSniffer_File The php cs file
      */
-    public function testInlineDoc()
-    {
-        $this->assertNoSniffErrorInFile(
-            $this->checkMethodDocSniff(__DIR__ . '/Fixtures/MethodDocSniff.InlineDoc.php')
-        );
-    }
-
-    /**
-     * Test empty method doc block
-     *
-     * @return void
-     */
-    public function testEmpty()
-    {
-        $report = $this->checkMethodDocSniff(__DIR__ . '/Fixtures/MethodDocSniff.Empty.php');
-
-        $this->assertSniffError(
-            $report,
-            5,
-            MethodDocSniff::CODE_EMPTY
-        );
-    }
-
-    /**
-     * Test missing empty line after summary
-     *
-     * @return void
-     */
-    public function testMissingEmptyLineAfterSummary()
-    {
-        $report = $this->checkMethodDocSniff(__DIR__ . '/Fixtures/MethodDocSniff.MissingEmptyLineAfterSummary.php');
-
-        $this->assertSniffError(
-            $report,
-            7,
-            MethodDocSniff::CODE_SPACING_BEFORE_TAGS
-        );
-
-        $this->assertSniffError(
-            $report,
-            15,
-            MethodDocSniff::CODE_SPACING_BEFORE_TAGS
-        );
-
-        $this->assertSniffError(
-            $report,
-            27,
-            MethodDocSniff::CODE_SPACING_BETWEEN
-        );
-    }
-
-    /**
-     * Test if a doc block is missing a summary
-     *
-     * @return void
-     */
-    public function testMissingSummary()
-    {
-        $report = $this->checkMethodDocSniff(__DIR__ . '/Fixtures/MethodDocSniff.MissingSummary.php');
-
-        $this->assertSniffError(
-            $report,
-            5,
-            MethodDocSniff::CODE_MISSING_SHORT
-        );
-    }
-
-    /**
-     * Test if a doc block is missing a summary
-     *
-     * @return void
-     */
-    public function testEmtpyLineBeforeSummary()
-    {
-        $report = $this->checkMethodDocSniff(__DIR__ . '/Fixtures/MethodDocSniff.NoLineBeforeSummary.php');
-
-        $this->assertSniffError(
-            $report,
-            7,
-            MethodDocSniff::CODE_SPACING_BEFORE_SHORT
-        );
-    }
-
-    /**
-     * Tests if the doc block short description (summary) and long description is starting with a capital letter
-     *
-     * @return void
-     */
-    public function testNonCapitalLetterStart()
-    {
-        $report = $this->checkMethodDocSniff(__DIR__ . '/Fixtures/MethodDocSniff.NonCapitalLetterStart.php');
-
-        $this->assertSniffError(
-            $report,
-            6,
-            MethodDocSniff::CODE_SHORT_NOT_CAPITAL
-        );
-
-        $this->assertSniffError(
-            $report,
-            15,
-            MethodDocSniff::CODE_SHORT_NOT_CAPITAL
-        );
-
-        $this->assertSniffError(
-            $report,
-            17,
-            MethodDocSniff::CODE_LONG_NOT_CAPITAL
-        );
-    }
-
-
-    /**
-     * Return a PHP_CodeSniffer_File with only needed sniff codes.
-     *
-     * @param string $file
-     *
-     * @return PHP_CodeSniffer_File
-     */
-    private function checkMethodDocSniff($file)
+    protected function checkSniffFile(string $file, array $sniffProperties = []): PHP_CodeSniffer_File
     {
         return $this->checkFile(
             $file,
-            [],
+            $sniffProperties,
             [
-                MethodDocSniff::CODE_EMPTY,
-                MethodDocSniff::CODE_SPACING_BEFORE_TAGS,
-                MethodDocSniff::CODE_SPACING_BETWEEN,
-                MethodDocSniff::CODE_MISSING_SHORT,
-                MethodDocSniff::CODE_SHORT_NOT_CAPITAL,
-                MethodDocSniff::CODE_LONG_NOT_CAPITAL,
-                MethodDocSniff::CODE_SPACING_BEFORE_SHORT
+                MethodDocSniff::CODE_NO_IMMEDIATE_DOC_FOUND,
+                MethodDocSniff::CODE_COMMENT_NOT_MULTI_LINE,
+                MethodDocSniff::CODE_NO_SUMMARY,
+                MethodDocSniff::CODE_SUMMARY_NOT_FIRST,
+                MethodDocSniff::CODE_NO_LINE_AFTER_SUMMARY,
+                MethodDocSniff::CODE_SUMMARY_TOO_LONG,
+                MethodDocSniff::CODE_LINE_AFTER_SUMMARY_NOT_EMPTY,
+                MethodDocSniff::CODE_DESCRIPTION_NOT_FOUND,
+                MethodDocSniff::CODE_DESCRIPTION_TOO_LONG,
+                MethodDocSniff::CODE_NO_LINE_AFTER_DESCRIPTION,
+                MethodDocSniff::CODE_MUCH_LINES_AFTER_DESCRIPTION,
+                MethodDocSniff::CODE_TAG_NOT_ALLOWED,
+                MethodDocSniff::CODE_TAG_OCCURRENCE_MIN,
+                MethodDocSniff::CODE_TAG_OCCURRENCE_MAX,
+                MethodDocSniff::CODE_TAG_WRONG_POSITION,
+                MethodDocSniff::CODE_SUMMARY_UC_FIRST,
+                MethodDocSniff::CODE_DESCRIPTION_UC_FIRST,
+                MethodDocSniff::CODE_NO_LINE_AFTER_TAG,
+                MethodDocSniff::CODE_MUCH_LINES_AFTER_TAG,
             ]
         );
     }

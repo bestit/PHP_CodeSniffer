@@ -7,24 +7,15 @@
     <rule ref="PSR1" />
     <rule ref="PSR2" />
 
-    <rule ref="BestIt.TypeHints.DeclareStrictTypes" />
-
-    <rule ref="Squiz.Strings.DoubleQuoteUsage" />
-
-    <rule ref="Generic.Formatting.SpaceAfterCast" />
-
-    <rule ref="BestIt.Formatting.SpaceAfterDeclare" />
-    <rule ref="BestIt.Formatting.OpenTag" />
-    <rule ref="BestIt.Functions.FluentSetter" />
-
+    <rule ref="Generic.Arrays.DisallowLongArraySyntax" />
     <rule ref="Generic.Files.LineLength">
         <properties>
             <property name="lineLimit" value="120"/>
             <property name="absoluteLineLimit" value="120"/>
         </properties>
     </rule>
+    <rule ref="Generic.Formatting.SpaceAfterCast" />
 
-    <rule ref="Generic.Arrays.DisallowLongArraySyntax" />
+    <rule ref="Squiz.Strings.DoubleQuoteUsage" />
 
-    <rule ref="BestIt.Commenting.MethodDoc" />
 </ruleset>
