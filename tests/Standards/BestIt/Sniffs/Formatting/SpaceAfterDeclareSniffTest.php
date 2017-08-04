@@ -6,7 +6,7 @@ namespace Tests\BestIt\Sniffs\Formatting;
 
 use BestIt\Sniffs\Formatting\SpaceAfterDeclareSniff;
 use PHP_CodeSniffer_File;
-use Tests\BestIt\Sniffs\TestCase;
+use Tests\BestIt\SniffTestCase;
 
 /**
  * Class SpaceAfterDeclareSniffTest
@@ -15,17 +15,17 @@ use Tests\BestIt\Sniffs\TestCase;
  *
  * @author Nick Lubisch <nick.lubisch@bestit-online.de>
  */
-class SpaceAfterDeclareSniffTest extends TestCase
+class SpaceAfterDeclareSniffTest extends SniffTestCase
 {
     /**
      * Test space after declare with no errors.
      *
      * @return void
      */
-    public function testSpaceAfterDeclareCorrect()
+    public function testSpaceAfterDeclareCorrect(): void
     {
         $this->assertNoSniffErrorInFile(
-            $this->checkSpaceAfterDeclareFile(__DIR__ . '/Fixtures/SpaceAfterDeclare.Correct.php')
+            $this->checkSniffFile($this->getFixtureFilePath('Correct.php'))
         );
     }
 
@@ -34,10 +34,10 @@ class SpaceAfterDeclareSniffTest extends TestCase
      *
      * @return void
      */
-    public function testEarlyReturn()
+    public function testEarlyReturn(): void
     {
         $this->assertNoSniffErrorInFile(
-            $this->checkSpaceAfterDeclareFile(__DIR__ . '/Fixtures/SpaceAfterDeclare.NoFollowingStatement.php')
+            $this->checkSniffFile($this->getFixtureFilePath('NoFollowingStatement.php'))
         );
     }
 
@@ -46,9 +46,9 @@ class SpaceAfterDeclareSniffTest extends TestCase
      *
      * @return void
      */
-    public function testNoWhitespaceFound()
+    public function testNoWhitespaceFound(): void
     {
-        $report = $this->checkSpaceAfterDeclareFile(__DIR__ . '/Fixtures/SpaceAfterDeclare.NoWhitespaceFound.php');
+        $report = $this->checkSniffFile($this->getFixtureFilePath('NoWhitespaceFound.php'));
 
         $this->assertSniffError(
             $report,
@@ -64,9 +64,9 @@ class SpaceAfterDeclareSniffTest extends TestCase
      *
      * @return void
      */
-    public function testMuchWhitespaceFound()
+    public function testMuchWhitespaceFound(): void
     {
-        $report = $this->checkSpaceAfterDeclareFile(__DIR__ . '/Fixtures/SpaceAfterDeclare.MuchWhitespaceFound.php');
+        $report = $this->checkSniffFile($this->getFixtureFilePath('MuchWhitespaceFound.php'));
 
         $this->assertSniffError(
             $report,
@@ -82,10 +82,10 @@ class SpaceAfterDeclareSniffTest extends TestCase
      *
      * @return void
      */
-    public function testMultipleDeclareStatements()
+    public function testMultipleDeclareStatements(): void
     {
-        $report = $this->checkSpaceAfterDeclareFile(
-            __DIR__ . '/Fixtures/SpaceAfterDeclare.MultipleDeclareStatements.php'
+        $report = $this->checkSniffFile(
+            $this->getFixtureFilePath('MultipleDeclareStatements.php')
         );
 
         $this->assertSniffError(
@@ -104,17 +104,18 @@ class SpaceAfterDeclareSniffTest extends TestCase
     }
 
     /**
-     * Return a PHP_CodeSniffer_File with only needed sniff codes.
+     * Checks the given file with defined error codes.
      *
-     * @param string $file
+     * @param string $file Filename of the fixture
+     * @param array $sniffProperties Array of sniff properties
      *
-     * @return PHP_CodeSniffer_File
+     * @return PHP_CodeSniffer_File The php cs file
      */
-    private function checkSpaceAfterDeclareFile($file)
+    protected function checkSniffFile(string $file, array $sniffProperties = []): PHP_CodeSniffer_File
     {
         return $this->checkFile(
             $file,
-            [],
+            $sniffProperties,
             [
                 SpaceAfterDeclareSniff::CODE_NO_WHITESPACE_FOUND,
                 SpaceAfterDeclareSniff::CODE_MUCH_WHITESPACE_FOUND,

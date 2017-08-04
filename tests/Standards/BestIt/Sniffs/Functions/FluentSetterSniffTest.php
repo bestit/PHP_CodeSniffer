@@ -6,7 +6,7 @@ namespace Tests\BestIt\Sniffs\Functions;
 
 use BestIt\Sniffs\Functions\FluentSetterSniff;
 use PHP_CodeSniffer_File;
-use Tests\BestIt\Sniffs\TestCase;
+use Tests\BestIt\SniffTestCase;
 
 /**
  * Class FluentSetterSniffTest
@@ -15,24 +15,28 @@ use Tests\BestIt\Sniffs\TestCase;
  *
  * @author Nick Lubisch <nick.lubisch@bestit-online.de>
  */
-class FluentSetterSniffTest extends TestCase
+class FluentSetterSniffTest extends SniffTestCase
 {
     /**
      * Test fluent setter with no errors.
+     *
+     * @return void
      */
-    public function testCorrectFluentSetter()
+    public function testCorrectFluentSetter(): void
     {
         $this->assertNoSniffErrorInFile(
-            $this->checkFluentSetterFile(__DIR__ . '/Fixtures/FluentSetterSniff.Correct.php')
+            $this->checkSniffFile($this->getFixtureFilePath('Correct.php'))
         );
     }
 
     /**
      * Test fluent setter no return error and fix.
+     *
+     * @return void
      */
-    public function testFluentSetterNoReturn()
+    public function testFluentSetterNoReturn(): void
     {
-        $report = $this->checkFluentSetterFile(__DIR__ . '/Fixtures/FluentSetterSniff.NoReturn.php');
+        $report = $this->checkSniffFile($this->getFixtureFilePath('NoReturn.php'));
 
         $this->assertSniffError(
             $report,
@@ -45,11 +49,13 @@ class FluentSetterSniffTest extends TestCase
 
     /**
      * Test fluent setter multiple return error.
+     *
+     * @return void
      */
-    public function testFluentSetterMultipleReturn()
+    public function testFluentSetterMultipleReturn(): void
     {
         $this->assertSniffError(
-            $this->checkFluentSetterFile(__DIR__ . '/Fixtures/FluentSetterSniff.MultipleReturn.php'),
+            $this->checkSniffFile($this->getFixtureFilePath('MultipleReturn.php')),
             7,
             FluentSetterSniff::CODE_MULTIPLE_RETURN_FOUND
         );
@@ -57,10 +63,12 @@ class FluentSetterSniffTest extends TestCase
 
     /**
      * Test fluent setter must return this error and fix.
+     *
+     * @return void
      */
-    public function testFluentSetterMustReturnThis()
+    public function testFluentSetterMustReturnThis(): void
     {
-        $report = $this->checkFluentSetterFile(__DIR__ . '/Fixtures/FluentSetterSniff.MustReturnThis.php');
+        $report = $this->checkSniffFile($this->getFixtureFilePath('MustReturnThis.php'));
 
         $this->assertSniffError(
             $report,
@@ -72,17 +80,18 @@ class FluentSetterSniffTest extends TestCase
     }
 
     /**
-     * Return a PHP_CodeSniffer_File with only needed sniff codes.
+     * Checks the given file with defined error codes.
      *
-     * @param string $file
+     * @param string $file Filename of the fixture
+     * @param array $sniffProperties Array of sniff properties
      *
-     * @return PHP_CodeSniffer_File
+     * @return PHP_CodeSniffer_File The php cs file
      */
-    private function checkFluentSetterFile($file)
+    protected function checkSniffFile(string $file, array $sniffProperties = []): PHP_CodeSniffer_File
     {
         return $this->checkFile(
             $file,
-            [],
+            $sniffProperties,
             [
                 FluentSetterSniff::CODE_MULTIPLE_RETURN_FOUND,
                 FluentSetterSniff::CODE_MUST_RETURN_THIS,

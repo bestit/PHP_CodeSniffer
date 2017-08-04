@@ -61,9 +61,9 @@ class OpenTagSniff implements PHP_CodeSniffer_Sniff
     /**
      * Registers the tokens that this sniff wants to listen for.
      *
-     * @return int[]
+     * @return int[] List of tokens to listen for
      */
-    public function register()
+    public function register(): array
     {
         return [
             T_OPEN_TAG
@@ -106,12 +106,12 @@ class OpenTagSniff implements PHP_CodeSniffer_Sniff
     /**
      * Handles open tag not first statement error.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile
-     * @param int $stackPtr
+     * @param PHP_CodeSniffer_File $phpcsFile The php cs file
+     * @param int $stackPtr Pointer to the open tag token
      *
      * @return void
      */
-    private function handleOpenTagNotFirstStatement(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    private function handleOpenTagNotFirstStatement(PHP_CodeSniffer_File $phpcsFile, int $stackPtr): void
     {
         $fixNotFirstStatement = $phpcsFile->addFixableError(
             self::ERROR_NOT_FIRST_STATEMENT,
@@ -131,13 +131,13 @@ class OpenTagSniff implements PHP_CodeSniffer_Sniff
     /**
      * Handles no space after open tag error.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile
-     * @param int $stackPtr
-     * @param int $whitespacePtr
+     * @param PHP_CodeSniffer_File $phpcsFile The php cs file
+     * @param int $stackPtr Pointer to the open tag token
+     * @param int $whitespacePtr Pointer to the line after the open tag
      *
      * @return void
      */
-    private function handleNoSpaceAfterOpenTag(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $whitespacePtr)
+    private function handleNoSpaceAfterOpenTag(PHP_CodeSniffer_File $phpcsFile, int $stackPtr, int $whitespacePtr): void
     {
         $fixNoSpaceAfterTag = $phpcsFile->addFixableError(
             self::ERROR_NO_SPACE_AFTER_OPEN_TAG,
@@ -155,12 +155,12 @@ class OpenTagSniff implements PHP_CodeSniffer_Sniff
     /**
      * Handles line after open tag not empty.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile
-     * @param int $whitespacePtr
+     * @param PHP_CodeSniffer_File $phpcsFile The php cs file
+     * @param int $whitespacePtr Pointer to the line after the open tag
      *
      * @return void
      */
-    private function handleLineNotEmpty(PHP_CodeSniffer_File $phpcsFile, $whitespacePtr)
+    private function handleLineNotEmpty(PHP_CodeSniffer_File $phpcsFile, int $whitespacePtr): void
     {
         $fixSpaceNotScndLine = $phpcsFile->addFixableError(
             self::ERROR_LINE_NOT_EMPTY,

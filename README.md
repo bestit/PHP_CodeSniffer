@@ -54,7 +54,28 @@ Execute the PHP_CodeSniffer (path can vary on your composer configuration):
 | Generic.Files.LineLength | PSR-2 | Every line MUST not be longer than 120 chars. |
 | Generic.Arrays.DisallowLongArraySyntax | BestIt | Every array syntax MUST be in short array syntax. |
 | BestIt.Formatting.OpenTagSniff | BestIt | After the open tag there MUST be an empty line. |
-| MethodDocSniff | BestIt | Every method docblock MUST have a short description that starts capitalized and is followed by an empty line |
+| BestIt.Commenting.AbstractDocSniff.NoImmediateDocFound¹| BestIt | There MUST be a doc block before the listened token |
+| BestIt.Commenting.AbstractDocSniff.NoSummary¹| BestIt | There MUST be a summary |
+| BestIt.Commenting.AbstractDocSniff.SummaryNotFirst¹| BestIt | The summary MUST be the first statement in a doc block |
+| BestIt.Commenting.AbstractDocSniff.SummaryTooLong¹| BestIt | The summary length MUST be maximum 120 characters |
+| BestIt.Commenting.AbstractDocSniff.CommentNotMultiLine¹| BestIt | Every doc block must be multi line |
+| BestIt.Commenting.AbstractDocSniff.NoLineAfterSummary¹| BestIt | There MUST be an empty line after the summary |
+| BestIt.Commenting.AbstractDocSniff.LineAfterSummaryNotEmpty¹| BestIt | The line after the summary MUST be empty |
+| BestIt.Commenting.AbstractDocSniff.DescriptionNotFound¹| BestIt | There MUST be doc block long description |
+| BestIt.Commenting.AbstractDocSniff.NoLineAfterDescription¹| BestIt | There MUST be an empty line after the long description |
+| BestIt.Commenting.AbstractDocSniff.MuchLinesAfterDescription¹| BestIt | There MUST be an empty line after the long description  |
+| BestIt.Commenting.AbstractDocSniff.DescriptionTooLong¹| BestIt | Every line of the long description MUST be not longer than 120 characters |
+| BestIt.Commenting.AbstractDocSniff.TagNotAllowed¹| BestIt | The given tag MUST NOT be used |
+| BestIt.Commenting.AbstractDocSniff.TagOccurrenceMin¹| BestIt | The given tag MUST occur min x times |
+| BestIt.Commenting.AbstractDocSniff.TagOccurrenceMax¹| BestIt | The given tag MUST occur max x times |
+| BestIt.Commenting.AbstractDocSniff.TagWrongPosition¹| BestIt | The given tag MUST be at the correct position |
+| BestIt.Commenting.AbstractDocSniff.SummaryUcFirst¹| BestIt | The summary first letter MUST be a capital letter |
+| BestIt.Commenting.AbstractDocSniff.DescriptionUcFirst¹| BestIt | The long description first letter MUST be a capital letter |
+| BestIt.Commenting.AbstractDocSniff.NoLineAfterTag¹| BestIt | There MUST be an empty line after the given tag |
+| BestIt.Commenting.AbstractDocSniff.MuchLinesAfterTag¹| BestIt | There MUST be a single empty line after the given tag |
+| BestIt.Commenting.AbstractDocSniff.TagFormatContentInvalid¹| BestIt | The tag content MUST match the given pattern |
+
+¹ AbstractDocSniff means ClassDocSniff, MethodDocSniff, ConstantDocSniff and PropertyDocSniff  
 
 ## Testing
 To be able to test our written sniffs ensure that composer is installed with the option `--prefer-source`.

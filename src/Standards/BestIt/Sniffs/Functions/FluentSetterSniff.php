@@ -74,13 +74,19 @@ class FluentSetterSniff extends PHP_CodeSniffer_Standards_AbstractScopeSniff
     }
 
     /**
-     * @inheritdoc
+     * Processes the tokens that this test is listening for.
+     *
+     * @param PHP_CodeSniffer_File $phpcsFile The file where this token was found.
+     * @param int $stackPtr The position in the stack where this token was found.
+     * @param int $currScope The position in the tokens array that opened the scope that this test is listening for.
+     *
+     * @return void
      */
     protected function processTokenWithinScope(
         PHP_CodeSniffer_File $phpcsFile,
         $stackPtr,
         $currScope
-    ) {
+    ): void {
         $className = $phpcsFile->getDeclarationName($currScope);
         $methodName = $phpcsFile->getDeclarationName($stackPtr);
 
@@ -153,11 +159,11 @@ class FluentSetterSniff extends PHP_CodeSniffer_Standards_AbstractScopeSniff
      * We check that the letters until the first upper case character equals "set".
      * This way we expect that after "set" follows an upper case letter.
      *
-     * @param string $methodName
+     * @param string $methodName Current method name
      *
-     * @return bool
+     * @return bool Indicator if the given method is a setter function
      */
-    private function checkIfSetterFunction($methodName)
+    private function checkIfSetterFunction(string $methodName): bool
     {
         $firstMatch = strcspn($methodName, 'ABCDEFGHJIJKLMNOPQRSTUVWXYZ');
 
@@ -167,12 +173,12 @@ class FluentSetterSniff extends PHP_CodeSniffer_Standards_AbstractScopeSniff
     /**
      * Fixes if no return statement is found.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile
-     * @param int $closingBracePtr
+     * @param PHP_CodeSniffer_File $phpcsFile The php cs file
+     * @param int $closingBracePtr Pointer to the closing curly brace of the function
      *
      * @return void
      */
-    private function fixNoReturnFound(PHP_CodeSniffer_File $phpcsFile, $closingBracePtr)
+    private function fixNoReturnFound(PHP_CodeSniffer_File $phpcsFile, int $closingBracePtr): void
     {
         $tokens = $phpcsFile->getTokens();
         $closingBraceToken = $tokens[$closingBracePtr];
@@ -189,12 +195,12 @@ class FluentSetterSniff extends PHP_CodeSniffer_Standards_AbstractScopeSniff
     /**
      * Fixes the return value of a function to $this.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile
-     * @param int $returnPtr
+     * @param PHP_CodeSniffer_File $phpcsFile The php cs file
+     * @param int $returnPtr Pointer to the return token
      *
      * @return void
      */
-    private function fixMustReturnThis(PHP_CodeSniffer_File $phpcsFile, $returnPtr)
+    private function fixMustReturnThis(PHP_CodeSniffer_File $phpcsFile, $returnPtr): void
     {
         $returnSemicolonPtr = $phpcsFile->findEndOfStatement($returnPtr);
 
