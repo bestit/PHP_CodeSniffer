@@ -101,6 +101,115 @@ abstract class SniffTestCase extends SlevomatTestCase
     }
 
     /**
+     * Asserts all errors in a given file.
+     *
+     * @param string $file Filename of the fixture
+     * @param string $error Error code
+     * @param int[] $lines Array of lines where the error code occurs
+     * @param array $sniffProperties Array of sniff properties
+     *
+     * @return PHP_CodeSniffer_File The php cs file
+     */
+    protected function assertWarningsInFile(
+        string $file,
+        string $error,
+        array $lines,
+        array $sniffProperties = []
+    ): PHP_CodeSniffer_File {
+        $report = $this->checkSniffFile(
+            $this->getFixtureFilePath($file),
+            $sniffProperties
+        );
+
+        foreach ($lines as $line) {
+            $this->assertSniffWarnings(
+                $report,
+                $line,
+                $error
+            );
+        }
+
+        return $report;
+    }
+
+    /**
+     * Checks if the given file has warnings on the given line
+     *
+     * @param PHP_CodeSniffer_File $codeSnifferFile The code sniffer file class
+     * @param int $line The line where a warning may occur
+     * @param string $code The error code that might be thrown
+     * @param string|null $message The message
+     *
+     * @return void
+     */
+    protected function assertSniffWarnings(
+        PHP_CodeSniffer_File $codeSnifferFile,
+        int $line,
+        string $code,
+        string $message = null
+    ): void {
+        $errors = $codeSnifferFile->getWarnings();
+        $this->assertTrue(isset($errors[$line]), sprintf('Expected error on line %s, but none found.', $line));
+
+        $sniffCode = sprintf('%s.%s', $this->getSniffName(), $code);
+
+        $this->assertTrue(
+            $this->hasWarning($errors[$line], $sniffCode, $message),
+            sprintf(
+                'Expected error %s%s, but none found on line %d.%sErrors found on line %d:%s%s%s',
+                $sniffCode,
+                $message !== null ? sprintf(' with message "%s"', $message) : '',
+                $line,
+                PHP_EOL . PHP_EOL,
+                $line,
+                PHP_EOL,
+                $this->getFormattedWarnings($errors[$line]),
+                PHP_EOL
+            )
+        );
+    }
+
+    /**
+     * Checks if the file has a warning
+     *
+     * @param array $warningOnLine An array containing warnings
+     * @param string $sniffCode The expected warning
+     * @param string|null $message The expected message
+     *
+     * @return bool Returns true if the given array has the given warning
+     */
+    private function hasWarning(array $warningOnLine, string $sniffCode, string $message = null): bool
+    {
+        foreach ($warningOnLine as $warningsOnPosition) {
+            foreach ($warningsOnPosition as $warning) {
+                if ($warning['source'] === $sniffCode
+                    && ($message === null || strpos($warning['message'], $message) !== false)
+                ) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Formats a warning
+     *
+     * @param array $warnings The unformatted warning
+     *
+     * @return string the formatted warning
+     */
+    private function getFormattedWarnings(array $warnings): string
+    {
+        return implode(PHP_EOL, array_map(function (array $errors): string {
+            return implode(PHP_EOL, array_map(function (array $error): string {
+                return sprintf("\t%s: %s", $error['source'], $error['message']);
+            }, $errors));
+        }, $warnings));
+    }
+
+    /**
      * Tests files which have to be without errors.
      *
      * @param string $file File to test

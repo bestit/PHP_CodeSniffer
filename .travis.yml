@@ -10,7 +10,10 @@ install:
   - composer install --no-interaction --prefer-source
 
 script:
-  - ./vendor/bin/phpcs
+  - ./vendor/bin/phpcs -n
   - ./vendor/bin/phpunit
   - ./vendor/bin/phpmd src text phpmd.xml.dist
   - ./vendor/bin/phpcpd src
+
+after_script:
+  - ./vendor/bin/phpcs

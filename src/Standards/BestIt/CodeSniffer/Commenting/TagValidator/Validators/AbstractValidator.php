@@ -47,7 +47,7 @@ abstract class AbstractValidator implements ValidatorInterface
 
         if ($contentPtr !== -1) {
             $content = $contentToken['content'];
-            $result = $this->validateContent($content);
+            $result = $this->validateContent($content, $tagToken);
         }
 
         if (!$result) {
@@ -77,13 +77,35 @@ abstract class AbstractValidator implements ValidatorInterface
     }
 
     /**
+     * Adds the invalid format error.
+     *
+     * @param array $tagToken Token data of the current tag
+     * @param string $expected Description what is expected
+     *
+     * @return void
+     */
+    public function addInvalidFormatWarning(array $tagToken, string $expected): void
+    {
+        $this->file->addWarning(
+            AbstractDocSniff::MESSAGE_TAG_CONTENT_FORMAT_WARNING,
+            $tagToken['pointer'],
+            AbstractDocSniff::CODE_TAG_CONTENT_FORMAT_WARNING,
+            [
+                $tagToken['content'],
+                $expected
+            ]
+        );
+    }
+
+    /**
      * Validates the content.
      *
      * @param string $content Tag content to be validated
+     * @param array $tagToken The tag token
      *
      * @return bool Indicator if content is valid or not
      */
-    abstract protected function validateContent(string $content): bool;
+    abstract protected function validateContent(string $content, array $tagToken): bool;
 
     /**
      * Returns the expected content for the tag.

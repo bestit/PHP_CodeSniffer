@@ -307,6 +307,20 @@ abstract class AbstractDocSniff extends AbstractSniff
     const MESSAGE_TAG_CONTENT_FORMAT_INVALID = '"%s"-Tag format is invalid. Expected: "%s"';
 
     /**
+     * Message that the tag content format is invalid.
+     *
+     * @var string
+     */
+    const MESSAGE_TAG_CONTENT_FORMAT_WARNING = '"%s"-Tag format may be invalid. Expected: "%s"';
+
+    /**
+     * Code that the tag content format may be invalid.
+     *
+     * @var string
+     */
+    const CODE_TAG_CONTENT_FORMAT_WARNING = 'TagFormatContentWarning';
+
+    /**
      * DocHelper for comment
      *
      * @var DocHelper

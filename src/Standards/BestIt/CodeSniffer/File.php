@@ -162,6 +162,32 @@ class File
     }
 
     /**
+     * Records a warning against a specific token in the file.
+     *
+     * @param string $warning The warning message.
+     * @param int $stackPtr The stack position where the warning occurred.
+     * @param string $code A violation code unique to the sniff message.
+     * @param array $data Replacements for the warning message.
+     * @param int $severity The severity level for this warning. A value of 0
+     *                      will be converted into the default severity level.
+     * @param bool $fixable Can the warning be fixed by the sniff?
+     *
+     * @return bool Returns true if setting the warning was done or false
+     *
+     * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
+     */
+    public function addWarning(
+        string $warning,
+        int $stackPtr,
+        string $code = '',
+        array $data = [],
+        int $severity = 0,
+        bool $fixable = false
+    ): bool {
+        return $this->baseFile->addWarning($warning, $stackPtr, $code, $data, $severity, $fixable);
+    }
+
+    /**
      * Records an error against a specific line in the file.
      *
      * @param string $error The error message.
