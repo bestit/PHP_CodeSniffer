@@ -356,7 +356,7 @@ abstract class AbstractDocSniff extends AbstractSniff
      *
      * @return void
      */
-    public function processToken(): void
+    public function processToken()
     {
         $propertyHelper = new PropertyHelper($this->getFile());
 

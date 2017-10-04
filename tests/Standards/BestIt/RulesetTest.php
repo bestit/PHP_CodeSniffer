@@ -20,7 +20,7 @@ class RulesetTest extends TestCase
      *
      * @return void
      */
-    public function testRulesetXmlIsValid(): void
+    public function testRulesetXmlIsValid()
     {
         $xml = new DOMDocument();
         self::assertTrue($xml->load('./src/Standards/BestIt/ruleset.xml'), 'The file ruleset.xml is not valid.');

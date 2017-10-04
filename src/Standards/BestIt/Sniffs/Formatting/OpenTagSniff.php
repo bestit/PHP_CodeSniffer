@@ -111,7 +111,7 @@ class OpenTagSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    private function handleOpenTagNotFirstStatement(PHP_CodeSniffer_File $phpcsFile, int $stackPtr): void
+    private function handleOpenTagNotFirstStatement(PHP_CodeSniffer_File $phpcsFile, int $stackPtr)
     {
         $fixNotFirstStatement = $phpcsFile->addFixableError(
             self::ERROR_NOT_FIRST_STATEMENT,
@@ -137,7 +137,7 @@ class OpenTagSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    private function handleNoSpaceAfterOpenTag(PHP_CodeSniffer_File $phpcsFile, int $stackPtr, int $whitespacePtr): void
+    private function handleNoSpaceAfterOpenTag(PHP_CodeSniffer_File $phpcsFile, int $stackPtr, int $whitespacePtr)
     {
         $fixNoSpaceAfterTag = $phpcsFile->addFixableError(
             self::ERROR_NO_SPACE_AFTER_OPEN_TAG,
@@ -160,7 +160,7 @@ class OpenTagSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    private function handleLineNotEmpty(PHP_CodeSniffer_File $phpcsFile, int $whitespacePtr): void
+    private function handleLineNotEmpty(PHP_CodeSniffer_File $phpcsFile, int $whitespacePtr)
     {
         $fixSpaceNotScndLine = $phpcsFile->addFixableError(
             self::ERROR_LINE_NOT_EMPTY,

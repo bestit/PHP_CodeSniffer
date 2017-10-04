@@ -37,7 +37,7 @@ abstract class SniffTestCase extends SlevomatTestCase
      *
      * @return void
      */
-    protected function assertAllFixedInFile(PHP_CodeSniffer_File $codeSnifferFile): void
+    protected function assertAllFixedInFile(PHP_CodeSniffer_File $codeSnifferFile)
     {
         $codeSnifferFile->fixer->fixFile();
 
@@ -62,7 +62,7 @@ abstract class SniffTestCase extends SlevomatTestCase
         string $error,
         array $lines,
         array $sniffProperties = []
-    ): void {
+    ) {
         $report = $this->assertErrorsInFile($file, $error, $lines, $sniffProperties);
 
         $this->assertAllFixedInFile($report);
@@ -107,7 +107,7 @@ abstract class SniffTestCase extends SlevomatTestCase
      *
      * @return void
      */
-    protected function assertFileCorrect(string $file): void
+    protected function assertFileCorrect(string $file)
     {
         $report = $this->checkSniffFile(
             $this->getFixtureFilePath($file)

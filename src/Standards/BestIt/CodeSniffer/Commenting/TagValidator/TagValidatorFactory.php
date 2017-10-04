@@ -31,7 +31,7 @@ class TagValidatorFactory
      *
      * @return ValidatorInterface|null Validator or null
      */
-    public function createFromTagName(File $file, string $tagName): ?ValidatorInterface
+    public function createFromTagName(File $file, string $tagName)
     {
         $validator = null;
 

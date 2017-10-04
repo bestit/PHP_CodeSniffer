@@ -68,7 +68,7 @@ abstract class AbstractSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr): void
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
         $this->baseFile = $phpcsFile;
         $this->file = new File($phpcsFile);
@@ -121,5 +121,5 @@ abstract class AbstractSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    abstract public function processToken(): void;
+    abstract public function processToken();
 }

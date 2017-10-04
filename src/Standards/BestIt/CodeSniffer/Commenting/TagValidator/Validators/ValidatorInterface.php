@@ -21,5 +21,5 @@ interface ValidatorInterface
      *
      * @return void
      */
-    public function validate(array $tagToken, int $contentPtr, ?array $contentToken): void;
+    public function validate(array $tagToken, int $contentPtr, $contentToken);
 }

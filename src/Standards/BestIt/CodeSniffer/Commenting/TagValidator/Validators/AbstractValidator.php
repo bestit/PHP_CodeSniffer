@@ -41,7 +41,7 @@ abstract class AbstractValidator implements ValidatorInterface
      *
      * @return void
      */
-    public function validate(array $tagToken, int $contentPtr, ?array $contentToken): void
+    public function validate(array $tagToken, int $contentPtr, $contentToken)
     {
         $result = false;
 
@@ -63,7 +63,7 @@ abstract class AbstractValidator implements ValidatorInterface
      *
      * @return void
      */
-    public function addInvalidFormatError(array $tagToken, string $expected): void
+    public function addInvalidFormatError(array $tagToken, string $expected)
     {
         $this->file->addError(
             AbstractDocSniff::MESSAGE_TAG_CONTENT_FORMAT_INVALID,
