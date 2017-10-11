@@ -22,7 +22,7 @@ class OpenTagSniffTest extends SniffTestCase
      *
      * @return void
      */
-    public function testCorrectSpaceAfterOpenTag(): void
+    public function testCorrectSpaceAfterOpenTag()
     {
         $this->assertNoSniffErrorInFile(
             $this->checkSniffFile($this->getFixtureFilePath('Correct.php'))
@@ -34,7 +34,7 @@ class OpenTagSniffTest extends SniffTestCase
      *
      * @return void
      */
-    public function testLineNotEmpty(): void
+    public function testLineNotEmpty()
     {
         $report = $this->checkSniffFile(
             $this->getFixtureFilePath('LineNotEmpty.php')
@@ -54,7 +54,7 @@ class OpenTagSniffTest extends SniffTestCase
      *
      * @return void
      */
-    public function testNoSpaceAfterOpenTag(): void
+    public function testNoSpaceAfterOpenTag()
     {
         $report = $this->checkSniffFile(
             $this->getFixtureFilePath('NoSpaceAfterOpenTag.php')
@@ -74,7 +74,7 @@ class OpenTagSniffTest extends SniffTestCase
      *
      * @return void
      */
-    public function testNotFirstStatement(): void
+    public function testNotFirstStatement()
     {
         $report = $this->checkSniffFile(
             $this->getFixtureFilePath('NotFirstStatement.php')

@@ -64,7 +64,7 @@ class SpaceAfterDeclareSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void Optionally returns a stack pointer.
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr): void
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
 
@@ -102,7 +102,7 @@ class SpaceAfterDeclareSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    private function handleNoWhitespaceFound(PHP_CodeSniffer_File $phpcsFile, int $semicolonPtr): void
+    private function handleNoWhitespaceFound(PHP_CodeSniffer_File $phpcsFile, int $semicolonPtr)
     {
         $fixNoWhitespace = $phpcsFile->addFixableError(
             self::MESSAGE_NO_WHITESPACE_FOUND,
@@ -132,7 +132,7 @@ class SpaceAfterDeclareSniff implements PHP_CodeSniffer_Sniff
         int $semicolonPtr,
         int $secondSpacePtr,
         int $nextNonSpacePtr
-    ): void {
+    ) {
         $fixMuchWhitespaces = $phpcsFile->addFixableError(
             self::MESSAGE_MUCH_WHITESPACE_FOUND,
             $semicolonPtr,

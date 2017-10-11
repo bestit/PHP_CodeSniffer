@@ -20,7 +20,7 @@ class DeclareStrictTypesSniffTest extends TestCase
      *
      * @return void
      */
-    public function testConstructor(): void
+    public function testConstructor()
     {
         $fixture = new DeclareStrictTypesSniff();
 

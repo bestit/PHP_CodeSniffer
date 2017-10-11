@@ -89,7 +89,7 @@ class DocSummaryHelper
      *
      * @return void
      */
-    public function checkCommentSummary(): void
+    public function checkCommentSummary()
     {
         $commentEndPtr = $this->docHelper->getCommentEndPointer();
         $commentStartPtr = $this->docHelper->getCommentStartPointer();
@@ -123,7 +123,7 @@ class DocSummaryHelper
      *
      * @return void
      */
-    private function checkSummaryCapitalLetter(array $summaryToken, int $summaryPtr): void
+    private function checkSummaryCapitalLetter(array $summaryToken, int $summaryPtr)
     {
         $summaryText = $summaryToken['content'];
 
@@ -150,7 +150,7 @@ class DocSummaryHelper
      *
      * @return void
      */
-    private function checkSummaryLineLength(array $summaryToken, int $summaryPtr): void
+    private function checkSummaryLineLength(array $summaryToken, int $summaryPtr)
     {
         $summaryLineLength = $summaryToken['column'] + $summaryToken['length'];
 
@@ -172,7 +172,7 @@ class DocSummaryHelper
      *
      * @return void
      */
-    private function checkSummaryIsFirstLine(array $commentStartToken, array $summaryToken, int $summaryPtr): void
+    private function checkSummaryIsFirstLine(array $commentStartToken, array $summaryToken, int $summaryPtr)
     {
         if ($summaryToken['line'] !== $commentStartToken['line'] + 1) {
             $fixSummaryNotFirst = $this->file->addFixableError(
@@ -195,7 +195,7 @@ class DocSummaryHelper
      *
      * @return void
      */
-    private function checkLineAfterSummary(int $summaryPtr, int $commentEndPtr): void
+    private function checkLineAfterSummary(int $summaryPtr, int $commentEndPtr)
     {
         $summaryToken = $this->getCommentSummaryToken();
 
@@ -233,7 +233,7 @@ class DocSummaryHelper
      *
      * @return void
      */
-    private function fixNoLineAfterSummary(): void
+    private function fixNoLineAfterSummary()
     {
         $summaryPtr = $this->getCommentSummaryPointer();
         $summaryToken = $this->getCommentSummaryToken();
@@ -253,7 +253,7 @@ class DocSummaryHelper
      *
      * @return void
      */
-    private function fixSummaryNotFirst(): void
+    private function fixSummaryNotFirst()
     {
         $commentStartToken = $this->docHelper->getCommentStartToken();
         $summaryStartToken = $this->getCommentSummaryToken();
@@ -274,7 +274,7 @@ class DocSummaryHelper
      *
      * @return void
      */
-    private function fixSummaryUcFirst(array $summaryToken, int $summaryPtr): void
+    private function fixSummaryUcFirst(array $summaryToken, int $summaryPtr)
     {
         $this->file->getFixer()->beginChangeset();
 

@@ -55,7 +55,7 @@ class DocTagOccurenceHelper
      *
      * @return void
      */
-    public function checkTagOccurrences(array $tagMetadata): void
+    public function checkTagOccurrences(array $tagMetadata)
     {
         $tagTokens = $this->docTagHelper->getCommentTagTokens();
 

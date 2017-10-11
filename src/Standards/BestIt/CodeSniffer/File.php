@@ -110,10 +110,10 @@ class File
      *
      * @param array $types The type(s) of tokens to search for.
      * @param int $start The position to start searching from in the token stack.
-     * @param int $end The end position to fail if no token is found.
+     * @param int|null $end The end position to fail if no token is found.
      *        if not specified or null, end will default to the start of the token stack.
      * @param bool $exclude If true, find the previous token that are NOT of the types specified in $types.
-     * @param string $value The value that the token(s) must be equal to.
+     * @param string|null $value The value that the token(s) must be equal to.
      *        If value is omitted, tokens with any value will be returned.
      * @param bool $local If true, tokens outside the current statement will not be checked.
      *        IE. checking will stop at the previous semi-colon found.
@@ -125,9 +125,9 @@ class File
     public function findPrevious(
         array $types,
         int $start,
-        ?int $end = null,
+        $end = null,
         bool $exclude = false,
-        ?string $value = null,
+        $value = null,
         bool $local = false
     ): int {
         $pointer = $this->baseFile->findPrevious($types, $start, $end, $exclude, $value, $local);
@@ -194,10 +194,10 @@ class File
      * @param array $types The type(s) of tokens to search for.
      * @param int $start The position to start searching from in the
      *                   token stack.
-     * @param int $end The end position to fail if no token is found. if not specified or null, end will default to
+     * @param int|null $end The end position to fail if no token is found. if not specified or null, end will default to
      *                 the end of the token stack.
      * @param bool $exclude If true, find the next token that is NOT of a type specified in $types.
-     * @param string $value The value that the token(s) must be equal to.
+     * @param string|null $value The value that the token(s) must be equal to.
      *                      If value is omitted, tokens with any value will be returned.
      * @param bool $local If true, tokens outside the current statement will not be checked. i.e., checking will stop
      *                    at the next semi-colon found.
@@ -209,9 +209,9 @@ class File
     public function findNext(
         array $types,
         int $start,
-        ?int $end = null,
+        $end = null,
         bool $exclude = false,
-        ?string $value = null,
+        $value = null,
         bool $local = false
     ): int {
         $result = $this->baseFile->findNext($types, $start, $end, $exclude, $value, $local);

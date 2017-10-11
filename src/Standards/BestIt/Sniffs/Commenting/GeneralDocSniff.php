@@ -105,7 +105,7 @@ class GeneralDocSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void Optionally returns a stack pointer.
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $commentStartPtr): void
+    public function process(PHP_CodeSniffer_File $phpcsFile, $commentStartPtr)
     {
         $this->phpcsFile = $phpcsFile;
         $this->tokens = $phpcsFile->getTokens();
@@ -121,7 +121,7 @@ class GeneralDocSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    private function checkEmptyLineBeforeComment(): void
+    private function checkEmptyLineBeforeComment()
     {
         $prevNonSpacePtr = $this->phpcsFile->findPrevious(T_WHITESPACE, $this->commentStartPtr - 1, null, true);
         $prevNonSpaceToken = $this->tokens[$prevNonSpacePtr];
@@ -156,7 +156,7 @@ class GeneralDocSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    private function checkCommentTagsSpacing(): void
+    private function checkCommentTagsSpacing()
     {
         $commentTagPtrs = $this->commentStartToken['comment_tags'];
 
@@ -181,7 +181,7 @@ class GeneralDocSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    private function checkCommentTagSpacing(int $commentTagPtr): void
+    private function checkCommentTagSpacing(int $commentTagPtr)
     {
         $lineEndingPtr = $this->phpcsFile->findNext(
             T_DOC_COMMENT_WHITESPACE,
@@ -211,7 +211,7 @@ class GeneralDocSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    private function checkCommentTagStringSpacing(int $tagStringPtr): void
+    private function checkCommentTagStringSpacing(int $tagStringPtr)
     {
         $tagStringToken = $this->tokens[$tagStringPtr];
 
@@ -237,7 +237,7 @@ class GeneralDocSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    private function fixCommentTagStringSpacing(int $tagStringPtr): void
+    private function fixCommentTagStringSpacing(int $tagStringPtr)
     {
         $tagStringToken = $this->tokens[$tagStringPtr];
         $tagStringContent = $tagStringToken['content'];
@@ -255,7 +255,7 @@ class GeneralDocSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    private function fixCommentTagSpacing(int $whitespacePtr): void
+    private function fixCommentTagSpacing(int $whitespacePtr)
     {
         $this->phpcsFile->fixer->replaceToken($whitespacePtr, ' ');
     }
@@ -270,7 +270,7 @@ class GeneralDocSniff implements PHP_CodeSniffer_Sniff
      *
      * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
      */
-    private function fixMuchLinesBeforeComment(array $whitespacePtrs, bool $noWhitespace = false): void
+    private function fixMuchLinesBeforeComment(array $whitespacePtrs, bool $noWhitespace = false)
     {
         $this->phpcsFile->fixer->beginChangeset();
 
@@ -290,7 +290,7 @@ class GeneralDocSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    private function fixNoLineBeforeComment(): void
+    private function fixNoLineBeforeComment()
     {
         $this->phpcsFile->fixer->beginChangeset();
 
@@ -308,7 +308,7 @@ class GeneralDocSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    private function checkCommentTagWhiteSpacing(int $whitespacePtr): void
+    private function checkCommentTagWhiteSpacing(int $whitespacePtr)
     {
         $fixWrongWhitespace = $this->phpcsFile->addFixableError(
             self::MESSAGE_WRONG_COMMENT_TAG_SPACING,
@@ -329,7 +329,7 @@ class GeneralDocSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    private function addFixableMuchLinesBeforeCommentError(array $whitespacePtrs, bool $hasPrevCurlyBrace): void
+    private function addFixableMuchLinesBeforeCommentError(array $whitespacePtrs, bool $hasPrevCurlyBrace)
     {
         $fixMuchLines = $this->phpcsFile->addFixableError(
             self::MESSAGE_MANY_LINES_BEFORE_COMMENT,
@@ -350,7 +350,7 @@ class GeneralDocSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    private function addFixableNoLineBeforeCommentError(): void
+    private function addFixableNoLineBeforeCommentError()
     {
         $fixNoLine = $this->phpcsFile->addFixableError(
             self::MESSAGE_NO_LINE_BEFORE_COMMENT,

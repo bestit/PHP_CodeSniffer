@@ -86,7 +86,7 @@ class FluentSetterSniff extends PHP_CodeSniffer_Standards_AbstractScopeSniff
         PHP_CodeSniffer_File $phpcsFile,
         $stackPtr,
         $currScope
-    ): void {
+    ) {
         $className = $phpcsFile->getDeclarationName($currScope);
         $methodName = $phpcsFile->getDeclarationName($stackPtr);
 
@@ -178,7 +178,7 @@ class FluentSetterSniff extends PHP_CodeSniffer_Standards_AbstractScopeSniff
      *
      * @return void
      */
-    private function fixNoReturnFound(PHP_CodeSniffer_File $phpcsFile, int $closingBracePtr): void
+    private function fixNoReturnFound(PHP_CodeSniffer_File $phpcsFile, int $closingBracePtr)
     {
         $tokens = $phpcsFile->getTokens();
         $closingBraceToken = $tokens[$closingBracePtr];
@@ -200,7 +200,7 @@ class FluentSetterSniff extends PHP_CodeSniffer_Standards_AbstractScopeSniff
      *
      * @return void
      */
-    private function fixMustReturnThis(PHP_CodeSniffer_File $phpcsFile, $returnPtr): void
+    private function fixMustReturnThis(PHP_CodeSniffer_File $phpcsFile, $returnPtr)
     {
         $returnSemicolonPtr = $phpcsFile->findEndOfStatement($returnPtr);
 

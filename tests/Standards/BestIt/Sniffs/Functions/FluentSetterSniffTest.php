@@ -22,7 +22,7 @@ class FluentSetterSniffTest extends SniffTestCase
      *
      * @return void
      */
-    public function testCorrectFluentSetter(): void
+    public function testCorrectFluentSetter()
     {
         $this->assertNoSniffErrorInFile(
             $this->checkSniffFile($this->getFixtureFilePath('Correct.php'))
@@ -34,7 +34,7 @@ class FluentSetterSniffTest extends SniffTestCase
      *
      * @return void
      */
-    public function testFluentSetterNoReturn(): void
+    public function testFluentSetterNoReturn()
     {
         $report = $this->checkSniffFile($this->getFixtureFilePath('NoReturn.php'));
 
@@ -52,7 +52,7 @@ class FluentSetterSniffTest extends SniffTestCase
      *
      * @return void
      */
-    public function testFluentSetterMultipleReturn(): void
+    public function testFluentSetterMultipleReturn()
     {
         $this->assertSniffError(
             $this->checkSniffFile($this->getFixtureFilePath('MultipleReturn.php')),
@@ -66,7 +66,7 @@ class FluentSetterSniffTest extends SniffTestCase
      *
      * @return void
      */
-    public function testFluentSetterMustReturnThis(): void
+    public function testFluentSetterMustReturnThis()
     {
         $report = $this->checkSniffFile($this->getFixtureFilePath('MustReturnThis.php'));
 

@@ -27,7 +27,7 @@ class ClassDocSniffTest extends SniffTestCase
      *
      * @dataProvider getCorrectFileList
      */
-    public function testCorrect(string $file): void
+    public function testCorrect(string $file)
     {
         $this->assertFileCorrect($file);
     }
@@ -44,7 +44,7 @@ class ClassDocSniffTest extends SniffTestCase
      *
      * @dataProvider getErrorData
      */
-    public function testErrors(string $file, string $error, array $lines, array $sniffProperties = []): void
+    public function testErrors(string $file, string $error, array $lines, array $sniffProperties = [])
     {
         $this->assertErrorsInFile($file, $error, $lines, $sniffProperties);
     }
@@ -61,7 +61,7 @@ class ClassDocSniffTest extends SniffTestCase
      *
      * @dataProvider getFixableErrorData
      */
-    public function testFixableErrors(string $file, string $error, array $lines, array $sniffProperties = []): void
+    public function testFixableErrors(string $file, string $error, array $lines, array $sniffProperties = [])
     {
         $this->assertFixableErrorsInFile($file, $error, $lines, $sniffProperties);
     }

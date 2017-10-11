@@ -81,7 +81,7 @@ class DocTagHelper
      *
      * @return void
      */
-    public function checkCommentTags(array $tagMetadata, array $disallowedTags): void
+    public function checkCommentTags(array $tagMetadata, array $disallowedTags)
     {
         $this->tagMetadata = $tagMetadata;
         $this->disallowedTags = $disallowedTags;
@@ -107,7 +107,7 @@ class DocTagHelper
      *
      * @return void
      */
-    private function checkBlankLinesAfterTags(): void
+    private function checkBlankLinesAfterTags()
     {
         $tagTokens = $this->getCommentTagTokens();
 
@@ -135,7 +135,7 @@ class DocTagHelper
      *
      * @return void
      */
-    private function checkBlankLinesAfterTag(int $lastTagPtr, array $lastTagToken, array $tagToken): void
+    private function checkBlankLinesAfterTag(int $lastTagPtr, array $lastTagToken, array $tagToken)
     {
         $lastTagName = $lastTagToken['content'];
         $lastTagEndPtr = $this->getTagEndPointer($lastTagPtr);
@@ -214,7 +214,7 @@ class DocTagHelper
      *
      * @return void
      */
-    private function fixMuchLinesAfterTag(array $lastTagToken, array $tagToken): void
+    private function fixMuchLinesAfterTag(array $lastTagToken, array $tagToken)
     {
         $this->file->getFixer()->beginChangeset();
 
@@ -230,7 +230,7 @@ class DocTagHelper
      *
      * @return void
      */
-    private function fixNoLineAfterTag(int $tagPtr): void
+    private function fixNoLineAfterTag(int $tagPtr)
     {
         $eolPtr = $this->file->findNext(
             [T_DOC_COMMENT_WHITESPACE],
@@ -256,7 +256,7 @@ class DocTagHelper
      *
      * @return void
      */
-    private function checkAllowedTags(): void
+    private function checkAllowedTags()
     {
         $tagTokens = $this->getCommentTagTokens();
 
@@ -374,7 +374,7 @@ class DocTagHelper
      *
      * @return void
      */
-    private function checkNoBlankLineAfterLastTag(array $lastTagToken, int $lastTagPtr): void
+    private function checkNoBlankLineAfterLastTag(array $lastTagToken, int $lastTagPtr)
     {
         $commentEndToken = $this->docHelper->getCommentEndToken();
 
@@ -408,7 +408,7 @@ class DocTagHelper
      *
      * @return void
      */
-    private function addMuchLinesAfterTagError(int $lastTagPtr, array $lastTagToken, array $tagToken): void
+    private function addMuchLinesAfterTagError(int $lastTagPtr, array $lastTagToken, array $tagToken)
     {
         $lastTagName = $lastTagToken['content'];
 
@@ -431,7 +431,7 @@ class DocTagHelper
      *
      * @return void
      */
-    private function validateTags(): void
+    private function validateTags()
     {
         $tagTokens = $this->getCommentTagTokens();
 
@@ -460,7 +460,7 @@ class DocTagHelper
      *
      * @return void
      */
-    private function addNoLineAfterTagError(int $lastTagPtr, string $lastTagName): void
+    private function addNoLineAfterTagError(int $lastTagPtr, string $lastTagName)
     {
         $fixNoLine = $this->file->addFixableError(
             AbstractDocSniff::MESSAGE_NO_LINE_AFTER_TAG,
@@ -491,7 +491,7 @@ class DocTagHelper
         array $tagToken,
         int $lineDiff,
         array $lastTagEndToken
-    ): void {
+    ) {
         // Check if spacing between two tags in a group is more than 0
         if ($lineDiff > 0) {
             $this->addMuchLinesAfterTagError($lastTagPtr, $lastTagEndToken, $tagToken);
@@ -513,7 +513,7 @@ class DocTagHelper
         array $tagToken,
         int $lineDiff,
         array $lastTagEndToken
-    ): void {
+    ) {
         $lastTagName = $lastTagToken['content'];
         $tagMetadata = $this->getTagMetadata($lastTagName);
 

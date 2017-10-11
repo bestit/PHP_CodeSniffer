@@ -6,7 +6,10 @@
         {
             "name": "Tim Kellner",
             "email": "tim.kellner@bestit-online.de"
-        }
+        }, {
+        "name": "Nick Lubisch",
+        "email": "nick.lubisch@bestit-online.de"
+      }
     ],
     "autoload": {
         "psr-4": {
@@ -20,7 +23,7 @@
     },
     "prefer-stable": true,
     "require": {
-        "php": "^7.1",
+        "php": "^7.0",
         "slevomat/coding-standard": "^2.4",
         "squizlabs/php_codesniffer": "^2.0"
     },

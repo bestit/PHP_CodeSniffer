@@ -25,7 +25,7 @@ class GeneralDocSniffTest extends SniffTestCase
      *
      * @dataProvider getCorrectFileList
      */
-    public function testCorrect(string $file): void
+    public function testCorrect(string $file)
     {
         $this->assertFileCorrect($file);
     }
@@ -35,7 +35,7 @@ class GeneralDocSniffTest extends SniffTestCase
      *
      * @return void
      */
-    public function testMuchLinesBeforeComment(): void
+    public function testMuchLinesBeforeComment()
     {
         $report = $this->checkSniffFile(__DIR__ . '/Fixtures/GeneralDocSniff/MuchLinesBeforeComment.php');
 
@@ -77,7 +77,7 @@ class GeneralDocSniffTest extends SniffTestCase
      *
      * @return void
      */
-    public function testNoLineBeforeComment(): void
+    public function testNoLineBeforeComment()
     {
         $report = $this->checkSniffFile(__DIR__ . '/Fixtures/GeneralDocSniff/NoLineBeforeComment.php');
 
@@ -107,7 +107,7 @@ class GeneralDocSniffTest extends SniffTestCase
      *
      * @return void
      */
-    public function testWrongCommentTagSpacing(): void
+    public function testWrongCommentTagSpacing()
     {
         $report = $this->checkSniffFile(__DIR__ . '/Fixtures/GeneralDocSniff/WrongCommentTagSpacing.php');
 

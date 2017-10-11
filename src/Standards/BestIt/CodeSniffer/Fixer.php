@@ -45,7 +45,7 @@ class Fixer
      *
      * @return void
      */
-    public function beginChangeset(): void
+    public function beginChangeset()
     {
         $this->baseFixer->beginChangeset();
     }
@@ -106,7 +106,7 @@ class Fixer
      *
      * @return void
      */
-    public function removeLine(int $line): void
+    public function removeLine(int $line)
     {
         foreach ($this->file->getTokens() as $tagPtr => $tagToken) {
             if ($tagToken['line'] !== $line) {
@@ -125,7 +125,7 @@ class Fixer
      *
      * @return void
      */
-    public function removeLines(int $startLine, int $endLine): void
+    public function removeLines(int $startLine, int $endLine)
     {
         for ($line = $startLine; $line <= $endLine; $line++) {
             $this->removeLine($line);
