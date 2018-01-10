@@ -17,7 +17,7 @@ Create a PHP_CodeSniffer configuration (phpcs.xml.dist / phpcs.xml) like this:
     <description>The coding standard for project x.</description>
 
     <!-- Path to best it ruleset. -->
-    <rule ref="./vendor/bestit/codesniffer/src/Standards/BestIt/ruleset.xml" />
+    <rule ref="./vendor/bestit/php_codesniffer/src/Standards/BestIt/ruleset.xml" />
 
     <!-- Path to directory which are checked. -->
     <file>src/</file>
