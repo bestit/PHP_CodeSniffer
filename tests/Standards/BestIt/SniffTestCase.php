@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\BestIt;
 
-use PHP_CodeSniffer_File;
+use PHP_CodeSniffer\Files\File;
 use SlevomatCodingStandard\Sniffs\TestCase as SlevomatTestCase;
 
 /**
@@ -33,11 +33,11 @@ abstract class SniffTestCase extends SlevomatTestCase
     /**
      * Asserts that all errors are fixed in the given file.
      *
-     * @param PHP_CodeSniffer_File $codeSnifferFile The CodeSniffer file
+     * @param File $codeSnifferFile The CodeSniffer file
      *
      * @return void
      */
-    protected function assertAllFixedInFile(PHP_CodeSniffer_File $codeSnifferFile)
+    protected function assertAllFixedInFile(File $codeSnifferFile)
     {
         $codeSnifferFile->fixer->fixFile();
 
@@ -76,14 +76,14 @@ abstract class SniffTestCase extends SlevomatTestCase
      * @param int[] $lines Array of lines where the error code occurs
      * @param array $sniffProperties Array of sniff properties
      *
-     * @return PHP_CodeSniffer_File The php cs file
+     * @return File The php cs file
      */
     protected function assertErrorsInFile(
         string $file,
         string $error,
         array $lines,
         array $sniffProperties = []
-    ): PHP_CodeSniffer_File {
+    ): File {
         $report = $this->checkSniffFile(
             $this->getFixtureFilePath($file),
             $sniffProperties
@@ -183,7 +183,7 @@ abstract class SniffTestCase extends SlevomatTestCase
      * @param string $file Filename of the fixture
      * @param array $sniffProperties Array of sniff properties
      *
-     * @return PHP_CodeSniffer_File The php cs file
+     * @return File The php cs file
      */
-    abstract protected function checkSniffFile(string $file, array $sniffProperties = []): PHP_CodeSniffer_File;
+    abstract protected function checkSniffFile(string $file, array $sniffProperties = []): File;
 }

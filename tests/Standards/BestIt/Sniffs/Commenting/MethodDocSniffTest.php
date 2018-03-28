@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\BestIt\Sniffs\Commenting;
 
 use BestIt\Sniffs\Commenting\MethodDocSniff;
+use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer_File;
 use Tests\BestIt\Sniffs\Filename;
 use Tests\BestIt\SniffTestCase;
@@ -234,9 +235,9 @@ class MethodDocSniffTest extends SniffTestCase
      * @param string $file Filename of the fixture
      * @param array $sniffProperties Array of sniff properties
      *
-     * @return PHP_CodeSniffer_File The php cs file
+     * @return File The php cs file
      */
-    protected function checkSniffFile(string $file, array $sniffProperties = []): PHP_CodeSniffer_File
+    protected function checkSniffFile(string $file, array $sniffProperties = []): File
     {
         return $this->checkFile(
             $file,

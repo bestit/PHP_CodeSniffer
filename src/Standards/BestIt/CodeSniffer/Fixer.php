@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace BestIt\CodeSniffer;
 
+use PHP_CodeSniffer\Fixer as BaseFixer;
 use PHP_CodeSniffer_Fixer;
 
 /**
@@ -17,7 +18,7 @@ class Fixer
     /**
      * The PHP_CodeSniffer_Fixer
      *
-     * @var PHP_CodeSniffer_Fixer
+     * @var BaseFixer
      */
     private $baseFixer;
 
@@ -32,9 +33,9 @@ class Fixer
      * Fixer constructor.
      *
      * @param File $file The wrapped PHP_CodeSniffer_File
-     * @param PHP_CodeSniffer_Fixer $baseFixer The PHP_CodeSniffer_Fixer
+     * @param BaseFixer $baseFixer The PHP_CodeSniffer_Fixer
      */
-    public function __construct(File $file, PHP_CodeSniffer_Fixer $baseFixer)
+    public function __construct(File $file, BaseFixer $baseFixer)
     {
         $this->file = $file;
         $this->baseFixer = $baseFixer;
