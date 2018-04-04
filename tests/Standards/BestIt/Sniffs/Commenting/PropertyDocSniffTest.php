@@ -66,6 +66,44 @@ class PropertyDocSniffTest extends SniffTestCase
     }
 
     /**
+     * Tests fixable errors.
+     *
+     * @param string $file Fixture file
+     * @param string $error Error code
+     * @param int[] $lines Lines where the error code occurs
+     * @param array $sniffProperties Array of sniff properties
+     *
+     * @return void
+     *
+     * @dataProvider getWarningsData
+     */
+    public function testWarnings(string $file, string $error, array $lines, array $sniffProperties = []): void
+    {
+        $this->assertWarningsInFile($file, $error, $lines, $sniffProperties);
+    }
+
+    /**
+     * Returns data for warnings.
+     *
+     * @return array List of warnings
+     */
+    public function getWarningsData(): array
+    {
+        $warnings = [
+            PropertyDocSniff::CODE_TAG_CONTENT_FORMAT_WARNING => [
+                'TypehintedArrays.php',
+                PropertyDocSniff::CODE_TAG_CONTENT_FORMAT_WARNING,
+                [
+                    16,
+                    23
+                ]
+            ]
+        ];
+
+        return $warnings;
+    }
+
+    /**
      * Returns data for not fixable errors.
      *
      * @return array List of error data
@@ -255,6 +293,7 @@ class PropertyDocSniffTest extends SniffTestCase
                 PropertyDocSniff::CODE_DESCRIPTION_UC_FIRST,
                 PropertyDocSniff::CODE_NO_LINE_AFTER_TAG,
                 PropertyDocSniff::CODE_MUCH_LINES_AFTER_TAG,
+                PropertyDocSniff::CODE_TAG_CONTENT_FORMAT_WARNING
             ]
         );
     }

@@ -49,6 +49,23 @@ class MethodDocSniffTest extends SniffTestCase
     }
 
     /**
+     * Tests non fixable errors.
+     *
+     * @param string $file Fixture file
+     * @param string $error Error code
+     * @param int[] $lines Lines where the error code occurs
+     * @param array $sniffProperties Array of sniff properties
+     *
+     * @return void
+     *
+     * @dataProvider getWarningData
+     */
+    public function testWarnings(string $file, string $error, array $lines, array $sniffProperties = []): void
+    {
+        $this->assertWarningsInFile($file, $error, $lines, $sniffProperties);
+    }
+
+    /**
      * Tests fixable errors.
      *
      * @param string $file Fixture file
@@ -63,6 +80,23 @@ class MethodDocSniffTest extends SniffTestCase
     public function testFixableErrors(string $file, string $error, array $lines, array $sniffProperties = [])
     {
         $this->assertFixableErrorsInFile($file, $error, $lines, $sniffProperties);
+    }
+
+    /**
+     * Returns data for not fixable errors.
+     *
+     * @return array List of error data
+     */
+    public function getWarningData(): array
+    {
+        $warnings = [
+            MethodDocSniff::CODE_TAG_CONTENT_FORMAT_WARNING => [
+                'TypehintedArrays.php',
+                MethodDocSniff::CODE_TAG_CONTENT_FORMAT_WARNING,
+                [14, 31]
+            ]
+        ];
+        return $warnings;
     }
 
     /**
@@ -261,6 +295,7 @@ class MethodDocSniffTest extends SniffTestCase
                 MethodDocSniff::CODE_DESCRIPTION_UC_FIRST,
                 MethodDocSniff::CODE_NO_LINE_AFTER_TAG,
                 MethodDocSniff::CODE_MUCH_LINES_AFTER_TAG,
+                MethodDocSniff::CODE_TAG_CONTENT_FORMAT_WARNING
             ]
         );
     }

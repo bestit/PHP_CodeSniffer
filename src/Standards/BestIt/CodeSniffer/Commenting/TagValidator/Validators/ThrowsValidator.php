@@ -26,10 +26,11 @@ class ThrowsValidator extends AbstractValidator
      * Validates the content.
      *
      * @param string $content Tag content to be validated
+     * @param array $tagToken The tag token
      *
      * @return bool Indicator if content is valid or not
      */
-    protected function validateContent(string $content): bool
+    protected function validateContent(string $content, array $tagToken): bool
     {
         return substr_count($content, ' ') >= 1;
     }

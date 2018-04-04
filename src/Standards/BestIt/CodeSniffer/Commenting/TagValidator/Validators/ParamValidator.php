@@ -16,19 +16,24 @@ class ParamValidator extends AbstractValidator
      * Validates the content.
      *
      * @param string $content Tag content to be validated
+     * @param array $tagToken The tag token
      *
      * @return bool Indicator if content is valid or not
      */
-    protected function validateContent(string $content): bool
+    protected function validateContent(string $content, array $tagToken): bool
     {
+        $content = preg_replace('# +#', ' ', $content);
         $parts = explode(' ', $content);
 
         if (count($parts) < 3) {
             return false;
         }
 
-        $variable = $parts[1];
+        if ($parts[0] === 'array') {
+            $this->addInvalidFormatWarning($tagToken, 'Please check if you can typehint your array ' . $parts[1]);
+        }
 
+        $variable = $parts[1];
         return strpos($variable, '$') === 0;
     }
 
