@@ -6,7 +6,7 @@ This package contains a default rule set and custom rules which are used in all 
 ## Installation
 Our PHP_CodeSniffer package can be installed with composer with the following command:
 ```bash
-composer require bestit/phpcodesniffer --dev
+composer require bestit/php_codesniffer --dev
 ```
 
 ## Usage
