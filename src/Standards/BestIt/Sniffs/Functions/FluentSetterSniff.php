@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace BestIt\Sniffs\Functions;
 
-use PHP_CodeSniffer_File;
-use PHP_CodeSniffer_Standards_AbstractScopeSniff;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Standards\Squiz\Sniffs\Scope\MethodScopeSniff;
 
 /**
  * Class FluentSetterSniff
@@ -14,7 +14,7 @@ use PHP_CodeSniffer_Standards_AbstractScopeSniff;
  *
  * @author Nick Lubisch <nick.lubisch@bestit-online.de>
  */
-class FluentSetterSniff extends PHP_CodeSniffer_Standards_AbstractScopeSniff
+class FluentSetterSniff extends MethodScopeSniff
 {
     /**
      * Code when multiple return statements are found.
@@ -76,14 +76,14 @@ class FluentSetterSniff extends PHP_CodeSniffer_Standards_AbstractScopeSniff
     /**
      * Processes the tokens that this test is listening for.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile The file where this token was found.
+     * @param File $phpcsFile The file where this token was found.
      * @param int $stackPtr The position in the stack where this token was found.
      * @param int $currScope The position in the tokens array that opened the scope that this test is listening for.
      *
      * @return void
      */
     protected function processTokenWithinScope(
-        PHP_CodeSniffer_File $phpcsFile,
+        File $phpcsFile,
         $stackPtr,
         $currScope
     ) {
@@ -173,12 +173,12 @@ class FluentSetterSniff extends PHP_CodeSniffer_Standards_AbstractScopeSniff
     /**
      * Fixes if no return statement is found.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile The php cs file
+     * @param File $phpcsFile The php cs file
      * @param int $closingBracePtr Pointer to the closing curly brace of the function
      *
      * @return void
      */
-    private function fixNoReturnFound(PHP_CodeSniffer_File $phpcsFile, int $closingBracePtr)
+    private function fixNoReturnFound(File $phpcsFile, int $closingBracePtr)
     {
         $tokens = $phpcsFile->getTokens();
         $closingBraceToken = $tokens[$closingBracePtr];
@@ -195,12 +195,12 @@ class FluentSetterSniff extends PHP_CodeSniffer_Standards_AbstractScopeSniff
     /**
      * Fixes the return value of a function to $this.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile The php cs file
+     * @param File $phpcsFile The php cs file
      * @param int $returnPtr Pointer to the return token
      *
      * @return void
      */
-    private function fixMustReturnThis(PHP_CodeSniffer_File $phpcsFile, $returnPtr)
+    private function fixMustReturnThis(File $phpcsFile, $returnPtr)
     {
         $returnSemicolonPtr = $phpcsFile->findEndOfStatement($returnPtr);
 

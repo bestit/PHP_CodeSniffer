@@ -6,7 +6,7 @@ namespace BestIt\CodeSniffer\Helper;
 
 use BestIt\CodeSniffer\File;
 use BestIt\Sniffs\Commenting\AbstractDocSniff;
-use PHP_CodeSniffer_Tokens;
+use PHP_CodeSniffer\Util\Tokens;
 
 /**
  * Class DocHelper
@@ -133,7 +133,7 @@ class DocHelper
     {
         $whitelistedTokens = array_merge(
             [T_WHITESPACE],
-            PHP_CodeSniffer_Tokens::$methodPrefixes
+            Tokens::$methodPrefixes
         );
 
         return $this->file->findPrevious(

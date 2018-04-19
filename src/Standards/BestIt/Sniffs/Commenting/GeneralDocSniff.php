@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace BestIt\Sniffs\Commenting;
 
-use PHP_CodeSniffer_File;
-use PHP_CodeSniffer_Sniff;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Sniffs\Sniff;
 
 /**
  * Class GeneralDocSniff
@@ -13,7 +13,7 @@ use PHP_CodeSniffer_Sniff;
  * @package BestIt\Sniffs\Commenting
  * @author Nick Lubisch <nick.lubisch@bestit-online.de>
  */
-class GeneralDocSniff implements PHP_CodeSniffer_Sniff
+class GeneralDocSniff implements Sniff
 {
     /**
      * Code that there is no line before the comment.
@@ -60,7 +60,7 @@ class GeneralDocSniff implements PHP_CodeSniffer_Sniff
     /**
      * The PHP_CodeSniffer file where the token was found.
      *
-     * @var PHP_CodeSniffer_File CodeSniffer file.
+     * @var File CodeSniffer file.
      */
     private $phpcsFile;
 
@@ -100,12 +100,12 @@ class GeneralDocSniff implements PHP_CodeSniffer_Sniff
     /**
      * Called when one of the token types that this sniff is listening for is found.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile The PHP_CodeSniffer file where the token was found.
+     * @param File $phpcsFile The PHP_CodeSniffer file where the token was found.
      * @param int $commentStartPtr The position in the PHP_CodeSniffer file's token stack where the token was found.
      *
      * @return void Optionally returns a stack pointer.
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $commentStartPtr)
+    public function process(File $phpcsFile, $commentStartPtr)
     {
         $this->phpcsFile = $phpcsFile;
         $this->tokens = $phpcsFile->getTokens();

@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace BestIt\CodeSniffer;
 
-use PHP_CodeSniffer_File;
+use PHP_CodeSniffer\Files\File as PhpCsFile;
 
 /**
  * Class File
  *
- * Wrapper Class for PHP_CodeSniffer_File to provide a consistent way to replace int|bool returns
+ * Wrapper Class for PhpCsFile to provide a consistent way to replace int|bool returns
  * with int returns (false => -1)
  * Additionally there could be some architecture changes in the future, like Token-Objects and so on.
  *
@@ -21,7 +21,7 @@ class File
     /**
      * The CodeSniffer file
      *
-     * @var PHP_CodeSniffer_File
+     * @var PhpCsFile
      */
     private $baseFile;
 
@@ -42,9 +42,9 @@ class File
     /**
      * File constructor.
      *
-     * @param PHP_CodeSniffer_File $baseFile CodeSniffer file
+     * @param PhpCsFile $baseFile CodeSniffer file
      */
-    public function __construct(PHP_CodeSniffer_File $baseFile)
+    public function __construct(PhpCsFile $baseFile)
     {
         $this->baseFile = $baseFile;
         $this->fixer = new Fixer($this, $this->baseFile->fixer);

@@ -6,13 +6,11 @@ checks:
         code_rating: true
         duplication: true
 build:
+    environment:
+        php:
+            version: 7.1
+        postgresql: false
+        redis: false
     dependencies:
         override:
             - 'composer install --prefer-source'
-    tests:
-        override:
-            -
-                command: 'vendor/bin/phpunit --coverage-clover=build/phpunit-report'
-                coverage:
-                    file: 'build/phpunit-report'
-                    format: 'clover'
