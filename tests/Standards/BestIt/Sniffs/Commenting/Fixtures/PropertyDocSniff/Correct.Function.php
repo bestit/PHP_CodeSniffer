@@ -27,6 +27,7 @@ class Test
      */
     public function test()
     {
+        /** @var int $test */
         $test = 1;
     }
 }

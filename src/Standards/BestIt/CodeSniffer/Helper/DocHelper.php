@@ -54,40 +54,46 @@ class DocHelper
      * Checks if a comment for the class exists.
      *
      * @param int $listenerPtr Pointer of the listener token
+     * @param bool $isVariable Is the current token a variable
      *
      * @return bool Indicator if the comment exists or not
      */
-    public function checkCommentExists(int $listenerPtr): bool
+    public function checkCommentExists(int $listenerPtr, bool $isVariable): bool
     {
         $listenerToken = $this->tokens[$listenerPtr];
         $commentEndToken = $this->getCommentEndToken();
+        $commentExists = true;
 
         if ($commentEndToken['type'] !== 'T_DOC_COMMENT_CLOSE_TAG'
             || ($listenerToken['line'] - 1) !== $commentEndToken['line']
         ) {
+            $commentExists = false;
+        }
+
+        if (!$isVariable && !$commentExists) {
             $this->file->addError(
                 AbstractDocSniff::MESSAGE_NO_IMMEDIATE_DOC_FOUND,
                 $listenerPtr,
                 AbstractDocSniff::CODE_NO_IMMEDIATE_DOC_FOUND
             );
-
-            return false;
         }
 
-        return true;
+        return $commentExists;
     }
 
     /**
      * Checks if the comment is multi line.
      *
+     * @param bool $isVariable Is the current token a variable
+     *
      * @return bool Indicator if the comment is multiline
      */
-    public function checkCommentMultiLine(): bool
+    public function checkCommentMultiLine(bool $isVariable): bool
     {
         $commentStart = $this->getCommentStartToken();
         $commentEnd = $this->getCommentEndToken();
 
-        if ($commentStart['line'] === $commentEnd['line']) {
+        if (!$isVariable && $commentStart['line'] === $commentEnd['line']) {
             $this->file->addErrorOnLine(
                 AbstractDocSniff::MESSAGE_COMMENT_NOT_MULTI_LINE,
                 $commentStart['line'],

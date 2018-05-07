@@ -358,12 +358,14 @@ abstract class AbstractDocSniff extends AbstractSniff
      */
     public function processToken()
     {
+        $isVariable = false;
+
         $propertyHelper = new PropertyHelper($this->getFile());
 
         if ($this->getListenerToken()['code'] === T_VARIABLE
             && !$propertyHelper->isProperty($this->getListenerPointer())
         ) {
-            return;
+            $isVariable = true;
         }
 
         $this->docHelper = new DocHelper($this->getFile(), $this->getListenerPointer());
@@ -375,17 +377,19 @@ abstract class AbstractDocSniff extends AbstractSniff
         );
         $this->tagHelper = new DocTagHelper($this->getFile(), $this->docHelper, $this->getListenerPointer());
 
-        if (!$this->docHelper->checkCommentExists($this->getListenerPointer())
-            || !$this->docHelper->checkCommentMultiLine()
+        if (!$this->docHelper->checkCommentExists($this->getListenerPointer(), $isVariable)
+            || !$this->docHelper->checkCommentMultiLine($isVariable)
         ) {
             return;
         }
 
-        $this->summaryHelper->checkCommentSummary();
+        if (!$isVariable) {
+            $this->summaryHelper->checkCommentSummary();
 
-        $this->descriptionHelper->checkCommentDescription(
-            $this->descriptionRequired
-        );
+            $this->descriptionHelper->checkCommentDescription(
+                $this->descriptionRequired
+            );
+        }
 
         $this->tagHelper->checkCommentTags(
             $this->getTagMetadata(),
