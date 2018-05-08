@@ -184,6 +184,28 @@ class File
     }
 
     /**
+     * Records a warning against a specific token in the file.
+     *
+     * @param string $warning The error message.
+     * @param int $line The line on which the warning occurred.
+     * @param string $code A violation code unique to the sniff message.
+     * @param array $data Replacements for the warning message.
+     * @param int $severity The severity level for this warning. A value of 0 will
+     *                         will be converted into the default severity level.
+     *
+     * @return boolean Returns true if the warning got recorded
+     */
+    public function addWarningOnLine(
+        $warning,
+        $line,
+        $code,
+        $data = [],
+        $severity = 0
+    ):bool {
+        return $this->baseFile->addWarningOnLine($warning, $line, $code, $data, $severity);
+    }
+
+    /**
      * Returns the position of the next specified token(s).
      *
      * If a value is specified, the next token of the specified type(s)

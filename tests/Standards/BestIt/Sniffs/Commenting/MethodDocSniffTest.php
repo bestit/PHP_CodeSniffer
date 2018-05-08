@@ -50,6 +50,18 @@ class MethodDocSniffTest extends SniffTestCase
     }
 
     /**
+     * Test for found warnings.
+     *
+     * @return void
+     */
+    public function testWarnings()
+    {
+        $report = $this->checkFile(__DIR__ . '/Fixtures/MethodDocSniff/MixedWarning.php');
+
+        $this->assertEquals(2, $report->getWarningCount());
+    }
+
+    /**
      * Tests fixable errors.
      *
      * @param string $file Fixture file
