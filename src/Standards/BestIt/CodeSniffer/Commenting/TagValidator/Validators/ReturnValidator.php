@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace BestIt\CodeSniffer\Commenting\TagValidator\Validators;
 
+use BestIt\Sniffs\Commenting\AbstractDocSniff;
+
 /**
  * Class ReturnValidator
  *
@@ -12,6 +14,24 @@ namespace BestIt\CodeSniffer\Commenting\TagValidator\Validators;
  */
 class ReturnValidator extends AbstractValidator
 {
+    /**
+     * Validates the tag content.
+     *
+     * @param array $tagToken Token data of the current token
+     * @param int $contentPtr Pointer to the tag content
+     * @param array|null $contentToken Token of the tag content
+     *
+     * @return void
+     */
+    public function validate(array $tagToken, int $contentPtr, $contentToken)
+    {
+        parent::validate($tagToken, $contentPtr, $contentToken);
+
+        if ($contentPtr !== -1) {
+            $this->addWarnings($tagToken, $contentToken['content']);
+        }
+    }
+
     /**
      * Returns the expected content for the tag.
      *
@@ -40,5 +60,24 @@ class ReturnValidator extends AbstractValidator
         }
 
         return false;
+    }
+
+    /**
+     * Adds warnings to the tag line
+     *
+     * @param array $tagToken Token data of the current token
+     * @param string $content Tag content to be validated
+     *
+     * @return void
+     */
+    private function addWarnings(array $tagToken, string $content)
+    {
+        if (substr_count($content, 'mixed') >= 1) {
+            $this->file->addWarningOnLine(
+                AbstractDocSniff::MESSAGE_TAG_WARNING_MIXED,
+                $tagToken['line'],
+                AbstractDocSniff::CODE_TAG_WARNING_MIXED
+            );
+        }
     }
 }
