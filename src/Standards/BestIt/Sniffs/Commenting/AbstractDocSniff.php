@@ -307,6 +307,20 @@ abstract class AbstractDocSniff extends AbstractSniff
     const MESSAGE_TAG_CONTENT_FORMAT_INVALID = '"%s"-Tag format is invalid. Expected: "%s"';
 
     /**
+     * Code that the tag content has a mixed type warning.
+     *
+     * @var string
+     */
+    const CODE_TAG_WARNING_MIXED = 'TagWarningMixedType';
+
+    /**
+     * Message that the tag content has a mixed type warning.
+     *
+     * @var string
+     */
+    const MESSAGE_TAG_WARNING_MIXED = 'Consider removing the mixed type';
+
+    /**
      * DocHelper for comment
      *
      * @var DocHelper
