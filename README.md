@@ -49,6 +49,7 @@ Execute the PHP_CodeSniffer (path can vary on your composer configuration):
 | BestIt.Functions.FluentSetter | BestIt | Every setter function MUST return $this. |
 | BestIt.Formatting.SpaceAfterDeclare | BestIt | There MUST be one empty line after declare-statement. |
 | BestIt.TypeHints.DeclareStrictTypes | BestIt | Every file MUST have "declare(strict_types=1);" two line breaks after the opening tag. There MUST be no spaces aroung the equal-sign. |
+| BestIt.TypeHints.TypeHintDeclaration | BestIt | Every function or method MUST have a type hint if the return annotation is valid. |
 | Squiz.Strings.DoubleQuoteUsage | Squiz | Every String MUST be wrapped with single quotes. |
 | Generic.Formatting.SpaceAfterCast | BestIt | There MUST be a space after cast. |
 | Generic.Files.LineLength | PSR-2 | Every line MUST not be longer than 120 chars. |
