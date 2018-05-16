@@ -265,6 +265,20 @@ abstract class AbstractDocSniff extends AbstractSniff
     const MESSAGE_DESCRIPTION_UC_FIRST = 'The first letter of the description is not uppercase';
 
     /**
+     * Code that there is no line before given tag group.
+     *
+     * @var string
+     */
+    const CODE_NO_LINES_AROUND_TAG_GROUP = 'NoLinesAroundTagGroup';
+
+    /**
+     * Message that there is no line before given tag.
+     *
+     * @var string
+     */
+    const MESSAGE_NO_LINE_AROUND_TAG_GROUP = 'There are no blank lines around the tag group';
+
+    /**
      * Code that there is no line after given tag.
      *
      * @var string

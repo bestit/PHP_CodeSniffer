@@ -288,6 +288,12 @@ class ClassDocSniffTest extends SniffTestCase
                 ClassDocSniff::CODE_MUCH_LINES_AFTER_TAG,
                 [16, 19, 23, 28]
             ],
+
+            ClassDocSniff::CODE_NO_LINES_AROUND_TAG_GROUP => [
+                'TagGroups.php',
+                ClassDocSniff::CODE_NO_LINES_AROUND_TAG_GROUP,
+                [7, 9]
+            ],
         ];
     }
 
@@ -324,7 +330,8 @@ class ClassDocSniffTest extends SniffTestCase
                 ClassDocSniff::CODE_DESCRIPTION_UC_FIRST,
                 ClassDocSniff::CODE_NO_LINE_AFTER_TAG,
                 ClassDocSniff::CODE_MUCH_LINES_AFTER_TAG,
-                ClassDocSniff::CODE_TAG_CONTENT_FORMAT_INVALID
+                ClassDocSniff::CODE_TAG_CONTENT_FORMAT_INVALID,
+                ClassDocSniff::CODE_NO_LINES_AROUND_TAG_GROUP
             ]
         );
     }

@@ -14,6 +14,7 @@ namespace Test;
  * test123
  *
  * @package Test
+ *
  * @author Nick Lubisch <nick.lubisch@bestit-online.de>
  * @author Mirco Baumann <mirco.baumann@bestit-online.de>
  *
