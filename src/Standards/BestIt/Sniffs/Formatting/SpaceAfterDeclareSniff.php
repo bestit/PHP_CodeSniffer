@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace BestIt\Sniffs\Formatting;
 
@@ -45,6 +45,20 @@ class SpaceAfterDeclareSniff implements Sniff
     const CODE_MUCH_WHITESPACE_FOUND = 'MuchWhitespaceFound';
 
     /**
+     * Error message when blank lines in a group are found.
+     *
+     * @var string
+     */
+    const MESSAGE_GROUP_BLANK_LINE_FOUND = 'Multpile declare-statements should be grouped without a blank line.';
+
+    /**
+     * Code when whitespaces in a group are found.
+     *
+     * @var string
+     */
+    const CODE_GROUP_BLANK_LINE_FOUND = 'GroupBlankLineFound';
+
+    /**
      * Registers the tokens that this sniff wants to listen for.
      *
      * @return int[] List of tokens to listen for
@@ -73,6 +87,23 @@ class SpaceAfterDeclareSniff implements Sniff
         $secondSpacePtr = $semicolonPtr + 2;
         $secondSpaceToken = $tokens[$secondSpacePtr];
 
+        $nextDeclarePtr = $phpcsFile->findNext(T_DECLARE, $semicolonPtr, null, false);
+
+        $whiteSpaceInGroupPtr = $phpcsFile->findNext(T_WHITESPACE, $secondSpacePtr, $nextDeclarePtr, false);
+
+
+        //Declare statement group detected
+        if ($secondSpaceToken['code'] === T_DECLARE) {
+            return;
+        }
+
+        //Declare statement group with blank lines detected
+        if ($nextDeclarePtr && $whiteSpaceInGroupPtr) {
+            $this->handleBlankLineInGroup($phpcsFile, $semicolonPtr, $whiteSpaceInGroupPtr, $nextDeclarePtr);
+            return;
+        }
+
+        //Single declare statement with no following whitespace detected
         if ($secondSpaceToken['code'] !== T_WHITESPACE) {
             $this->handleNoWhitespaceFound($phpcsFile, $semicolonPtr);
 
@@ -87,6 +118,7 @@ class SpaceAfterDeclareSniff implements Sniff
 
         $nextNonSpaceToken = $tokens[$nextNonSpacePtr];
 
+        //Detect too many whitespaces after declare statement
         if (($nextNonSpaceToken['line'] - $secondSpaceToken['line']) > 1) {
             $this->handleMuchWhitespacesFound($phpcsFile, $semicolonPtr, $secondSpacePtr, $nextNonSpacePtr);
 
@@ -140,6 +172,37 @@ class SpaceAfterDeclareSniff implements Sniff
         );
 
         if ($fixMuchWhitespaces) {
+            $phpcsFile->fixer->beginChangeset();
+            for ($i = $secondSpacePtr; $i < $nextNonSpacePtr; $i++) {
+                $phpcsFile->fixer->replaceToken($i, '');
+            }
+            $phpcsFile->fixer->endChangeset();
+        }
+    }
+
+    /**
+     * Handles blank lines found in declare group.
+     *
+     * @param File $phpcsFile The php cs file
+     * @param int $semicolonPtr Pointer to the semicolon
+     * @param int $secondSpacePtr Pointer to the second space
+     * @param int $nextNonSpacePtr Pointer to the next non space token
+     *
+     * @return void
+     */
+    private function handleBlankLineInGroup(
+        File $phpcsFile,
+        int $semicolonPtr,
+        int $secondSpacePtr,
+        int $nextNonSpacePtr
+    ) {
+        $fixGroupBlankLines = $phpcsFile->addFixableError(
+            self::MESSAGE_GROUP_BLANK_LINE_FOUND,
+            $semicolonPtr,
+            self::CODE_GROUP_BLANK_LINE_FOUND
+        );
+
+        if ($fixGroupBlankLines) {
             $phpcsFile->fixer->beginChangeset();
             for ($i = $secondSpacePtr; $i < $nextNonSpacePtr; $i++) {
                 $phpcsFile->fixer->replaceToken($i, '');

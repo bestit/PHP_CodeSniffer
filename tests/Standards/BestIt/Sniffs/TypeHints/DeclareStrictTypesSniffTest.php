@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Tests\BestIt\Sniffs\Functions;
 
@@ -25,6 +25,6 @@ class DeclareStrictTypesSniffTest extends TestCase
         $fixture = new DeclareStrictTypesSniff();
 
         self::assertSame(2, $fixture->newlinesCountBetweenOpenTagAndDeclare);
-        self::assertSame(0, $fixture->spacesCountAroundEqualsSign);
+        self::assertSame(1, $fixture->spacesCountAroundEqualsSign);
     }
 }
