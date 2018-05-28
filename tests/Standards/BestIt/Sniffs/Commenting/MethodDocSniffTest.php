@@ -238,6 +238,12 @@ class MethodDocSniffTest extends SniffTestCase
                 MethodDocSniff::CODE_MUCH_LINES_AFTER_TAG,
                 [19, 22, 27]
             ],
+
+            MethodDocSniff::CODE_NO_LINES_AROUND_TAG_GROUP => [
+                'TagGroups.php',
+                MethodDocSniff::CODE_NO_LINES_AROUND_TAG_GROUP,
+                [15, 16, 29, 43]
+            ],
         ];
     }
 
@@ -274,6 +280,7 @@ class MethodDocSniffTest extends SniffTestCase
                 MethodDocSniff::CODE_DESCRIPTION_UC_FIRST,
                 MethodDocSniff::CODE_NO_LINE_AFTER_TAG,
                 MethodDocSniff::CODE_MUCH_LINES_AFTER_TAG,
+                MethodDocSniff::CODE_NO_LINES_AROUND_TAG_GROUP
             ]
         );
     }

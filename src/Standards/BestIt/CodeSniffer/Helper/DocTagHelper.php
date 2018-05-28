@@ -88,6 +88,11 @@ class DocTagHelper
 
         $tagOccurenceHelper = new DocTagOccurenceHelper($this->file, $this->docHelper, $this);
         $tagSortingHelper = new DocTagSortingHelper($this->file, $this);
+        $tagGroupHelper = new DocTagGroupHelper(
+            $this->file,
+            $this->getCommentTagTokens(),
+            $tagMetadata
+        );
 
         $this->validateTags();
         $this->checkAllowedTags();
@@ -100,6 +105,10 @@ class DocTagHelper
         }
 
         $this->checkBlankLinesAfterTags();
+        $groups = $tagGroupHelper->getTagGroups(
+            $this->getTagCounts($this->getCommentTagTokens())
+        );
+        $tagGroupHelper->checkGroupBlankLines($groups);
     }
 
     /**
