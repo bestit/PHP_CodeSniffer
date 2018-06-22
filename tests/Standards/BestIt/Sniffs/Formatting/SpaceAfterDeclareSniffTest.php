@@ -1,12 +1,11 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Tests\BestIt\Sniffs\Formatting;
 
 use BestIt\Sniffs\Formatting\SpaceAfterDeclareSniff;
 use PHP_CodeSniffer\Files\File;
-use PHP_CodeSniffer_File;
 use Tests\BestIt\SniffTestCase;
 
 /**
@@ -92,12 +91,12 @@ class SpaceAfterDeclareSniffTest extends SniffTestCase
         $this->assertSniffError(
             $report,
             3,
-            SpaceAfterDeclareSniff::CODE_NO_WHITESPACE_FOUND
+            SpaceAfterDeclareSniff::CODE_GROUP_BLANK_LINE_FOUND
         );
 
         $this->assertSniffError(
             $report,
-            4,
+            5,
             SpaceAfterDeclareSniff::CODE_NO_WHITESPACE_FOUND
         );
 
@@ -120,6 +119,7 @@ class SpaceAfterDeclareSniffTest extends SniffTestCase
             [
                 SpaceAfterDeclareSniff::CODE_NO_WHITESPACE_FOUND,
                 SpaceAfterDeclareSniff::CODE_MUCH_WHITESPACE_FOUND,
+                SpaceAfterDeclareSniff::CODE_GROUP_BLANK_LINE_FOUND,
             ]
         );
     }

@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace BestIt\Sniffs\TypeHints;
 
@@ -20,6 +20,6 @@ class DeclareStrictTypesSniff extends BaseSniff
     public function __construct()
     {
         $this->newlinesCountBetweenOpenTagAndDeclare = 2;
-        $this->spacesCountAroundEqualsSign = 0;
+        $this->spacesCountAroundEqualsSign = 1;
     }
 }
