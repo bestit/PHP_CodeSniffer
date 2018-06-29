@@ -16,6 +16,6 @@
     </rule>
     <rule ref="Generic.Formatting.SpaceAfterCast" />
 
-    <rule ref="Squiz.Strings.DoubleQuoteUsage" />
+    <rule ref="Squiz.Strings.DoubleQuoteUsage.NotRequired" />
 
 </ruleset>
