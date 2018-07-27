@@ -13,6 +13,38 @@ namespace BestIt\Sniffs\Commenting;
 class MethodDocSniff extends AbstractDocSniff
 {
     /**
+     * This tags are disallowed and could be injected from the outside.
+     *
+     * @var array
+     */
+    public $disallowedTags = [
+        '@api',
+        '@author',
+        '@category',
+        '@copyright',
+        '@filesource',
+        '@global',
+        '@ignore',
+        '@internal',
+        '@license',
+        '@link',
+        '@method',
+        '@package',
+        '@property',
+        '@property-read',
+        '@property-write',
+        '@see',
+        '@since',
+        '@source',
+        '@subpackage',
+        '@todo',
+        '@uses',
+        '@var',
+        '@version',
+        '@inheritdoc'
+    ];
+
+    /**
      * Returns which tokens should be listened to.
      *
      * @return int[] List of tokens which is to be listened to
@@ -55,41 +87,6 @@ class MethodDocSniff extends AbstractDocSniff
                 'min' => 0,
                 'max' => null
             ]
-        ];
-    }
-
-    /**
-     * Returns an array of disallowed tokens.
-     *
-     * @return array List of disallowed tags
-     */
-    public function getDisallowedTags(): array
-    {
-        return [
-            '@api',
-            '@author',
-            '@category',
-            '@copyright',
-            '@filesource',
-            '@global',
-            '@ignore',
-            '@internal',
-            '@license',
-            '@link',
-            '@method',
-            '@package',
-            '@property',
-            '@property-read',
-            '@property-write',
-            '@see',
-            '@since',
-            '@source',
-            '@subpackage',
-            '@todo',
-            '@uses',
-            '@var',
-            '@version',
-            '@inheritdoc'
         ];
     }
 }

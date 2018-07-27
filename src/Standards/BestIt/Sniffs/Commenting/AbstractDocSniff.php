@@ -335,6 +335,13 @@ abstract class AbstractDocSniff extends AbstractSniff
     const MESSAGE_TAG_WARNING_MIXED = 'Consider removing the mixed type';
 
     /**
+     * This tags are disallowed and could be injected from the outside.
+     *
+     * @var array
+     */
+    public $disallowedTags = [];
+
+    /**
      * DocHelper for comment
      *
      * @var DocHelper
@@ -452,7 +459,10 @@ abstract class AbstractDocSniff extends AbstractSniff
     /**
      * Returns an array of disallowed tags.
      *
-     * @return array List of disallowed tags
+     * @return array The array of the disallowed tags as strings.
      */
-    abstract public function getDisallowedTags(): array;
+    protected function getDisallowedTags(): array
+    {
+        return $this->disallowedTags;
+    }
 }
