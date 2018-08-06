@@ -18,4 +18,14 @@
 
     <rule ref="Squiz.Strings.DoubleQuoteUsage.NotRequired" />
 
+    <rule ref="BestIt">
+        <exclude name="BestIt.Commenting.AbstractDocSniff.TagNotAllowed" />
+        <exclude name="BestIt.Commenting.AbstractDocSniff.TagOccurrenceMin" />
+        <exclude name="BestIt.Commenting.AbstractDocSniff.TagOccurrenceMax" />
+        <exclude name="BestIt.Commenting.AbstractDocSniff.TagWrongPosition" />
+        <exclude name="BestIt.Commenting.AbstractDocSniff.NoLineAfterTag" />
+        <exclude name="BestIt.Commenting.AbstractDocSniff.MuchLinesAfterTag" />
+        <exclude name="BestIt.Commenting.AbstractDocSniff.TagFormatContentInvalid" />
+    </rule>
+
 </ruleset>
