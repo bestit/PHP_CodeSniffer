@@ -12,7 +12,7 @@ use SlevomatCodingStandard\Sniffs\TestCase as SlevomatTestCase;
  *
  * @package Tests\BestIt\Sniffs
  *
- * @author Nick Lubisch <nick.lubisch@bestit-online.de>
+ * @author Nick Lubisch <nick.lubisch@bestit-online.de>vendo
  */
 abstract class SniffTestCase extends SlevomatTestCase
 {
