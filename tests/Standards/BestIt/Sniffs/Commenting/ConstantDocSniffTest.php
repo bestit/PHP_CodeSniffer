@@ -6,8 +6,6 @@ namespace Tests\BestIt\Sniffs\Commenting;
 
 use BestIt\Sniffs\Commenting\ConstantDocSniff;
 use PHP_CodeSniffer\Files\File;
-use PHP_CodeSniffer_File;
-use Tests\BestIt\Sniffs\Filename;
 use Tests\BestIt\SniffTestCase;
 
 /**

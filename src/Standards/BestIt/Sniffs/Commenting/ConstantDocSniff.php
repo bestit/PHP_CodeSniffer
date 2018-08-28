@@ -13,6 +13,41 @@ namespace BestIt\Sniffs\Commenting;
 class ConstantDocSniff extends AbstractDocSniff
 {
     /**
+     * This tags are disallowed and could be injected from the outside.
+     *
+     * @var array
+     */
+    public $disallowedTags = [
+        '@api',
+        '@author',
+        '@category',
+        '@copyright',
+        '@deprecated',
+        '@example',
+        '@filesource',
+        '@global',
+        '@ignore',
+        '@internal',
+        '@license',
+        '@link',
+        '@method',
+        '@package',
+        '@param',
+        '@property',
+        '@property-read',
+        '@property-write',
+        '@return',
+        '@see',
+        '@since',
+        '@source',
+        '@subpackage',
+        '@throws',
+        '@todo',
+        '@uses',
+        '@version',
+    ];
+
+    /**
      * Returns which tokens should be listened to.
      *
      * @return int[] List of tokens which should be listened to
@@ -38,44 +73,6 @@ class ConstantDocSniff extends AbstractDocSniff
                 'min' => 1,
                 'max' => 1
             ],
-        ];
-    }
-
-    /**
-     * Returns an array of disallowed tokens.
-     *
-     * @return array List of disallowed tags
-     */
-    public function getDisallowedTags(): array
-    {
-        return [
-            '@api',
-            '@author',
-            '@category',
-            '@copyright',
-            '@deprecated',
-            '@example',
-            '@filesource',
-            '@global',
-            '@ignore',
-            '@internal',
-            '@license',
-            '@link',
-            '@method',
-            '@package',
-            '@param',
-            '@property',
-            '@property-read',
-            '@property-write',
-            '@return',
-            '@see',
-            '@since',
-            '@source',
-            '@subpackage',
-            '@throws',
-            '@todo',
-            '@uses',
-            '@version',
         ];
     }
 }
