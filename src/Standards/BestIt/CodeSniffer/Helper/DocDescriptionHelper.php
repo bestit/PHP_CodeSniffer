@@ -76,10 +76,10 @@ class DocDescriptionHelper
     {
         $this->descriptionRequired = $descriptionRequired;
 
-        $commentStartToken = $this->docHelper->getCommentStartToken();
-        $commentEndToken = $this->docHelper->getCommentEndToken();
+        $commentStartToken = $this->docHelper->getBlockStartToken();
+        $commentEndToken = $this->docHelper->getBlockEndToken();
 
-        $summaryPtr = $this->summaryHelper->getCommentSummaryPointer();
+        $summaryPtr = $this->summaryHelper->getCommentSummaryPosition();
 
         if ($summaryPtr === -1) {
             return;
@@ -99,7 +99,6 @@ class DocDescriptionHelper
         $descEndToken = $this->tokens[$descriptionEndPtr];
 
         $this->checkCommentDescriptionUcFirst($descriptionStartPtr);
-        $this->checkCommentDescriptionLineLength($descriptionStartPtr, $descriptionEndPtr);
 
         //Fix no or too much lines after description.
         $toLine = $commentEndToken['line'];
@@ -173,42 +172,6 @@ class DocDescriptionHelper
     }
 
     /**
-     * Checks the line length of each line of the comment description.
-     *
-     * @param int $descriptionStartPtr Pointer to the start of the description.
-     * @param int $descriptionEndPtr Pointer to the end of the description.
-     *
-     * @return void
-     */
-    private function checkCommentDescriptionLineLength(int $descriptionStartPtr, int $descriptionEndPtr)
-    {
-        $diffTokens = array_slice(
-            $this->tokens,
-            $descriptionStartPtr,
-            $descriptionEndPtr - $descriptionStartPtr + 2,
-            true
-        );
-
-        foreach ($diffTokens as $diffToken) {
-            if ($diffToken['type'] !== 'T_DOC_COMMENT_WHITESPACE') {
-                continue;
-            }
-
-            if ($diffToken['content'] !== $this->file->getEolChar()) {
-                continue;
-            }
-
-            if ($diffToken['column'] > AbstractDocSniff::MAX_LINE_LENGTH) {
-                $this->file->addErrorOnLine(
-                    AbstractDocSniff::MESSAGE_DESCRIPTION_TOO_LONG,
-                    $diffToken['line'],
-                    AbstractDocSniff::CODE_DESCRIPTION_TOO_LONG
-                );
-            }
-        }
-    }
-
-    /**
      * Returns pointer to the end of the description.
      *
      * @return int Pointer to the end of the description or false
@@ -217,8 +180,8 @@ class DocDescriptionHelper
     {
         $descriptionStartPtr = $this->getCommentDescriptionStartPointer();
 
-        $commentStartToken = $this->docHelper->getCommentStartToken();
-        $commentEndPtr = $this->docHelper->getCommentEndPointer();
+        $commentStartToken = $this->docHelper->getBlockStartToken();
+        $commentEndPtr = $this->docHelper->getBlockEndPosition();
 
         //If no tags found, possible end of search is the starting tag of the doc comment.
         if (count($commentStartToken['comment_tags']) === 0) {
@@ -246,10 +209,10 @@ class DocDescriptionHelper
      */
     private function getCommentDescriptionStartPointer(): int
     {
-        $commentStartToken = $this->docHelper->getCommentStartToken();
-        $commentEndPtr = $this->docHelper->getCommentEndPointer();
+        $commentStartToken = $this->docHelper->getBlockStartToken();
+        $commentEndPtr = $this->docHelper->getBlockEndPosition();
 
-        $summaryPtr = $this->summaryHelper->getCommentSummaryPointer();
+        $summaryPtr = $this->summaryHelper->getCommentSummaryPosition();
 
         //If no tags the possible end of search is the closing tag of the doc comment.
         if (count($commentStartToken['comment_tags']) === 0) {

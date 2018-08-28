@@ -23,7 +23,7 @@ class ReturnTypeDeclarationSniffTest extends SniffTestCase
     public function testCorrectTypeHints()
     {
         $this->assertNoSniffErrorInFile(
-            $this->checkSniffFile($this->getFixtureFilePath('Correct.php'))
+            $this->checkFile($this->getFixtureFilePath('Correct.php'))
         );
     }
 
@@ -34,7 +34,7 @@ class ReturnTypeDeclarationSniffTest extends SniffTestCase
      */
     public function testNoTypeHints()
     {
-        $report = $this->checkSniffFile($this->getFixtureFilePath('NoTypeHints.php'));
+        $report = $this->checkFile($this->getFixtureFilePath('NoTypeHints.php'));
 
         $this->assertSniffError(
             $report,
@@ -65,7 +65,7 @@ class ReturnTypeDeclarationSniffTest extends SniffTestCase
      *
      * @return File The php cs file
      */
-    protected function checkSniffFile(string $file, array $sniffProperties = []): File
+    protected function checkFileAgainstSniff(string $file, array $sniffProperties = []): File
     {
         return $this->checkFile(
             $file,

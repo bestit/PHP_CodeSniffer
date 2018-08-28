@@ -13,7 +13,7 @@ use function substr;
  * @author Nick Lubisch <nick.lubisch@bestit-online.de>
  * @package BestIt\CodeSniffer\Helper
  */
-final class PropertyHelper
+class PropertyHelper
 {
     /**
      * The wrapped PHP_CodeSniffer_File

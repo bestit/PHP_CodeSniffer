@@ -12,7 +12,7 @@ use PHP_CodeSniffer\Files\File;
  * @author Bjoern Lange <bjoern.lange@bestit-online.de>
  * @package BestIt\Sniffs
  */
-trait DefaultSniffIntegrationTestTrait
+trait TestTrait
 {
     /**
      * Asserts all warnings in a given file.

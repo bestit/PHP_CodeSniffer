@@ -7,9 +7,9 @@ namespace BestIt\Sniffs\Commenting;
 use BestIt\Sniffs\ClassRegistrationTrait;
 
 /**
- * Class ClassDocSniff
+ * Checks the structure of the class summary.
  *
- * @author Nick Lubisch <nick.lubisch@bestit-online.de>
+ * @author blange <bjoern.lange@bestit-online.de>
  * @package BestIt\Sniffs\Commenting
  */
 class ClassDocSniff extends AbstractDocSniff

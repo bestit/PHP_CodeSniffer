@@ -3,16 +3,15 @@
 declare(strict_types=1);
 
 namespace BestIt\Sniffs\Commenting;
-
 use BestIt\Sniffs\VariableRegistrationTrait;
 
 /**
- * Class PropertyDocSniff
+ * Checks the structure of the property summary.
  *
- * @author Nick Lubisch <nick.lubisch@bestit-online.de>
+ * @author blange <bjoern.lange@bestit-online.de>
  * @package BestIt\Sniffs\Commenting
  */
-class PropertyDocSniff extends ConstantDocSniff
+class PropertyDocSniff extends AbstractDocSniff
 {
     use VariableRegistrationTrait;
 }

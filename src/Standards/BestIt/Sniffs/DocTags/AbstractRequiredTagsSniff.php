@@ -6,6 +6,7 @@ namespace BestIt\Sniffs\DocTags;
 
 use BestIt\CodeSniffer\Helper\DocTagHelper;
 use BestIt\Sniffs\AbstractSniff;
+use BestIt\Sniffs\DocPosProviderTrait;
 use Closure;
 use function array_filter;
 use function array_key_exists;

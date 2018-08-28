@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace BestIt\Sniffs\Commenting;
 
-use PHP_CodeSniffer\Util\Tokens;
+use const T_FUNCTION;
 
 /**
- * Test for ClassSummarySniffTest.
+ * Integration test for FunctionSummarySniffTest.
  *
  * @author blange <bjoern.lange@bestit-online.de>
  * @package  BestIt\Sniffs\Commenting
- * @see ClassDocSniff
+ * @see FunctionDocSniff
  */
-class ClassDocSniffTest extends AbstractDocSniffTest
+class FunctionDocSniffTest extends AbstractDocSniffTest
 {
     /**
      * Returns the tokens which should be checked.
@@ -22,7 +22,9 @@ class ClassDocSniffTest extends AbstractDocSniffTest
      */
     protected function getExpectedTokens(): array
     {
-        return Tokens::$ooScopeTokens;
+        return [
+            T_FUNCTION
+        ];
     }
 
     /**
@@ -34,6 +36,6 @@ class ClassDocSniffTest extends AbstractDocSniffTest
     {
         parent::setUp();
 
-        $this->fixture = new ClassDocSniff();
+        $this->fixture = new FunctionDocSniff();
     }
 }

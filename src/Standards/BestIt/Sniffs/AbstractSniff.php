@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace BestIt\Sniffs;
 
+use BestIt\CodeSniffer\CodeError;
+use BestIt\CodeSniffer\CodeWarning;
 use BestIt\CodeSniffer\File;
 use BestIt\CodeSniffer\Helper\ExceptionHelper;
 use PHP_CodeSniffer\Files\File as BaseFile;
@@ -61,6 +63,19 @@ abstract class AbstractSniff implements Sniff
     protected function areRequirementsMet(): bool
     {
         return true;
+    }
+
+    /**
+     * Default method for fixing exceptions.
+     *
+     * @param CodeWarning $exception
+     *
+     * @return void
+     */
+    protected function fixDefaultProblem(CodeWarning $exception): void
+    {
+        // Satisfy PHP MD
+        unset($exception);
     }
 
     /**
@@ -143,7 +158,15 @@ abstract class AbstractSniff implements Sniff
         $this->setUp();
 
         if ($this->areRequirementsMet()) {
-            $this->processToken();
+            try {
+                $this->processToken();
+            } catch (CodeWarning | CodeError $exception) {
+                $withFix = $this->getExceptionHandler()->handleException($exception);
+
+                if ($withFix) {
+                    $this->fixDefaultProblem($exception);
+                }
+            }
         }
 
         $this->tearDown();

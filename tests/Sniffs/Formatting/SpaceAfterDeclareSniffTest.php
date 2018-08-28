@@ -23,7 +23,7 @@ class SpaceAfterDeclareSniffTest extends SniffTestCase
     public function testSpaceAfterDeclareCorrect()
     {
         $this->assertNoSniffErrorInFile(
-            $this->checkSniffFile($this->getFixtureFilePath('Correct.php'))
+            $this->checkFile($this->getFixtureFilePath('Correct.php'))
         );
     }
 
@@ -35,7 +35,7 @@ class SpaceAfterDeclareSniffTest extends SniffTestCase
     public function testEarlyReturn()
     {
         $this->assertNoSniffErrorInFile(
-            $this->checkSniffFile($this->getFixtureFilePath('NoFollowingStatement.php'))
+            $this->checkFile($this->getFixtureFilePath('NoFollowingStatement.php'))
         );
     }
 
@@ -46,7 +46,7 @@ class SpaceAfterDeclareSniffTest extends SniffTestCase
      */
     public function testNoWhitespaceFound()
     {
-        $report = $this->checkSniffFile($this->getFixtureFilePath('NoWhitespaceFound.php'));
+        $report = $this->checkFile($this->getFixtureFilePath('NoWhitespaceFound.php'));
 
         $this->assertSniffError(
             $report,
@@ -64,7 +64,7 @@ class SpaceAfterDeclareSniffTest extends SniffTestCase
      */
     public function testMuchWhitespaceFound()
     {
-        $report = $this->checkSniffFile($this->getFixtureFilePath('MuchWhitespaceFound.php'));
+        $report = $this->checkFile($this->getFixtureFilePath('MuchWhitespaceFound.php'));
 
         $this->assertSniffError(
             $report,
@@ -82,7 +82,7 @@ class SpaceAfterDeclareSniffTest extends SniffTestCase
      */
     public function testMultipleDeclareStatements()
     {
-        $report = $this->checkSniffFile(
+        $report = $this->checkFile(
             $this->getFixtureFilePath('MultipleDeclareStatements.php')
         );
 
@@ -109,7 +109,7 @@ class SpaceAfterDeclareSniffTest extends SniffTestCase
      *
      * @return File The php cs file
      */
-    protected function checkSniffFile(string $file, array $sniffProperties = []): File
+    protected function checkFileAgainstSniff(string $file, array $sniffProperties = []): File
     {
         return $this->checkFile(
             $file,

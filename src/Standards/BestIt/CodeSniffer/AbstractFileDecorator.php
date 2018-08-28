@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace BestIt\CodeSniffer;
 
 use PHP_CodeSniffer\Files\File;
+use function array_walk;
 use function func_get_args;
+use function get_object_vars;
 
 /**
  * Copy of the file api to provide an file decorator.
@@ -29,6 +31,8 @@ abstract class AbstractFileDecorator extends File
      */
     public function __construct(File $baseFile)
     {
+        $this->takeProperties($baseFile);
+
         $this->baseFile = $baseFile;
     }
 
@@ -44,19 +48,7 @@ abstract class AbstractFileDecorator extends File
     {
         return $this->getBaseFile()->{$method}(...$args);
     }
-
-    /**
-     * Returns the property of the base file.
-     *
-     * @param string $property
-     *
-     * @return mixed
-     */
-    public function __get(string $property)
-    {
-        return $this->getBaseFile()->$property;
-    }
-
+    
     /**
      * Records an error against a specific token in the file.
      *
@@ -77,8 +69,7 @@ abstract class AbstractFileDecorator extends File
         $data = [],
         $severity = 0,
         $fixable = false
-    )
-    {
+    ) {
         return $this->__call(__FUNCTION__, func_get_args());
     }
 
@@ -100,8 +91,7 @@ abstract class AbstractFileDecorator extends File
         $code,
         $data = [],
         $severity = 0
-    )
-    {
+    ) {
         return $this->__call(__FUNCTION__, func_get_args());
     }
 
@@ -125,8 +115,7 @@ abstract class AbstractFileDecorator extends File
         $code,
         $data = [],
         $severity = 0
-    )
-    {
+    ) {
         return $this->__call(__FUNCTION__, func_get_args());
     }
 
@@ -150,8 +139,7 @@ abstract class AbstractFileDecorator extends File
         $code,
         $data = [],
         $severity = 0
-    )
-    {
+    ) {
         return $this->__call(__FUNCTION__, func_get_args());
     }
 
@@ -195,8 +183,7 @@ abstract class AbstractFileDecorator extends File
         $data = [],
         $severity = 0,
         $fixable = false
-    ): bool
-    {
+    ) {
         return $this->__call(__FUNCTION__, func_get_args());
     }
 
@@ -218,8 +205,7 @@ abstract class AbstractFileDecorator extends File
         $code,
         $data = [],
         $severity = 0
-    ): bool
-    {
+    ) {
         return $this->__call(__FUNCTION__, func_get_args());
     }
 
@@ -340,8 +326,7 @@ abstract class AbstractFileDecorator extends File
         $exclude = false,
         $value = null,
         $local = false
-    )
-    {
+    ) {
         return $this->__call(__FUNCTION__, func_get_args());
     }
 
@@ -378,8 +363,7 @@ abstract class AbstractFileDecorator extends File
         $exclude = false,
         $value = null,
         $local = false
-    )
-    {
+    ) {
         return $this->__call(__FUNCTION__, func_get_args());
     }
 
@@ -765,5 +749,21 @@ abstract class AbstractFileDecorator extends File
     public function setContent($content)
     {
         $this->__call(__FUNCTION__, func_get_args());
+    }
+
+    /**
+     * We need to clone the properties of the base file to this. A magic getter on inherited props does not work.
+     *
+     * @param File $baseFile
+     *
+     * @return void
+     */
+    private function takeProperties(File $baseFile): void
+    {
+        $baseProps = get_object_vars($baseFile);
+
+        array_walk($baseProps, function ($value, $key) {
+            $this->$key = $value;
+        });
     }
 }

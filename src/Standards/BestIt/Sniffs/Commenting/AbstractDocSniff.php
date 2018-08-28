@@ -4,41 +4,38 @@ declare(strict_types=1);
 
 namespace BestIt\Sniffs\Commenting;
 
-use BestIt\CodeSniffer\Helper\DocDescriptionHelper;
-use BestIt\CodeSniffer\Helper\DocHelper;
-use BestIt\CodeSniffer\Helper\DocSummaryHelper;
-use BestIt\CodeSniffer\Helper\PropertyHelper;
+use BestIt\CodeSniffer\CodeWarning;
 use BestIt\Sniffs\AbstractSniff;
-use const T_VARIABLE;
+use BestIt\Sniffs\DocPosProviderTrait;
+use SlevomatCodingStandard\Helpers\TokenHelper;
+use function ucfirst;
+use const T_DOC_COMMENT_OPEN_TAG;
+use const T_DOC_COMMENT_STRING;
+use const T_DOC_COMMENT_TAG;
 
 /**
- * Class AbstractDocSniff
+ * The basic sniff for the summaries.
  *
- * @author Nick Lubisch <nick.lubisch@bestit-online.de>
+ * @author blange <bjoern.lange@bestit-online.de>
  * @package BestIt\Sniffs\Commenting
  */
 abstract class AbstractDocSniff extends AbstractSniff
 {
-    /**
-     * Defines the maximum line length.
-     *
-     * @var int
-     */
-    public const MAX_LINE_LENGTH = 120;
+    use DocPosProviderTrait;
 
     /**
-     * Code that there is no immediate doc comment found before class.
+     * Code that the doc comment starts with an capital letter.
      *
      * @var string
      */
-    public const CODE_NO_IMMEDIATE_DOC_FOUND = 'NoImmediateDocFound';
+    public const CODE_DOC_COMMENT_UC_FIRST = 'DocCommentUcFirst';
 
     /**
-     * Message that there is no immediate doc comment found before class.
+     * Code that there is no line after the doc comment.
      *
      * @var string
      */
-    public const MESSAGE_NO_IMMEDIATE_DOC_FOUND = 'No immediate doc comment found before class.';
+    public const CODE_NO_LINE_AFTER_DOC_COMMENT = 'NoLineAfterDocComment';
 
     /**
      * Code that there is no summary in doc comment.
@@ -48,224 +45,384 @@ abstract class AbstractDocSniff extends AbstractSniff
     public const CODE_NO_SUMMARY = 'NoSummary';
 
     /**
-     * Message that there is no summary in doc comment.
-     *
-     * @var string
-     */
-    public const MESSAGE_NO_SUMMARY = 'There must be a summary for the doc comment.';
-
-    /**
-     * Code that there is no summary in doc comment.
-     *
-     * @var string
-     */
-    public const CODE_SUMMARY_NOT_FIRST = 'SummaryNotFirst';
-
-    /**
-     * Message that there is no summary in doc comment.
-     *
-     * @var string
-     */
-    public const MESSAGE_SUMMARY_NOT_FIRST = 'The summary must be the first statement in a comment.';
-
-    /**
-     * Code that the summary is too long.
+     * Error code if the summary is too long.
      *
      * @var string
      */
     public const CODE_SUMMARY_TOO_LONG = 'SummaryTooLong';
 
     /**
+     * Message that the doc comments does not start with an capital letter.
+     *
+     * @var string
+     */
+    private const MESSAGE_DOC_COMMENT_UC_FIRST = 'The first letter of the summary/long-description is not uppercase.';
+
+    /**
+     * Message that there is no line after the doc comment.
+     *
+     * @var string
+     */
+    private const MESSAGE_NO_LINE_AFTER_DOC_COMMENT = 'There is no empty line after the summary/long-description.';
+
+    /**
      * Message that there is no summary in doc comment.
      *
      * @var string
      */
-    public const MESSAGE_SUMMARY_TOO_LONG = 'The summary line must not be longer than 120 chars.';
+    private const MESSAGE_NO_SUMMARY = 'There must be a summary in the doc comment.';
 
     /**
-     * Code that the summary is not multi line.
+     * The error message if the summary is too long.
      *
      * @var string
      */
-    public const CODE_COMMENT_NOT_MULTI_LINE = 'CommentNotMultiLine';
+    private const MESSAGE_SUMMARY_TOO_LONG = 'The summary should fit in one line. If you want more, use the long desc.';
 
     /**
-     * Message that comment is not multi line.
+     * The cached position of the summary.
      *
-     * @var string
+     * @var int|null
      */
-    public const MESSAGE_COMMENT_NOT_MULTI_LINE = 'Comment is not multi line.';
+    private $summaryPosition = -1;
 
     /**
-     * Code that there is no line after summary.
+     * Returns true if there is a doc block.
      *
-     * @var string
+     * @return bool
      */
-    public const CODE_NO_LINE_AFTER_SUMMARY = 'NoLineAfterSummary';
+    protected function areRequirementsMet(): bool
+    {
+        $docHelper = $this->getDocHelper();
+
+        return $docHelper->hasDocBlock() && $docHelper->isMultiLine();
+    }
 
     /**
-     * Message that there is no line after summary.
+     * Fixes the first letter of the doc comment, which must be uppercase.
      *
-     * @var string
-     */
-    public const MESSAGE_NO_LINE_AFTER_SUMMARY = 'There is no empty line after the summary.';
-
-    /**
-     * Code that the line after the summary is not empty.
+     * @param int $position
+     * @param array $token
      *
-     * @var string
+     * @return void
      */
-    public const CODE_LINE_AFTER_SUMMARY_NOT_EMPTY = 'LineAfterSummaryNotEmpty';
+    private function fixDocCommentUcFirst(int $position, array $token)
+    {
+        $this->file->fixer->beginChangeset();
+        $this->file->fixer->replaceToken($position, ucfirst($token['content']));
+        $this->file->fixer->endChangeset();
+    }
 
     /**
-     * Message that the line after the summary is not empty.
+     * Fixes no line after doc comment.
      *
-     * @var string
-     */
-    public const MESSAGE_LINE_AFTER_SUMMARY_NOT_EMPTY = 'The line after the summary is not empty.';
-
-    /**
-     * Code that no comment description is found.
+     * @param int $position
+     * @param array $token
      *
-     * @var string
+     * @return void
      */
-    public const CODE_DESCRIPTION_NOT_FOUND = 'DescriptionNotFound';
+    private function fixNoLineAfterDocComment(int $position, array $token)
+    {
+        $this->file->fixer->beginChangeset();
+
+        $this->file->fixer->addContent(
+            $position,
+            $this->file->getEolChar() . str_repeat('    ', $token['level']) . ' *'
+        );
+
+        $this->file->fixer->endChangeset();
+    }
 
     /**
-     * Message that no comment description is found.
+     * Returns the position of the summary or null.
      *
-     * @var string
+     * @return int|null
      */
-    public const MESSAGE_DESCRIPTION_NOT_FOUND = 'There must be an comment description.';
+    private function getSummaryPosition(): ?int
+    {
+        if ($this->summaryPosition === -1) {
+            $this->summaryPosition = $this->loadSummaryPosition();
+        }
+
+        return $this->summaryPosition;
+    }
 
     /**
-     * Code that there is no empty line after description.
+     * Returns true if the next line of the comment is empty.
      *
-     * @var string
-     */
-    public const CODE_NO_LINE_AFTER_DESCRIPTION = 'NoLineAfterDescription';
-
-    /**
-     * Message that there is no empty line after description.
+     * @param int $startPosition The position where to start the search.
      *
-     * @var string
+     * @return bool
      */
-    public const MESSAGE_NO_LINE_AFTER_DESCRIPTION = 'There must be an empty line after description.';
+    private function isNextLineEmpty(int $startPosition): bool
+    {
+        $istNextLineEmpty = true;
+        $nextRelevantPos = $this->loadNextDocBlockContent($startPosition);
+
+        if ($nextRelevantPos !== -1) {
+            $istNextLineEmpty = $this->tokens[$startPosition]['line'] + 1 < $this->tokens[$nextRelevantPos]['line'];
+        }
+
+        return $istNextLineEmpty;
+    }
 
     /**
-     * Code that there is no empty line after description.
+     * Returns true if the prev line of the comment is empty.
      *
-     * @var string
-     */
-    public const CODE_MUCH_LINES_AFTER_DESCRIPTION = 'MuchLinesAfterDescription';
-
-    /**
-     * Message that there is no empty line after description.
+     * @param int $startPosition The position where to start the search.
      *
-     * @var string
+     * @return bool
      */
-    public const MESSAGE_MUCH_LINES_AFTER_DESCRIPTION = 'There must be exactly one empty line after description.';
+    private function isPrevLineEmpty(int $startPosition): bool
+    {
+        $isPrevLineEmpty = true;
+        $posPrevContentPos = $this->loadPrevDocBlockContent($startPosition);
+
+        if ($posPrevContentPos !== -1) {
+            $isPrevLineEmpty = $this->tokens[$startPosition]['line'] - 1 > $this->tokens[$posPrevContentPos]['line'];
+        }
+
+        return $isPrevLineEmpty;
+    }
 
     /**
-     * Code that the description line is too long.
+     * Is the given token a simple comment node?
      *
-     * @var string
-     */
-    public const CODE_DESCRIPTION_TOO_LONG = 'DescriptionTooLong';
-
-    /**
-     * Message that the description line is too long.
+     * @param array $possCommentToken
      *
-     * @var string
+     * @return bool
      */
-    public const MESSAGE_DESCRIPTION_TOO_LONG = 'The description exceeds the maximum length of 120 chars.';
+    private function isSimpleText(array $possCommentToken): bool
+    {
+        return $possCommentToken['code'] === T_DOC_COMMENT_STRING;
+    }
 
     /**
-     * Code that the summary starts with an capital letter.
+     * Returns the position of the next whitespace or star of the comment for checking the line after that.
      *
-     * @var string
-     */
-    public const CODE_SUMMARY_UC_FIRST = 'SummaryUcFirst';
-
-    /**
-     * Message that the summary starts with an capital letter.
+     * @param int $startPosition
      *
-     * @var string
+     * @return int
      */
-    public const MESSAGE_SUMMARY_UC_FIRST = 'The first letter of the summary is not uppercase';
+    private function loadNextDocBlockContent(int $startPosition): int
+    {
+        return $this->file->findNext(
+            [
+                T_DOC_COMMENT_WHITESPACE,
+                T_DOC_COMMENT_STAR
+            ],
+            $startPosition + 1,
+            $this->getDocHelper()->getBlockEndPosition(),
+            true
+        );
+    }
 
     /**
-     * Code that the description starts with an capital letter.
+     * Returns the position of the previous whitespace or star of the comment for checking the line after that.
      *
-     * @var string
-     */
-    public const CODE_DESCRIPTION_UC_FIRST = 'DescriptionUcFirst';
-
-    /**
-     * Message that the description starts with an capital letter.
+     * @param int $startPosition
      *
-     * @var string
+     * @return int
      */
-    public const MESSAGE_DESCRIPTION_UC_FIRST = 'The first letter of the description is not uppercase';
+    private function loadPrevDocBlockContent(int $startPosition): int
+    {
+        return $this->file->findPrevious(
+            [
+                T_DOC_COMMENT_OPEN_TAG,
+                T_DOC_COMMENT_STAR,
+                T_DOC_COMMENT_WHITESPACE,
+            ],
+            $startPosition - 1,
+            $this->getDocCommentPos(),
+            true
+        );
+    }
 
     /**
-     * Code that the tag content has a mixed type warning.
+     * Loads the position of the summary token if possible.
      *
-     * @var string
+     * @return int|null
      */
-    public const CODE_TAG_WARNING_MIXED = 'TagWarningMixedType';
+    private function loadSummaryPosition(): ?int
+    {
+        $return = null;
+        $possSummaryPos = $this->loadNextDocBlockContent($this->getDocCommentPos());
+
+        if ((int) $possSummaryPos > 0) {
+            $possSummaryToken = $this->tokens[$possSummaryPos];
+
+            $return = $this->isSimpleText($possSummaryToken) ? $possSummaryPos : null;
+        }
+
+        return $return;
+    }
 
     /**
-     * Message that the tag content has a mixed type warning.
+     * Checks and registers errors  if there are invalid doc comments.
      *
-     * @var string
-     */
-    public const MESSAGE_TAG_WARNING_MIXED = 'Consider removing the mixed type';
-
-    /**
-     * Indicator if a description is required.
-     *
-     * @var bool
-     */
-    public $descriptionRequired = false;
-
-    /**
-     * Processes a found registered token.
+     * @throws CodeWarning
      *
      * @return void
      */
     protected function processToken(): void
     {
-        $isVariable = false;
+        $this
+            ->validateSummaryExistence()
+            ->validateDescriptions();
+    }
 
-        $propertyHelper = new PropertyHelper($this->file);
+    /**
+     * Resets the sniff after one processing.
+     *
+     * @return void
+     */
+    protected function tearDown(): void
+    {
+        $this->resetDocCommentPos();
+        $this->summaryPosition = -1;
+    }
 
-        if ($this->token['code'] === T_VARIABLE
-            && !$propertyHelper->isProperty($this->stackPos)
-        ) {
-            $isVariable = true;
-        }
-
-        $docHelper = new DocHelper($this->file, $this->stackPos);
-        $summaryHelper = new DocSummaryHelper($this->file, $docHelper);
-        $descriptionHelper = new DocDescriptionHelper(
-            $this->file,
-            $docHelper,
-            $summaryHelper
+    /**
+     * Validates the descriptions in the file.
+     *
+     * @return AbstractDocSniff
+     */
+    private function validateDescriptions(): self
+    {
+        $commentPoss = TokenHelper::findNextAll(
+            $this->file->getBaseFile(),
+            [T_DOC_COMMENT_STRING, T_DOC_COMMENT_TAG],
+            $this->getDocCommentPos(),
+            $this->getDocHelper()->getBlockEndPosition()
         );
 
-        if (!$docHelper->checkCommentExists($this->stackPos, $isVariable)
-            || !$docHelper->checkCommentMultiLine($isVariable)
-        ) {
-            return;
+        foreach ($commentPoss as $index => $commentPos) {
+            $commentToken = $this->tokens[$commentPos];
+            $skipNewLineCheck = false;
+
+            // We only search till the tags.
+            if ($commentToken['code'] === T_DOC_COMMENT_TAG) {
+                break;
+            }
+
+            if ($isFirstDocString = $index === 0) {
+                $skipNewLineCheck = !$this->validateOneLineSummary();
+            }
+
+            $this->validateUCFirstDocComment($commentPos, $commentToken);
+
+            if (!$skipNewLineCheck) {
+                $this->validateNewLineAfterDocComment($commentPos, $commentToken, $isFirstDocString);
+            }
         }
 
-        if (!$isVariable) {
-            $summaryHelper->checkCommentSummary();
+        return $this;
 
-            $descriptionHelper->checkCommentDescription(
-                $this->descriptionRequired
+        ;
+    }
+
+    /**
+     * Checks if there is a line break after the comment block..
+     *
+     * @param int $position
+     * @param array $token
+     * @param bool $asSingleLine
+     *
+     * @return void
+     */
+    private function validateNewLineAfterDocComment(int $position, array $token, bool $asSingleLine = true): void
+    {
+        if (!$this->isNextLineEmpty($position)) {
+            $nextRelevantPos = $this->loadNextDocBlockContent($position);
+            $nextToken = $this->tokens[$nextRelevantPos];
+
+            // Register an error if we force a single line or this is no long description with more then one line.
+            if ($asSingleLine || ($nextToken['code'] !== T_DOC_COMMENT_STRING)) {
+                $isFixing = $this->file->addFixableWarning(
+                    self::MESSAGE_NO_LINE_AFTER_DOC_COMMENT,
+                    $position,
+                    static::CODE_NO_LINE_AFTER_DOC_COMMENT
+                );
+
+                if ($isFixing) {
+                    $this->fixNoLineAfterDocComment($position, $token);
+                }
+            }
+        }
+    }
+
+    /**
+     * Checks if the summary is on line or registers a warning.
+     *
+     * @return bool We can skip the new line error, so return true if the one line summary is true.
+     */
+    private function validateOneLineSummary(): bool
+    {
+        $isValid = true;
+        $summaryPos = $this->getSummaryPosition();
+        $nextPossiblePos = $this->loadNextDocBlockContent($summaryPos);
+
+        if ($nextPossiblePos > -1) {
+            $nextToken = $this->tokens[$nextPossiblePos];
+
+            if (($nextToken['code'] === T_DOC_COMMENT_STRING) && !$this->isNextLineEmpty($summaryPos)) {
+                $isValid = false;
+
+                $this->file->addWarning(
+                    self::MESSAGE_SUMMARY_TOO_LONG,
+                    $nextPossiblePos,
+                    static::CODE_SUMMARY_TOO_LONG
+                );
+            }
+        }
+
+        return $isValid;
+    }
+
+    /**
+     * Returns position to the comment summary or null.
+     *
+     * @throws CodeWarning If there is no summary.
+     *
+     * @return $this
+     */
+    private function validateSummaryExistence(): self
+    {
+        $summaryPos = $this->getSummaryPosition();
+
+        if (!$summaryPos) {
+            throw new CodeWarning(
+                static::CODE_NO_SUMMARY,
+                self::MESSAGE_NO_SUMMARY,
+                $this->getDocCommentPos()
             );
+        }
+
+        return $this;
+    }
+
+    /**
+     * Checks if the first char of the doc comment is ucfirst.
+     *
+     * @param int $position
+     * @param array $token
+     *
+     * @return void
+     */
+    private function validateUCFirstDocComment(int $position, array $token): void
+    {
+        $commentText = $token['content'];
+
+        if (ucfirst($commentText) !== $commentText && $this->isPrevLineEmpty($position)) {
+            $isFixing = $this->file->addFixableWarning(
+                self::MESSAGE_DOC_COMMENT_UC_FIRST,
+                $position,
+                static::CODE_DOC_COMMENT_UC_FIRST
+            );
+
+            if ($isFixing) {
+                $this->fixDocCommentUcFirst($position, $token);
+            }
         }
     }
 }

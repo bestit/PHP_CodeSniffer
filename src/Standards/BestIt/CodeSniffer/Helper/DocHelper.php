@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace BestIt\CodeSniffer\Helper;
 
-use BestIt\Sniffs\Commenting\AbstractDocSniff;
+use DomainException;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Util\Tokens;
+use SlevomatCodingStandard\Helpers\TokenHelper;
+use function sprintf;
+use const T_DOC_COMMENT_CLOSE_TAG;
 
 /**
  * Class DocHelper
@@ -17,6 +20,13 @@ use PHP_CodeSniffer\Util\Tokens;
 class DocHelper
 {
     /**
+     * The position of the end token of the doc block.
+     *
+     * @var int|null|bool If false then it will be loaded in the getter.
+     */
+    private $blockEndPosition = false;
+
+    /**
      * The php cs file.
      *
      * @var File
@@ -24,11 +34,11 @@ class DocHelper
     private $file;
 
     /**
-     * Pointer to the token which is to be listened.
+     * Position to the token which is to be listened.
      *
      * @var int
      */
-    private $stackPtr;
+    private $stackPos;
 
     /**
      * Token stack of the current file.
@@ -41,89 +51,27 @@ class DocHelper
      * DocHelper constructor.
      *
      * @param File $file File object of file which is processed.
-     * @param int $stackPtr Pointer to the token which is processed.
+     * @param int $stackPos Position to the token which is processed.
      */
-    public function __construct(File $file, $stackPtr)
+    public function __construct(File $file, $stackPos)
     {
         $this->file = $file;
         $this->tokens = $file->getTokens();
-        $this->stackPtr = $stackPtr;
+        $this->stackPos = $stackPos;
     }
 
     /**
-     * Checks if a comment for the class exists.
+     * Returns position to the class comment end.
      *
-     * @param int $listenerPtr Pointer of the listener token
-     * @param bool $isVariable Is the current token a variable
-     *
-     * @return bool Indicator if the comment exists or not
+     * @return int|null Position to the class comment end.
      */
-    public function checkCommentExists(int $listenerPtr, bool $isVariable): bool
+    public function getBlockEndPosition(): ?int
     {
-        $listenerToken = $this->tokens[$listenerPtr];
-        $commentEndToken = $this->getCommentEndToken();
-        $commentExists = true;
-
-        if ($commentEndToken['type'] !== 'T_DOC_COMMENT_CLOSE_TAG'
-            || ($listenerToken['line'] - 1) !== $commentEndToken['line']
-        ) {
-            $commentExists = false;
+        if ($this->blockEndPosition === false) {
+            $this->blockEndPosition = $this->loadBlockEndPosition();
         }
 
-        if (!$isVariable && !$commentExists) {
-            $this->file->addError(
-                AbstractDocSniff::MESSAGE_NO_IMMEDIATE_DOC_FOUND,
-                $listenerPtr,
-                AbstractDocSniff::CODE_NO_IMMEDIATE_DOC_FOUND
-            );
-        }
-
-        return $commentExists;
-    }
-
-    /**
-     * Checks if the comment is multi line.
-     *
-     * @param bool $isVariable Is the current token a variable
-     *
-     * @return bool Indicator if the comment is multiline
-     */
-    public function checkCommentMultiLine(bool $isVariable): bool
-    {
-        $commentStart = $this->getCommentStartToken();
-        $commentEnd = $this->getCommentEndToken();
-
-        if (!$isVariable && $commentStart['line'] === $commentEnd['line']) {
-            $this->file->addErrorOnLine(
-                AbstractDocSniff::MESSAGE_COMMENT_NOT_MULTI_LINE,
-                $commentStart['line'],
-                AbstractDocSniff::CODE_COMMENT_NOT_MULTI_LINE
-            );
-
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * Returns pointer to the class comment end.
-     *
-     * @return int Pointer to the class comment end.
-     */
-    public function getCommentEndPointer(): int
-    {
-        $whitelistedTokens = array_merge(
-            [T_WHITESPACE],
-            Tokens::$methodPrefixes
-        );
-
-        return $this->file->findPrevious(
-            $whitelistedTokens,
-            $this->stackPtr - 1,
-            null,
-            true
-        );
+        return $this->blockEndPosition;
     }
 
     /**
@@ -131,9 +79,15 @@ class DocHelper
      *
      * @return array Token data of the comment end.
      */
-    public function getCommentEndToken(): array
+    public function getBlockEndToken(): array
     {
-        return $this->tokens[$this->getCommentEndPointer()];
+        if (!$this->hasDocBlock()) {
+            throw new DomainException(
+                sprintf('Missing doc block for position %s of file %s.', $this->stackPos, $this->file->getFilename())
+            );
+        }
+
+        return $this->tokens[$this->getBlockEndPosition()];
     }
 
     /**
@@ -141,9 +95,9 @@ class DocHelper
      *
      * @return int Pointer to the class comment start.
      */
-    public function getCommentStartPointer(): int
+    public function getBlockStartPosition(): int
     {
-        $commentEndToken = $this->getCommentEndToken();
+        $commentEndToken = $this->getBlockEndToken();
 
         return $commentEndToken['comment_opener'];
     }
@@ -153,10 +107,54 @@ class DocHelper
      *
      * @return array Token data of the comment start.
      */
-    public function getCommentStartToken(): array
+    public function getBlockStartToken(): array
     {
-        $commentStartPtr = $this->getCommentStartPointer();
+        $commentStartPtr = $this->getBlockStartPosition();
 
         return $this->tokens[$commentStartPtr];
+    }
+
+    /**
+     * Returns true if there is a doc block.
+     *
+     * @return bool
+     */
+    public function hasDocBlock(): bool
+    {
+        return $this->getBlockEndPosition() !== null;
+    }
+
+    /**
+     * Returns true if this doc block is a multi line comment.
+     *
+     * @return bool
+     */
+    public function isMultiLine(): bool
+    {
+        $openingToken = $this->getBlockStartToken();
+        $closingToken = $this->getBlockEndToken();
+
+        return $openingToken['line'] < $closingToken['line'];
+    }
+
+    /**
+     * Returns the position of the token for the doc block end.
+     *
+     * @return int|null
+     */
+    private function loadBlockEndPosition(): ?int
+    {
+        $endPos = $this->file->findPrevious(
+            [T_DOC_COMMENT_CLOSE_TAG],
+            $this->stackPos - 1,
+            // Search till the next method, property, etc ...
+            TokenHelper::findPreviousExcluding(
+                $this->file,
+                TokenHelper::$ineffectiveTokenCodes + Tokens::$methodPrefixes,
+                $this->stackPos - 1
+            )
+        );
+
+        return ((int) $endPos) > 0 ? $endPos : null;
     }
 }

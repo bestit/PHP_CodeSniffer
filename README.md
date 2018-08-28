@@ -34,6 +34,24 @@ Execute the PHP_CodeSniffer (path can vary on your composer configuration):
 ./vendor/bin/phpcs
 ```
 
+We use warnings for things which a human person should check, but which must not fail an automatic build. If you want to 
+see warnings but get successful builds, call the code sniffer with the special config option _ignore_warnings_on_exit_:
+
+```bash
+./vendor/bin/phpcs --config-set ignore_warnings_on_exit 1
+```
+
+[Check original docs for more info.](https://github.com/squizlabs/PHP_CodeSniffer/wiki/Configuration-Options#ignoring-warnings-when-generating-the-exit-code)
+
+If you want to ignore warnings altogether, you can provide the cli argument n:
+
+```bash
+./vendor/bin/phpcs -n
+```
+
+We suggest that you do not ignore warnings, but only check them in a manual pull/merge request.
+
+
 ### Use in PHPStorm
 
 How to use it in our favorite IDE?
@@ -52,6 +70,12 @@ The base for the BestIt Standard is [PSR-12](https://github.com/php-fig/fig-stan
 
 | Sniff | Description | suppressable |
 | ----- | ----------- | ------------ |
+| BestIt.Commenting.(ClassDoc,ConstanctDoc,FunctionDoc,PropertyDoc).DocCommentUcFirst| Every doc comment block SHOULD start ucfirst. |
+| BestIt.Commenting.(ClassDoc,ConstanctDoc,FunctionDoc,PropertyDoc).NoLineAfterDocComment|  Every doc comment block (the summary or a long description paragrah) SHOULD finish with double newline. |
+| BestIt.Commenting.(ClassDoc,ConstanctDoc,FunctionDoc,PropertyDoc).NoSummary|  There SHOULD be a summary. |
+| BestIt.Commenting.(ClassDoc,ConstanctDoc,FunctionDoc,PropertyDoc).SummaryTooLong|  The summary should be in one line. |
+| BestIt.Commenting.RequiredDocBlock.MissingDocBlock* |  There MUST be a doc block before a Class, Constant, Interface, Function, Trait, Variable. The * will be replaced with the name of the structure like MissingDocBlockClass. |
+| BestIt.Commenting.RequiredDocBlock.NoMultiLineDocBlock* |  The doc block before a Class, Constant, Interface, Function, Trait, Variable must be multi-line. The * will be replaced with the name of the structure like NoMultiLineDocBlockClass. |
 | BestIt.DocTags.AuthorTag.TagContentFormatInvalid | You MUST commit to your codes and give an [author tag](http://docs.phpdoc.org/references/phpdoc/tags/author.html). | 
 | BestIt.DocTags.DeprecatedTag.TagContentFormatInvalid | If you provide a deprecated tag, you MUST provide it with versions since when its deprecated and when it will be removed. | 
 | BestIt.DocTags.(DisallowedClassTags,DisallowedConstantTags,DisallowedMethodTags,DisallowedPropertyTags).TagNotAllowed | You MUST not give one of the disallowed tags in your doc comment. | You can configure the disallowed tags. |
@@ -79,22 +103,6 @@ The base for the BestIt Standard is [PSR-12](https://github.com/php-fig/fig-stan
 | Generic.Formatting.SpaceAfterCast | There MUST be a space after cast. |
 | Generic.Arrays.DisallowLongArraySyntax | Every array syntax MUST be in short array syntax. |
 | BestIt.Formatting.OpenTagSniff | After the open tag there MUST be an empty line. |
-| BestIt.Commenting.AbstractDocSniff.NoImmediateDocFound¹|  There MUST be a doc block before the listened token |
-| BestIt.Commenting.AbstractDocSniff.NoSummary¹|  There MUST be a summary |
-| BestIt.Commenting.AbstractDocSniff.SummaryNotFirst¹|  The summary MUST be the first statement in a doc block |
-| BestIt.Commenting.AbstractDocSniff.SummaryTooLong¹|  The summary length MUST be maximum 120 characters |
-| BestIt.Commenting.AbstractDocSniff.CommentNotMultiLine¹|  Every doc block must be multi line |
-| BestIt.Commenting.AbstractDocSniff.NoLineAfterSummary¹|  There MUST be an empty line after the summary |
-| BestIt.Commenting.AbstractDocSniff.LineAfterSummaryNotEmpty¹|  The line after the summary MUST be empty |
-| BestIt.Commenting.AbstractDocSniff.DescriptionNotFound¹|  There MUST be doc block long description |
-| BestIt.Commenting.AbstractDocSniff.NoLineAfterDescription¹|  There MUST be an empty line after the long description |
-| BestIt.Commenting.AbstractDocSniff.MuchLinesAfterDescription¹|  There MUST be an empty line after the long description  |
-| BestIt.Commenting.AbstractDocSniff.DescriptionTooLong¹|  Every line of the long description MUST be not longer than 120 characters |
-| BestIt.Commenting.AbstractDocSniff.SummaryUcFirst¹|  The summary first letter MUST be a capital letter |
-| BestIt.Commenting.AbstractDocSniff.DescriptionUcFirst¹|  The long description first letter MUST be a capital letter |
-| BestIt.Commenting.AbstractDocSniff.TagContentFormatInvalid¹|  The tag content MUST match the given pattern |
-
-¹ AbstractDocSniff means ClassDocSniff, MethodDocSniff, ConstantDocSniff and PropertyDocSniff  
 
 ## Development
 
