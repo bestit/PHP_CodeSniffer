@@ -13,12 +13,12 @@ use SlevomatCodingStandard\Helpers\TypeHintHelper;
 use SlevomatCodingStandard\Sniffs\TypeHints\TypeHintDeclarationSniff as BaseSniff;
 
 /**
- * Class TypeHintDeclarationSniff
+ * Class ReturnTypeDeclarationSniff
  *
  * @package BestIt\Sniffs\TypeHints
  * @author Stephan Weber <stephan.weber@bestit-online.de>
  */
-class TypeHintDeclarationSniff extends BaseSniff
+class ReturnTypeDeclarationSniff extends BaseSniff
 {
     /**
      * The php cs file
@@ -93,7 +93,7 @@ class TypeHintDeclarationSniff extends BaseSniff
      *
      * @return void
      */
-    public function process(File $phpcsFile, $pointer)
+    public function process(File $phpcsFile, $pointer): void
     {
         $token = $phpcsFile->getTokens()[$pointer];
 
@@ -101,8 +101,12 @@ class TypeHintDeclarationSniff extends BaseSniff
         $this->pointer = $pointer;
         $this->token = $token;
 
-        $isSniffSuppressed = $this->suppressHelper::isSniffSuppressed($phpcsFile, $pointer, self::NAME);
         $hasInheritedDoc = $this->hasInheritdocAnnotation($phpcsFile, $pointer);
+        $isSniffSuppressed = $this->suppressHelper::isSniffSuppressed(
+            $phpcsFile,
+            $pointer,
+            $this->getSniffName(static::CODE_MISSING_RETURN_TYPE_HINT)
+        );
 
         if ($token['code'] === T_FUNCTION && !$isSniffSuppressed && !$hasInheritedDoc) {
             $this->checkReturnTypeHints($phpcsFile, $pointer);
@@ -311,12 +315,22 @@ class TypeHintDeclarationSniff extends BaseSniff
     /**
      * Get the sniff name.
      *
-     * @param string $sniffName The name of the sniff (const name)
+     * @param string $sniffName If there is an optional sniff name.
      *
-     * @return string Returns sniff name with prefixed class name
+     * @return string Returns the special sniff name in the code sniffer context.
      */
-    private function getSniffName(string $sniffName): string
+    private function getSniffName(string $sniffName = ''): string
     {
-        return sprintf('%s.%s', self::NAME, $sniffName);
+        $sniffFQCN = preg_replace(
+            '/Sniff$/',
+            '',
+            str_replace(['\\', '.Sniffs'], ['.', ''], static::class)
+        );
+
+        if ($sniffName) {
+            $sniffFQCN .= '.' . $sniffName;
+        }
+
+        return $sniffFQCN;
     }
 }
