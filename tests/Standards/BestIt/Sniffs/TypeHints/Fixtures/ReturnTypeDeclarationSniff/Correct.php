@@ -11,9 +11,10 @@ class TypeHintDeclarationSniff
     }
 
     /**
+     * @phpcsSuppress BestIt.TypeHints.ReturnTypeDeclaration.MissingReturnTypeHint
      * @return int
      */
-    public function testIntMethod(): int
+    public function testIntMethod()
     {
         return 1;
     }

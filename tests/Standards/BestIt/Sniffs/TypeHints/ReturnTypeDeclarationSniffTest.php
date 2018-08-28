@@ -4,17 +4,17 @@ declare(strict_types = 1);
 
 namespace Tests\BestIt\Sniffs\TypeHints;
 
-use BestIt\Sniffs\TypeHints\TypeHintDeclarationSniff;
+use BestIt\Sniffs\TypeHints\ReturnTypeDeclarationSniff;
 use PHP_CodeSniffer\Files\File;
 use Tests\BestIt\SniffTestCase;
 
 /**
- * Test for TypeHintDeclarationSniff
+ * Test for ReturnTypeDeclarationSniff
  *
  * @package Tests\BestIt\Sniffs\TypeHints
  * @author Stephan Weber <stephan.weber@bestit-online.de>
  */
-class TypeHintDeclarationSniffTest extends SniffTestCase
+class ReturnTypeDeclarationSniffTest extends SniffTestCase
 {
     /**
      * Test type hints with no errors.
@@ -40,19 +40,19 @@ class TypeHintDeclarationSniffTest extends SniffTestCase
         $this->assertSniffError(
             $report,
             8,
-            TypeHintDeclarationSniff::CODE_MISSING_RETURN_TYPE_HINT
+            ReturnTypeDeclarationSniff::CODE_MISSING_RETURN_TYPE_HINT
         );
 
         $this->assertSniffError(
             $report,
             16,
-            TypeHintDeclarationSniff::CODE_MISSING_RETURN_TYPE_HINT
+            ReturnTypeDeclarationSniff::CODE_MISSING_RETURN_TYPE_HINT
         );
 
         $this->assertSniffError(
             $report,
             24,
-            TypeHintDeclarationSniff::CODE_MISSING_RETURN_TYPE_HINT
+            ReturnTypeDeclarationSniff::CODE_MISSING_RETURN_TYPE_HINT
         );
 
         $this->assertAllFixedInFile($report);
@@ -72,7 +72,7 @@ class TypeHintDeclarationSniffTest extends SniffTestCase
             $file,
             $sniffProperties,
             [
-                TypeHintDeclarationSniff::CODE_MISSING_RETURN_TYPE_HINT
+                ReturnTypeDeclarationSniff::CODE_MISSING_RETURN_TYPE_HINT
             ]
         );
     }

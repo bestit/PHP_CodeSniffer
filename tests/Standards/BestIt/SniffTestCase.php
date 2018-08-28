@@ -11,8 +11,7 @@ use SlevomatCodingStandard\Sniffs\TestCase as SlevomatTestCase;
  * Class SniffTestCase
  *
  * @package Tests\BestIt\Sniffs
- *
- * @author Nick Lubisch <nick.lubisch@bestit-online.de>vendo
+ * @author Nick Lubisch <nick.lubisch@bestit-online.de>
  */
 abstract class SniffTestCase extends SlevomatTestCase
 {
@@ -21,11 +20,9 @@ abstract class SniffTestCase extends SlevomatTestCase
      *
      * @return string sniff class name
      */
-    protected function getSniffClassName(): string
+    protected static function getSniffClassName(): string
     {
-        $className = get_class($this);
-
-        $className = str_replace('Tests\\', '', $className);
+        $className = str_replace('Tests\\', '', static::class);
 
         return substr($className, 0, -strlen('Test'));
     }
@@ -37,11 +34,11 @@ abstract class SniffTestCase extends SlevomatTestCase
      *
      * @return void
      */
-    protected function assertAllFixedInFile(File $codeSnifferFile)
+    protected static function assertAllFixedInFile(File $codeSnifferFile): void
     {
         $codeSnifferFile->fixer->fixFile();
 
-        $this->assertStringEqualsFile(
+        self::assertStringEqualsFile(
             preg_replace('~(\\.php)$~', '.Fixed\\1', $codeSnifferFile->getFilename()),
             $codeSnifferFile->fixer->getContents()
         );
