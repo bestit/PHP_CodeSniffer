@@ -2,47 +2,26 @@
 
 declare(strict_types = 1);
 
-namespace Tests\BestIt;
+namespace BestIt;
 
+use const DIRECTORY_SEPARATOR;
+use function implode;
 use PHP_CodeSniffer\Files\File;
+use ReflectionClass;
 use SlevomatCodingStandard\Sniffs\TestCase as SlevomatTestCase;
 
 /**
  * Class SniffTestCase
  *
- * @package Tests\BestIt\Sniffs
+ * @package BestIt\Sniffs
  * @author Nick Lubisch <nick.lubisch@bestit-online.de>
  */
 abstract class SniffTestCase extends SlevomatTestCase
 {
     /**
-     * Returns the sniff class name.
-     *
-     * @return string sniff class name
+     * @var string The cached folder path for the fixtures of this class.
      */
-    protected static function getSniffClassName(): string
-    {
-        $className = str_replace('Tests\\', '', static::class);
-
-        return substr($className, 0, -strlen('Test'));
-    }
-
-    /**
-     * Asserts that all errors are fixed in the given file.
-     *
-     * @param File $codeSnifferFile The CodeSniffer file
-     *
-     * @return void
-     */
-    protected static function assertAllFixedInFile(File $codeSnifferFile): void
-    {
-        $codeSnifferFile->fixer->fixFile();
-
-        self::assertStringEqualsFile(
-            preg_replace('~(\\.php)$~', '.Fixed\\1', $codeSnifferFile->getFilename()),
-            $codeSnifferFile->fixer->getContents()
-        );
-    }
+    private $fixturePath;
 
     /**
      * Tests files with given error list and fixes them.
@@ -59,7 +38,7 @@ abstract class SniffTestCase extends SlevomatTestCase
         string $error,
         array $lines,
         array $sniffProperties = []
-    ) {
+    ): void {
         $report = $this->assertErrorsInFile($file, $error, $lines, $sniffProperties);
 
         $this->assertAllFixedInFile($report);
@@ -104,11 +83,9 @@ abstract class SniffTestCase extends SlevomatTestCase
      *
      * @return void
      */
-    protected function assertFileCorrect(string $file)
+    protected function assertFileCorrect(string $file): void
     {
-        $report = $this->checkSniffFile(
-            $this->getFixtureFilePath($file)
-        );
+        $report = $this->checkSniffFile($file);
 
         $this->assertNoSniffErrorInFile($report);
     }
@@ -118,28 +95,13 @@ abstract class SniffTestCase extends SlevomatTestCase
      *
      * @return string Fixture path
      */
-    public function getFixturePath(): string
+    protected function getFixturePath(): string
     {
-        $fqTestClassName = get_class($this);
-        $fqTestClassNameParts  = explode('\\', $fqTestClassName);
+        if (!$this->fixturePath) {
+            $this->fixturePath = $this->loadFixturePath();
+        }
 
-        $sniffsIndex = array_search('BestIt', $fqTestClassNameParts, true);
-
-        $additionalPathParts = array_slice($fqTestClassNameParts, $sniffsIndex + 1);
-
-        $testClassName = array_pop($additionalPathParts);
-        $className = substr($testClassName, 0, -4);
-
-        $additionalPath = implode(DIRECTORY_SEPARATOR, $additionalPathParts);
-
-        $basePathParts = [
-            __DIR__,
-            $additionalPath,
-            'Fixtures',
-            $className
-        ];
-
-        return implode(DIRECTORY_SEPARATOR, $basePathParts);
+        return $this->fixturePath;
     }
 
     /**
@@ -149,7 +111,7 @@ abstract class SniffTestCase extends SlevomatTestCase
      *
      * @return string Filepath to fixture
      */
-    public function getFixtureFilePath(string $fixture): string
+    protected function getFixtureFilePath(string $fixture): string
     {
         return $this->getFixturePath() . '/' . $fixture;
     }
@@ -157,21 +119,30 @@ abstract class SniffTestCase extends SlevomatTestCase
     /**
      * Returns a list of files which start with Correct*
      *
-     * @return string[] File list
+     * @return array With the path to a file as the first parameter.
      */
     public function getCorrectFileList(): array
     {
-        $fixtureFiles = scandir($this->getFixturePath(), SCANDIR_SORT_NONE);
-
-        $files = preg_grep('/^Correct(.*)\.(php)$/', $fixtureFiles);
-
         $providerFiles = [];
 
-        foreach ($files as $file) {
-            $providerFiles[$file][] = $file;
+        foreach (glob($this->getFixturePath() . DIRECTORY_SEPARATOR . 'Correct*.php') as $file) {
+            $providerFiles[basename($file)] = [$file];
         }
 
         return $providerFiles;
+    }
+
+    protected function loadFixturePath(): string
+    {
+        $reflection = new ReflectionClass(static::class);
+
+        $basePathParts = [
+            dirname($reflection->getFileName()),
+            'Fixtures',
+            substr($reflection->getShortName(), 0, -4)
+        ];
+
+        return implode(DIRECTORY_SEPARATOR, $basePathParts);
     }
 
     /**

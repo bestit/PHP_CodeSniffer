@@ -2,17 +2,17 @@
 
 declare(strict_types = 1);
 
-namespace Tests\BestIt\Sniffs\Formatting;
+namespace BestIt\Sniffs\Formatting;
 
 use BestIt\Sniffs\Formatting\OpenTagSniff;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer_File;
-use Tests\BestIt\SniffTestCase;
+use BestIt\SniffTestCase;
 
 /**
  * Class OpenTagSniffTest
  *
- * @package Tests\BestIt\Sniffs\Formatting
+ * @package BestIt\Sniffs\Formatting
  *
  * @author Nick Lubisch <nick.lubisch@bestit-online.de>
  */

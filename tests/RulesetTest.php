@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace Tests\BestIt;
+namespace BestIt;
 
 use DOMDocument;
 use PHPUnit\Framework\TestCase;
@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * Class RulesetTest.
  *
- * @package Tests\BestIt
+ * @package BestIt
  * @author Tim Kellner <tim.kellner@bestit-online.de>
  */
 class RulesetTest extends TestCase

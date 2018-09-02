@@ -2,16 +2,16 @@
 
 declare(strict_types = 1);
 
-namespace Tests\BestIt\Sniffs\TypeHints;
+namespace BestIt\Sniffs\TypeHints;
 
 use BestIt\Sniffs\TypeHints\ReturnTypeDeclarationSniff;
 use PHP_CodeSniffer\Files\File;
-use Tests\BestIt\SniffTestCase;
+use BestIt\SniffTestCase;
 
 /**
  * Test for ReturnTypeDeclarationSniff
  *
- * @package Tests\BestIt\Sniffs\TypeHints
+ * @package BestIt\Sniffs\TypeHints
  * @author Stephan Weber <stephan.weber@bestit-online.de>
  */
 class ReturnTypeDeclarationSniffTest extends SniffTestCase

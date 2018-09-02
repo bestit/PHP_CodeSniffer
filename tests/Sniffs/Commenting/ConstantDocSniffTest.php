@@ -2,24 +2,24 @@
 
 declare(strict_types = 1);
 
-namespace Tests\BestIt\Sniffs\Commenting;
+namespace BestIt\Sniffs\Commenting;
 
-use BestIt\Sniffs\Commenting\PropertyDocSniff;
+use BestIt\Sniffs\Commenting\ConstantDocSniff;
 use PHP_CodeSniffer\Files\File;
-use Tests\BestIt\SniffTestCase;
+use BestIt\SniffTestCase;
 
 /**
- * Class PropertyDocSniffTest
+ * Class ConstantDocSniffTest
  *
- * @package Tests\BestIt\Sniffs\Commenting
+ * @package BestIt\Sniffs\Commenting
  * @author Nick Lubisch <nick.lubisch@bestit-online.de>
  */
-class PropertyDocSniffTest extends SniffTestCase
+class ConstantDocSniffTest extends SniffTestCase
 {
     /**
      * Test that the given files contain no errors.
      *
-     * @param string $file Provided file to test
+     * @param string $file Provided filename to test
      *
      * @return void
      *
@@ -74,48 +74,48 @@ class PropertyDocSniffTest extends SniffTestCase
         $fixableErrors = $this->getFixableErrorData();
 
         $errors =  [
-            PropertyDocSniff::CODE_NO_IMMEDIATE_DOC_FOUND => [
+            ConstantDocSniff::CODE_NO_IMMEDIATE_DOC_FOUND => [
                 'NoImmediateDocFound.php',
-                PropertyDocSniff::CODE_NO_IMMEDIATE_DOC_FOUND,
+                ConstantDocSniff::CODE_NO_IMMEDIATE_DOC_FOUND,
                 [22]
             ],
 
-            PropertyDocSniff::CODE_COMMENT_NOT_MULTI_LINE => [
+            ConstantDocSniff::CODE_COMMENT_NOT_MULTI_LINE => [
                 'CommentNotMultiLine.php',
-                PropertyDocSniff::CODE_COMMENT_NOT_MULTI_LINE,
+                ConstantDocSniff::CODE_COMMENT_NOT_MULTI_LINE,
                 [13]
             ],
 
-            PropertyDocSniff::CODE_NO_SUMMARY => [
+            ConstantDocSniff::CODE_NO_SUMMARY => [
                 'NoSummary.php',
-                PropertyDocSniff::CODE_NO_SUMMARY,
+                ConstantDocSniff::CODE_NO_SUMMARY,
                 [13]
             ],
 
-            PropertyDocSniff::CODE_SUMMARY_TOO_LONG => [
+            ConstantDocSniff::CODE_SUMMARY_TOO_LONG => [
                 'SummaryTooLong.php',
-                PropertyDocSniff::CODE_SUMMARY_TOO_LONG,
+                ConstantDocSniff::CODE_SUMMARY_TOO_LONG,
                 [14]
             ],
 
-            PropertyDocSniff::CODE_DESCRIPTION_TOO_LONG => [
+            ConstantDocSniff::CODE_DESCRIPTION_TOO_LONG => [
                 'DescriptionTooLong.php',
-                PropertyDocSniff::CODE_DESCRIPTION_TOO_LONG,
+                ConstantDocSniff::CODE_DESCRIPTION_TOO_LONG,
                 [16, 17]
             ],
 
-            PropertyDocSniff::CODE_DESCRIPTION_NOT_FOUND => [
+            ConstantDocSniff::CODE_DESCRIPTION_NOT_FOUND => [
                 'DescriptionNotFound.php',
-                PropertyDocSniff::CODE_DESCRIPTION_NOT_FOUND,
+                ConstantDocSniff::CODE_DESCRIPTION_NOT_FOUND,
                 [14],
                 [
                     'descriptionRequired' => true
                 ]
             ],
 
-            PropertyDocSniff::CODE_TAG_NOT_ALLOWED => [
+            ConstantDocSniff::CODE_TAG_NOT_ALLOWED => [
                 'TagNotAllowed.php',
-                PropertyDocSniff::CODE_TAG_NOT_ALLOWED,
+                ConstantDocSniff::CODE_TAG_NOT_ALLOWED,
                 [
                     24,
                     25,
@@ -144,15 +144,15 @@ class PropertyDocSniffTest extends SniffTestCase
                 ]
             ],
 
-            PropertyDocSniff::CODE_TAG_OCCURRENCE_MIN => [
+            ConstantDocSniff::CODE_TAG_OCCURRENCE_MIN => [
                 'TagOccurrenceMin.php',
-                PropertyDocSniff::CODE_TAG_OCCURRENCE_MIN,
+                ConstantDocSniff::CODE_TAG_OCCURRENCE_MIN,
                 [13]
             ],
 
-            PropertyDocSniff::CODE_TAG_OCCURRENCE_MAX => [
+            ConstantDocSniff::CODE_TAG_OCCURRENCE_MAX => [
                 'TagOccurrenceMax.php',
-                PropertyDocSniff::CODE_TAG_OCCURRENCE_MAX,
+                ConstantDocSniff::CODE_TAG_OCCURRENCE_MAX,
                 [13]
             ],
         ];
@@ -166,56 +166,56 @@ class PropertyDocSniffTest extends SniffTestCase
     /**
      * Returns data for fixable errors.
      *
-     * @return array List with fixable error data
+     * @return array List of fixable error data
      */
     public function getFixableErrorData(): array
     {
         return [
-            PropertyDocSniff::CODE_SUMMARY_NOT_FIRST => [
+            ConstantDocSniff::CODE_SUMMARY_NOT_FIRST => [
                 'SummaryNotFirst.php',
-                PropertyDocSniff::CODE_SUMMARY_NOT_FIRST,
+                ConstantDocSniff::CODE_SUMMARY_NOT_FIRST,
                 [15]
             ],
 
-            PropertyDocSniff::CODE_NO_LINE_AFTER_SUMMARY => [
+            ConstantDocSniff::CODE_NO_LINE_AFTER_SUMMARY => [
                 'NoLineAfterSummary.php',
-                PropertyDocSniff::CODE_NO_LINE_AFTER_SUMMARY,
+                ConstantDocSniff::CODE_NO_LINE_AFTER_SUMMARY,
                 [14]
             ],
 
-            PropertyDocSniff::CODE_NO_LINE_AFTER_DESCRIPTION => [
+            ConstantDocSniff::CODE_NO_LINE_AFTER_DESCRIPTION => [
                 'NoLineAfterDescription.php',
-                PropertyDocSniff::CODE_NO_LINE_AFTER_DESCRIPTION,
+                ConstantDocSniff::CODE_NO_LINE_AFTER_DESCRIPTION,
                 [17]
             ],
 
-            PropertyDocSniff::CODE_MUCH_LINES_AFTER_DESCRIPTION => [
+            ConstantDocSniff::CODE_MUCH_LINES_AFTER_DESCRIPTION => [
                 'MuchLinesAfterDescription.php',
-                PropertyDocSniff::CODE_MUCH_LINES_AFTER_DESCRIPTION,
+                ConstantDocSniff::CODE_MUCH_LINES_AFTER_DESCRIPTION,
                 [17]
             ],
 
-            PropertyDocSniff::CODE_MUCH_LINES_AFTER_DESCRIPTION . '.WithoutTags' => [
+            ConstantDocSniff::CODE_MUCH_LINES_AFTER_DESCRIPTION . '.WithoutTags' => [
                 'MuchLinesAfterDescription.WithoutTags.php',
-                PropertyDocSniff::CODE_MUCH_LINES_AFTER_DESCRIPTION,
+                ConstantDocSniff::CODE_MUCH_LINES_AFTER_DESCRIPTION,
                 [17]
             ],
 
-            PropertyDocSniff::CODE_SUMMARY_UC_FIRST => [
+            ConstantDocSniff::CODE_SUMMARY_UC_FIRST => [
                 'SummaryUcFirst.php',
-                PropertyDocSniff::CODE_SUMMARY_UC_FIRST,
+                ConstantDocSniff::CODE_SUMMARY_UC_FIRST,
                 [14]
             ],
 
-            PropertyDocSniff::CODE_DESCRIPTION_UC_FIRST => [
+            ConstantDocSniff::CODE_DESCRIPTION_UC_FIRST => [
                 'DescriptionUcFirst.php',
-                PropertyDocSniff::CODE_DESCRIPTION_UC_FIRST,
+                ConstantDocSniff::CODE_DESCRIPTION_UC_FIRST,
                 [16]
             ],
 
-            PropertyDocSniff::CODE_MUCH_LINES_AFTER_TAG => [
+            ConstantDocSniff::CODE_MUCH_LINES_AFTER_TAG => [
                 'MuchLinesAfterTag.php',
-                PropertyDocSniff::CODE_MUCH_LINES_AFTER_TAG,
+                ConstantDocSniff::CODE_MUCH_LINES_AFTER_TAG,
                 [19]
             ],
         ];
@@ -235,25 +235,25 @@ class PropertyDocSniffTest extends SniffTestCase
             $file,
             $sniffProperties,
             [
-                PropertyDocSniff::CODE_NO_IMMEDIATE_DOC_FOUND,
-                PropertyDocSniff::CODE_COMMENT_NOT_MULTI_LINE,
-                PropertyDocSniff::CODE_NO_SUMMARY,
-                PropertyDocSniff::CODE_SUMMARY_NOT_FIRST,
-                PropertyDocSniff::CODE_NO_LINE_AFTER_SUMMARY,
-                PropertyDocSniff::CODE_SUMMARY_TOO_LONG,
-                PropertyDocSniff::CODE_LINE_AFTER_SUMMARY_NOT_EMPTY,
-                PropertyDocSniff::CODE_DESCRIPTION_NOT_FOUND,
-                PropertyDocSniff::CODE_DESCRIPTION_TOO_LONG,
-                PropertyDocSniff::CODE_NO_LINE_AFTER_DESCRIPTION,
-                PropertyDocSniff::CODE_MUCH_LINES_AFTER_DESCRIPTION,
-                PropertyDocSniff::CODE_TAG_NOT_ALLOWED,
-                PropertyDocSniff::CODE_TAG_OCCURRENCE_MIN,
-                PropertyDocSniff::CODE_TAG_OCCURRENCE_MAX,
-                PropertyDocSniff::CODE_TAG_WRONG_POSITION,
-                PropertyDocSniff::CODE_SUMMARY_UC_FIRST,
-                PropertyDocSniff::CODE_DESCRIPTION_UC_FIRST,
-                PropertyDocSniff::CODE_NO_LINE_AFTER_TAG,
-                PropertyDocSniff::CODE_MUCH_LINES_AFTER_TAG,
+                ConstantDocSniff::CODE_NO_IMMEDIATE_DOC_FOUND,
+                ConstantDocSniff::CODE_COMMENT_NOT_MULTI_LINE,
+                ConstantDocSniff::CODE_NO_SUMMARY,
+                ConstantDocSniff::CODE_SUMMARY_NOT_FIRST,
+                ConstantDocSniff::CODE_NO_LINE_AFTER_SUMMARY,
+                ConstantDocSniff::CODE_SUMMARY_TOO_LONG,
+                ConstantDocSniff::CODE_LINE_AFTER_SUMMARY_NOT_EMPTY,
+                ConstantDocSniff::CODE_DESCRIPTION_NOT_FOUND,
+                ConstantDocSniff::CODE_DESCRIPTION_TOO_LONG,
+                ConstantDocSniff::CODE_NO_LINE_AFTER_DESCRIPTION,
+                ConstantDocSniff::CODE_MUCH_LINES_AFTER_DESCRIPTION,
+                ConstantDocSniff::CODE_TAG_NOT_ALLOWED,
+                ConstantDocSniff::CODE_TAG_OCCURRENCE_MIN,
+                ConstantDocSniff::CODE_TAG_OCCURRENCE_MAX,
+                ConstantDocSniff::CODE_TAG_WRONG_POSITION,
+                ConstantDocSniff::CODE_SUMMARY_UC_FIRST,
+                ConstantDocSniff::CODE_DESCRIPTION_UC_FIRST,
+                ConstantDocSniff::CODE_NO_LINE_AFTER_TAG,
+                ConstantDocSniff::CODE_MUCH_LINES_AFTER_TAG,
             ]
         );
     }

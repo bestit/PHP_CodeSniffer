@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace Tests\BestIt\Sniffs\Functions;
+namespace BestIt\Sniffs\Functions;
 
 use BestIt\Sniffs\TypeHints\DeclareStrictTypesSniff;
 use PHPUnit\Framework\TestCase;
@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * Test for DeclareStrictTypesSniff.
  *
- * @package Tests\BestIt\Sniffs\Functions
+ * @package BestIt\Sniffs\Functions
  * @author Tim Kellner <tim.kellner@bestit-online.de>
  */
 class DeclareStrictTypesSniffTest extends TestCase

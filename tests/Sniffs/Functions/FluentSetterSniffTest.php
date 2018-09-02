@@ -2,16 +2,16 @@
 
 declare(strict_types = 1);
 
-namespace Tests\BestIt\Sniffs\Functions;
+namespace BestIt\Sniffs\Functions;
 
 use BestIt\Sniffs\Functions\FluentSetterSniff;
 use PHP_CodeSniffer\Files\File;
-use Tests\BestIt\SniffTestCase;
+use BestIt\SniffTestCase;
 
 /**
  * Class FluentSetterSniffTest
  *
- * @package Tests\BestIt\Sniffs\Functions
+ * @package BestIt\Sniffs\Functions
  *
  * @author Nick Lubisch <nick.lubisch@bestit-online.de>
  */

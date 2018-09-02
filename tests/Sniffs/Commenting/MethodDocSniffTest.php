@@ -2,16 +2,16 @@
 
 declare(strict_types = 1);
 
-namespace Tests\BestIt\Sniffs\Commenting;
+namespace BestIt\Sniffs\Commenting;
 
 use BestIt\Sniffs\Commenting\MethodDocSniff;
 use PHP_CodeSniffer\Files\File;
-use Tests\BestIt\SniffTestCase;
+use BestIt\SniffTestCase;
 
 /**
  * Class MethodDocSniffTest
  *
- * @package Tests\BestIt\Sniffs\Commenting
+ * @package BestIt\Sniffs\Commenting
  * @author Nick Lubisch <nick.lubisch@bestit-online.de>
  */
 class MethodDocSniffTest extends SniffTestCase
