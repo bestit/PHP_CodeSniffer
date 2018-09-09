@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace BestIt;
 
@@ -8,6 +8,7 @@ use const DIRECTORY_SEPARATOR;
 use function implode;
 use PHP_CodeSniffer\Files\File;
 use ReflectionClass;
+use ReflectionException;
 use SlevomatCodingStandard\Sniffs\TestCase as SlevomatTestCase;
 
 /**
@@ -19,7 +20,9 @@ use SlevomatCodingStandard\Sniffs\TestCase as SlevomatTestCase;
 abstract class SniffTestCase extends SlevomatTestCase
 {
     /**
-     * @var string The cached folder path for the fixtures of this class.
+     * The cached folder path for the fixtures of this class.
+     *
+     * @var string
      */
     private $fixturePath;
 
@@ -132,15 +135,26 @@ abstract class SniffTestCase extends SlevomatTestCase
         return $providerFiles;
     }
 
+    /**
+     * Returns the path to the fixture folder for this sniff.
+     *
+     * @return string The path to the fixture folder for this sniff.
+     */
     protected function loadFixturePath(): string
     {
-        $reflection = new ReflectionClass(static::class);
+        $basePathParts = [];
 
-        $basePathParts = [
-            dirname($reflection->getFileName()),
-            'Fixtures',
-            substr($reflection->getShortName(), 0, -4)
-        ];
+        try {
+            $reflection = new ReflectionClass(static::class);
+
+            $basePathParts = [
+                dirname($reflection->getFileName()),
+                'Fixtures',
+                substr($reflection->getShortName(), 0, -4)
+            ];
+        } catch (ReflectionException $e) {
+            // Do nothing, this class exists!
+        }
 
         return implode(DIRECTORY_SEPARATOR, $basePathParts);
     }

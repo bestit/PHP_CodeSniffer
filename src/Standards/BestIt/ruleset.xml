@@ -1,21 +1,27 @@
 <?xml version="1.0"?>
 <ruleset name="best it">
-    <description>The best it coding standard.</description>
-
+    <!-- This argument forces the php sniffer to convert tabs to 4 spaces! -->
     <arg name="tab-width" value="4" />
 
-    <rule ref="PSR1" />
-    <rule ref="PSR2" />
+    <!-- This is needed to reuse SlevomatCodingStandard-Sniffs without custom php code. -->
+    <config name="installed_paths" value="../../slevomat/coding-standard"/>
 
-    <rule ref="Generic.Arrays.DisallowLongArraySyntax" />
-    <rule ref="Generic.Files.LineLength">
+    <description>The best it coding standard.</description>
+
+    <!-- PSR12 includes PSR-1, extends PSR-2 and even contains rules for the line length itself! -->
+    <rule ref="PSR12" />
+
+    <rule ref="SlevomatCodingStandard.TypeHints.DeclareStrictTypes">
         <properties>
-            <property name="lineLimit" value="120"/>
-            <property name="absoluteLineLimit" value="120"/>
+            <property name="newlinesCountAfterDeclare" value="2"/>
+            <property name="newlinesCountBetweenOpenTagAndDeclare" value="2"/>
+            <property name="spacesCountAroundEqualsSign" value="0"/>
         </properties>
     </rule>
+
+    <rule ref="Generic.Arrays.DisallowLongArraySyntax" />
+
     <rule ref="Generic.Formatting.SpaceAfterCast" />
 
     <rule ref="Squiz.Strings.DoubleQuoteUsage.NotRequired" />
-
 </ruleset>

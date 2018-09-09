@@ -30,6 +30,9 @@ Execute the PHP_CodeSniffer (path can vary on your composer configuration):
 ./vendor/bin/phpcs
 ```
 ## Used sniffs
+
+The base for the BestIt Standard is [PSR-12](https://github.com/php-fig/fig-standards/blob/master/proposed/extended-coding-style-guide.md).
+
 | Sniff | Standard | Description |
 | ----- | -------- | ----------- |
 | Generic.PHP.DisallowShortOpenTag.EchoFound | PSR-1 | PHP code MUST use the long <?php ?> tags or the short-echo <?= ?> tags; it MUST NOT use the other tag variations. |
@@ -37,7 +40,6 @@ Execute the PHP_CodeSniffer (path can vary on your composer configuration):
 | Squiz.Classes.ValidClassName | PSR-1 | Class names MUST be declared in StudlyCaps. |
 | Generic.NamingConventions.UpperCaseConstantName | PSR-1 | Class constants MUST be declared in all upper case with underscore separators. |
 | Generic.Files.LineEndings | PSR-2 | All PHP files MUST use the Unix LF (linefeed) line ending. |
-| Generic.Files.LineLength  | PSR-2 | The soft limit on line length MUST be 120 characters; automated style checkers MUST warn but MUST NOT error at the soft limit. |
 | Squiz.WhiteSpace.SuperfluousWhitespace" | PSR-2 | There MUST NOT be trailing whitespace at the end of non-blank lines. |
 | Squiz.WhiteSpace.SuperfluousWhitespace.StartFile | PSR-2 | There MUST NOT be trailing whitespace at the end of non-blank lines. |
 | Squiz.WhiteSpace.SuperfluousWhitespace.EndFile | PSR-2 | There MUST NOT be trailing whitespace at the end of non-blank lines. |
@@ -52,7 +54,6 @@ Execute the PHP_CodeSniffer (path can vary on your composer configuration):
 | BestIt.TypeHints.TypeHintDeclaration | BestIt | Every function or method MUST have a type hint if the return annotation is valid. |
 | Squiz.Strings.DoubleQuoteUsage | Squiz | Every String MUST be wrapped with single quotes. |
 | Generic.Formatting.SpaceAfterCast | BestIt | There MUST be a space after cast. |
-| Generic.Files.LineLength | PSR-2 | Every line MUST not be longer than 120 chars. |
 | Generic.Arrays.DisallowLongArraySyntax | BestIt | Every array syntax MUST be in short array syntax. |
 | BestIt.Formatting.OpenTagSniff | BestIt | After the open tag there MUST be an empty line. |
 | BestIt.Commenting.AbstractDocSniff.NoImmediateDocFound¹| BestIt | There MUST be a doc block before the listened token |
