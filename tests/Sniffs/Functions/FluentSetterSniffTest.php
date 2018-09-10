@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace BestIt\Sniffs\Functions;
 
-use BestIt\Sniffs\Functions\FluentSetterSniff;
-use PHP_CodeSniffer\Files\File;
 use BestIt\SniffTestCase;
+use PHP_CodeSniffer\Files\File;
+use Symfony\Component\Console\Command\LockableTrait;
+use Symfony\Component\DependencyInjection\Loader\Configurator\Traits\TagTrait;
 
 /**
  * Class FluentSetterSniffTest
@@ -17,6 +18,9 @@ use BestIt\SniffTestCase;
  */
 class FluentSetterSniffTest extends SniffTestCase
 {
+    use LockableTrait;
+    use TagTrait;
+
     /**
      * Test fluent setter with no errors.
      *

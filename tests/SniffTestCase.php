@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace BestIt;
 
-use const DIRECTORY_SEPARATOR;
-use function implode;
 use PHP_CodeSniffer\Files\File;
 use ReflectionClass;
 use ReflectionException;
 use SlevomatCodingStandard\Sniffs\TestCase as SlevomatTestCase;
+use function implode;
+use const DIRECTORY_SEPARATOR;
 
 /**
  * Class SniffTestCase

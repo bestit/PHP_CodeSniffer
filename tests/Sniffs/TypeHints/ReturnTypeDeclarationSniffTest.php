@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace BestIt\Sniffs\TypeHints;
 
-use BestIt\Sniffs\TypeHints\ReturnTypeDeclarationSniff;
-use PHP_CodeSniffer\Files\File;
 use BestIt\SniffTestCase;
+use PHP_CodeSniffer\Files\File;
 
 /**
  * Test for ReturnTypeDeclarationSniff

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace BestIt\CodeSniffer\Helper;
 
+use BestIt\CodeSniffer\Commenting\TagValidator\TagValidatorFactory;
 use BestIt\CodeSniffer\File;
 use BestIt\Sniffs\Commenting\AbstractDocSniff;
-use BestIt\CodeSniffer\Commenting\TagValidator\TagValidatorFactory;
 
 /**
  * Class DocTagHelper

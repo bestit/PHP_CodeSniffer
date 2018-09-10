@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace BestIt\Sniffs\Formatting;
 
-use BestIt\Sniffs\Formatting\SpaceAfterDeclareSniff;
-use PHP_CodeSniffer\Files\File;
 use BestIt\SniffTestCase;
+use PHP_CodeSniffer\Files\File;
 
 /**
  * Class SpaceAfterDeclareSniffTest

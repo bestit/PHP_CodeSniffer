@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace BestIt\Sniffs\Commenting;
 
-use BestIt\Sniffs\Commenting\GeneralDocSniff;
-use PHP_CodeSniffer\Files\File;
-use PHP_CodeSniffer_File;
 use BestIt\SniffTestCase;
+use PHP_CodeSniffer\Files\File;
 
 /**
  * Class GeneralDocSniff

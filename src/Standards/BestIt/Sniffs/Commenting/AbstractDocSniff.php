@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace BestIt\Sniffs\Commenting;
 
+use BestIt\CodeSniffer\AbstractSniff;
 use BestIt\CodeSniffer\Helper\DocDescriptionHelper;
 use BestIt\CodeSniffer\Helper\DocHelper;
 use BestIt\CodeSniffer\Helper\DocSummaryHelper;
 use BestIt\CodeSniffer\Helper\DocTagHelper;
 use BestIt\CodeSniffer\Helper\PropertyHelper;
-use BestIt\CodeSniffer\AbstractSniff;
+use const T_VARIABLE;
 
 /**
  * Class AbstractDocSniff

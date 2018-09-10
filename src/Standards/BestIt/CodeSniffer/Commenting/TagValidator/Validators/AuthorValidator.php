@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace BestIt\CodeSniffer\Commenting\TagValidator\Validators;
 
-use const FILTER_VALIDATE_EMAIL;
 use function filter_var;
 use function preg_match;
+use const FILTER_VALIDATE_EMAIL;
 
 /**
  * Class AuthorValidator
