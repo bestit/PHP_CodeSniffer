@@ -21,42 +21,42 @@ class OpenTagSniff implements Sniff
      *
      * @var string
      */
-    const ERROR_NOT_FIRST_STATEMENT = 'Open tag is not first statement';
+    public const ERROR_NOT_FIRST_STATEMENT = 'Open tag is not first statement';
 
     /**
      * Code when open tag is not first statement.
      *
      * @var string
      */
-    const CODE_NOT_FIRST_STATEMENT = 'OpenTagNotFirstStatement';
+    public const CODE_NOT_FIRST_STATEMENT = 'OpenTagNotFirstStatement';
 
     /**
      * Error message when there is no space after open tag.
      *
      * @var string
      */
-    const ERROR_NO_SPACE_AFTER_OPEN_TAG = 'No space after open tag';
+    public const ERROR_NO_SPACE_AFTER_OPEN_TAG = 'No space after open tag';
 
     /**
      * Code when there is no space after open tag.
      *
      * @var string
      */
-    const CODE_NO_SPACE_AFTER_OPEN_TAG = 'NoSpaceAfterOpenTag';
+    public const CODE_NO_SPACE_AFTER_OPEN_TAG = 'NoSpaceAfterOpenTag';
 
     /**
      * Error message when line after open tag is not empty.
      *
      * @var string
      */
-    const ERROR_LINE_NOT_EMPTY = 'Line after open tag is not empty.';
+    public const ERROR_LINE_NOT_EMPTY = 'Line after open tag is not empty.';
 
     /**
      * Code when line after open tag is not empty.
      *
      * @var string
      */
-    const CODE_LINE_NOT_EMPTY = 'LineNotEmpty';
+    public const CODE_LINE_NOT_EMPTY = 'LineNotEmpty';
 
     /**
      * Registers the tokens that this sniff wants to listen for.

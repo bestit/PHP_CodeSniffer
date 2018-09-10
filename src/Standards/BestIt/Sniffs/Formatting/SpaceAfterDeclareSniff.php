@@ -21,42 +21,42 @@ class SpaceAfterDeclareSniff implements Sniff
      *
      * @var string
      */
-    const MESSAGE_NO_WHITESPACE_FOUND = 'There is no whitespace after declare-statement.';
+    public const MESSAGE_NO_WHITESPACE_FOUND = 'There is no whitespace after declare-statement.';
 
     /**
      * Code when no whitespace is found.
      *
      * @var string
      */
-    const CODE_NO_WHITESPACE_FOUND = 'NoWhitespaceFound';
+    public const CODE_NO_WHITESPACE_FOUND = 'NoWhitespaceFound';
 
     /**
      * Error message when more than one whitespaces are found.
      *
      * @var string
      */
-    const MESSAGE_MUCH_WHITESPACE_FOUND = 'There are more than one whitespaces after declare-statement.';
+    public const MESSAGE_MUCH_WHITESPACE_FOUND = 'There are more than one whitespaces after declare-statement.';
 
     /**
      * Code when more than one whitespaces are found.
      *
      * @var string
      */
-    const CODE_MUCH_WHITESPACE_FOUND = 'MuchWhitespaceFound';
+    public const CODE_MUCH_WHITESPACE_FOUND = 'MuchWhitespaceFound';
 
     /**
      * Error message when blank lines in a group are found.
      *
      * @var string
      */
-    const MESSAGE_GROUP_BLANK_LINE_FOUND = 'Multpile declare-statements should be grouped without a blank line.';
+    public const MESSAGE_GROUP_BLANK_LINE_FOUND = 'Multpile declare-statements should be grouped without a blank line.';
 
     /**
      * Code when whitespaces in a group are found.
      *
      * @var string
      */
-    const CODE_GROUP_BLANK_LINE_FOUND = 'GroupBlankLineFound';
+    public const CODE_GROUP_BLANK_LINE_FOUND = 'GroupBlankLineFound';
 
     /**
      * Registers the tokens that this sniff wants to listen for.

@@ -38,6 +38,7 @@ The base for the BestIt Standard is [PSR-12](https://github.com/php-fig/fig-stan
 | BestIt.Commenting.ClassDoc.TagFormatContentInvalid | BestIt | Authors MUST commit to their classes and add an [author phpDoc-Tag](http://docs.phpdoc.org/references/phpdoc/tags/author.html). |
 | Generic.PHP.DisallowShortOpenTag.EchoFound | PSR-1 | PHP code MUST use the long <?php ?> tags or the short-echo <?= ?> tags; it MUST NOT use the other tag variations. |
 | Generic.Files.ByteOrderMark | PSR-1 | PHP code MUST use only UTF-8 without BOM. |
+| SlevomatCodingStandard.Classes.ClassConstantVisibility.MissingConstantVisibility | BestIt | Constants MUST be marked with a visibility. |
 | Squiz.Classes.ValidClassName | PSR-1 | Class names MUST be declared in StudlyCaps. |
 | Generic.NamingConventions.UpperCaseConstantName | PSR-1 | Class constants MUST be declared in all upper case with underscore separators. |
 | Generic.Files.LineEndings | PSR-2 | All PHP files MUST use the Unix LF (linefeed) line ending. |

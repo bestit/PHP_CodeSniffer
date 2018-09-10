@@ -20,42 +20,42 @@ class GeneralDocSniff implements Sniff
      *
      * @var string
      */
-    const CODE_NO_LINE_BEFORE_COMMENT = 'NoLineBeforeComment';
+    public const CODE_NO_LINE_BEFORE_COMMENT = 'NoLineBeforeComment';
 
     /**
      * Message that there is no line before the comment.
      *
      * @var string
      */
-    const MESSAGE_NO_LINE_BEFORE_COMMENT = 'There is no line before the comment.';
+    public const MESSAGE_NO_LINE_BEFORE_COMMENT = 'There is no line before the comment.';
 
     /**
      * Code that are too many lines before comment.
      *
      * @var string
      */
-    const CODE_MANY_LINES_BEFORE_COMMENT = 'ManyLinesBeforeComment';
+    public const CODE_MANY_LINES_BEFORE_COMMENT = 'ManyLinesBeforeComment';
 
     /**
      * Message that are too many lines before comment.
      *
      * @var string
      */
-    const MESSAGE_MANY_LINES_BEFORE_COMMENT = 'There are too many lines before the comment.';
+    public const MESSAGE_MANY_LINES_BEFORE_COMMENT = 'There are too many lines before the comment.';
 
     /**
      * Code that are too much spaces between comment tag fragments.
      *
      * @var string
      */
-    const CODE_WRONG_COMMENT_TAG_SPACING = 'WrongCommentTagSpacing';
+    public const CODE_WRONG_COMMENT_TAG_SPACING = 'WrongCommentTagSpacing';
     
     /**
      * Message that are too much spaces between comment tag fragments.
      *
      * @var string
      */
-    const MESSAGE_WRONG_COMMENT_TAG_SPACING = 'There must only be 1 space between comment tag fragments.';
+    public const MESSAGE_WRONG_COMMENT_TAG_SPACING = 'There must only be 1 space between comment tag fragments.';
 
     /**
      * The PHP_CodeSniffer file where the token was found.

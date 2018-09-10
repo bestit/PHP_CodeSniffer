@@ -21,42 +21,42 @@ class FluentSetterSniff extends MethodScopeSniff
      *
      * @var string
      */
-    const CODE_MULTIPLE_RETURN_FOUND = 'MultipleReturnFound';
+    public const CODE_MULTIPLE_RETURN_FOUND = 'MultipleReturnFound';
 
     /**
      * Code when the method does not return $this.
      *
      * @var string
      */
-    const CODE_MUST_RETURN_THIS = 'MustReturnThis';
+    public const CODE_MUST_RETURN_THIS = 'MustReturnThis';
 
     /**
      * Code when no return statement is found.
      *
      * @var string
      */
-    const CODE_NO_RETURN_FOUND = 'NoReturnFound';
+    public const CODE_NO_RETURN_FOUND = 'NoReturnFound';
 
     /**
      * Error message when no return statement is found.
      *
      * @var string
      */
-    const ERROR_NO_RETURN_FOUND = 'Method "%s" has no return statement';
+    public const ERROR_NO_RETURN_FOUND = 'Method "%s" has no return statement';
 
     /**
      * Error message when multiple return statements are found.
      *
      * @var string
      */
-    const ERROR_MULTIPLE_RETURN_FOUND = 'Method "%s" has multiple return statements';
+    public const ERROR_MULTIPLE_RETURN_FOUND = 'Method "%s" has multiple return statements';
 
     /**
      * Error message when the method does not return $this.
      *
      * @var string
      */
-    const ERROR_MUST_RETURN_THIS = 'The method "%s" must return $this';
+    public const ERROR_MUST_RETURN_THIS = 'The method "%s" must return $this';
 
     /**
      * Specifies how an identation looks like.

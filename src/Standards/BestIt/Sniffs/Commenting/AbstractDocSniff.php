@@ -25,315 +25,315 @@ abstract class AbstractDocSniff extends AbstractSniff
      *
      * @var int
      */
-    const MAX_LINE_LENGTH = 120;
+    public const MAX_LINE_LENGTH = 120;
 
     /**
      * Code that there is no immediate doc comment found before class.
      *
      * @var string
      */
-    const CODE_NO_IMMEDIATE_DOC_FOUND = 'NoImmediateDocFound';
+    public const CODE_NO_IMMEDIATE_DOC_FOUND = 'NoImmediateDocFound';
 
     /**
      * Message that there is no immediate doc comment found before class.
      *
      * @var string
      */
-    const MESSAGE_NO_IMMEDIATE_DOC_FOUND = 'No immediate doc comment found before class.';
+    public const MESSAGE_NO_IMMEDIATE_DOC_FOUND = 'No immediate doc comment found before class.';
 
     /**
      * Code that there is no summary in doc comment.
      *
      * @var string
      */
-    const CODE_NO_SUMMARY = 'NoSummary';
+    public const CODE_NO_SUMMARY = 'NoSummary';
 
     /**
      * Message that there is no summary in doc comment.
      *
      * @var string
      */
-    const MESSAGE_NO_SUMMARY = 'There must be a summary for the doc comment.';
+    public const MESSAGE_NO_SUMMARY = 'There must be a summary for the doc comment.';
 
     /**
      * Code that there is no summary in doc comment.
      *
      * @var string
      */
-    const CODE_SUMMARY_NOT_FIRST = 'SummaryNotFirst';
+    public const CODE_SUMMARY_NOT_FIRST = 'SummaryNotFirst';
 
     /**
      * Message that there is no summary in doc comment.
      *
      * @var string
      */
-    const MESSAGE_SUMMARY_NOT_FIRST = 'The summary must be the first statement in a comment.';
+    public const MESSAGE_SUMMARY_NOT_FIRST = 'The summary must be the first statement in a comment.';
 
     /**
      * Code that the summary is too long.
      *
      * @var string
      */
-    const CODE_SUMMARY_TOO_LONG = 'SummaryTooLong';
+    public const CODE_SUMMARY_TOO_LONG = 'SummaryTooLong';
 
     /**
      * Message that there is no summary in doc comment.
      *
      * @var string
      */
-    const MESSAGE_SUMMARY_TOO_LONG = 'The summary line must not be longer than 120 chars.';
+    public const MESSAGE_SUMMARY_TOO_LONG = 'The summary line must not be longer than 120 chars.';
 
     /**
      * Code that the summary is not multi line.
      *
      * @var string
      */
-    const CODE_COMMENT_NOT_MULTI_LINE = 'CommentNotMultiLine';
+    public const CODE_COMMENT_NOT_MULTI_LINE = 'CommentNotMultiLine';
 
     /**
      * Message that comment is not multi line.
      *
      * @var string
      */
-    const MESSAGE_COMMENT_NOT_MULTI_LINE = 'Comment is not multi line.';
+    public const MESSAGE_COMMENT_NOT_MULTI_LINE = 'Comment is not multi line.';
 
     /**
      * Code that there is no line after summary.
      *
      * @var string
      */
-    const CODE_NO_LINE_AFTER_SUMMARY = 'NoLineAfterSummary';
+    public const CODE_NO_LINE_AFTER_SUMMARY = 'NoLineAfterSummary';
 
     /**
      * Message that there is no line after summary.
      *
      * @var string
      */
-    const MESSAGE_NO_LINE_AFTER_SUMMARY = 'There is no empty line after the summary.';
+    public const MESSAGE_NO_LINE_AFTER_SUMMARY = 'There is no empty line after the summary.';
 
     /**
      * Code that the line after the summary is not empty.
      *
      * @var string
      */
-    const CODE_LINE_AFTER_SUMMARY_NOT_EMPTY = 'LineAfterSummaryNotEmpty';
+    public const CODE_LINE_AFTER_SUMMARY_NOT_EMPTY = 'LineAfterSummaryNotEmpty';
 
     /**
      * Message that the line after the summary is not empty.
      *
      * @var string
      */
-    const MESSAGE_LINE_AFTER_SUMMARY_NOT_EMPTY = 'The line after the summary is not empty.';
+    public const MESSAGE_LINE_AFTER_SUMMARY_NOT_EMPTY = 'The line after the summary is not empty.';
 
     /**
      * Code that no comment description is found.
      *
      * @var string
      */
-    const CODE_DESCRIPTION_NOT_FOUND = 'DescriptionNotFound';
+    public const CODE_DESCRIPTION_NOT_FOUND = 'DescriptionNotFound';
 
     /**
      * Message that no comment description is found.
      *
      * @var string
      */
-    const MESSAGE_DESCRIPTION_NOT_FOUND = 'There must be an comment description.';
+    public const MESSAGE_DESCRIPTION_NOT_FOUND = 'There must be an comment description.';
 
     /**
      * Code that there is no empty line after description.
      *
      * @var string
      */
-    const CODE_NO_LINE_AFTER_DESCRIPTION = 'NoLineAfterDescription';
+    public const CODE_NO_LINE_AFTER_DESCRIPTION = 'NoLineAfterDescription';
 
     /**
      * Message that there is no empty line after description.
      *
      * @var string
      */
-    const MESSAGE_NO_LINE_AFTER_DESCRIPTION = 'There must be an empty line after description.';
+    public const MESSAGE_NO_LINE_AFTER_DESCRIPTION = 'There must be an empty line after description.';
 
     /**
      * Code that there is no empty line after description.
      *
      * @var string
      */
-    const CODE_MUCH_LINES_AFTER_DESCRIPTION = 'MuchLinesAfterDescription';
+    public const CODE_MUCH_LINES_AFTER_DESCRIPTION = 'MuchLinesAfterDescription';
 
     /**
      * Message that there is no empty line after description.
      *
      * @var string
      */
-    const MESSAGE_MUCH_LINES_AFTER_DESCRIPTION = 'There must be exactly one empty line after description.';
+    public const MESSAGE_MUCH_LINES_AFTER_DESCRIPTION = 'There must be exactly one empty line after description.';
 
     /**
      * Code that the description line is too long.
      *
      * @var string
      */
-    const CODE_DESCRIPTION_TOO_LONG = 'DescriptionTooLong';
+    public const CODE_DESCRIPTION_TOO_LONG = 'DescriptionTooLong';
 
     /**
      * Message that the description line is too long.
      *
      * @var string
      */
-    const MESSAGE_DESCRIPTION_TOO_LONG = 'The description exceeds the maximum length of 120 chars.';
+    public const MESSAGE_DESCRIPTION_TOO_LONG = 'The description exceeds the maximum length of 120 chars.';
 
     /**
      * Code that comment tag is not allowed.
      *
      * @var string
      */
-    const CODE_TAG_NOT_ALLOWED = 'TagNotAllowed';
+    public const CODE_TAG_NOT_ALLOWED = 'TagNotAllowed';
 
     /**
      * Message that comment tag is not allowed.
      *
      * @var string
      */
-    const MESSAGE_TAG_NOT_ALLOWED = 'The comment tag "%s" is not allowed.';
+    public const MESSAGE_TAG_NOT_ALLOWED = 'The comment tag "%s" is not allowed.';
 
     /**
      * Code that comment tag must appear minimum x times.
      *
      * @var string
      */
-    const CODE_TAG_OCCURRENCE_MIN = 'TagOccurrenceMin';
+    public const CODE_TAG_OCCURRENCE_MIN = 'TagOccurrenceMin';
 
     /**
      * Message that comment tag must appear minimum x times.
      *
      * @var string
      */
-    const MESSAGE_TAG_OCCURRENCE_MIN = 'The comment tag "%s" must appear minimum %d times.';
+    public const MESSAGE_TAG_OCCURRENCE_MIN = 'The comment tag "%s" must appear minimum %d times.';
 
     /**
      * Code that comment tag must appear maximum x times.
      *
      * @var string
      */
-    const CODE_TAG_OCCURRENCE_MAX = 'TagOccurrenceMax';
+    public const CODE_TAG_OCCURRENCE_MAX = 'TagOccurrenceMax';
 
     /**
      * Message that comment tag must appear maximum x times.
      *
      * @var string
      */
-    const MESSAGE_TAG_OCCURRENCE_MAX = 'The comment tag "%s" must appear maximum %d times.';
+    public const MESSAGE_TAG_OCCURRENCE_MAX = 'The comment tag "%s" must appear maximum %d times.';
 
     /**
      * Code that comment tag has the wrong position.
      *
      * @var string
      */
-    const CODE_TAG_WRONG_POSITION = 'TagWrongPosition';
+    public const CODE_TAG_WRONG_POSITION = 'TagWrongPosition';
 
     /**
      * Message that comment tag has the wrong position.
      *
      * @var string
      */
-    const MESSAGE_TAG_WRONG_POSITION = 'This tag has the wrong position. Expected "%s"';
+    public const MESSAGE_TAG_WRONG_POSITION = 'This tag has the wrong position. Expected "%s"';
 
     /**
      * Code that the summary starts with an capital letter.
      *
      * @var string
      */
-    const CODE_SUMMARY_UC_FIRST = 'SummaryUcFirst';
+    public const CODE_SUMMARY_UC_FIRST = 'SummaryUcFirst';
 
     /**
      * Message that the summary starts with an capital letter.
      *
      * @var string
      */
-    const MESSAGE_SUMMARY_UC_FIRST = 'The first letter of the summary is not uppercase';
+    public const MESSAGE_SUMMARY_UC_FIRST = 'The first letter of the summary is not uppercase';
 
     /**
      * Code that the description starts with an capital letter.
      *
      * @var string
      */
-    const CODE_DESCRIPTION_UC_FIRST = 'DescriptionUcFirst';
+    public const CODE_DESCRIPTION_UC_FIRST = 'DescriptionUcFirst';
 
     /**
      * Message that the description starts with an capital letter.
      *
      * @var string
      */
-    const MESSAGE_DESCRIPTION_UC_FIRST = 'The first letter of the description is not uppercase';
+    public const MESSAGE_DESCRIPTION_UC_FIRST = 'The first letter of the description is not uppercase';
 
     /**
      * Code that there is no line before given tag group.
      *
      * @var string
      */
-    const CODE_NO_LINES_AROUND_TAG_GROUP = 'NoLinesAroundTagGroup';
+    public const CODE_NO_LINES_AROUND_TAG_GROUP = 'NoLinesAroundTagGroup';
 
     /**
      * Message that there is no line before given tag.
      *
      * @var string
      */
-    const MESSAGE_NO_LINE_AROUND_TAG_GROUP = 'There are no blank lines around the tag group';
+    public const MESSAGE_NO_LINE_AROUND_TAG_GROUP = 'There are no blank lines around the tag group';
 
     /**
      * Code that there is no line after given tag.
      *
      * @var string
      */
-    const CODE_NO_LINE_AFTER_TAG = 'NoLineAfterTag';
+    public const CODE_NO_LINE_AFTER_TAG = 'NoLineAfterTag';
 
     /**
      * Message that there is no line after given tag.
      *
      * @var string
      */
-    const MESSAGE_NO_LINE_AFTER_TAG = 'There is no blank line after tag %s';
+    public const MESSAGE_NO_LINE_AFTER_TAG = 'There is no blank line after tag %s';
 
     /**
      * Code that there are too much lines after given tag.
      *
      * @var string
      */
-    const CODE_MUCH_LINES_AFTER_TAG = 'MuchLinesAfterTag';
+    public const CODE_MUCH_LINES_AFTER_TAG = 'MuchLinesAfterTag';
 
     /**
      * Message that there are too much lines after given tag.
      *
      * @var string
      */
-    const MESSAGE_MUCH_LINES_AFTER_TAG = 'There are too much blank lines after tag %s';
+    public const MESSAGE_MUCH_LINES_AFTER_TAG = 'There are too much blank lines after tag %s';
 
     /**
      * Code that the tag content format is invalid.
      *
      * @var string
      */
-    const CODE_TAG_CONTENT_FORMAT_INVALID = 'TagFormatContentInvalid';
+    public const CODE_TAG_CONTENT_FORMAT_INVALID = 'TagFormatContentInvalid';
 
     /**
      * Message that the tag content format is invalid.
      *
      * @var string
      */
-    const MESSAGE_TAG_CONTENT_FORMAT_INVALID = '"%s"-Tag format is invalid. Expected: "%s"';
+    public const MESSAGE_TAG_CONTENT_FORMAT_INVALID = '"%s"-Tag format is invalid. Expected: "%s"';
 
     /**
      * Code that the tag content has a mixed type warning.
      *
      * @var string
      */
-    const CODE_TAG_WARNING_MIXED = 'TagWarningMixedType';
+    public const CODE_TAG_WARNING_MIXED = 'TagWarningMixedType';
 
     /**
      * Message that the tag content has a mixed type warning.
      *
      * @var string
      */
-    const MESSAGE_TAG_WARNING_MIXED = 'Consider removing the mixed type';
+    public const MESSAGE_TAG_WARNING_MIXED = 'Consider removing the mixed type';
 
     /**
      * This tags are disallowed and could be injected from the outside.
