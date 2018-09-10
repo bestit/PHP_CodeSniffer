@@ -8,6 +8,7 @@ use PHP_CodeSniffer\Files\File;
 use ReflectionClass;
 use ReflectionException;
 use SlevomatCodingStandard\Sniffs\TestCase as SlevomatTestCase;
+use function dirname;
 use function implode;
 use const DIRECTORY_SEPARATOR;
 
@@ -63,10 +64,11 @@ abstract class SniffTestCase extends SlevomatTestCase
         array $lines,
         array $sniffProperties = []
     ): File {
-        $report = $this->checkSniffFile(
-            $this->getFixtureFilePath($file),
-            $sniffProperties
-        );
+        if ((!$dirname = dirname($file)) || ($dirname === '.')) {
+            $file = $this->getFixtureFilePath($file);
+        }
+
+        $report = $this->checkSniffFile($file, $sniffProperties);
 
         foreach ($lines as $line) {
             $this->assertSniffError(
@@ -167,5 +169,8 @@ abstract class SniffTestCase extends SlevomatTestCase
      *
      * @return File The php cs file
      */
-    abstract protected function checkSniffFile(string $file, array $sniffProperties = []): File;
+    protected function checkSniffFile(string $file, array $sniffProperties = []): File
+    {
+        return $this->checkFile($file, $sniffProperties);
+    }
 }

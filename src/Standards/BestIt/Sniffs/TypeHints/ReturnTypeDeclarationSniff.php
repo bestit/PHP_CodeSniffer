@@ -102,7 +102,7 @@ class ReturnTypeDeclarationSniff extends BaseSniff
         $this->token = $token;
 
         $hasInheritedDoc = $this->hasInheritdocAnnotation($phpcsFile, $pointer);
-        $isSniffSuppressed = $this->suppressHelper::isSniffSuppressed(
+        $isSniffSuppressed = SuppressHelper::isSniffSuppressed(
             $phpcsFile,
             $pointer,
             $this->getSniffName(static::CODE_MISSING_RETURN_TYPE_HINT)

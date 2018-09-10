@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace BestIt\Sniffs\Functions;
 
 use BestIt\SniffTestCase;
-use PHP_CodeSniffer\Files\File;
-use Symfony\Component\Console\Command\LockableTrait;
-use Symfony\Component\DependencyInjection\Loader\Configurator\Traits\TagTrait;
+use BestIt\Sniffs\DefaultSniffIntegrationTestTrait;
+use BestIt\Sniffs\TestTokenRegistrationTrait;
+use BestIt\TestRequiredConstantsTrait;
+use const T_FUNCTION;
 
 /**
  * Class FluentSetterSniffTest
@@ -18,89 +19,53 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\Traits\TagTrait;
  */
 class FluentSetterSniffTest extends SniffTestCase
 {
-    use LockableTrait;
-    use TagTrait;
+    use DefaultSniffIntegrationTestTrait;
+    use TestRequiredConstantsTrait;
+    use TestTokenRegistrationTrait;
 
     /**
-     * Test fluent setter with no errors.
+     * The tested class.
      *
-     * @return void
+     * We use this var to reduce the hard dependencies on internals from a specific slevomat version.
+     *
+     * @var FluentSetterSniff|void
      */
-    public function testCorrectFluentSetter()
+    protected $fixture;
+
+    /**
+     * Returns the tokens which should be checked.
+     *
+     * @return array The expected token ids.
+     */
+    protected function getExpectedTokens(): array
     {
-        $this->assertNoSniffErrorInFile(
-            $this->checkSniffFile($this->getFixtureFilePath('Correct.php'))
-        );
+        return [
+            T_FUNCTION
+        ];
     }
 
     /**
-     * Test fluent setter no return error and fix.
+     * Sets up the test.
      *
      * @return void
      */
-    public function testFluentSetterNoReturn()
+    protected function setUp(): void
     {
-        $report = $this->checkSniffFile($this->getFixtureFilePath('NoReturn.php'));
+        parent::setUp();
 
-        $this->assertSniffError(
-            $report,
-            7,
-            FluentSetterSniff::CODE_NO_RETURN_FOUND
-        );
-
-        $this->assertAllFixedInFile($report);
+        $this->fixture = new FluentSetterSniff();
     }
 
     /**
-     * Test fluent setter multiple return error.
+     * Returns the names of the required constants.
      *
-     * @return void
+     * @return array The required constants of a class. The second value is a possible value which should be checked.
      */
-    public function testFluentSetterMultipleReturn()
+    public function getRequiredConstantAsserts(): array
     {
-        $this->assertSniffError(
-            $this->checkSniffFile($this->getFixtureFilePath('MultipleReturn.php')),
-            7,
-            FluentSetterSniff::CODE_MULTIPLE_RETURN_FOUND
-        );
-    }
-
-    /**
-     * Test fluent setter must return this error and fix.
-     *
-     * @return void
-     */
-    public function testFluentSetterMustReturnThis()
-    {
-        $report = $this->checkSniffFile($this->getFixtureFilePath('MustReturnThis.php'));
-
-        $this->assertSniffError(
-            $report,
-            7,
-            FluentSetterSniff::CODE_MUST_RETURN_THIS
-        );
-
-        $this->assertAllFixedInFile($report);
-    }
-
-    /**
-     * Checks the given file with defined error codes.
-     *
-     * @param string $file Filename of the fixture
-     * @param array $sniffProperties Array of sniff properties
-     *
-     * @return File The php cs file
-     */
-    protected function checkSniffFile(string $file, array $sniffProperties = []): File
-    {
-        return $this->checkFile(
-            $file,
-            $sniffProperties,
-            [
-                FluentSetterSniff::CODE_MULTIPLE_RETURN_FOUND,
-                FluentSetterSniff::CODE_MUST_RETURN_THIS,
-                FluentSetterSniff::CODE_NO_RETURN_FOUND,
-            ]
-        );
+        return [
+            'CODE_MUST_RETURN_THIS' => ['CODE_MUST_RETURN_THIS', 'MustReturnThis'],
+            'CODE_NO_RETURN_FOUND' => ['CODE_NO_RETURN_FOUND', 'NoReturnFound']
+        ];
     }
 }

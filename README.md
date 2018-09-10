@@ -1,15 +1,18 @@
 # best it PHP_CodeSniffer
+
 [![Build Status](https://travis-ci.org/bestit/PHP_CodeSniffer.svg?branch=master)](https://travis-ci.org/bestit/php_codesniffer) [![Build Status](https://scrutinizer-ci.com/g/bestit/PHP_CodeSniffer/badges/build.png?b=master)](https://scrutinizer-ci.com/g/bestit/PHP_CodeSniffer/build-status/master) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/bestit/PHP_CodeSniffer/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/bestit/PHP_CodeSniffer/?branch=master) [![Code Coverage](https://scrutinizer-ci.com/g/bestit/PHP_CodeSniffer/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/bestit/PHP_CodeSniffer/?branch=master)
 
 This package contains a default rule set and custom rules which are used in all best it projects.
 
 ## Installation
+
 Our PHP_CodeSniffer package can be installed with composer with the following command:
 ```bash
 composer require bestit/php_codesniffer --dev
 ```
 
 ## Usage
+
 Create a PHP_CodeSniffer configuration (phpcs.xml.dist / phpcs.xml) like this:
 ```xml
 <?xml version="1.0"?>
@@ -26,6 +29,7 @@ Create a PHP_CodeSniffer configuration (phpcs.xml.dist / phpcs.xml) like this:
 ```
 
 Execute the PHP_CodeSniffer (path can vary on your composer configuration):
+
 ```bash
 ./vendor/bin/phpcs
 ```
@@ -50,7 +54,7 @@ The base for the BestIt Standard is [PSR-12](https://github.com/php-fig/fig-stan
 | Generic.WhiteSpace.ScopeIndent | PSR-2 | Code MUST use an indent of 4 spaces. |
 | Generic.WhiteSpace.DisallowTabIndent | PSR-2 | Code MUST NOT use tabs for indenting. |
 | Generic.PHP.LowerCaseKeyword | PSR-2 | The PHP constants true, false, and null MUST be in lower case. |
-| BestIt.Functions.FluentSetter | BestIt | Every setter function MUST return $this. |
+| BestIt.Functions.FluentSetter | BestIt | Every setter function MUST return $this if nothing else is returned.  |
 | BestIt.Formatting.SpaceAfterDeclare | BestIt | There MUST be one empty line after declare-statement. |
 | BestIt.TypeHints.DeclareStrictTypes | BestIt | Every file MUST have "declare(strict_types=1);" two line breaks after the opening tag. There MUST be no spaces aroung the equal-sign. |
 | BestIt.TypeHints.TypeHintDeclaration | BestIt | Every function or method MUST have a type hint if the return annotation is valid. |
@@ -82,8 +86,91 @@ The base for the BestIt Standard is [PSR-12](https://github.com/php-fig/fig-stan
 ¹ AbstractDocSniff means ClassDocSniff, MethodDocSniff, ConstantDocSniff and PropertyDocSniff  
 
 ## Testing
-To be able to test our written sniffs ensure that composer is installed with the option `--prefer-source`.
-This is needed because we use the TestCase of the SlevomatCodingStandard.
+
+### Requirements
+
+**To be able to test our written sniffs ensure that composer is installed with the option `--prefer-source`.
+This is needed because we use the TestCase of the SlevomatCodingStandard.**
+
+### Error code as public constant   
+
+In additional to readable/clean clode our test base requires you to provide your error codes as a public constant prefixed
+with **CODE_** in your sniff class.
+
+### No "Test"-Namespace
+
+Our test base expects you to provide everything in the "normal" namespace: _BestIt_.
+
+### Helping test traits
+
+#### Token Registration
+
+The trait _BestIt\Sniffs\TestTokenRegistrationTrait_ helps you with testing of the registered tokens.
+
+#### Public error codes
+
+The trait _BestIt\Sniffs\TestRequiredConstantsTrait_ helps you to test the errors codes. We suggest that you test the 
+values as well, because they could be part of a "foreign ruleset" out of your control from your "customer." So we 
+enforce that the constant values stay api-stable!
+
+#### Default Integration Tests
+
+The trait _BestIt\Sniffs\DefaultSniffIntegrationTestTrait_ provides you with three tests to test the usually use cases of
+a sniff based on sniff-individual test files:
+
+1. testCorrect
+2. testErrors
+3. testWarnings
+
+##### Requirements
+
+* Your test-file should be called exactly like your sniff (including the namespace) but suffixed with _**Test**_
+* Provide a folder **_Fixtures_** as a sibling to your test file.
+* Put a folder into your "Fixtures" directory, which is called exactly like the short name of the sniff.
+
+##### testCorrect
+
+Create a **_correct_** folder into your fixtures directory. Every php file in this folder will be checked against your 
+sniff. The sniff may not populate errors and warning for a successful test!
+
+##### testErrors
+
+Create a **_with_errors_** folder into your fixtures directory. Every php file in this folder should trigger an error in your sniff. 
+You must provide the error structure through the file name. The file name must match the following pregex:
+
+```regex
+/(?P<code>[\w]*)(\(\d\))?\.(?P<errorLines>[\d\,]*)(?P<fixedSuffix>\.fixed)?\.php/
+```
+
+The file name gives information about which errors in which line should occur.
+Example files would be _ErrorCode.1.php, ErrorCode.1,2,3.php, ErrorCode.1,2,3.fixed.php_, ErrorCode(2).1,2,3.php, 
+ErrorCode(2).1,2,3.fixed.php_. The error code must be the
+original code value from your sniff, the numbers after the first dot are the erroneous lines.
+
+If you provide an additional file which is suffixed with "fixed" then this is the correct formatted file for its
+erroneous sibling.
+
+##### testWarnings
+
+Create a **_with_warnings_** folder into your fixtures directory. Every php file in this folder should trigger a warning in your sniff. 
+You must provide the warning structure through the file name. The file name must match the following pregex:
+
+```regex
+/(?P<code>[\w]*)(\(\d\))?\.(?P<errorLines>[\d\,]*)(?P<fixedSuffix>\.fixed)?\.php/
+```
+
+The file name gives information about which warning in which line should occur.
+Example files would be _WarningCode.1.php, WarningCode.1,2,3.php, WarningCode.1,2,3.fixed.php_, 
+WarningCode(2).1,2,3.php, WarningCode(2).1,2,3.fixed.php_. The warning code must be the
+original code value from your sniff, the numbers after the first dot are the lines with warnings.
+
+If you provide an additional file which is suffixed with "fixed" then this is the correct formatted file for its
+erroneous sibling.
 
 ## Contributing
+
 See [CONTRIBUTING.md](CONTRIBUTING.md).
+
+## TODO 
+
+* Remove further slevomat dependencies for internal apis.

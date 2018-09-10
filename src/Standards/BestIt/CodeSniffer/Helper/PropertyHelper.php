@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace BestIt\CodeSniffer\Helper;
 
 use BestIt\CodeSniffer\File;
+use function substr;
 
 /**
  * Class PropertyHelper
@@ -29,6 +30,35 @@ final class PropertyHelper
     public function __construct(File $file)
     {
         $this->file = $file;
+    }
+
+    /**
+     * Returns the names of the class' properties.
+     *
+     * @param array $classToken The token array for the class like structure.
+     * @param File|null $file The used file. If not given then the file from the construct is used.
+     *
+     * @return array The names of the properties.
+     */
+    public function getProperties(array $classToken, ?File $file = null): array
+    {
+        if (!$file) {
+            $file = $this->file;
+        }
+
+        $properties = [];
+        $startPos = $classToken['scope_opener'] ?? 0;
+        $tokens = $file->getTokens();
+
+        while (($propertyPos = $file->findNext([T_VARIABLE], $startPos, $classToken['scope_closer'])) > 0) {
+            if ($this->isProperty($propertyPos)) {
+                $properties[] = substr($tokens[$propertyPos]['content'], 1);
+            }
+
+            $startPos = $propertyPos + 1;
+        }
+
+        return $properties;
     }
 
     /**
