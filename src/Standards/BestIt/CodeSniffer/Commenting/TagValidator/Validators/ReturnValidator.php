@@ -18,16 +18,15 @@ class ReturnValidator extends AbstractValidator
      * Validates the tag content.
      *
      * @param array $tagToken Token data of the current token
-     * @param int $contentPtr Pointer to the tag content
      * @param array|null $contentToken Token of the tag content
      *
      * @return void
      */
-    public function validate(array $tagToken, int $contentPtr, $contentToken)
+    public function validate(array $tagToken, ?array $contentToken): void
     {
-        parent::validate($tagToken, $contentPtr, $contentToken);
+        parent::validate($tagToken, $contentToken);
 
-        if ($contentPtr !== -1) {
+        if ($contentToken) {
             $this->addWarnings($tagToken, $contentToken['content']);
         }
     }

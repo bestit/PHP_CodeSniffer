@@ -16,10 +16,9 @@ interface ValidatorInterface
      * Validates the tag content.
      *
      * @param array $tagToken Token data of the current token
-     * @param int|null $contentPtr Pointer to the tag content
      * @param array $contentToken Token of the tag content
      *
      * @return void
      */
-    public function validate(array $tagToken, int $contentPtr, $contentToken);
+    public function validate(array $tagToken, ?array $contentToken): void;
 }

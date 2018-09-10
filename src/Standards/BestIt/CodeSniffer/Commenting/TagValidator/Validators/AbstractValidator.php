@@ -33,25 +33,17 @@ abstract class AbstractValidator implements ValidatorInterface
     }
 
     /**
-     * Validates the tag content.
+     * Validates the tag content and registers errors/warnings if needed.
      *
      * @param array $tagToken Token data of the current token
-     * @param int $contentPtr Pointer to the tag content
      * @param array|null $contentToken Token of the tag content
      *
      * @return void
      */
-    public function validate(array $tagToken, int $contentPtr, $contentToken)
+    public function validate(array $tagToken, ?array $contentToken): void
     {
-        $result = false;
-
-        if ($contentPtr !== -1) {
-            $content = $contentToken['content'];
-            $result = $this->validateContent($content);
-        }
-
-        if (!$result) {
-            $this->addInvalidFormatError($tagToken, $this->getExpectedContent());
+        if (!($contentToken && $this->validateContent($contentToken['content']))) {
+            $this->addInvalidFormatError($tagToken);
         }
     }
 
@@ -63,7 +55,7 @@ abstract class AbstractValidator implements ValidatorInterface
      *
      * @return void
      */
-    public function addInvalidFormatError(array $tagToken, string $expected)
+    protected function addInvalidFormatError(array $tagToken, string $expected = ''): void
     {
         $this->file->addError(
             AbstractDocSniff::MESSAGE_TAG_CONTENT_FORMAT_INVALID,
@@ -71,7 +63,7 @@ abstract class AbstractValidator implements ValidatorInterface
             AbstractDocSniff::CODE_TAG_CONTENT_FORMAT_INVALID,
             [
                 $tagToken['content'],
-                $expected
+                $expected ?: $this->getExpectedContent()
             ]
         );
     }

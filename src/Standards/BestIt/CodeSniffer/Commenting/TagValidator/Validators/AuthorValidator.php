@@ -4,11 +4,15 @@ declare(strict_types=1);
 
 namespace BestIt\CodeSniffer\Commenting\TagValidator\Validators;
 
+use const FILTER_VALIDATE_EMAIL;
+use function filter_var;
+use function preg_match;
+
 /**
  * Class AuthorValidator
  *
  * @package BestIt\Commenting\TagValidator\Validators
- * @author Nick Lubisch <nick.lubisch@bestit-online.de>
+ * @author blange <nick.lubisch@bestit-online.de>
  */
 class AuthorValidator extends AbstractValidator
 {
@@ -19,7 +23,7 @@ class AuthorValidator extends AbstractValidator
      */
     protected function getExpectedContent(): string
     {
-        return 'Firstname Lastname <your.email@example.com>';
+        return 'name <your.email@example.com>';
     }
 
     /**
@@ -27,32 +31,18 @@ class AuthorValidator extends AbstractValidator
      *
      * @param string $content Tag content to be validated
      *
-     * @return bool Indicator if content is valid or not
+     * @return bool Returns true if the content matches "name <your.email@example.com>" and contains a valid mail.
      */
     protected function validateContent(string $content): bool
     {
-        $parts = explode(' ', $content);
+        $isValidContent = false;
+        $matches = [];
 
-        if (count($parts) < 3) {
-            return false;
+        if (preg_match('/(?P<name>[\w\s]*)\s<(?P<mail>.*)>/uU', $content, $matches) === 1) {
+            $isValidContent = (bool) filter_var($matches['mail'], FILTER_VALIDATE_EMAIL);
         }
 
-        $email = array_pop($parts);
 
-        if (strpos($email, '<') !== 0) {
-            return false;
-        }
-
-        if (strpos($email, '>') !== strlen($email) - 1) {
-            return false;
-        }
-
-        $rawEmail = str_replace(['<', '>'], '', $email);
-
-        if (!filter_var($rawEmail, FILTER_VALIDATE_EMAIL)) {
-            return false;
-        }
-
-        return true;
+        return $isValidContent;
     }
 }

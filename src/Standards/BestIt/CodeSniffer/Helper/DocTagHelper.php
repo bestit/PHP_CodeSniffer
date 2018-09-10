@@ -59,7 +59,7 @@ class DocTagHelper
     private $stackPtr;
 
     /**
-     * DocSummaryHelper constructor.
+     * DocTagHelper constructor.
      *
      * @param File $file The php cs file
      * @param DocHelper $docHelper The doc comment helper
@@ -457,7 +457,7 @@ class DocTagHelper
             $stringPtr = $this->file->findNext([T_DOC_COMMENT_STRING], $tagPtr + 1, $tagEndPtr + 1);
 
 
-            $validator->validate($tagToken, $stringPtr, $stringPtr > 0 ? $this->tokens[$stringPtr] : null);
+            $validator->validate($tagToken, $stringPtr > 0 ? $this->tokens[$stringPtr] : null);
         }
     }
 
