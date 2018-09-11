@@ -4,25 +4,26 @@ declare(strict_types=1);
 
 namespace BestIt\Sniffs\Functions;
 
+use BestIt\CodeSniffer\File as FileDecorator;
+use BestIt\CodeSniffer\Helper\PropertyHelper;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Standards\Squiz\Sniffs\Scope\MethodScopeSniff;
+use PHP_CodeSniffer\Util\Tokens;
+use SlevomatCodingStandard\Helpers\SuppressHelper;
+use SlevomatCodingStandard\Helpers\TokenHelper;
+use function in_array;
+use function substr;
 
 /**
- * Class FluentSetterSniff
+ * Checks if a fluent setter is used per default.
  *
  * @package BestIt\Sniffs\Functions
  *
  * @author Nick Lubisch <nick.lubisch@bestit-online.de>
+ * @author Björn Lange <bjoern.lange@bestit-online.de>
  */
 class FluentSetterSniff extends MethodScopeSniff
 {
-    /**
-     * Code when multiple return statements are found.
-     *
-     * @var string
-     */
-    public const CODE_MULTIPLE_RETURN_FOUND = 'MultipleReturnFound';
-
     /**
      * Code when the method does not return $this.
      *
@@ -38,25 +39,18 @@ class FluentSetterSniff extends MethodScopeSniff
     public const CODE_NO_RETURN_FOUND = 'NoReturnFound';
 
     /**
-     * Error message when no return statement is found.
-     *
-     * @var string
-     */
-    public const ERROR_NO_RETURN_FOUND = 'Method "%s" has no return statement';
-
-    /**
-     * Error message when multiple return statements are found.
-     *
-     * @var string
-     */
-    public const ERROR_MULTIPLE_RETURN_FOUND = 'Method "%s" has multiple return statements';
-
-    /**
      * Error message when the method does not return $this.
      *
      * @var string
      */
-    public const ERROR_MUST_RETURN_THIS = 'The method "%s" must return $this';
+    private const ERROR_MUST_RETURN_THIS = 'The method "%s" must return $this';
+
+    /**
+     * Error message when no return statement is found.
+     *
+     * @var string
+     */
+    private const ERROR_NO_RETURN_FOUND = 'Method "%s" has no return statement';
 
     /**
      * Specifies how an identation looks like.
@@ -70,34 +64,56 @@ class FluentSetterSniff extends MethodScopeSniff
      */
     public function __construct()
     {
-        parent::__construct([T_CLASS, T_ANON_CLASS, T_TRAIT], [T_FUNCTION], false);
+        parent::__construct(Tokens::$ooScopeTokens, [T_FUNCTION], false);
     }
 
     /**
-     * Processes the tokens that this test is listening for.
+     * Registers an error if an empty return (return null; or return;) is given.
      *
-     * @param File $phpcsFile The file where this token was found.
-     * @param int $stackPtr The position in the stack where this token was found.
-     * @param int $currScope The position in the tokens array that opened the scope that this test is listening for.
+     * @param File $file The sniffed file.
+     * @param int $functionPos The position of the function.
+     * @param int $returnPos The position of the return call.
+     * @param string $methodIdent The ident for the method to given in an error.
      *
      * @return void
      */
-    protected function processTokenWithinScope(
-        File $phpcsFile,
-        $stackPtr,
-        $currScope
-    ) {
-        $className = $phpcsFile->getDeclarationName($currScope);
-        $methodName = $phpcsFile->getDeclarationName($stackPtr);
+    private function checkAndRegisterEmptyReturnErrors(
+        File $file,
+        int $functionPos,
+        int $returnPos,
+        string $methodIdent
+    ): void {
+        $nextToken = $file->getTokens()[TokenHelper::findNextEffective($file, $returnPos + 1)];
 
-        if (!$this->checkIfSetterFunction($methodName)) {
-            return;
+        if (!$nextToken || (in_array($nextToken['content'], ['null', ';']))) {
+            $fixMustReturnThis = $file->addFixableError(
+                self::ERROR_MUST_RETURN_THIS,
+                $functionPos,
+                self::CODE_MUST_RETURN_THIS,
+                $methodIdent
+            );
+
+            if ($fixMustReturnThis) {
+                $this->fixMustReturnThis($file, $returnPos);
+            }
         }
+    }
 
+    /**
+     * Checks if there are fluent setter errors and registers errors if needed.
+     *
+     * @param File $phpcsFile The file for this sniff.
+     * @param int $functionPos The position of the used token.
+     * @param int $classPos The position of the class.
+     *
+     * @return void
+     */
+    private function checkForFluentSetterErrors(File $phpcsFile, int $functionPos, int $classPos): void
+    {
         $tokens = $phpcsFile->getTokens();
-        $errorData = sprintf('%s::%s', $className, $methodName);
+        $errorData = $phpcsFile->getDeclarationName($classPos) . '::' . $phpcsFile->getDeclarationName($functionPos);
 
-        $functionToken = $tokens[$stackPtr];
+        $functionToken = $tokens[$functionPos];
         $openBracePtr = $functionToken['scope_opener'];
         $closeBracePtr = $functionToken['scope_closer'];
 
@@ -106,7 +122,7 @@ class FluentSetterSniff extends MethodScopeSniff
         if ($returnPtr === false) {
             $fixNoReturnFound = $phpcsFile->addFixableError(
                 self::ERROR_NO_RETURN_FOUND,
-                $stackPtr,
+                $functionPos,
                 self::CODE_NO_RETURN_FOUND,
                 $errorData
             );
@@ -118,56 +134,82 @@ class FluentSetterSniff extends MethodScopeSniff
             return;
         }
 
-        $nextReturnPtr = $phpcsFile->findNext(
-            T_RETURN,
-            $returnPtr + 1,
-            $closeBracePtr
+        $this->checkAndRegisterEmptyReturnErrors($phpcsFile, $functionPos, $returnPtr, $errorData);
+    }
+
+    /**
+     * Get the sniff name.
+     *
+     * @param string $sniffName If there is an optional sniff name.
+     *
+     * @return string Returns the special sniff name in the code sniffer context.
+     */
+    private function getSniffName(string $sniffName = ''): string
+    {
+        $sniffFQCN = preg_replace(
+            '/Sniff$/',
+            '',
+            str_replace(['\\', '.Sniffs'], ['.', ''], static::class)
         );
 
-        if ($nextReturnPtr !== false) {
-            $phpcsFile->addError(
-                self::ERROR_MULTIPLE_RETURN_FOUND,
-                $stackPtr,
-                self::CODE_MULTIPLE_RETURN_FOUND,
-                $errorData
-            );
-            return;
+        if ($sniffName) {
+            $sniffFQCN .= '.' . $sniffName;
         }
 
-        $thisVariablePtr = $phpcsFile->findNext(T_VARIABLE, $returnPtr, null, false, '$this', true);
+        return $sniffFQCN;
+    }
 
-        if ($thisVariablePtr === false) {
-            $fixMustReturnThis = $phpcsFile->addFixableError(
-                self::ERROR_MUST_RETURN_THIS,
-                $stackPtr,
-                self::CODE_MUST_RETURN_THIS,
-                $errorData
-            );
+    /**
+     * Processes the tokens that this test is listening for.
+     *
+     * @param File $file The file where this token was found.
+     * @param int $functionPos The position in the stack where this token was found.
+     * @param int $classPos The position in the tokens array that opened the scope that this test is listening for.
+     *
+     * @return void
+     */
+    protected function processTokenWithinScope(
+        File $file,
+        $functionPos,
+        $classPos
+    ): void {
+        $isSuppressed = SuppressHelper::isSniffSuppressed(
+            $file,
+            $functionPos,
+            $this->getSniffName(static::CODE_NO_RETURN_FOUND)
+        );
 
-            if ($fixMustReturnThis) {
-                $this->fixMustReturnThis($phpcsFile, $returnPtr);
-            }
-
-            return;
+        if (!$isSuppressed && $this->checkIfSetterFunction($classPos, $file, $functionPos)) {
+            $this->checkForFluentSetterErrors($file, $functionPos, $classPos);
         }
     }
 
     /**
-     * Checks if the given method name relates to a setter function.
+     * Checks if the given method name relates to a setter function of a property.
      *
-     * Its not a simple strpos because a method name like "setupDatabase" would be catched.
-     * We check that the letters until the first upper case character equals "set".
-     * This way we expect that after "set" follows an upper case letter.
-     *
-     * @param string $methodName Current method name
+     * @param int $classPosition The position of the class token.
+     * @param File $file The file of the sniff.
+     * @param int $methodPosition The position of the method token.
      *
      * @return bool Indicator if the given method is a setter function
      */
-    private function checkIfSetterFunction(string $methodName): bool
+    private function checkIfSetterFunction(int $classPosition, File $file, int $methodPosition): bool
     {
-        $firstMatch = strcspn($methodName, 'ABCDEFGHJIJKLMNOPQRSTUVWXYZ');
+        $isSetter = false;
+        $methodName = $file->getDeclarationName($methodPosition);
 
-        return substr($methodName, 0, $firstMatch) === 'set';
+        if (substr($methodName, 0, 3) === 'set') {
+            // We define in our styleguide, that there is only one class per file!
+            $properties = (new PropertyHelper(new FileDecorator($file)))->getProperties(
+                $file->getTokens()[$classPosition]
+            );
+
+            // We require camelCase for methods and properties,
+            // so there should be an "lcfirst-Method" without set-prefix.
+            $isSetter = in_array(lcfirst(substr($methodName, 3)), $properties, true);
+        }
+
+        return $isSetter;
     }
 
     /**

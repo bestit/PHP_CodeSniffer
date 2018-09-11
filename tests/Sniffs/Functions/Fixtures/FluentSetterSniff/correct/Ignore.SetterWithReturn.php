@@ -4,10 +4,10 @@ class FluentSetterSniff
 {
     private $test;
 
-    public function setTest($test)
+    public function setTest($test): bool
     {
         $this->test = $test;
 
-        return false;
+        return true;
     }
 }
