@@ -60,14 +60,6 @@ class FluentSetterSniff extends MethodScopeSniff
     public $identation = '    ';
 
     /**
-     * FluentSetterSniff constructor.
-     */
-    public function __construct()
-    {
-        parent::__construct(Tokens::$ooScopeTokens, [T_FUNCTION], false);
-    }
-
-    /**
      * Registers an error if an empty return (return null; or return;) is given.
      *
      * @param File $file The sniffed file.
