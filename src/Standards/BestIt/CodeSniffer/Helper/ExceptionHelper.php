@@ -12,7 +12,7 @@ use PHP_CodeSniffer\Files\File;
  * Registers the exception as an error or warning on the file.
  *
  * @author blange <bjoern.lange@bestit-online.de>
- * @package BestIt\CodeSniffer
+ * @package BestIt\CodeSniffer\Helper
  */
 class ExceptionHelper
 {

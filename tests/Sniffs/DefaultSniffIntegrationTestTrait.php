@@ -5,11 +5,14 @@ declare(strict_types=1);
 namespace BestIt\Sniffs;
 
 use PHP_CodeSniffer\Files\File;
+use function array_merge;
 use function array_reverse;
 use function explode;
 use function preg_match;
+use function range;
 use function sprintf;
 use function str_replace;
+use function strpos;
 
 /**
  * The basic calls for checking sniffs against files.
@@ -143,7 +146,7 @@ trait DefaultSniffIntegrationTestTrait
     private function loadAssertData(bool $forErrors = true): array
     {
         //
-        $pattern = '/(?P<code>\w+)(\(\w*\))?\.(?P<errorLines>[\d\,]*)(?P<fixedSuffix>\.fixed)?\.php/';
+        $pattern = '/(?P<code>\w+)(\(\w*\))?\.(?P<errorLines>[\d-\,]*)(?P<fixedSuffix>\.fixed)?\.php/';
         $errorData = [];
 
         foreach ($this->getFixtureFiles($forErrors) as $file) {
@@ -154,10 +157,22 @@ trait DefaultSniffIntegrationTestTrait
                 if (@$matches['fixedSuffix']) {
                     $errorData[str_replace('.fixed', '', $fileName)][] = true;
                 } else {
+                    $errorLines = explode(',', $matches['errorLines']);
+
+                    // Check if there is a range.
+                    foreach ($errorLines as $index => $errorLine) {
+                        if (strpos($errorLine, '-') !== false) {
+                            unset($errorLines[$index]);
+
+                            $errorLines = array_merge($errorLines, range(...explode('-', $errorLine)));
+                        }
+                    }
+
+
                     $errorData[$fileName] = [
                         $file,
                         $matches['code'],
-                        array_map('intval', explode(',', $matches['errorLines']))
+                        array_map('intval', $errorLines)
                     ];
                 }
             }

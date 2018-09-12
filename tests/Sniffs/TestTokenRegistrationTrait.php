@@ -17,7 +17,8 @@ trait TestTokenRegistrationTrait
     /**
      * The tested class.
      *
-     * We use this var to reduce the hard dependencies on internals from a specific slevomat version.
+     * We use this var to reduce the hard dependencies on internals from a specific slevomat version and we get more
+     * explicit and navigateable codes.
      *
      * @var Sniff|void
      */
