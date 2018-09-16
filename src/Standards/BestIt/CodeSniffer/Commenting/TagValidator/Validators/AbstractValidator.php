@@ -10,8 +10,8 @@ use BestIt\Sniffs\Commenting\AbstractDocSniff;
 /**
  * Class AbstractValidator
  *
- * @package BestIt\Commenting\TagValidator\Validators
  * @author Nick Lubisch <nick.lubisch@bestit-online.de>
+ * @package BestIt\Commenting\TagValidator\Validators
  */
 abstract class AbstractValidator implements ValidatorInterface
 {

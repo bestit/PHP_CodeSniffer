@@ -32,7 +32,6 @@ namespace Test;
  * @property-read
  * @property-write
  * @return
- * @see
  * @since
  * @source
  * @subpackage

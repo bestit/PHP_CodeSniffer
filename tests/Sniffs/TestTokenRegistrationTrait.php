@@ -9,8 +9,8 @@ use PHP_CodeSniffer\Sniffs\Sniff;
 /**
  * Checks the registered tokens.
  *
- * @package BestIt\Sniffs
  * @author Bjoern Lange <bjoern.lange@bestit-online.de>
+ * @package BestIt\Sniffs
  */
 trait TestTokenRegistrationTrait
 {

@@ -10,8 +10,8 @@ use PHP_CodeSniffer\Sniffs\Sniff;
 /**
  * Class GeneralDocSniff
  *
- * @package BestIt\Sniffs\Commenting
  * @author Nick Lubisch <nick.lubisch@bestit-online.de>
+ * @package BestIt\Sniffs\Commenting
  */
 class GeneralDocSniff implements Sniff
 {
@@ -263,12 +263,12 @@ class GeneralDocSniff implements Sniff
     /**
      * Fixes lines before comment.
      *
+     * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
+     *
      * @param int[] $whitespacePtrs Pointers of all whitespaces before comment.
      * @param bool $noWhitespace Indicator which controls if there should be minimum one whitespace or not.
      *
      * @return void
-     *
-     * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
      */
     private function fixMuchLinesBeforeComment(array $whitespacePtrs, bool $noWhitespace = false)
     {

@@ -4,19 +4,19 @@ declare(strict_types=1);
 
 namespace BestIt\Sniffs\Commenting;
 
-use BestIt\CodeSniffer\AbstractSniff;
 use BestIt\CodeSniffer\Helper\DocDescriptionHelper;
 use BestIt\CodeSniffer\Helper\DocHelper;
 use BestIt\CodeSniffer\Helper\DocSummaryHelper;
 use BestIt\CodeSniffer\Helper\DocTagHelper;
 use BestIt\CodeSniffer\Helper\PropertyHelper;
+use BestIt\Sniffs\AbstractSniff;
 use const T_VARIABLE;
 
 /**
  * Class AbstractDocSniff
  *
- * @package BestIt\Sniffs\Commenting
  * @author Nick Lubisch <nick.lubisch@bestit-online.de>
+ * @package BestIt\Sniffs\Commenting
  */
 abstract class AbstractDocSniff extends AbstractSniff
 {
@@ -224,20 +224,6 @@ abstract class AbstractDocSniff extends AbstractSniff
     public const MESSAGE_TAG_OCCURRENCE_MAX = 'The comment tag "%s" must appear maximum %d times.';
 
     /**
-     * Code that comment tag has the wrong position.
-     *
-     * @var string
-     */
-    public const CODE_TAG_WRONG_POSITION = 'TagWrongPosition';
-
-    /**
-     * Message that comment tag has the wrong position.
-     *
-     * @var string
-     */
-    public const MESSAGE_TAG_WRONG_POSITION = 'This tag has the wrong position. Expected "%s"';
-
-    /**
      * Code that the summary starts with an capital letter.
      *
      * @var string
@@ -264,48 +250,6 @@ abstract class AbstractDocSniff extends AbstractSniff
      * @var string
      */
     public const MESSAGE_DESCRIPTION_UC_FIRST = 'The first letter of the description is not uppercase';
-
-    /**
-     * Code that there is no line before given tag group.
-     *
-     * @var string
-     */
-    public const CODE_NO_LINES_AROUND_TAG_GROUP = 'NoLinesAroundTagGroup';
-
-    /**
-     * Message that there is no line before given tag.
-     *
-     * @var string
-     */
-    public const MESSAGE_NO_LINE_AROUND_TAG_GROUP = 'There are no blank lines around the tag group';
-
-    /**
-     * Code that there is no line after given tag.
-     *
-     * @var string
-     */
-    public const CODE_NO_LINE_AFTER_TAG = 'NoLineAfterTag';
-
-    /**
-     * Message that there is no line after given tag.
-     *
-     * @var string
-     */
-    public const MESSAGE_NO_LINE_AFTER_TAG = 'There is no blank line after tag %s';
-
-    /**
-     * Code that there are too much lines after given tag.
-     *
-     * @var string
-     */
-    public const CODE_MUCH_LINES_AFTER_TAG = 'MuchLinesAfterTag';
-
-    /**
-     * Message that there are too much lines after given tag.
-     *
-     * @var string
-     */
-    public const MESSAGE_MUCH_LINES_AFTER_TAG = 'There are too much blank lines after tag %s';
 
     /**
      * Code that the tag content format is invalid.
@@ -343,25 +287,11 @@ abstract class AbstractDocSniff extends AbstractSniff
     public $disallowedTags = [];
 
     /**
-     * DocHelper for comment
+     * Indicator if a description is required.
      *
-     * @var DocHelper
+     * @var bool
      */
-    private $docHelper;
-
-    /**
-     * Helper for comment summary.
-     *
-     * @var DocSummaryHelper
-     */
-    protected $summaryHelper;
-
-    /**
-     * The doc comment description helper.
-     *
-     * @var DocDescriptionHelper
-     */
-    private $descriptionHelper;
+    public $descriptionRequired = false;
 
     /**
      * The doc comment helper
@@ -371,18 +301,11 @@ abstract class AbstractDocSniff extends AbstractSniff
     private $tagHelper;
 
     /**
-     * Indicator if a description is required.
-     *
-     * @var bool
-     */
-    public $descriptionRequired = false;
-
-    /**
      * Returns an array of registered tokens.
      *
      * @return int[] Returns array of tokens to listen for
      */
-    public function getRegisteredTokens(): array
+    public function register(): array
     {
         return $this->getListenedTokens();
     }
@@ -392,37 +315,42 @@ abstract class AbstractDocSniff extends AbstractSniff
      *
      * @return void
      */
-    public function processToken()
+    protected function processToken(): void
     {
         $isVariable = false;
 
         $propertyHelper = new PropertyHelper($this->getFile());
 
-        if ($this->getListenerToken()['code'] === T_VARIABLE
-            && !$propertyHelper->isProperty($this->getListenerPointer())
+        if ($this->getToken()['code'] === T_VARIABLE
+            && !$propertyHelper->isProperty($this->getStackPosition())
         ) {
             $isVariable = true;
         }
 
-        $this->docHelper = new DocHelper($this->getFile(), $this->getListenerPointer());
-        $this->summaryHelper = new DocSummaryHelper($this->getFile(), $this->docHelper);
-        $this->descriptionHelper = new DocDescriptionHelper(
+        $docHelper = new DocHelper($this->getFile(), $this->getStackPosition());
+        $summaryHelper = new DocSummaryHelper($this->getFile(), $docHelper);
+        $descriptionHelper = new DocDescriptionHelper(
             $this->getFile(),
-            $this->docHelper,
-            $this->summaryHelper
+            $docHelper,
+            $summaryHelper
         );
-        $this->tagHelper = new DocTagHelper($this->getFile(), $this->docHelper, $this->getListenerPointer());
 
-        if (!$this->docHelper->checkCommentExists($this->getListenerPointer(), $isVariable)
-            || !$this->docHelper->checkCommentMultiLine($isVariable)
+        if (!$docHelper->checkCommentExists($this->getStackPosition(), $isVariable)
+            || !$docHelper->checkCommentMultiLine($isVariable)
         ) {
             return;
         }
 
-        if (!$isVariable) {
-            $this->summaryHelper->checkCommentSummary();
+        $this->tagHelper = new DocTagHelper(
+            $docHelper->getCommentStartToken(),
+            $this->getFile(),
+            $this->getStackPosition()
+        );
 
-            $this->descriptionHelper->checkCommentDescription(
+        if (!$isVariable) {
+            $summaryHelper->checkCommentSummary();
+
+            $descriptionHelper->checkCommentDescription(
                 $this->descriptionRequired
             );
         }

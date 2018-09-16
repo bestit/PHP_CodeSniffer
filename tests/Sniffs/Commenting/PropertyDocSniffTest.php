@@ -10,19 +10,18 @@ use PHP_CodeSniffer\Files\File;
 /**
  * Class PropertyDocSniffTest
  *
- * @package BestIt\Sniffs\Commenting
  * @author Nick Lubisch <nick.lubisch@bestit-online.de>
+ * @package BestIt\Sniffs\Commenting
  */
 class PropertyDocSniffTest extends SniffTestCase
 {
     /**
      * Test that the given files contain no errors.
      *
+     * @dataProvider getCorrectFileList
      * @param string $file Provided file to test
      *
      * @return void
-     *
-     * @dataProvider getCorrectFileList
      */
     public function testCorrect(string $file)
     {
@@ -32,14 +31,14 @@ class PropertyDocSniffTest extends SniffTestCase
     /**
      * Tests non fixable errors.
      *
+     * @dataProvider getErrorData
+     *
      * @param string $file Fixture file
      * @param string $error Error code
      * @param int[] $lines Lines where the error code occurs
      * @param array $sniffProperties Array of sniff properties
      *
      * @return void
-     *
-     * @dataProvider getErrorData
      */
     public function testErrors(string $file, string $error, array $lines, array $sniffProperties = [])
     {
@@ -49,14 +48,14 @@ class PropertyDocSniffTest extends SniffTestCase
     /**
      * Tests fixable errors.
      *
+     * @dataProvider getFixableErrorData
+     *
      * @param string $file Fixture file
      * @param string $error Error code
      * @param int[] $lines Lines where the error code occurs
      * @param array $sniffProperties Array of sniff properties
      *
      * @return void
-     *
-     * @dataProvider getFixableErrorData
      */
     public function testFixableErrors(string $file, string $error, array $lines, array $sniffProperties = [])
     {
@@ -138,8 +137,7 @@ class PropertyDocSniffTest extends SniffTestCase
                     43,
                     44,
                     45,
-                    46,
-                    47
+                    46
                 ]
             ],
 
@@ -211,12 +209,6 @@ class PropertyDocSniffTest extends SniffTestCase
                 PropertyDocSniff::CODE_DESCRIPTION_UC_FIRST,
                 [16]
             ],
-
-            PropertyDocSniff::CODE_MUCH_LINES_AFTER_TAG => [
-                'MuchLinesAfterTag.php',
-                PropertyDocSniff::CODE_MUCH_LINES_AFTER_TAG,
-                [19]
-            ],
         ];
     }
 
@@ -248,11 +240,8 @@ class PropertyDocSniffTest extends SniffTestCase
                 PropertyDocSniff::CODE_TAG_NOT_ALLOWED,
                 PropertyDocSniff::CODE_TAG_OCCURRENCE_MIN,
                 PropertyDocSniff::CODE_TAG_OCCURRENCE_MAX,
-                PropertyDocSniff::CODE_TAG_WRONG_POSITION,
                 PropertyDocSniff::CODE_SUMMARY_UC_FIRST,
                 PropertyDocSniff::CODE_DESCRIPTION_UC_FIRST,
-                PropertyDocSniff::CODE_NO_LINE_AFTER_TAG,
-                PropertyDocSniff::CODE_MUCH_LINES_AFTER_TAG,
             ]
         );
     }

@@ -10,8 +10,8 @@ use PHP_CodeSniffer\Files\File;
 /**
  * Test for ReturnTypeDeclarationSniff
  *
- * @package BestIt\Sniffs\TypeHints
  * @author Stephan Weber <stephan.weber@bestit-online.de>
+ * @package BestIt\Sniffs\TypeHints
  */
 class ReturnTypeDeclarationSniffTest extends SniffTestCase
 {

@@ -10,9 +10,8 @@ use PHP_CodeSniffer\Files\File;
 /**
  * Class SpaceAfterDeclareSniffTest
  *
- * @package BestIt\Sniffs\Formatting
- *
  * @author Nick Lubisch <nick.lubisch@bestit-online.de>
+ * @package BestIt\Sniffs\Formatting
  */
 class SpaceAfterDeclareSniffTest extends SniffTestCase
 {

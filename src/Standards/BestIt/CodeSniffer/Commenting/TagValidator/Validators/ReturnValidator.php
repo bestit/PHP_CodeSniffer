@@ -9,8 +9,8 @@ use BestIt\Sniffs\Commenting\AbstractDocSniff;
 /**
  * Class ReturnValidator
  *
- * @package BestIt\Commenting\TagValidator\Validators
  * @author Nick Lubisch <nick.lubisch@bestit-online.de>
+ * @package BestIt\Commenting\TagValidator\Validators
  */
 class ReturnValidator extends AbstractValidator
 {

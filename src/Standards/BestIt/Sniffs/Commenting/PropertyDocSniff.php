@@ -7,8 +7,8 @@ namespace BestIt\Sniffs\Commenting;
 /**
  * Class PropertyDocSniff
  *
- * @package BestIt\Sniffs\Commenting
  * @author Nick Lubisch <nick.lubisch@bestit-online.de>
+ * @package BestIt\Sniffs\Commenting
  */
 class PropertyDocSniff extends ConstantDocSniff
 {

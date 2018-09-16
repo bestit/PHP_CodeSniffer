@@ -10,24 +10,24 @@ use BestIt\Sniffs\Commenting\AbstractDocSniff;
 /**
  * Class DocTagOccurenceHelper
  *
- * @package BestIt\CodeSniffer\Helper
  * @author Nick Lubisch <nick.lubisch@bestit-online.de>
+ * @package BestIt\CodeSniffer\Helper
  */
 class DocTagOccurenceHelper
 {
+    /**
+     * The position of the comment stark.
+     *
+     * @var int
+     */
+    private $commentStartPointer;
+
     /**
      * The deferred CodeSniffer file.
      *
      * @var File
      */
     private $file;
-
-    /**
-     * The DocHelper
-     *
-     * @var DocHelper
-     */
-    private $docHelper;
 
     /**
      * The DocTagHelper
@@ -40,14 +40,14 @@ class DocTagOccurenceHelper
      * DocTagOccurenceHelper constructor.
      *
      * @param File $file The deferred CodeSniffer file.
-     * @param DocHelper $docHelper The DocHelper
+     * @param int $commentStartPointer The position of the doc comment start.
      * @param DocTagHelper $docTagHelper The DocTagHelper
      */
-    public function __construct(File $file, DocHelper $docHelper, DocTagHelper $docTagHelper)
+    public function __construct(File $file, int $commentStartPointer, DocTagHelper $docTagHelper)
     {
         $this->docTagHelper = $docTagHelper;
-        $this->docHelper = $docHelper;
         $this->file = $file;
+        $this->commentStartPointer = $commentStartPointer;
     }
 
     /**
@@ -78,7 +78,7 @@ class DocTagOccurenceHelper
             if ($min !== 0 && $tagCount < $min) {
                 $this->file->addError(
                     AbstractDocSniff::MESSAGE_TAG_OCCURRENCE_MIN,
-                    $this->docHelper->getCommentStartPointer(),
+                    $this->commentStartPointer,
                     AbstractDocSniff::CODE_TAG_OCCURRENCE_MIN,
                     [
                         $tagName,
@@ -92,7 +92,7 @@ class DocTagOccurenceHelper
             if ($max !== null && $tagCount > $max) {
                 $this->file->addError(
                     AbstractDocSniff::MESSAGE_TAG_OCCURRENCE_MAX,
-                    $this->docHelper->getCommentStartPointer(),
+                    $this->commentStartPointer,
                     AbstractDocSniff::CODE_TAG_OCCURRENCE_MAX,
                     [
                         $tagName,

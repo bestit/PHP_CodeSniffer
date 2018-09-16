@@ -10,19 +10,18 @@ use PHP_CodeSniffer\Files\File;
 /**
  * Class ClassDocSniffTest
  *
- * @package BestIt\Sniffs\Commenting
  * @author Nick Lubisch <nick.lubisch@bestit-online.de>
+ * @package BestIt\Sniffs\Commenting
  */
 class ClassDocSniffTest extends SniffTestCase
 {
     /**
      * Test that the given files contain no errors.
      *
+     * @dataProvider getCorrectFileList
      * @param string $file Provided file to test
      *
      * @return void
-     *
-     * @dataProvider getCorrectFileList
      */
     public function testCorrect(string $file)
     {
@@ -32,14 +31,14 @@ class ClassDocSniffTest extends SniffTestCase
     /**
      * Tests non fixable errors.
      *
+     * @dataProvider getErrorData
+     *
      * @param string $file Fixture file
      * @param string $error Error code
      * @param int[] $lines Lines where the error code occurs
      * @param array $sniffProperties Array of sniff properties
      *
      * @return void
-     *
-     * @dataProvider getErrorData
      */
     public function testErrors(string $file, string $error, array $lines, array $sniffProperties = [])
     {
@@ -49,14 +48,14 @@ class ClassDocSniffTest extends SniffTestCase
     /**
      * Tests fixable errors.
      *
+     * @dataProvider getFixableErrorData
+     *
      * @param string $file Fixture file
      * @param string $error Error code
      * @param int[] $lines Lines where the error code occurs
      * @param array $sniffProperties Array of sniff properties
      *
      * @return void
-     *
-     * @dataProvider getFixableErrorData
      */
     public function testFixableErrors(string $file, string $error, array $lines, array $sniffProperties = [])
     {
@@ -139,8 +138,7 @@ class ClassDocSniffTest extends SniffTestCase
                     40,
                     41,
                     42,
-                    43,
-                    44
+                    43
                 ]
             ],
 
@@ -278,18 +276,6 @@ class ClassDocSniffTest extends SniffTestCase
                 ClassDocSniff::CODE_DESCRIPTION_UC_FIRST,
                 [8]
             ],
-
-            ClassDocSniff::CODE_MUCH_LINES_AFTER_TAG => [
-                'MuchLinesAfterTag.php',
-                ClassDocSniff::CODE_MUCH_LINES_AFTER_TAG,
-                [16, 19, 23, 28]
-            ],
-
-            ClassDocSniff::CODE_NO_LINES_AROUND_TAG_GROUP => [
-                'TagGroups.php',
-                ClassDocSniff::CODE_NO_LINES_AROUND_TAG_GROUP,
-                [7, 9]
-            ],
         ];
     }
 
@@ -321,13 +307,9 @@ class ClassDocSniffTest extends SniffTestCase
                 ClassDocSniff::CODE_TAG_NOT_ALLOWED,
                 ClassDocSniff::CODE_TAG_OCCURRENCE_MIN,
                 ClassDocSniff::CODE_TAG_OCCURRENCE_MAX,
-                ClassDocSniff::CODE_TAG_WRONG_POSITION,
                 ClassDocSniff::CODE_SUMMARY_UC_FIRST,
                 ClassDocSniff::CODE_DESCRIPTION_UC_FIRST,
-                ClassDocSniff::CODE_NO_LINE_AFTER_TAG,
-                ClassDocSniff::CODE_MUCH_LINES_AFTER_TAG,
-                ClassDocSniff::CODE_TAG_CONTENT_FORMAT_INVALID,
-                ClassDocSniff::CODE_NO_LINES_AROUND_TAG_GROUP
+                ClassDocSniff::CODE_TAG_CONTENT_FORMAT_INVALID
             ]
         );
     }

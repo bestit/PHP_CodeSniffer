@@ -10,8 +10,8 @@ use BestIt\Sniffs\Commenting\AbstractDocSniff;
 /**
  * Class DocSummaryHelper
  *
- * @package BestIt\Helper
  * @author Nick Lubisch <nick.lubisch@bestit-online.de>
+ * @package BestIt\Helper
  */
 class DocSummaryHelper
 {
@@ -262,7 +262,9 @@ class DocSummaryHelper
         $endLine = $summaryStartToken['line'] - 1;
 
         $this->file->getFixer()->beginChangeset();
-        $this->file->getFixer()->removeLines($startLine, $endLine);
+
+        (new LineHelper($this->file))->removeLines($startLine, $endLine);
+
         $this->file->getFixer()->endChangeset();
     }
 

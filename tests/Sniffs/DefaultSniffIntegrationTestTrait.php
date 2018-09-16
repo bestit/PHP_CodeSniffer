@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace BestIt\Sniffs;
 
 use PHP_CodeSniffer\Files\File;
+use function array_reverse;
 use function explode;
 use function preg_match;
 use function sprintf;
@@ -13,8 +14,8 @@ use function str_replace;
 /**
  * The basic calls for checking sniffs against files.
  *
- * @package BestIt\Sniffs
  * @author Bjoern Lange <bjoern.lange@bestit-online.de>
+ * @package BestIt\Sniffs
  */
 trait DefaultSniffIntegrationTestTrait
 {
@@ -37,11 +38,10 @@ trait DefaultSniffIntegrationTestTrait
     /**
      * Test that the given files contain no errors.
      *
+     * @dataProvider getCorrectFileListAsDataProvider
      * @param string $file Provided file to test
      *
      * @return void
-     *
-     * @dataProvider getCorrectFileListAsDataProvider
      */
     public function testCorrect(string $file): void
     {
@@ -60,14 +60,14 @@ trait DefaultSniffIntegrationTestTrait
     /**
      * Tests errors.
      *
+     * @dataProvider getErrorAsserts
+     *
      * @param string $file Fixture file
      * @param string $error Error code
      * @param int[] $lines Lines where the error code occurs
      * @param bool $withFixable Should we checked the fixed version?
      *
      * @return void
-     *
-     * @dataProvider getErrorAsserts
      */
     public function testErrors(string $file, string $error, array $lines, bool $withFixable = false): void
     {
@@ -96,6 +96,27 @@ trait DefaultSniffIntegrationTestTrait
     ): File;
 
     /**
+     * Tests warnings.
+     *
+     * @dataProvider getWarningAsserts
+     *
+     * @param string $file Fixture file
+     * @param string $error Error code
+     * @param int[] $lines Lines where the error code occurs
+     * @param bool $withFixable Should we test a fixable?
+     *
+     * @return void
+     */
+    public function testWarnings(string $file, string $error, array $lines, bool $withFixable = false): void
+    {
+        $report = $this->assertWarningsInFile($file, $error, $lines);
+
+        if ($withFixable) {
+            $this->assertAllFixedInFile($report);
+        }
+    }
+
+    /**
      * Returns data for errors.
      *
      * @return array List of error data (Filepath, error code, error lines, fixable)
@@ -122,7 +143,7 @@ trait DefaultSniffIntegrationTestTrait
     private function loadAssertData(bool $forErrors = true): array
     {
         //
-        $pattern = '/(?P<code>[\w]*)(\(\d\))?\.(?P<errorLines>[\d\,]*)(?P<fixedSuffix>\.fixed)?\.php/';
+        $pattern = '/(?P<code>\w+)(\(\w*\))?\.(?P<errorLines>[\d\,]*)(?P<fixedSuffix>\.fixed)?\.php/';
         $errorData = [];
 
         foreach ($this->getFixtureFiles($forErrors) as $file) {
@@ -154,9 +175,34 @@ trait DefaultSniffIntegrationTestTrait
      */
     private function getFixtureFiles(bool $forErrors = true): array
     {
-        return glob(sprintf(
+        return array_reverse(glob(sprintf(
             $this->getFixturePath() . '/with_%s/*.php',
             $forErrors ? 'errors' : 'warnings'
-        )) ?: [];
+        ))) ?: [];
     }
+
+    /**
+     * Returns data for warnings.
+     *
+     * @return array List of warnig data (Filepath, error code, error lines, fixable)
+     */
+    public function getWarningAsserts(): array
+    {
+        return $this->loadAssertData(false);
+    }
+
+    /**
+     * Asserts all warnings in a given file.
+     *
+     * @param string $file Filename of the fixture
+     * @param string $error Error code
+     * @param int[] $lines Array of lines where the error code occurs
+     *
+     * @return File The php cs file
+     */
+    abstract protected function assertWarningsInFile(
+        string $file,
+        string $error,
+        array $lines
+    ): File;
 }

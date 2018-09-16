@@ -10,8 +10,8 @@ use PHPUnit\Framework\TestCase;
 /**
  * Class RulesetTest.
  *
- * @package BestIt
  * @author Tim Kellner <tim.kellner@bestit-online.de>
+ * @package BestIt
  */
 class RulesetTest extends TestCase
 {

@@ -10,8 +10,8 @@ use function substr;
 /**
  * Class PropertyHelper
  *
- * @package BestIt\Helper
  * @author Nick Lubisch <nick.lubisch@bestit-online.de>
+ * @package BestIt\Helper
  */
 final class PropertyHelper
 {
