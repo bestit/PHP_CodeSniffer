@@ -9,8 +9,8 @@ use function constant;
 /**
  * Helps you checking required constants in a class.
  *
- * @package BestIt
  * @author Bjoern Lange <bjoern.lange@bestit-online.de>
+ * @package BestIt
  */
 trait TestRequiredConstantsTrait
 {
@@ -47,12 +47,12 @@ trait TestRequiredConstantsTrait
     /**
      * Checks if the api is extended.
      *
+     * @dataProvider getRequiredConstantAsserts
+     *
      * @param string $constant The name of the constant.
      * @param string $constantValue We check the value as well, because some constants are fixed in ruleset.xmls.
      *
      * @return void
-     *
-     * @dataProvider getRequiredConstantAsserts
      */
     public function testRequiredConstants(string $constant, ?string $constantValue = null)
     {

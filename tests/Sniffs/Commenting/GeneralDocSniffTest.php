@@ -10,19 +10,18 @@ use PHP_CodeSniffer\Files\File;
 /**
  * Class GeneralDocSniff
  *
- * @package BestIt\Sniffs\Commenting
  * @author Nick Lubisch <nick.lubisch@bestit-online.de>
+ * @package BestIt\Sniffs\Commenting
  */
 class GeneralDocSniffTest extends SniffTestCase
 {
     /**
      * Test that the given files contain no errors.
      *
+     * @dataProvider getCorrectFileList
      * @param string $file Provided file to test
      *
      * @return void
-     *
-     * @dataProvider getCorrectFileList
      */
     public function testCorrect(string $file)
     {

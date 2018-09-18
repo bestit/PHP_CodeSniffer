@@ -10,9 +10,8 @@ use PHP_CodeSniffer\Files\File;
 /**
  * Class OpenTagSniffTest
  *
- * @package BestIt\Sniffs\Formatting
- *
  * @author Nick Lubisch <nick.lubisch@bestit-online.de>
+ * @package BestIt\Sniffs\Formatting
  */
 class OpenTagSniffTest extends SniffTestCase
 {

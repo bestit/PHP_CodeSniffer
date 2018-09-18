@@ -10,8 +10,8 @@ use BestIt\Sniffs\Commenting\AbstractDocSniff;
 /**
  * Class DocDescriptionHelper
  *
- * @package BestIt\Helper
  * @author Nick Lubisch <nick.lubisch@bestit-online.de>
+ * @package BestIt\Helper
  */
 class DocDescriptionHelper
 {
@@ -320,7 +320,7 @@ class DocDescriptionHelper
     {
         $this->file->getFixer()->beginChangeset();
 
-        $this->file->getFixer()->removeLines($startLine, $endLine);
+        (new LineHelper($this->file))->removeLines($startLine, $endLine);
 
         $this->file->getFixer()->endChangeset();
     }

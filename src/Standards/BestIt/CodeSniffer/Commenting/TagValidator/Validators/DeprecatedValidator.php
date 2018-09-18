@@ -7,8 +7,8 @@ namespace BestIt\CodeSniffer\Commenting\TagValidator\Validators;
 /**
  * Class DeprecatedValidator
  *
- * @package BestIt\Commenting\TagValidator\Validators
  * @author Nick Lubisch <nick.lubisch@bestit-online.de>
+ * @package BestIt\Commenting\TagValidator\Validators
  */
 class DeprecatedValidator extends AbstractValidator
 {

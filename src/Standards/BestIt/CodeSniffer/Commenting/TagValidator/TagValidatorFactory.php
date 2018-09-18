@@ -13,8 +13,8 @@ use function ucfirst;
 /**
  * Class TagValidatorFactory
  *
- * @package BestIt\Commenting\TagValidator
  * @author Nick Lubisch <nick.lubisch@bestit-online.de>
+ * @package BestIt\Commenting\TagValidator
  */
 class TagValidatorFactory
 {

@@ -11,8 +11,8 @@ use PHP_CodeSniffer\Util\Tokens;
 /**
  * Class DocHelper
  *
- * @package BestIt\Helper
  * @author Nick Lubisch <nick.lubisch@bestit-online.de>
+ * @package BestIt\Helper
  */
 class DocHelper
 {

@@ -37,52 +37,41 @@ Execute the PHP_CodeSniffer (path can vary on your composer configuration):
 
 The base for the BestIt Standard is [PSR-12](https://github.com/php-fig/fig-standards/blob/master/proposed/extended-coding-style-guide.md).
 
-| Sniff | Standard | Description |
-| ----- | -------- | ----------- |
-| BestIt.Commenting.ClassDoc.TagFormatContentInvalid | BestIt | Authors MUST commit to their classes and add an [author phpDoc-Tag](http://docs.phpdoc.org/references/phpdoc/tags/author.html). |
-| Generic.PHP.DisallowShortOpenTag.EchoFound | PSR-1 | PHP code MUST use the long <?php ?> tags or the short-echo <?= ?> tags; it MUST NOT use the other tag variations. |
-| Generic.Files.ByteOrderMark | PSR-1 | PHP code MUST use only UTF-8 without BOM. |
-| SlevomatCodingStandard.Classes.ClassConstantVisibility.MissingConstantVisibility | BestIt | Constants MUST be marked with a visibility. |
-| SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnly.ReferenceViaFullyQualifiedName | BestIt | No class may be used via its FQCN. You MUST import every class! |
-| Squiz.Classes.ValidClassName | PSR-1 | Class names MUST be declared in StudlyCaps. |
-| Generic.NamingConventions.UpperCaseConstantName | PSR-1 | Class constants MUST be declared in all upper case with underscore separators. |
-| Generic.Files.LineEndings | PSR-2 | All PHP files MUST use the Unix LF (linefeed) line ending. |
-| Squiz.WhiteSpace.SuperfluousWhitespace" | PSR-2 | There MUST NOT be trailing whitespace at the end of non-blank lines. |
-| Squiz.WhiteSpace.SuperfluousWhitespace.StartFile | PSR-2 | There MUST NOT be trailing whitespace at the end of non-blank lines. |
-| Squiz.WhiteSpace.SuperfluousWhitespace.EndFile | PSR-2 | There MUST NOT be trailing whitespace at the end of non-blank lines. |
-| Squiz.WhiteSpace.SuperfluousWhitespace.EmptyLines | PSR-2 | There MUST NOT be trailing whitespace at the end of non-blank lines. |
-| Generic.Formatting.DisallowMultipleStatements | PSR-2 | There MUST NOT be more than one statement per line. |
-| Generic.WhiteSpace.ScopeIndent | PSR-2 | Code MUST use an indent of 4 spaces. |
-| Generic.WhiteSpace.DisallowTabIndent | PSR-2 | Code MUST NOT use tabs for indenting. |
-| Generic.PHP.LowerCaseKeyword | PSR-2 | The PHP constants true, false, and null MUST be in lower case. |
-| BestIt.Functions.FluentSetter | BestIt | Every setter function MUST return $this if nothing else is returned.  |
-| BestIt.Formatting.SpaceAfterDeclare | BestIt | There MUST be one empty line after declare-statement. |
-| BestIt.TypeHints.DeclareStrictTypes | BestIt | Every file MUST have "declare(strict_types=1);" two line breaks after the opening tag. There MUST be no spaces aroung the equal-sign. |
-| BestIt.TypeHints.TypeHintDeclaration | BestIt | Every function or method MUST have a type hint if the return annotation is valid. |
-| Squiz.Strings.DoubleQuoteUsage | Squiz | Every String MUST be wrapped with single quotes. |
-| Generic.Formatting.SpaceAfterCast | BestIt | There MUST be a space after cast. |
-| Generic.Arrays.DisallowLongArraySyntax | BestIt | Every array syntax MUST be in short array syntax. |
-| BestIt.Formatting.OpenTagSniff | BestIt | After the open tag there MUST be an empty line. |
-| BestIt.Commenting.AbstractDocSniff.NoImmediateDocFound¹| BestIt | There MUST be a doc block before the listened token |
-| BestIt.Commenting.AbstractDocSniff.NoSummary¹| BestIt | There MUST be a summary |
-| BestIt.Commenting.AbstractDocSniff.SummaryNotFirst¹| BestIt | The summary MUST be the first statement in a doc block |
-| BestIt.Commenting.AbstractDocSniff.SummaryTooLong¹| BestIt | The summary length MUST be maximum 120 characters |
-| BestIt.Commenting.AbstractDocSniff.CommentNotMultiLine¹| BestIt | Every doc block must be multi line |
-| BestIt.Commenting.AbstractDocSniff.NoLineAfterSummary¹| BestIt | There MUST be an empty line after the summary |
-| BestIt.Commenting.AbstractDocSniff.LineAfterSummaryNotEmpty¹| BestIt | The line after the summary MUST be empty |
-| BestIt.Commenting.AbstractDocSniff.DescriptionNotFound¹| BestIt | There MUST be doc block long description |
-| BestIt.Commenting.AbstractDocSniff.NoLineAfterDescription¹| BestIt | There MUST be an empty line after the long description |
-| BestIt.Commenting.AbstractDocSniff.MuchLinesAfterDescription¹| BestIt | There MUST be an empty line after the long description  |
-| BestIt.Commenting.AbstractDocSniff.DescriptionTooLong¹| BestIt | Every line of the long description MUST be not longer than 120 characters |
-| BestIt.Commenting.AbstractDocSniff.TagNotAllowed¹| BestIt | The given tag MUST NOT be used |
-| BestIt.Commenting.AbstractDocSniff.TagOccurrenceMin¹| BestIt | The given tag MUST occur min x times |
-| BestIt.Commenting.AbstractDocSniff.TagOccurrenceMax¹| BestIt | The given tag MUST occur max x times |
-| BestIt.Commenting.AbstractDocSniff.TagWrongPosition¹| BestIt | The given tag MUST be at the correct position |
-| BestIt.Commenting.AbstractDocSniff.SummaryUcFirst¹| BestIt | The summary first letter MUST be a capital letter |
-| BestIt.Commenting.AbstractDocSniff.DescriptionUcFirst¹| BestIt | The long description first letter MUST be a capital letter |
-| BestIt.Commenting.AbstractDocSniff.NoLineAfterTag¹| BestIt | There MUST be an empty line after the given tag |
-| BestIt.Commenting.AbstractDocSniff.MuchLinesAfterTag¹| BestIt | There MUST be a single empty line after the given tag |
-| BestIt.Commenting.AbstractDocSniff.TagFormatContentInvalid¹| BestIt | The tag content MUST match the given pattern |
+| Sniff | Description | suppressable |
+| ----- | ----------- | ------------ |
+| BestIt.Commenting.ClassDoc.TagFormatContentInvalid | Authors MUST commit to their classes and add an [author phpDoc-Tag](http://docs.phpdoc.org/references/phpdoc/tags/author.html). |
+| BestIt.Comment.TagSorting.MissingNewlineBetweenTags | You SHOULD separate tag groups and the final return with a newline. | Yes (By Sniff-Name) |
+| BestIt.Comment.TagSorting.WrongTagSorting | You SHOULD sort the tags by their occurrence and then alphabetically, but @return SHOULD be the last. | Yes (By Sniff-Name) |
+| SlevomatCodingStandard.Classes.ClassConstantVisibility.MissingConstantVisibility | Constants MUST be marked with a visibility. |
+| SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnly.ReferenceViaFullyQualifiedName | No class may be used via its FQCN. You MUST import every class! |
+| BestIt.Functions.FluentSetter | Every setter function MUST return $this if nothing else is returned.  | Yes |
+| BestIt.Formatting.SpaceAfterDeclare | There MUST be one empty line after declare-statement. |
+| BestIt.TypeHints.DeclareStrictTypes | Every file MUST have "declare(strict_types=1);" two line breaks after the opening tag. There MUST be no spaces aroung the equal-sign. |
+| BestIt.TypeHints.TypeHintDeclaration | Every function or method MUST have a type hint if the return annotation is valid. |
+| Squiz.Strings.DoubleQuoteUsage | Every String MUST be wrapped with single quotes. |
+| Generic.Formatting.SpaceAfterCast | There MUST be a space after cast. |
+| Generic.Arrays.DisallowLongArraySyntax | Every array syntax MUST be in short array syntax. |
+| BestIt.Formatting.OpenTagSniff | After the open tag there MUST be an empty line. |
+| BestIt.Commenting.AbstractDocSniff.NoImmediateDocFound¹|  There MUST be a doc block before the listened token |
+| BestIt.Commenting.AbstractDocSniff.NoSummary¹|  There MUST be a summary |
+| BestIt.Commenting.AbstractDocSniff.SummaryNotFirst¹|  The summary MUST be the first statement in a doc block |
+| BestIt.Commenting.AbstractDocSniff.SummaryTooLong¹|  The summary length MUST be maximum 120 characters |
+| BestIt.Commenting.AbstractDocSniff.CommentNotMultiLine¹|  Every doc block must be multi line |
+| BestIt.Commenting.AbstractDocSniff.NoLineAfterSummary¹|  There MUST be an empty line after the summary |
+| BestIt.Commenting.AbstractDocSniff.LineAfterSummaryNotEmpty¹|  The line after the summary MUST be empty |
+| BestIt.Commenting.AbstractDocSniff.DescriptionNotFound¹|  There MUST be doc block long description |
+| BestIt.Commenting.AbstractDocSniff.NoLineAfterDescription¹|  There MUST be an empty line after the long description |
+| BestIt.Commenting.AbstractDocSniff.MuchLinesAfterDescription¹|  There MUST be an empty line after the long description  |
+| BestIt.Commenting.AbstractDocSniff.DescriptionTooLong¹|  Every line of the long description MUST be not longer than 120 characters |
+| BestIt.Commenting.AbstractDocSniff.TagNotAllowed¹|  The given tag MUST NOT be used |
+| BestIt.Commenting.AbstractDocSniff.TagOccurrenceMin¹|  The given tag MUST occur min x times |
+| BestIt.Commenting.AbstractDocSniff.TagOccurrenceMax¹|  The given tag MUST occur max x times |
+| BestIt.Commenting.AbstractDocSniff.TagWrongPosition¹|  The given tag MUST be at the correct position |
+| BestIt.Commenting.AbstractDocSniff.SummaryUcFirst¹|  The summary first letter MUST be a capital letter |
+| BestIt.Commenting.AbstractDocSniff.DescriptionUcFirst¹|  The long description first letter MUST be a capital letter |
+| BestIt.Commenting.AbstractDocSniff.NoLineAfterTag¹|  There MUST be an empty line after the given tag |
+| BestIt.Commenting.AbstractDocSniff.MuchLinesAfterTag¹|  There MUST be a single empty line after the given tag |
+| BestIt.Commenting.AbstractDocSniff.TagFormatContentInvalid¹|  The tag content MUST match the given pattern |
 
 ¹ AbstractDocSniff means ClassDocSniff, MethodDocSniff, ConstantDocSniff and PropertyDocSniff  
 
@@ -140,7 +129,7 @@ Create a **_with_errors_** folder into your fixtures directory. Every php file i
 You must provide the error structure through the file name. The file name must match the following pregex:
 
 ```regex
-/(?P<code>[\w]*)(\(\d\))?\.(?P<errorLines>[\d\,]*)(?P<fixedSuffix>\.fixed)?\.php/
+/(?P<code>[\w]+)(\(\w*\))?\.(?P<errorLines>[\d\,]+)(?P<fixedSuffix>\.fixed)?\.php/
 ```
 
 The file name gives information about which errors in which line should occur.
@@ -157,7 +146,7 @@ Create a **_with_warnings_** folder into your fixtures directory. Every php file
 You must provide the warning structure through the file name. The file name must match the following pregex:
 
 ```regex
-/(?P<code>[\w]*)(\(\d\))?\.(?P<errorLines>[\d\,]*)(?P<fixedSuffix>\.fixed)?\.php/
+/(?P<code>[\w]+)(\(\w*\))?\.(?P<errorLines>[\d\,]+)(?P<fixedSuffix>\.fixed)?\.php/
 ```
 
 The file name gives information about which warning in which line should occur.

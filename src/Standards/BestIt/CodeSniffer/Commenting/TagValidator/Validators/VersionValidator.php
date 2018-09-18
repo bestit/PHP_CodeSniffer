@@ -7,8 +7,8 @@ namespace BestIt\CodeSniffer\Commenting\TagValidator\Validators;
 /**
  * Class VersionValidator
  *
- * @package BestIt\Commenting\TagValidator\Validators
  * @author Nick Lubisch <nick.lubisch@bestit-online.de>
+ * @package BestIt\Commenting\TagValidator\Validators
  */
 class VersionValidator extends AbstractValidator
 {

@@ -36,7 +36,6 @@ class Test
      * @property
      * @property-read
      * @property-write
-     * @see
      * @since
      * @source
      * @subpackage

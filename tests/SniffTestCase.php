@@ -13,10 +13,10 @@ use function implode;
 use const DIRECTORY_SEPARATOR;
 
 /**
- * Class SniffTestCase
+ * The basic sniff test case.
  *
- * @package BestIt\Sniffs
  * @author Nick Lubisch <nick.lubisch@bestit-online.de>
+ * @package BestIt\Sniffs
  */
 abstract class SniffTestCase extends SlevomatTestCase
 {
@@ -68,10 +68,37 @@ abstract class SniffTestCase extends SlevomatTestCase
             $file = $this->getFixtureFilePath($file);
         }
 
-        $report = $this->checkSniffFile($file, $sniffProperties);
+        $report = $this->checkFile($file, $sniffProperties);
 
         foreach ($lines as $line) {
             $this->assertSniffError(
+                $report,
+                $line,
+                $error
+            );
+        }
+
+        return $report;
+    }
+
+    /**
+     * Asserts all warnings in a given file.
+     *
+     * @param string $file Filename of the fixture
+     * @param string $error Error code
+     * @param int[] $lines Array of lines where the error code occurs
+     *
+     * @return File The php cs file
+     */
+    protected function assertWarningsInFile(
+        string $file,
+        string $error,
+        array $lines
+    ): File {
+        $report = $this->checkFile($file);
+
+        foreach ($lines as $line) {
+            $this->assertSniffWarning(
                 $report,
                 $line,
                 $error
@@ -90,9 +117,10 @@ abstract class SniffTestCase extends SlevomatTestCase
      */
     protected function assertFileCorrect(string $file): void
     {
-        $report = $this->checkSniffFile($file);
+        $report = $this->checkFile($file);
 
         $this->assertNoSniffErrorInFile($report);
+        $this->assertNoSniffWarningInFile($report);
     }
 
     /**
@@ -122,7 +150,7 @@ abstract class SniffTestCase extends SlevomatTestCase
     }
 
     /**
-     * Returns a list of files which start with Correct*
+     * Returns a list of files which start with correct*
      *
      * @return array With the path to a file as the first parameter.
      */
@@ -162,15 +190,131 @@ abstract class SniffTestCase extends SlevomatTestCase
     }
 
     /**
-     * Checks the given file with defined error codes.
+     * Checks that there are no warnings for the given file.
      *
-     * @param string $file Filename of the fixture
-     * @param array $sniffProperties Array of sniff properties
+     * Copied the following from slevomat but changed to warnings.
      *
-     * @return File The php cs file
+     * @param File $file
+     * @see SlevomatTestCase::assertNoSniffErrorInFile()
+     *
+     * @return void
      */
-    protected function checkSniffFile(string $file, array $sniffProperties = []): File
+    protected static function assertNoSniffWarningInFile(File $file): void
     {
-        return $this->checkFile($file, $sniffProperties);
+        $warnings = $file->getWarnings();
+
+        self::assertEmpty($warnings, sprintf('No warnings expected, but %d warnings found.', count($warnings)));
+    }
+
+    /**
+     * Checks the warnings for the given sniff file.
+     *
+     * Copied the following from slevomat but changed to warnings.
+     *
+     * @see SlevomatTestCase::assertSniffError()
+     *
+     * @param File $codeSnifferFile
+     * @param int $line
+     * @param string $code
+     * @param null|string $message
+     *
+     * @return void
+     */
+    protected static function assertSniffWarning(
+        File $codeSnifferFile,
+        int $line,
+        string $code,
+        ?string $message = null
+    ): void {
+        $warnings = $codeSnifferFile->getWarnings();
+        self::assertTrue(isset($warnings[$line]), sprintf('Expected warning on line %s, but none found.', $line));
+
+        $sniffCode = sprintf('%s.%s', static::getSniffName(), $code);
+
+        self::assertTrue(
+            self::hasWarning($warnings[$line], $sniffCode, $message),
+            sprintf(
+                'Expected warning %s%s, but none found on line %d.%sWarnings found on line %d:%s%s%s',
+                $sniffCode,
+                $message !== null ? sprintf(' with message "%s"', $message) : '',
+                $line,
+                PHP_EOL . PHP_EOL,
+                $line,
+                PHP_EOL,
+                self::getFormattedWarnings($warnings[$line]),
+                PHP_EOL
+            )
+        );
+    }
+
+    /**
+     * Copied from slevomat but changed to warnings.
+     *
+     * @see SlevomatTestCase::assertNoSniffError()
+     *
+     * @param File $codeSnifferFile
+     * @param int $line
+     *
+     * @return void
+     */
+    protected static function assertNoSniffWarning(File $codeSnifferFile, int $line): void
+    {
+        $warnings = $codeSnifferFile->getWarnings();
+        self::assertFalse(
+            isset($warnings[$line]),
+            sprintf(
+                'Expected no warning on line %s, but found:%s%s%s',
+                $line,
+                PHP_EOL . PHP_EOL,
+                isset($warnings[$line]) ? self::getFormattedWarnings($warnings[$line]) : '',
+                PHP_EOL
+            )
+        );
+    }
+
+    /**
+     * Copied from slevomat but changed to warnings.
+     *
+     * @see SlevomatTestCase::hasError()
+     *
+     * @param mixed[][][] $warningsOnLine
+     * @param string $sniffCode
+     * @param string|null $message
+     *
+     * @return bool
+     */
+    private static function hasWarning(array $warningsOnLine, string $sniffCode, ?string $message = null): bool
+    {
+        foreach ($warningsOnLine as $warningsOnPosition) {
+            foreach ($warningsOnPosition as $warning) {
+                if (!(
+                    $warning['source'] === $sniffCode
+                    && ($message === null || strpos($warning['message'], $message) !== false)
+                )) {
+                    continue;
+                }
+
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Copied from slevomat but changed to warnings.
+     *
+     * @param array $warnings
+     * @see SlevomatTestCase::getFormattedErrors()
+     *
+     * @return string
+     */
+    private static function getFormattedWarnings(array $warnings): string
+    {
+        return implode(PHP_EOL, array_map(function (array $warnings): string {
+            return implode(PHP_EOL, array_map(function (array $warning): string {
+                return sprintf("\t%s: %s", $warning['source'], $warning['message']);
+            }, $warnings));
+        }, $warnings));
     }
 }

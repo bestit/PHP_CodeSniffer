@@ -11,8 +11,8 @@ use const FILTER_VALIDATE_EMAIL;
 /**
  * Class AuthorValidator
  *
- * @package BestIt\Commenting\TagValidator\Validators
  * @author blange <nick.lubisch@bestit-online.de>
+ * @package BestIt\Commenting\TagValidator\Validators
  */
 class AuthorValidator extends AbstractValidator
 {

@@ -22,4 +22,7 @@
     <rule ref="rulesets/design.xml"/>
     <rule ref="rulesets/naming.xml"/>
     <rule ref="rulesets/unusedcode.xml"/>
+
+    <!-- So many copies of the original code from the sniffer/slevomat. Ignore it! -->
+    <exclude-pattern>AbstractFileDecorator.php</exclude-pattern>
 </ruleset>

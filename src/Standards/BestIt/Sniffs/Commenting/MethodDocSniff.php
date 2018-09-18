@@ -7,8 +7,8 @@ namespace BestIt\Sniffs\Commenting;
 /**
  * Class MethodDocSniff
  *
- * @package BestIt\Sniffs\Commenting
  * @author Nick Lubisch <nick.lubisch@bestit-online.de>
+ * @package BestIt\Sniffs\Commenting
  */
 class MethodDocSniff extends AbstractDocSniff
 {
@@ -33,7 +33,6 @@ class MethodDocSniff extends AbstractDocSniff
         '@property',
         '@property-read',
         '@property-write',
-        '@see',
         '@since',
         '@source',
         '@subpackage',
@@ -66,14 +65,12 @@ class MethodDocSniff extends AbstractDocSniff
         return [
             '@param' => [
                 'min' => 0,
-                'max' => null,
-                'lineAfter' => true
+                'max' => null
             ],
             '@return' => [
                 'min' => 1,
                 'max' => 1,
-                'if' => [$this->getTagHelper(), 'isNoWhitelistedFunction'],
-                'lineAfter' => true
+                'if' => [$this->getTagHelper(), 'isNoWhitelistedFunction']
             ],
             '@throws' => [
                 'min' => 0,

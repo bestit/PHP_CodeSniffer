@@ -9,8 +9,8 @@ use BestIt\Sniffs\Commenting\AbstractDocSniff;
 /**
  * Class ParamValidator
  *
- * @package BestIt\Commenting\TagValidator\Validators
  * @author Nick Lubisch <nick.lubisch@bestit-online.de>
+ * @package BestIt\Commenting\TagValidator\Validators
  */
 class ParamValidator extends AbstractValidator
 {

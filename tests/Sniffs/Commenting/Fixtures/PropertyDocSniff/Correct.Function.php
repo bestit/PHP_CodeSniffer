@@ -5,8 +5,8 @@ namespace Test;
 /**
  * Class Test
  *
- * @package Test
  * @author Nick Lubisch <nick.lubisch@bestit-online.de>
+ * @package Test
  */
 class Test
 {

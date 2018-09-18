@@ -15,8 +15,8 @@ use SlevomatCodingStandard\Sniffs\TypeHints\TypeHintDeclarationSniff as BaseSnif
 /**
  * Class ReturnTypeDeclarationSniff
  *
- * @package BestIt\Sniffs\TypeHints
  * @author Stephan Weber <stephan.weber@bestit-online.de>
+ * @package BestIt\Sniffs\TypeHints
  */
 class ReturnTypeDeclarationSniff extends BaseSniff
 {

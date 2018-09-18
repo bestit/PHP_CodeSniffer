@@ -13,9 +13,8 @@ use const T_FUNCTION;
 /**
  * Class FluentSetterSniffTest
  *
- * @package BestIt\Sniffs\Functions
- *
  * @author Nick Lubisch <nick.lubisch@bestit-online.de>
+ * @package BestIt\Sniffs\Functions
  */
 class FluentSetterSniffTest extends SniffTestCase
 {
