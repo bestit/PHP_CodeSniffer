@@ -6,10 +6,11 @@
         {
             "name": "Tim Kellner",
             "email": "tim.kellner@bestit-online.de"
-        }, {
-        "name": "Nick Lubisch",
-        "email": "nick.lubisch@bestit-online.de"
-      }
+        },
+        {
+            "name": "Nick Lubisch",
+            "email": "nick.lubisch@bestit-online.de"
+        }
     ],
     "autoload": {
         "psr-4": {
@@ -17,9 +18,9 @@
         }
     },
     "autoload-dev": {
-            "files": [
-                "vendor/squizlabs/php_codesniffer/autoload.php"
-            ],
+        "files": [
+            "vendor/squizlabs/php_codesniffer/autoload.php"
+        ],
         "psr-4": {
           "BestIt\\": "tests/"
         }
@@ -27,7 +28,7 @@
     "prefer-stable": true,
     "require": {
         "php": "^7.1",
-        "slevomat/coding-standard": "^4.2.0",
+        "slevomat/coding-standard": "^4.7.0",
         "squizlabs/php_codesniffer": "^3.3"
     },
     "require-dev": {
