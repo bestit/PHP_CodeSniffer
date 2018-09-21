@@ -33,6 +33,19 @@ Execute the PHP_CodeSniffer (path can vary on your composer configuration):
 ```bash
 ./vendor/bin/phpcs
 ```
+
+### Use in PHPStorm
+
+How to use it in our favorite IDE?
+
+/File/Settings:
+
+1. ![Choose executable](./docs/exe.png "Executable")
+
+2. ![Set up inspection](./docs/inspection.png "Inspection")
+
+3. ... and choose our ruleset.
+
 ## Used sniffs
 
 The base for the BestIt Standard is [PSR-12](https://github.com/php-fig/fig-standards/blob/master/proposed/extended-coding-style-guide.md).
