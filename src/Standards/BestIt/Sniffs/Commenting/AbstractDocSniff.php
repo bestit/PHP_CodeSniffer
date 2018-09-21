@@ -7,7 +7,6 @@ namespace BestIt\Sniffs\Commenting;
 use BestIt\CodeSniffer\Helper\DocDescriptionHelper;
 use BestIt\CodeSniffer\Helper\DocHelper;
 use BestIt\CodeSniffer\Helper\DocSummaryHelper;
-use BestIt\CodeSniffer\Helper\DocTagHelper;
 use BestIt\CodeSniffer\Helper\PropertyHelper;
 use BestIt\Sniffs\AbstractSniff;
 use const T_VARIABLE;
@@ -182,48 +181,6 @@ abstract class AbstractDocSniff extends AbstractSniff
     public const MESSAGE_DESCRIPTION_TOO_LONG = 'The description exceeds the maximum length of 120 chars.';
 
     /**
-     * Code that comment tag is not allowed.
-     *
-     * @var string
-     */
-    public const CODE_TAG_NOT_ALLOWED = 'TagNotAllowed';
-
-    /**
-     * Message that comment tag is not allowed.
-     *
-     * @var string
-     */
-    public const MESSAGE_TAG_NOT_ALLOWED = 'The comment tag "%s" is not allowed.';
-
-    /**
-     * Code that comment tag must appear minimum x times.
-     *
-     * @var string
-     */
-    public const CODE_TAG_OCCURRENCE_MIN = 'TagOccurrenceMin';
-
-    /**
-     * Message that comment tag must appear minimum x times.
-     *
-     * @var string
-     */
-    public const MESSAGE_TAG_OCCURRENCE_MIN = 'The comment tag "%s" must appear minimum %d times.';
-
-    /**
-     * Code that comment tag must appear maximum x times.
-     *
-     * @var string
-     */
-    public const CODE_TAG_OCCURRENCE_MAX = 'TagOccurrenceMax';
-
-    /**
-     * Message that comment tag must appear maximum x times.
-     *
-     * @var string
-     */
-    public const MESSAGE_TAG_OCCURRENCE_MAX = 'The comment tag "%s" must appear maximum %d times.';
-
-    /**
      * Code that the summary starts with an capital letter.
      *
      * @var string
@@ -252,20 +209,6 @@ abstract class AbstractDocSniff extends AbstractSniff
     public const MESSAGE_DESCRIPTION_UC_FIRST = 'The first letter of the description is not uppercase';
 
     /**
-     * Code that the tag content format is invalid.
-     *
-     * @var string
-     */
-    public const CODE_TAG_CONTENT_FORMAT_INVALID = 'TagFormatContentInvalid';
-
-    /**
-     * Message that the tag content format is invalid.
-     *
-     * @var string
-     */
-    public const MESSAGE_TAG_CONTENT_FORMAT_INVALID = '"%s"-Tag format is invalid. Expected: "%s"';
-
-    /**
      * Code that the tag content has a mixed type warning.
      *
      * @var string
@@ -280,35 +223,11 @@ abstract class AbstractDocSniff extends AbstractSniff
     public const MESSAGE_TAG_WARNING_MIXED = 'Consider removing the mixed type';
 
     /**
-     * This tags are disallowed and could be injected from the outside.
-     *
-     * @var array
-     */
-    public $disallowedTags = [];
-
-    /**
      * Indicator if a description is required.
      *
      * @var bool
      */
     public $descriptionRequired = false;
-
-    /**
-     * The doc comment helper
-     *
-     * @var DocTagHelper
-     */
-    private $tagHelper;
-
-    /**
-     * Returns an array of registered tokens.
-     *
-     * @return int[] Returns array of tokens to listen for
-     */
-    public function register(): array
-    {
-        return $this->getListenedTokens();
-    }
 
     /**
      * Processes a found registered token.
@@ -319,33 +238,27 @@ abstract class AbstractDocSniff extends AbstractSniff
     {
         $isVariable = false;
 
-        $propertyHelper = new PropertyHelper($this->getFile());
+        $propertyHelper = new PropertyHelper($this->file);
 
-        if ($this->getToken()['code'] === T_VARIABLE
-            && !$propertyHelper->isProperty($this->getStackPosition())
+        if ($this->token['code'] === T_VARIABLE
+            && !$propertyHelper->isProperty($this->stackPos)
         ) {
             $isVariable = true;
         }
 
-        $docHelper = new DocHelper($this->getFile(), $this->getStackPosition());
-        $summaryHelper = new DocSummaryHelper($this->getFile(), $docHelper);
+        $docHelper = new DocHelper($this->file, $this->stackPos);
+        $summaryHelper = new DocSummaryHelper($this->file, $docHelper);
         $descriptionHelper = new DocDescriptionHelper(
-            $this->getFile(),
+            $this->file,
             $docHelper,
             $summaryHelper
         );
 
-        if (!$docHelper->checkCommentExists($this->getStackPosition(), $isVariable)
+        if (!$docHelper->checkCommentExists($this->stackPos, $isVariable)
             || !$docHelper->checkCommentMultiLine($isVariable)
         ) {
             return;
         }
-
-        $this->tagHelper = new DocTagHelper(
-            $docHelper->getCommentStartToken(),
-            $this->getFile(),
-            $this->getStackPosition()
-        );
 
         if (!$isVariable) {
             $summaryHelper->checkCommentSummary();
@@ -354,44 +267,5 @@ abstract class AbstractDocSniff extends AbstractSniff
                 $this->descriptionRequired
             );
         }
-
-        $this->tagHelper->checkCommentTags(
-            $this->getTagMetadata(),
-            $this->getDisallowedTags()
-        );
-    }
-
-    /**
-     * Returns TagHelper
-     *
-     * @return DocTagHelper Returns doc comment tag helper for callable function
-     */
-    public function getTagHelper(): DocTagHelper
-    {
-        return $this->tagHelper;
-    }
-
-    /**
-     * Returns which tokens should be listened to.
-     *
-     * @return int[] List of tokens to listen for
-     */
-    abstract public function getListenedTokens(): array;
-
-    /**
-     * Returns allowed tag occurrences.
-     *
-     * @return array List of tag metadata
-     */
-    abstract public function getTagMetadata(): array;
-
-    /**
-     * Returns an array of disallowed tags.
-     *
-     * @return array The array of the disallowed tags as strings.
-     */
-    protected function getDisallowedTags(): array
-    {
-        return $this->disallowedTags;
     }
 }

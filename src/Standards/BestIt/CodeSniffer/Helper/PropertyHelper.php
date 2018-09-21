@@ -11,7 +11,7 @@ use function substr;
  * Class PropertyHelper
  *
  * @author Nick Lubisch <nick.lubisch@bestit-online.de>
- * @package BestIt\Helper
+ * @package BestIt\CodeSniffer\Helper
  */
 final class PropertyHelper
 {

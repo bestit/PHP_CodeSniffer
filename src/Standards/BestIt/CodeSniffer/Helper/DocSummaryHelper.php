@@ -11,7 +11,7 @@ use BestIt\Sniffs\Commenting\AbstractDocSniff;
  * Class DocSummaryHelper
  *
  * @author Nick Lubisch <nick.lubisch@bestit-online.de>
- * @package BestIt\Helper
+ * @package BestIt\CodeSniffer\Helper
  */
 class DocSummaryHelper
 {

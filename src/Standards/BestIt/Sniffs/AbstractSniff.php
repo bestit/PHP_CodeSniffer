@@ -23,14 +23,14 @@ abstract class AbstractSniff implements Sniff
      *
      * @var File|void
      */
-    private $file;
+    protected $file;
 
     /**
      * Position of the listened token.
      *
      * @var int|void
      */
-    private $stackPos;
+    protected $stackPos;
 
     /**
      * The used suppresshelper.
@@ -44,7 +44,7 @@ abstract class AbstractSniff implements Sniff
      *
      * @var array|void
      */
-    private $token;
+    protected $token;
 
     /**
      * All tokens of the class.
@@ -70,7 +70,7 @@ abstract class AbstractSniff implements Sniff
      */
     protected function getExceptionHandler(): ExceptionHelper
     {
-        return new ExceptionHelper($this->getFile());
+        return new ExceptionHelper($this->file);
     }
 
     /**
@@ -119,8 +119,8 @@ abstract class AbstractSniff implements Sniff
     protected function isSniffSuppressed(?string $rule = null): bool
     {
         return $this->getSuppressHelper()->isSniffSuppressed(
-            $this->getFile(),
-            $this->getStackPosition(),
+            $this->file,
+            $this->stackPos,
             $this->getSniffName($rule)
         );
     }
@@ -137,7 +137,7 @@ abstract class AbstractSniff implements Sniff
     {
         $this->file = new File($phpcsFile);
         $this->stackPos = $stackPos;
-        $this->tokens = $phpcsFile->getTokens();
+        $this->tokens = $this->file->getTokens();
         $this->token = $this->tokens[$stackPos];
 
         $this->setUp();
@@ -155,36 +155,6 @@ abstract class AbstractSniff implements Sniff
      * @return void
      */
     abstract protected function processToken(): void;
-
-    /**
-     * Getter for deferred PHP_CodeSniffer class.
-     *
-     * @return File The deferred CodeSniffer file
-     */
-    protected function getFile(): File
-    {
-        return $this->file;
-    }
-
-    /**
-     * Returns the position of our token in the stack.
-     *
-     * @return int The position of our token in the stack.
-     */
-    protected function getStackPosition(): int
-    {
-        return $this->stackPos;
-    }
-
-    /**
-     * Getter for the used token.
-     *
-     * @return array Returns token data of the listened token
-     */
-    protected function getToken(): array
-    {
-        return $this->token;
-    }
 
     /**
      * Do you want to setup things before processing the token?
