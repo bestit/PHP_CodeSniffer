@@ -8,7 +8,6 @@ use BestIt\CodeSniffer\File as FileDecorator;
 use BestIt\CodeSniffer\Helper\PropertyHelper;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Standards\Squiz\Sniffs\Scope\MethodScopeSniff;
-use PHP_CodeSniffer\Util\Tokens;
 use SlevomatCodingStandard\Helpers\SuppressHelper;
 use SlevomatCodingStandard\Helpers\TokenHelper;
 use function in_array;
@@ -58,14 +57,6 @@ class FluentSetterSniff extends MethodScopeSniff
      * @var string
      */
     public $identation = '    ';
-
-    /**
-     * FluentSetterSniff constructor.
-     */
-    public function __construct()
-    {
-        parent::__construct(Tokens::$ooScopeTokens, [T_FUNCTION], false);
-    }
 
     /**
      * Registers an error if an empty return (return null; or return;) is given.
