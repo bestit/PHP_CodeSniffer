@@ -109,116 +109,7 @@ class ClassDocSniffTest extends SniffTestCase
                 [
                     'descriptionRequired' => true
                 ]
-            ],
-
-            ClassDocSniff::CODE_TAG_NOT_ALLOWED => [
-                'TagNotAllowed.php',
-                ClassDocSniff::CODE_TAG_NOT_ALLOWED,
-                [
-                    20,
-                    21,
-                    22,
-                    23,
-                    24,
-                    25,
-                    26,
-                    27,
-                    28,
-                    29,
-                    30,
-                    31,
-                    32,
-                    33,
-                    34,
-                    35,
-                    36,
-                    37,
-                    38,
-                    39,
-                    40,
-                    41,
-                    42,
-                    43
-                ]
-            ],
-
-            ClassDocSniff::CODE_TAG_OCCURRENCE_MIN => [
-                'TagOccurrenceMin.php',
-                ClassDocSniff::CODE_TAG_OCCURRENCE_MIN,
-                [5]
-            ],
-
-            'SummaryWithoutAnyTags' => [
-                'SummaryOnly.php',
-                ClassDocSniff::CODE_TAG_OCCURRENCE_MIN,
-                [5]
-            ],
-
-            'Tag.Author.Empty' => [
-                'Tag.Author.Empty.php',
-                ClassDocSniff::CODE_TAG_CONTENT_FORMAT_INVALID,
-                [9]
-            ],
-
-            'Tag.Author.OnlyFirstname' => [
-                'Tag.Author.OnlyFirstname.php',
-                ClassDocSniff::CODE_TAG_CONTENT_FORMAT_INVALID,
-                [9]
-            ],
-
-            'Tag.Author.OnlyFullname' => [
-                'Tag.Author.OnlyFullname.php',
-                ClassDocSniff::CODE_TAG_CONTENT_FORMAT_INVALID,
-                [9]
-            ],
-
-            'Tag.Author.WrongEmail1' => [
-                'Tag.Author.WrongEmail1.php',
-                ClassDocSniff::CODE_TAG_CONTENT_FORMAT_INVALID,
-                [9]
-            ],
-
-            'Tag.Author.WrongEmail2' => [
-                'Tag.Author.WrongEmail2.php',
-                ClassDocSniff::CODE_TAG_CONTENT_FORMAT_INVALID,
-                [9]
-            ],
-
-            'Tag.Author.WrongEmail3' => [
-                'Tag.Author.WrongEmail3.php',
-                ClassDocSniff::CODE_TAG_CONTENT_FORMAT_INVALID,
-                [9]
-            ],
-
-            'Tag.Author.WrongEmail4' => [
-                'Tag.Author.WrongEmail4.php',
-                ClassDocSniff::CODE_TAG_CONTENT_FORMAT_INVALID,
-                [9]
-            ],
-
-            'Tag.Package.WithWhitespace' => [
-                'Tag.Package.WithWhitespace.php',
-                ClassDocSniff::CODE_TAG_CONTENT_FORMAT_INVALID,
-                [8]
-            ],
-
-            'Tag.Package.MultipleBackslash' => [
-                'Tag.Package.MultipleBackslash.php',
-                ClassDocSniff::CODE_TAG_CONTENT_FORMAT_INVALID,
-                [8]
-            ],
-
-            'Tag.Package.StartingBackslash' => [
-                'Tag.Package.StartingBackslash.php',
-                ClassDocSniff::CODE_TAG_CONTENT_FORMAT_INVALID,
-                [8]
-            ],
-
-            'Tag.Deprecated.Empty' => [
-                'Tag.Deprecated.Empty.php',
-                ClassDocSniff::CODE_TAG_CONTENT_FORMAT_INVALID,
-                [11]
-            ],
+            ]
         ];
 
         return array_merge(
@@ -304,12 +195,8 @@ class ClassDocSniffTest extends SniffTestCase
                 ClassDocSniff::CODE_DESCRIPTION_TOO_LONG,
                 ClassDocSniff::CODE_NO_LINE_AFTER_DESCRIPTION,
                 ClassDocSniff::CODE_MUCH_LINES_AFTER_DESCRIPTION,
-                ClassDocSniff::CODE_TAG_NOT_ALLOWED,
-                ClassDocSniff::CODE_TAG_OCCURRENCE_MIN,
-                ClassDocSniff::CODE_TAG_OCCURRENCE_MAX,
                 ClassDocSniff::CODE_SUMMARY_UC_FIRST,
                 ClassDocSniff::CODE_DESCRIPTION_UC_FIRST,
-                ClassDocSniff::CODE_TAG_CONTENT_FORMAT_INVALID
             ]
         );
     }

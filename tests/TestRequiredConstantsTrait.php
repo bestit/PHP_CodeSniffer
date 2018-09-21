@@ -63,8 +63,6 @@ trait TestRequiredConstantsTrait
             'Constant ' . $fullConstantName . ' is missing.'
         );
 
-        $fixture = $this->fixture;
-
         if ($constantValue !== null) {
             static::assertSame(
                 constant($fullConstantName),

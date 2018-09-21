@@ -109,49 +109,7 @@ class ConstantDocSniffTest extends SniffTestCase
                 [
                     'descriptionRequired' => true
                 ]
-            ],
-
-            ConstantDocSniff::CODE_TAG_NOT_ALLOWED => [
-                'TagNotAllowed.php',
-                ConstantDocSniff::CODE_TAG_NOT_ALLOWED,
-                [
-                    24,
-                    25,
-                    26,
-                    27,
-                    28,
-                    29,
-                    30,
-                    31,
-                    32,
-                    33,
-                    34,
-                    35,
-                    36,
-                    37,
-                    38,
-                    39,
-                    40,
-                    41,
-                    42,
-                    43,
-                    44,
-                    45,
-                    46
-                ]
-            ],
-
-            ConstantDocSniff::CODE_TAG_OCCURRENCE_MIN => [
-                'TagOccurrenceMin.php',
-                ConstantDocSniff::CODE_TAG_OCCURRENCE_MIN,
-                [13]
-            ],
-
-            ConstantDocSniff::CODE_TAG_OCCURRENCE_MAX => [
-                'TagOccurrenceMax.php',
-                ConstantDocSniff::CODE_TAG_OCCURRENCE_MAX,
-                [13]
-            ],
+            ]
         ];
 
         return array_merge(
@@ -237,9 +195,6 @@ class ConstantDocSniffTest extends SniffTestCase
                 ConstantDocSniff::CODE_DESCRIPTION_TOO_LONG,
                 ConstantDocSniff::CODE_NO_LINE_AFTER_DESCRIPTION,
                 ConstantDocSniff::CODE_MUCH_LINES_AFTER_DESCRIPTION,
-                ConstantDocSniff::CODE_TAG_NOT_ALLOWED,
-                ConstantDocSniff::CODE_TAG_OCCURRENCE_MIN,
-                ConstantDocSniff::CODE_TAG_OCCURRENCE_MAX,
                 ConstantDocSniff::CODE_SUMMARY_UC_FIRST,
                 ConstantDocSniff::CODE_DESCRIPTION_UC_FIRST,
             ]

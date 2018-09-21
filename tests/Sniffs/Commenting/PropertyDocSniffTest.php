@@ -109,49 +109,7 @@ class PropertyDocSniffTest extends SniffTestCase
                 [
                     'descriptionRequired' => true
                 ]
-            ],
-
-            PropertyDocSniff::CODE_TAG_NOT_ALLOWED => [
-                'TagNotAllowed.php',
-                PropertyDocSniff::CODE_TAG_NOT_ALLOWED,
-                [
-                    24,
-                    25,
-                    26,
-                    27,
-                    28,
-                    29,
-                    30,
-                    31,
-                    32,
-                    33,
-                    34,
-                    35,
-                    36,
-                    37,
-                    38,
-                    39,
-                    40,
-                    41,
-                    42,
-                    43,
-                    44,
-                    45,
-                    46
-                ]
-            ],
-
-            PropertyDocSniff::CODE_TAG_OCCURRENCE_MIN => [
-                'TagOccurrenceMin.php',
-                PropertyDocSniff::CODE_TAG_OCCURRENCE_MIN,
-                [13]
-            ],
-
-            PropertyDocSniff::CODE_TAG_OCCURRENCE_MAX => [
-                'TagOccurrenceMax.php',
-                PropertyDocSniff::CODE_TAG_OCCURRENCE_MAX,
-                [13]
-            ],
+            ]
         ];
 
         return array_merge(
@@ -237,9 +195,6 @@ class PropertyDocSniffTest extends SniffTestCase
                 PropertyDocSniff::CODE_DESCRIPTION_TOO_LONG,
                 PropertyDocSniff::CODE_NO_LINE_AFTER_DESCRIPTION,
                 PropertyDocSniff::CODE_MUCH_LINES_AFTER_DESCRIPTION,
-                PropertyDocSniff::CODE_TAG_NOT_ALLOWED,
-                PropertyDocSniff::CODE_TAG_OCCURRENCE_MIN,
-                PropertyDocSniff::CODE_TAG_OCCURRENCE_MAX,
                 PropertyDocSniff::CODE_SUMMARY_UC_FIRST,
                 PropertyDocSniff::CODE_DESCRIPTION_UC_FIRST,
             ]

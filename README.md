@@ -33,15 +33,41 @@ Execute the PHP_CodeSniffer (path can vary on your composer configuration):
 ```bash
 ./vendor/bin/phpcs
 ```
+
+### Use in PHPStorm
+
+How to use it in our favorite IDE?
+
+/File/Settings:
+
+1. ![Choose executable](./docs/exe.png "Executable")
+
+2. ![Set up inspection](./docs/inspection.png "Inspection")
+
+3. ... and choose our ruleset.
+
 ## Used sniffs
 
 The base for the BestIt Standard is [PSR-12](https://github.com/php-fig/fig-standards/blob/master/proposed/extended-coding-style-guide.md).
 
 | Sniff | Description | suppressable |
 | ----- | ----------- | ------------ |
-| BestIt.Commenting.ClassDoc.TagFormatContentInvalid | Authors MUST commit to their classes and add an [author phpDoc-Tag](http://docs.phpdoc.org/references/phpdoc/tags/author.html). |
-| BestIt.Comment.TagSorting.MissingNewlineBetweenTags | You SHOULD separate tag groups and the final return with a newline. | Yes (By Sniff-Name) |
-| BestIt.Comment.TagSorting.WrongTagSorting | You SHOULD sort the tags by their occurrence and then alphabetically, but @return SHOULD be the last. | Yes (By Sniff-Name) |
+| BestIt.DocTags.AuthorTag.TagContentFormatInvalid | You MUST commit to your codes and give an [author tag](http://docs.phpdoc.org/references/phpdoc/tags/author.html). | 
+| BestIt.DocTags.DeprecatedTag.TagContentFormatInvalid | If you provide a deprecated tag, you MUST provide it with versions since when its deprecated and when it will be removed. | 
+| BestIt.DocTags.(DisallowedClassTags,DisallowedConstantTags,DisallowedMethodTags,DisallowedPropertyTags).TagNotAllowed | You MUST not give one of the disallowed tags in your doc comment. | You can configure the disallowed tags. |
+| BestIt.DocTags.PackageTag.WrongPackage | If there is a namespace, you MUST provide the namespace as package tag. |
+| BestIt.DocTags.ParamTag.MissingDesc | You SHOULD provide a description for your parameter. |
+| BestIt.DocTags.ParamTag.MissingVariables | Your method MUST have parameters if there is a param tag. |
+| BestIt.DocTags.ParamTag.MissingVariable | Your method MUST have a matching variable for your param tag. |
+| BestIt.DocTags.ParamTag.MissingType | You MUST provide a type for your param tag. |
+| BestIt.DocTags.(RequiredClassTags,RequiredConstantTags,RequiredMethodTags,RequiredPropertyTags).TagOccurrenceMax* | You MUST provide only the maximum amount of required tags. For example, only one return per method is allowed. The error is registered for every tag specifically. |
+| BestIt.DocTags.(RequiredClassTags,RequiredConstantTags,RequiredMethodTags,RequiredPropertyTags).TagOccurrenceMin* | You MUST provide the required tags. The error is registered for every tag specifically. |
+| BestIt.DocTags.ReturnTag.MissingReturnDescription | You SHOULD provide a description your return. |
+| BestIt.DocTags.TagSorting.MissingNewlineBetweenTags | You SHOULD separate tag groups and the final return with a newline. | Yes (By Sniff-Name) |
+| BestIt.DocTags.TagSorting.WrongTagSorting | You SHOULD sort the tags by their occurrence and then alphabetically, but @return SHOULD be the last. | Yes (By Sniff-Name) |
+| BestIt.DocTags.ThrowsTag.MissingThrowDescription | You SHOULD provide a description your throw tag. | 
+| BestIt.DocTags.VarTag.TagContentFormatInvalid | You MUST provide a type for your var tag. | 
+| BestIt.DocTags.VersionTag.TagContentFormatInvalid | If you provide a version tag, you MUST provide it in [semver 2.0-Format](https://semver.org) with Major.Minor.Patch-Version . | 
 | SlevomatCodingStandard.Classes.ClassConstantVisibility.MissingConstantVisibility | Constants MUST be marked with a visibility. |
 | SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnly.ReferenceViaFullyQualifiedName | No class may be used via its FQCN. You MUST import every class! |
 | BestIt.Functions.FluentSetter | Every setter function MUST return $this if nothing else is returned.  | Yes |
@@ -63,17 +89,63 @@ The base for the BestIt Standard is [PSR-12](https://github.com/php-fig/fig-stan
 | BestIt.Commenting.AbstractDocSniff.NoLineAfterDescription¹|  There MUST be an empty line after the long description |
 | BestIt.Commenting.AbstractDocSniff.MuchLinesAfterDescription¹|  There MUST be an empty line after the long description  |
 | BestIt.Commenting.AbstractDocSniff.DescriptionTooLong¹|  Every line of the long description MUST be not longer than 120 characters |
-| BestIt.Commenting.AbstractDocSniff.TagNotAllowed¹|  The given tag MUST NOT be used |
-| BestIt.Commenting.AbstractDocSniff.TagOccurrenceMin¹|  The given tag MUST occur min x times |
-| BestIt.Commenting.AbstractDocSniff.TagOccurrenceMax¹|  The given tag MUST occur max x times |
-| BestIt.Commenting.AbstractDocSniff.TagWrongPosition¹|  The given tag MUST be at the correct position |
 | BestIt.Commenting.AbstractDocSniff.SummaryUcFirst¹|  The summary first letter MUST be a capital letter |
 | BestIt.Commenting.AbstractDocSniff.DescriptionUcFirst¹|  The long description first letter MUST be a capital letter |
-| BestIt.Commenting.AbstractDocSniff.NoLineAfterTag¹|  There MUST be an empty line after the given tag |
-| BestIt.Commenting.AbstractDocSniff.MuchLinesAfterTag¹|  There MUST be a single empty line after the given tag |
-| BestIt.Commenting.AbstractDocSniff.TagFormatContentInvalid¹|  The tag content MUST match the given pattern |
+| BestIt.Commenting.AbstractDocSniff.TagContentFormatInvalid¹|  The tag content MUST match the given pattern |
 
 ¹ AbstractDocSniff means ClassDocSniff, MethodDocSniff, ConstantDocSniff and PropertyDocSniff  
+
+## Development
+
+### Introduction
+
+The code sniffer is based on a [token-based](http://php.net/manual/de/tokens.php) sniff mechanism.
+
+You can use the [verbose-options](https://github.com/squizlabs/PHP_CodeSniffer/wiki/Usage#printing-progress-information) 
+of the code sniffer cli, to see which tokens are parsed on which position in your file. 
+Please consult the [official code sniffer tutorial](https://github.com/squizlabs/PHP_CodeSniffer/wiki/Coding-Standard-Tutorial) 
+to know the theory how to code a custom sniff.
+
+The gist of this tutorial is, that you need to implement the interface _PHP_CodeSniffer\Sniffs\Sniff_ which enforces two 
+methods:
+
+#### 1. Token Registration
+
+The _register_-method should return the parser token id of the tokens, which you want to sniff.
+
+#### 2. Process
+
+The _process_-method is called with the position of your registered token in the token stack of the given file object.
+
+## best it "Helpers"
+
+### BestIt\Sniffs\AbstractSniff
+
+We refactored our basic work into this abstract. You can use an extended api to get a cleaner api and skips 
+simple boilerplating.
+
+* **areRequirementsMet**: If this method returns false, the sniff is "skipped".
+* **isSniffSuppressed**: If this method returns true, the annotation for suppression is given and the sniff should be 
+"skipped".
+* **processToken**: The boilerplate of the normal api is saved in object properties and you can sniff you token without
+the need to "re-implement" the basic interface with its method arguments.
+* **setUp**: You can set up the test, before the requirements are checked with _areRequirementsMet_.
+* **tearDown**: If you want to "destroy" this sniff, you can tear it down after the sniff processing.
+
+### BestIt\Sniffs\DocTags\AbstractTagSniff
+
+This abstract class helps you sniff for single doc tags. Just implement the given abstract methods and you can register
+and sniff for a specific doc tag and check for its content till a newline.
+
+#### BestIt\Sniffs\DocTags\TagContentFormatTrait
+
+This trait is meant in addition to the AbstractTagSniff and provides you with an api, which checks the tag content 
+automatically against a regex pattern, which leads to an error or warning with the code _TagContentFormatInvalid_.
+
+### BestIt\Sniffs\*RegistrationTrait 
+
+We provide some traits, which make it easier, to register sniffs for class-like structures, constants, methods and 
+properties.
 
 ## Testing
 
@@ -129,7 +201,7 @@ Create a **_with_errors_** folder into your fixtures directory. Every php file i
 You must provide the error structure through the file name. The file name must match the following pregex:
 
 ```regex
-/(?P<code>[\w]+)(\(\w*\))?\.(?P<errorLines>[\d\,]+)(?P<fixedSuffix>\.fixed)?\.php/
+/(?P<code>[\w]+)(\(\w*\))?\.(?P<errorLines>[\d-\,]+)(?P<fixedSuffix>\.fixed)?\.php/
 ```
 
 The file name gives information about which errors in which line should occur.
@@ -146,7 +218,7 @@ Create a **_with_warnings_** folder into your fixtures directory. Every php file
 You must provide the warning structure through the file name. The file name must match the following pregex:
 
 ```regex
-/(?P<code>[\w]+)(\(\w*\))?\.(?P<errorLines>[\d\,]+)(?P<fixedSuffix>\.fixed)?\.php/
+/(?P<code>[\w]+)(\(\w*\))?\.(?P<errorLines>[\d-\,]+)(?P<fixedSuffix>\.fixed)?\.php/
 ```
 
 The file name gives information about which warning in which line should occur.

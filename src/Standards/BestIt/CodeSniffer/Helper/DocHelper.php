@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace BestIt\CodeSniffer\Helper;
 
-use BestIt\CodeSniffer\File;
 use BestIt\Sniffs\Commenting\AbstractDocSniff;
+use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Util\Tokens;
 
 /**
  * Class DocHelper
  *
  * @author Nick Lubisch <nick.lubisch@bestit-online.de>
- * @package BestIt\Helper
+ * @package BestIt\CodeSniffer\Helper
  */
 class DocHelper
 {
@@ -107,30 +107,6 @@ class DocHelper
     }
 
     /**
-     * Returns pointer to the class comment start.
-     *
-     * @return int Pointer to the class comment start.
-     */
-    public function getCommentStartPointer(): int
-    {
-        $commentEndToken = $this->getCommentEndToken();
-
-        return $commentEndToken['comment_opener'];
-    }
-
-    /**
-     * Returns token data of the evaluated class comment start.
-     *
-     * @return array Token data of the comment start.
-     */
-    public function getCommentStartToken(): array
-    {
-        $commentStartPtr = $this->getCommentStartPointer();
-
-        return $this->tokens[$commentStartPtr];
-    }
-
-    /**
      * Returns pointer to the class comment end.
      *
      * @return int Pointer to the class comment end.
@@ -158,5 +134,29 @@ class DocHelper
     public function getCommentEndToken(): array
     {
         return $this->tokens[$this->getCommentEndPointer()];
+    }
+
+    /**
+     * Returns pointer to the class comment start.
+     *
+     * @return int Pointer to the class comment start.
+     */
+    public function getCommentStartPointer(): int
+    {
+        $commentEndToken = $this->getCommentEndToken();
+
+        return $commentEndToken['comment_opener'];
+    }
+
+    /**
+     * Returns token data of the evaluated class comment start.
+     *
+     * @return array Token data of the comment start.
+     */
+    public function getCommentStartToken(): array
+    {
+        $commentStartPtr = $this->getCommentStartPointer();
+
+        return $this->tokens[$commentStartPtr];
     }
 }

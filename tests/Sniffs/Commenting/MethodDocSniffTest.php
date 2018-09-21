@@ -46,18 +46,6 @@ class MethodDocSniffTest extends SniffTestCase
     }
 
     /**
-     * Test for found warnings.
-     *
-     * @return void
-     */
-    public function testWarnings()
-    {
-        $report = $this->checkFile(__DIR__ . '/Fixtures/MethodDocSniff/MixedWarning.php');
-
-        $this->assertEquals(2, $report->getWarningCount());
-    }
-
-    /**
      * Tests fixable errors.
      *
      * @dataProvider getFixableErrorData
@@ -121,49 +109,7 @@ class MethodDocSniffTest extends SniffTestCase
                 [
                     'descriptionRequired' => true
                 ]
-            ],
-
-            MethodDocSniff::CODE_TAG_NOT_ALLOWED => [
-                'TagNotAllowed.php',
-                MethodDocSniff::CODE_TAG_NOT_ALLOWED,
-                [
-                    24,
-                    25,
-                    26,
-                    27,
-                    28,
-                    29,
-                    30,
-                    31,
-                    32,
-                    33,
-                    34,
-                    35,
-                    36,
-                    37,
-                    38,
-                    39,
-                    40,
-                    41,
-                    42,
-                    43,
-                    44,
-                    45,
-                    46
-                ]
-            ],
-
-            MethodDocSniff::CODE_TAG_OCCURRENCE_MIN => [
-                'TagOccurrenceMin.php',
-                MethodDocSniff::CODE_TAG_OCCURRENCE_MIN,
-                [13]
-            ],
-
-            MethodDocSniff::CODE_TAG_OCCURRENCE_MAX => [
-                'TagOccurrenceMax.php',
-                MethodDocSniff::CODE_TAG_OCCURRENCE_MAX,
-                [13]
-            ],
+            ]
         ];
 
         return array_merge(
@@ -249,9 +195,6 @@ class MethodDocSniffTest extends SniffTestCase
                 MethodDocSniff::CODE_DESCRIPTION_TOO_LONG,
                 MethodDocSniff::CODE_NO_LINE_AFTER_DESCRIPTION,
                 MethodDocSniff::CODE_MUCH_LINES_AFTER_DESCRIPTION,
-                MethodDocSniff::CODE_TAG_NOT_ALLOWED,
-                MethodDocSniff::CODE_TAG_OCCURRENCE_MIN,
-                MethodDocSniff::CODE_TAG_OCCURRENCE_MAX,
                 MethodDocSniff::CODE_SUMMARY_UC_FIRST,
                 MethodDocSniff::CODE_DESCRIPTION_UC_FIRST,
             ]
