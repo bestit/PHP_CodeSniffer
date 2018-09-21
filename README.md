@@ -91,7 +91,8 @@ The base for the BestIt Standard is [PSR-12](https://github.com/php-fig/fig-stan
 | BestIt.DocTags.TagSorting.WrongTagSorting | You SHOULD sort the tags by their occurrence and then alphabetically, but @return SHOULD be the last. | Yes (By Sniff-Name) |
 | BestIt.DocTags.ThrowsTag.MissingThrowDescription | You SHOULD provide a description your throw tag. | 
 | BestIt.DocTags.VarTag.TagContentFormatInvalid | You MUST provide a type for your var tag. | 
-| BestIt.DocTags.VersionTag.TagContentFormatInvalid | If you provide a version tag, you MUST provide it in [semver 2.0-Format](https://semver.org) with Major.Minor.Patch-Version . | 
+| BestIt.DocTags.VersionTag.TagContentFormatInvalid | If you provide a version tag, you MUST provide it in [semver 2.0-Format](https://semver.org) with Major.Minor.Patch-Version . |
+| BestIt.Formatting.AlphabeticClassContent.SortAlphabetically | You SHOULD sort you constants, methods and properties alphabetically. |
 | SlevomatCodingStandard.Classes.ClassConstantVisibility.MissingConstantVisibility | Constants MUST be marked with a visibility. |
 | SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnly.ReferenceViaFullyQualifiedName | No class may be used via its FQCN. You MUST import every class! |
 | BestIt.Functions.FluentSetter | Every setter function MUST return $this if nothing else is returned.  | Yes |
