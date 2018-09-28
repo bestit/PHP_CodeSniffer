@@ -28,6 +28,8 @@
         </properties>
     </rule>
 
+    <rule ref="SlevomatCodingStandard.Commenting.InlineDocCommentDeclaration" />
+
     <rule ref="SlevomatCodingStandard.Namespaces.AlphabeticallySortedUses">
         <properties>
             <property name="psr12Compatible" value="true" />
