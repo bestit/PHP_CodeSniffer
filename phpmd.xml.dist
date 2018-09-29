@@ -9,7 +9,10 @@
 
     <rule ref="rulesets/cleancode.xml/StaticAccess">
         <properties>
-            <property name="exceptions" value="Closure, \SlevomatCodingStandard\Helpers\NamespaceHelper, \SlevomatCodingStandard\Helpers\SuppressHelper, \SlevomatCodingStandard\Helpers\TokenHelper" />
+            <property
+                name="exceptions"
+                value="Closure, \SlevomatCodingStandard\Helpers\NamespaceHelper, \SlevomatCodingStandard\Helpers\SuppressHelper, \SlevomatCodingStandard\Helpers\TokenHelper, \SlevomatCodingStandard\Helpers\UseStatementHelper"
+            />
         </properties>
     </rule>
 
