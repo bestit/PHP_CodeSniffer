@@ -8,6 +8,7 @@ use BestIt\SniffTestCase;
 use BestIt\Sniffs\DefaultSniffIntegrationTestTrait;
 use BestIt\Sniffs\TestTokenRegistrationTrait;
 use BestIt\TestRequiredConstantsTrait;
+use const T_FUNCTION;
 
 /**
  * Class MultipleReturnSniffTest.
@@ -28,9 +29,7 @@ class MultipleReturnSniffTest extends SniffTestCase
      */
     protected function getExpectedTokens(): array
     {
-        return [
-            T_RETURN
-        ];
+        return [T_FUNCTION];
     }
 
     /**

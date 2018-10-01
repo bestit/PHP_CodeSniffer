@@ -4,8 +4,15 @@ declare(strict_types=1);
 
 namespace BestIt\Sniffs\Functions;
 
-use PHP_CodeSniffer\Files\File;
-use PHP_CodeSniffer\Sniffs\AbstractScopeSniff;
+use BestIt\Sniffs\AbstractSniff;
+use BestIt\Sniffs\FunctionRegistrationTrait;
+use SlevomatCodingStandard\Helpers\TokenHelper;
+use function array_filter;
+use function array_shift;
+use function array_walk;
+use const T_CLOSURE;
+use const T_FUNCTION;
+use const T_RETURN;
 
 /**
  * Class MultipleReturnSniff.
@@ -13,67 +20,77 @@ use PHP_CodeSniffer\Sniffs\AbstractScopeSniff;
  * @author Mika Bertels <mika.bertels@bestit-online.de>
  * @package BestIt\Sniffs\Functions
  */
-class MultipleReturnSniff extends AbstractScopeSniff
+class MultipleReturnSniff extends AbstractSniff
 {
+    use FunctionRegistrationTrait;
+
     /**
      * Code for multiple returns.
      *
-     * @var string CODE_MULTIPLE_RETURNS_FOUND
+     * @var string
      */
     public const CODE_MULTIPLE_RETURNS_FOUND = 'MultipleReturnsFound';
 
     /**
      * Error message for multiple returns.
      *
-     * @var string WARNING_MULTIPLE_RETURNS_FOUND
+     * @var string
      */
-    private const WARNING_MULTIPLE_RETURNS_FOUND = 'Multiple returns detected. Did you refactor your class?';
+    private const WARNING_MULTIPLE_RETURNS_FOUND = 'Multiple returns detected. Did you refactor your method? Please ' .
+        'do not use an early return if your method/function still is cluttered.';
 
     /**
-     * MultipleReturnSniff constructor.
+     * Only work on full fledged functions.
+     *
+     * @return bool True if there is a scope closer for this token.
      */
-    public function __construct()
+    protected function areRequirementsMet(): bool
     {
-        parent::__construct([T_FUNCTION], [T_RETURN], false);
+        return (bool) @ $this->token['scope_closer'];
     }
 
     /**
-     * Processes the tokens that this test is listening for.
+     * Returns the returns of this function.
      *
-     * @param File $phpcsFile
-     * @param int $returnPos
-     * @param int $functionPos
+     * We check the "token level" to exclude the returns of nested closures.
+     *
+     * @return int[] The positions of the returns from the same function-scope.
+     */
+    private function loadReturnsOfThisFunction(): array
+    {
+        $returnPositions = TokenHelper::findNextAll(
+            $this->file->getBaseFile(),
+            [T_RETURN],
+            $this->stackPos + 1,
+            $this->token['scope_closer']
+        );
+
+        return array_filter($returnPositions, function (int $returnPos): bool {
+            $possibleClosure = $this->file->findPrevious([T_CLOSURE, T_FUNCTION], $returnPos - 1, $this->stackPos);
+
+            return $possibleClosure === $this->stackPos;
+        });
+    }
+
+    /**
+     * Iterates through the returns of this function and registers warnings if there is more then one relevant return.
      *
      * @return void
      */
-    protected function processTokenWithinScope(File $phpcsFile, $returnPos, $functionPos): void
+    protected function processToken(): void
     {
-        $multipleReturnsFound = $phpcsFile->findPrevious([T_RETURN], $returnPos - 1, $functionPos);
+        $returnPositions = $this->loadReturnsOfThisFunction();
 
-        if ($multipleReturnsFound && $multipleReturnsFound > -1) {
-            $phpcsFile->addWarning(
-                self::WARNING_MULTIPLE_RETURNS_FOUND,
-                $returnPos,
-                self::CODE_MULTIPLE_RETURNS_FOUND,
-                $phpcsFile->getWarnings()
-            );
+        if (count($returnPositions) > 1) {
+            array_shift($returnPositions);
+
+            array_walk($returnPositions, function (int $returnPos): void {
+                $this->file->addWarning(
+                    self::WARNING_MULTIPLE_RETURNS_FOUND,
+                    $returnPos,
+                    self::CODE_MULTIPLE_RETURNS_FOUND
+                );
+            });
         }
-    }
-
-    /**
-     * Processes a token that is found outside the scope that this test is listening to.
-     *
-     * @param File $phpcsFile The file where this token was found.
-     * @param int $stackPtr The position in the stack where this token was found.
-     *
-     * @return void|int Optionally returns a stack pointer. The sniff will not be
-     *                  called again on the current file until the returned stack
-     *                  pointer is reached. Return (count($tokens) + 1) to skip
-     *                  the rest of the file.
-     */
-    protected function processTokenOutsideScope(File $phpcsFile, $stackPtr)
-    {
-        // Satisfy PHP MD and do nothing.
-        unset($phpcsFile, $stackPtr);
     }
 }
