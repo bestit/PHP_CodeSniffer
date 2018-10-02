@@ -11,7 +11,10 @@
         <properties>
             <property
                 name="exceptions"
-                value="Closure, \SlevomatCodingStandard\Helpers\FunctionHelper, \SlevomatCodingStandard\Helpers\NamespaceHelper, \SlevomatCodingStandard\Helpers\SuppressHelper, \SlevomatCodingStandard\Helpers\TokenHelper, \SlevomatCodingStandard\Helpers\TypeHintHelper, \SlevomatCodingStandard\Helpers\UseStatementHelper"
+                value="Closure, \PHP_CodeSniffer\Util\Common, \SlevomatCodingStandard\Helpers\FunctionHelper,
+                    \SlevomatCodingStandard\Helpers\NamespaceHelper, \SlevomatCodingStandard\Helpers\PropertyHelper,
+                    \SlevomatCodingStandard\Helpers\SuppressHelper, \SlevomatCodingStandard\Helpers\TokenHelper,
+                    \SlevomatCodingStandard\Helpers\TypeHintHelper, \SlevomatCodingStandard\Helpers\UseStatementHelper"
             />
         </properties>
     </rule>
