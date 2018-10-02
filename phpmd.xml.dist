@@ -11,15 +11,19 @@
         <properties>
             <property
                 name="exceptions"
-                value="Closure, \SlevomatCodingStandard\Helpers\NamespaceHelper, \SlevomatCodingStandard\Helpers\SuppressHelper, \SlevomatCodingStandard\Helpers\TokenHelper, \SlevomatCodingStandard\Helpers\UseStatementHelper"
+                value="Closure, \PHP_CodeSniffer\Util\Common, \SlevomatCodingStandard\Helpers\NamespaceHelper,
+                    \SlevomatCodingStandard\Helpers\PropertyHelper, \SlevomatCodingStandard\Helpers\SuppressHelper,
+                    \SlevomatCodingStandard\Helpers\TokenHelper, \SlevomatCodingStandard\Helpers\UseStatementHelper"
             />
         </properties>
     </rule>
 
     <rule ref="rulesets/cleancode.xml">
-        <exclude name="StaticAccess" />
         <!-- Disable opinionated things blocking us -->
         <exclude name="BooleanArgumentFlag" />
+        <exclude name="ElseExpression" />
+        <!-- Overwrote it before -->
+        <exclude name="StaticAccess" />
     </rule>
 
     <rule ref="rulesets/codesize.xml"/>

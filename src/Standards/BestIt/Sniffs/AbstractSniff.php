@@ -97,17 +97,17 @@ abstract class AbstractSniff implements Sniff
      */
     private function getSniffName(?string $sniffName = null): string
     {
-        $sniffFQCN = preg_replace(
+        $sniffClassName = preg_replace(
             '/Sniff$/',
             '',
             str_replace(['\\', '.Sniffs'], ['.', ''], static::class)
         );
 
         if ($sniffName) {
-            $sniffFQCN .= '.' . $sniffName;
+            $sniffClassName .= '.' . $sniffName;
         }
 
-        return $sniffFQCN;
+        return $sniffClassName;
     }
 
     /**
