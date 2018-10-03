@@ -12,8 +12,11 @@ use function array_filter;
 use function array_key_exists;
 use function array_map;
 use function array_walk;
+use function count;
 use function in_array;
 use function is_callable;
+use function substr;
+use function ucfirst;
 
 /**
  * Abstract sniff for the the required tags of a php structure.
@@ -261,11 +264,26 @@ abstract class AbstractRequiredTagsSniff extends AbstractSniff
     /**
      * Processes a found registered token.
      *
-     * Return void
+     * @return void
      */
     protected function processToken(): void
     {
         $this->checkAndRegisterTagMaximumCounts();
         $this->checkAndRegisterTagMinimumCounts();
+    }
+
+    /**
+     * Resets the cached data.
+     *
+     * @return void
+     */
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+
+        $this->resetDocCommentPos();
+
+        $this->processedTagRules = null;
+        $this->tags = null;
     }
 }
