@@ -10,7 +10,7 @@ use function in_array;
 /**
  * Class ReturnTagSniff
  *
- * @auhor blange <bjoern.lange@bestit-online.de>
+ * @author blange <bjoern.lange@bestit-online.de>
  * @package BestIt\Sniffs\DocTags
  */
 class ReturnTagSniff extends AbstractTagSniff
