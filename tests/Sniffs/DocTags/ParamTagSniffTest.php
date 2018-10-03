@@ -51,6 +51,7 @@ class ParamTagSniffTest extends SniffTestCase
             'CODE_TAG_MISSING_VARIABLES' => ['CODE_TAG_MISSING_VARIABLES', 'MissingVariables'],
             'CODE_TAG_MISSING_VARIABLE' => ['CODE_TAG_MISSING_VARIABLE', 'MissingVariable'],
             'CODE_TAG_MISSING_TYPE' => ['CODE_TAG_MISSING_TYPE', 'MissingType'],
+            'CODE_TAG_MIXED_TYPE' => ['CODE_TAG_MIXED_TYPE', 'MixedType']
         ];
     }
 

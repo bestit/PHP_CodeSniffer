@@ -11,6 +11,7 @@ use function array_filter;
 use function array_values;
 use function in_array;
 use function preg_quote;
+use function strtolower;
 use const T_CLOSE_PARENTHESIS;
 use const T_DOC_COMMENT_OPEN_TAG;
 use const T_VARIABLE;
@@ -33,11 +34,11 @@ class ParamTagSniff extends AbstractTagSniff
     public const CODE_TAG_MISSING_DESC = 'MissingDesc';
 
     /**
-     * The error code if every property is missing.
+     * The error code if the type of the param tag is missing.
      *
      * @var string
      */
-    public const CODE_TAG_MISSING_VARIABLES = 'MissingVariables';
+    public const CODE_TAG_MISSING_TYPE = 'MissingType';
 
     /**
      * The error code if the matching property is missing.
@@ -47,11 +48,18 @@ class ParamTagSniff extends AbstractTagSniff
     public const CODE_TAG_MISSING_VARIABLE = 'MissingVariable';
 
     /**
-     * The error code if the type of the param tag is missing.
+     * The error code if every property is missing.
      *
      * @var string
      */
-    public const CODE_TAG_MISSING_TYPE = 'MissingType';
+    public const CODE_TAG_MISSING_VARIABLES = 'MissingVariables';
+
+    /**
+     * Error code for the mixed type.
+     *
+     * @var string
+     */
+    public const CODE_TAG_MIXED_TYPE = 'MixedType';
 
     /**
      * Message for displaying the missing description.
@@ -61,11 +69,11 @@ class ParamTagSniff extends AbstractTagSniff
     private const MESSAGE_TAG_MISSING_DESC = 'There is no description for your tag: %s.';
 
     /**
-     * Message for displaying the missing properties.
+     * Message for displaying the missing type.
      *
      * @var string
      */
-    private const MESSAGE_TAG_MISSING_VARIABLES = 'There are no properties for your tags.';
+    private const MESSAGE_TAG_MISSING_TYPE = 'There is no type for your tag: %s.';
 
     /**
      * Message for displaying the missing property.
@@ -75,11 +83,19 @@ class ParamTagSniff extends AbstractTagSniff
     private const MESSAGE_TAG_MISSING_VARIABLE = 'There is no property for your tag "%s".';
 
     /**
-     * Message for displaying the missing type.
+     * Message for displaying the missing properties.
      *
      * @var string
      */
-    private const MESSAGE_TAG_MISSING_TYPE = 'There is no type for your tag: %s.';
+    private const MESSAGE_TAG_MISSING_VARIABLES = 'There are no properties for your tags.';
+
+    /**
+     * The message for the mixed type warning.
+     *
+     * @var string
+     */
+    private const MESSAGE_TAG_MIXED_TYPE = 'We suggest that you avoid the "mixed" type and declare the ' .
+        'required types in detail.';
 
     /**
      * The used variable tokens for this method.
@@ -92,7 +108,7 @@ class ParamTagSniff extends AbstractTagSniff
      * Simple check if the pattern is correct.
      *
      * @param string|null $tagContent
-     * @throws CodeError
+     * @throws CodeWarning
      *
      * @return bool True if it matches.
      */
@@ -126,21 +142,27 @@ class ParamTagSniff extends AbstractTagSniff
     }
 
     /**
-     * Checks if the param tag contains a type.
+     * Checks if the param tag contains a valid type.
      *
-     * @throws CodeError
+     * @throws CodeWarning
      *
-     * @return bool Returns true if there is a type.
+     * @return bool True if the type is valid.
      */
     private function checkType(): bool
     {
-        if ($hasNoType = !@$this->matches['type']) {
+        if (!@$this->matches['type']) {
             throw (new CodeError(self::CODE_TAG_MISSING_TYPE, self::MESSAGE_TAG_MISSING_TYPE, $this->stackPos))
                 ->setPayload([$this->matches['var']])
                 ->setToken($this->token);
         }
 
-        return !$hasNoType;
+        if (strtolower($this->matches['type']) === 'mixed') {
+            throw (new CodeWarning(self::CODE_TAG_MIXED_TYPE, self::MESSAGE_TAG_MIXED_TYPE, $this->stackPos))
+                ->setToken($this->token);
+        }
+
+
+        return true;
     }
 
     /**
@@ -186,8 +208,7 @@ class ParamTagSniff extends AbstractTagSniff
     /**
      * Loads and checks the variables of the following method.
      *
-     * @throws CodeError We have param tags, so there should be variables in the method.
-     * @throws CodeWarning
+     * @throws CodeWarning We have param tags, so there should be variables in the method.
      *
      * @return array The positions of the methods variables if there are any.
      */
@@ -224,7 +245,7 @@ class ParamTagSniff extends AbstractTagSniff
                 $this->checkType();
                 $this->checkDescription();
             }
-        } catch (CodeWarning | CodeError $exception) {
+        } catch (CodeWarning $exception) {
             $this->getExceptionHandler()->handleException($exception);
         }
     }
