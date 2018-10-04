@@ -1,11 +1,13 @@
 <?php
 
+use BestIt\CodeSniffer\File;
+
 class TypeHintDeclarationSniff
 {
     /**
      * @return bool
      */
-    public function testBoolMethod(): bool
+    public function testBoolMethod()
     {
         return false;
     }
@@ -13,7 +15,7 @@ class TypeHintDeclarationSniff
     /**
      * @return int
      */
-    public function testIntMethod(): int
+    public function testIntMethod()
     {
         return 1;
     }
@@ -21,7 +23,7 @@ class TypeHintDeclarationSniff
     /**
      * @return float
      */
-    public function testFloatMethod(): float
+    public function testFloatMethod()
     {
         return 1.01;
     }
@@ -29,7 +31,7 @@ class TypeHintDeclarationSniff
     /**
      * @return string
      */
-    public function testStringMethod(): string
+    public function testStringMethod()
     {
         return 'test';
     }
@@ -37,7 +39,15 @@ class TypeHintDeclarationSniff
     /**
      * @return array
      */
-    public function testArrayMethod(): array
+    public function testArrayMethod()
+    {
+        return [];
+    }
+
+    /**
+     * @return File[]
+     */
+    public function testTypesArrayMethod()
     {
         return [];
     }

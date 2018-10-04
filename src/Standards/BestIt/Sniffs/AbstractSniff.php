@@ -10,7 +10,6 @@ use BestIt\CodeSniffer\File;
 use BestIt\CodeSniffer\Helper\ExceptionHelper;
 use PHP_CodeSniffer\Files\File as BaseFile;
 use PHP_CodeSniffer\Sniffs\Sniff;
-use SlevomatCodingStandard\Helpers\SuppressHelper;
 
 /**
  * Class AbstractSniff
@@ -20,6 +19,8 @@ use SlevomatCodingStandard\Helpers\SuppressHelper;
  */
 abstract class AbstractSniff implements Sniff
 {
+    use SuppressingTrait;
+
     /**
      * The used file.
      *
@@ -33,13 +34,6 @@ abstract class AbstractSniff implements Sniff
      * @var int|void
      */
     protected $stackPos;
-
-    /**
-     * The used suppresshelper.
-     *
-     * @var SuppressHelper
-     */
-    private $suppressHelper = null;
 
     /**
      * The used token.
@@ -85,59 +79,27 @@ abstract class AbstractSniff implements Sniff
      */
     protected function getExceptionHandler(): ExceptionHelper
     {
-        return new ExceptionHelper($this->file);
+        return new ExceptionHelper($this->getFile());
     }
 
     /**
-     * Get the sniff name.
+     * Type-safe getter for the file.
      *
-     * @param string|null $sniffName If there is an optional sniff name.
-     *
-     * @return string Returns the special sniff name in the code sniffer context.
+     * @return File
      */
-    private function getSniffName(?string $sniffName = null): string
+    protected function getFile(): File
     {
-        $sniffFQCN = preg_replace(
-            '/Sniff$/',
-            '',
-            str_replace(['\\', '.Sniffs'], ['.', ''], static::class)
-        );
-
-        if ($sniffName) {
-            $sniffFQCN .= '.' . $sniffName;
-        }
-
-        return $sniffFQCN;
+        return $this->file;
     }
 
     /**
-     * Returns the used suppress helper.
+     * Type-safe getter for the stack position.
      *
-     * @return SuppressHelper The suppress helper.
+     * @return int
      */
-    private function getSuppressHelper(): SuppressHelper
+    protected function getStackPos(): int
     {
-        if (!$this->suppressHelper) {
-            $this->suppressHelper = new SuppressHelper();
-        }
-
-        return $this->suppressHelper;
-    }
-
-    /**
-     * Returns true if this sniff or a rule of this sniff is suppressed with the slevomat suppress annotation.
-     *
-     * @param null|string $rule The optional rule.
-     *
-     * @return bool Returns true if the sniff is suppressed.
-     */
-    protected function isSniffSuppressed(?string $rule = null): bool
-    {
-        return $this->getSuppressHelper()->isSniffSuppressed(
-            $this->file,
-            $this->stackPos,
-            $this->getSniffName($rule)
-        );
+        return $this->stackPos;
     }
 
     /**
@@ -152,7 +114,7 @@ abstract class AbstractSniff implements Sniff
     {
         $this->file = new File($phpcsFile);
         $this->stackPos = $stackPos;
-        $this->tokens = $this->file->getTokens();
+        $this->tokens = $this->getFile()->getTokens();
         $this->token = $this->tokens[$stackPos];
 
         $this->setUp();

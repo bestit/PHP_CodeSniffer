@@ -4,13 +4,16 @@ declare(strict_types=1);
 
 namespace BestIt\Sniffs\TypeHints;
 
-use PHP_CodeSniffer\Files\File;
+use BestIt\CodeSniffer\File;
+use BestIt\Sniffs\AbstractSniff;
+use BestIt\Sniffs\DocPosProviderTrait;
+use BestIt\Sniffs\FunctionRegistrationTrait;
+use BestIt\Sniffs\SuppressingTrait;
 use SlevomatCodingStandard\Helpers\Annotation;
-use SlevomatCodingStandard\Helpers\DocCommentHelper;
 use SlevomatCodingStandard\Helpers\FunctionHelper;
-use SlevomatCodingStandard\Helpers\SuppressHelper;
 use SlevomatCodingStandard\Helpers\TypeHintHelper;
-use SlevomatCodingStandard\Sniffs\TypeHints\TypeHintDeclarationSniff as BaseSniff;
+use function strpos;
+use function substr;
 
 /**
  * Class ReturnTypeDeclarationSniff
@@ -18,116 +21,41 @@ use SlevomatCodingStandard\Sniffs\TypeHints\TypeHintDeclarationSniff as BaseSnif
  * @author Stephan Weber <stephan.weber@bestit-online.de>
  * @package BestIt\Sniffs\TypeHints
  */
-class ReturnTypeDeclarationSniff extends BaseSniff
+class ReturnTypeDeclarationSniff extends AbstractSniff
 {
-    /**
-     * The php cs file
-     *
-     * @var File
-     */
-    private $phpcsFile;
+    use DocPosProviderTrait;
+    use FunctionRegistrationTrait;
+    use SuppressingTrait;
 
     /**
-     * The current token index
+     * The error code for this sniff.
      *
-     * @var int
+     * @var string
      */
-    private $pointer;
+    public const CODE_MISSING_RETURN_TYPE_HINT = 'MissingReturnTypeHint';
 
     /**
-     * The current token
+     * Returns true if this sniff may run.
      *
-     * @var array
+     * @return bool
      */
-    private $token;
-
-    /**
-     * The SuppressHelper class
-     *
-     * @var SuppressHelper
-     */
-    private $suppressHelper;
-
-    /**
-     * The FunctionHelper class
-     *
-     * @var FunctionHelper
-     */
-    private $functionHelper;
-
-    /**
-     * The TypeHintHelper class
-     *
-     * @var TypeHintHelper
-     */
-    private $typeHintHelper;
-
-    /**
-     * The DocCommentHelper class
-     *
-     * @var DocCommentHelper
-     */
-    private $docCommentHelper;
-
-    /**
-     * TypeHintDeclarationSniff constructor.
-     *
-     * @return void
-     */
-    public function __construct()
+    protected function areRequirementsMet(): bool
     {
-        $this->enableVoidTypeHint = false;
-        $this->enableNullableTypeHints = false;
-
-        $this->suppressHelper = new SuppressHelper();
-        $this->functionHelper = new FunctionHelper();
-        $this->typeHintHelper = new TypeHintHelper();
-        $this->docCommentHelper = new DocCommentHelper();
-    }
-
-    /**
-     * Processes the phpcs file.
-     *
-     * @param File $phpcsFile The php cs file
-     * @param int $pointer The current token index
-     *
-     * @return void
-     */
-    public function process(File $phpcsFile, $pointer): void
-    {
-        $token = $phpcsFile->getTokens()[$pointer];
-
-        $this->phpcsFile = $phpcsFile;
-        $this->pointer = $pointer;
-        $this->token = $token;
-
-        $hasInheritedDoc = $this->hasInheritdocAnnotation($phpcsFile, $pointer);
-        $isSniffSuppressed = SuppressHelper::isSniffSuppressed(
-            $phpcsFile,
-            $pointer,
-            $this->getSniffName(static::CODE_MISSING_RETURN_TYPE_HINT)
-        );
-
-        if ($token['code'] === T_FUNCTION && !$isSniffSuppressed && !$hasInheritedDoc) {
-            $this->checkReturnTypeHints($phpcsFile, $pointer);
-        }
+        return !$this->isSniffSuppressed(static::CODE_MISSING_RETURN_TYPE_HINT) && !$this->hasInheritdocAnnotation();
     }
 
     /**
      * Check method type hints based on return annotation.
      *
-     * @param File $phpcsFile The php cs file
-     * @param int $functionPointer The current token index
-     *
      * @return void
      */
-    private function checkReturnTypeHints(File $phpcsFile, int $functionPointer)
+    protected function processToken(): void
     {
-        if ($this->returnTypeHintSuppressed()) {
+        if ($this->hasReturnType()) {
             return;
         }
 
-        $returnAnnotation = $this->functionHelper::findReturnAnnotation($phpcsFile, $functionPointer);
+        $returnAnnotation = FunctionHelper::findReturnAnnotation($this->file->getBaseFile(), $this->stackPos);
         $hasReturnAnnotation = $this->hasReturnAnnotation($returnAnnotation);
         $returnTypeHintDef = '';
 
@@ -138,13 +66,13 @@ class ReturnTypeDeclarationSniff extends BaseSniff
         $returnsValue = $this->returnsValue($hasReturnAnnotation, $returnTypeHintDef);
 
         if (!$hasReturnAnnotation && $returnsValue) {
-            $this->phpcsFile->addError(
+            $this->file->addError(
                 sprintf(
                     '%s %s() does not have return type hint nor @return annotation for its return value.',
-                    $this->getFunctionTypeLabel($this->phpcsFile, $this->pointer),
-                    $this->functionHelper::getFullyQualifiedName($this->phpcsFile, $this->pointer)
+                    $this->getFunctionTypeLabel($this->file, $this->stackPos),
+                    FunctionHelper::getFullyQualifiedName($this->file->getBaseFile(), $this->stackPos)
                 ),
-                $this->pointer,
+                $this->stackPos,
                 self::CODE_MISSING_RETURN_TYPE_HINT
             );
         }
@@ -160,15 +88,15 @@ class ReturnTypeDeclarationSniff extends BaseSniff
             $possibleReturnType = $returnTypeHintDef;
             $nullableReturnType = false;
 
-            $fixable = $this->phpcsFile->addFixableError(
+            $fixable = $this->file->addFixableError(
                 sprintf(
                     '%s %s() does not have return type hint for its return value'
                     . ' but it should be possible to add it based on @return annotation "%s".',
-                    $this->getFunctionTypeLabel($this->phpcsFile, $this->pointer),
-                    $this->functionHelper::getFullyQualifiedName($this->phpcsFile, $this->pointer),
+                    $this->getFunctionTypeLabel($this->file, $this->stackPos),
+                    FunctionHelper::getFullyQualifiedName($this->file->getBaseFile(), $this->stackPos),
                     $returnTypeHintDef
                 ),
-                $this->pointer,
+                $this->stackPos,
                 self::CODE_MISSING_RETURN_TYPE_HINT
             );
 
@@ -192,8 +120,8 @@ class ReturnTypeDeclarationSniff extends BaseSniff
     {
         $returnsValue = ($hasReturnAnnotation && $returnTypeHintDef !== 'void');
 
-        if (!$this->functionHelper::isAbstract($this->phpcsFile, $this->pointer)) {
-            $returnsValue = $this->functionHelper::returnsValue($this->phpcsFile, $this->pointer);
+        if (!FunctionHelper::isAbstract($this->file->getBaseFile(), $this->stackPos)) {
+            $returnsValue = FunctionHelper::returnsValue($this->file->getBaseFile(), $this->stackPos);
         }
 
         return $returnsValue;
@@ -204,16 +132,9 @@ class ReturnTypeDeclarationSniff extends BaseSniff
      *
      * @return bool Suppressed or not
      */
-    private function returnTypeHintSuppressed(): bool
+    private function hasReturnType(): bool
     {
-        return (
-            $this->functionHelper::findReturnTypeHint($this->phpcsFile, $this->pointer) !== null
-            || $this->suppressHelper::isSniffSuppressed(
-                $this->phpcsFile,
-                $this->pointer,
-                $this->getSniffName(self::CODE_MISSING_RETURN_TYPE_HINT)
-            )
-        );
+        return FunctionHelper::findReturnTypeHint($this->file->getBaseFile(), $this->stackPos) !== null;
     }
 
     /**
@@ -231,6 +152,8 @@ class ReturnTypeDeclarationSniff extends BaseSniff
     /**
      * Fixes the type hint error
      *
+     * @todo Check prior php 7.1 with the void return type.
+     *
      * @param bool $fix Error is fixable
      * @param string $possibleReturnType Return annotation value
      * @param bool $nullableReturnType Is the return type nullable
@@ -240,51 +163,54 @@ class ReturnTypeDeclarationSniff extends BaseSniff
     private function fixTypeHint(bool $fix, string $possibleReturnType, bool $nullableReturnType)
     {
         if ($fix) {
-            $this->phpcsFile->fixer->beginChangeset();
+            $this->file->fixer->beginChangeset();
             $returnTypeHint = $possibleReturnType;
 
-            if ($this->typeHintHelper::isSimpleTypeHint($possibleReturnType)) {
-                $returnTypeHint = $this->typeHintHelper::convertLongSimpleTypeHintToShort($possibleReturnType);
+            if (TypeHintHelper::isSimpleTypeHint($possibleReturnType)) {
+                $returnTypeHint = TypeHintHelper::convertLongSimpleTypeHintToShort($possibleReturnType);
             }
 
-            $this->phpcsFile->fixer->addContent(
+            if (substr($returnTypeHint, -2) === '[]') {
+                $returnTypeHint = 'array';
+            }
+
+            $this->file->fixer->addContent(
                 $this->token['parenthesis_closer'],
                 sprintf(': %s%s', ($nullableReturnType ? '?' : ''), $returnTypeHint)
             );
-            $this->phpcsFile->fixer->endChangeset();
+            $this->file->fixer->endChangeset();
         }
     }
 
     /**
      * Check if method has an inheritdoc annotation
      *
-     * @param File $phpcsFile The php cs file
-     * @param int $functionPointer The current token
-     *
      * @return bool Has inheritdoc
      */
-    private function hasInheritdocAnnotation(File $phpcsFile, int $functionPointer): bool
+    private function hasInheritdocAnnotation(): bool
     {
-        $docComment = $this->docCommentHelper::getDocComment($phpcsFile, $functionPointer);
+        $return = false;
 
-        if ($docComment === null) {
-            return false;
+        if ($this->getDocCommentPos()) {
+            $docBlockContent = trim($this->getDocHelper()->getBlockStartToken()['content']);
+
+            $return = strpos($docBlockContent, '@inheritdoc') !== false;
         }
 
-        return stripos($docComment, '@inheritdoc') !== false;
+        return $return;
     }
 
     /**
      * Check if method or function
      *
-     * @param File $phpcsFile The php cs file
+     * @param File $file The php cs file
      * @param int $functionPointer The current token
      *
      * @return string Returns either Method or Function
      */
-    private function getFunctionTypeLabel(File $phpcsFile, int $functionPointer): string
+    private function getFunctionTypeLabel(File $file, int $functionPointer): string
     {
-        return $this->functionHelper::isMethod($phpcsFile, $functionPointer) ? 'Method' : 'Function';
+        return FunctionHelper::isMethod($file->getBaseFile(), $functionPointer) ? 'Method' : 'Function';
     }
 
     /**
@@ -296,8 +222,8 @@ class ReturnTypeDeclarationSniff extends BaseSniff
      */
     private function isValidTypeHint(string $typeHint): bool
     {
-        return $this->typeHintHelper::isSimpleTypeHint($typeHint)
-            || !$this->typeHintHelper::isSimpleUnofficialTypeHints($typeHint);
+        return TypeHintHelper::isSimpleTypeHint($typeHint)
+            || !TypeHintHelper::isSimpleUnofficialTypeHints($typeHint);
     }
 
     /**
@@ -313,24 +239,12 @@ class ReturnTypeDeclarationSniff extends BaseSniff
     }
 
     /**
-     * Get the sniff name.
+     * Resets the data of this sniff.
      *
-     * @param string $sniffName If there is an optional sniff name.
-     *
-     * @return string Returns the special sniff name in the code sniffer context.
+     * @return void
      */
-    private function getSniffName(string $sniffName = ''): string
+    protected function tearDown(): void
     {
-        $sniffFQCN = preg_replace(
-            '/Sniff$/',
-            '',
-            str_replace(['\\', '.Sniffs'], ['.', ''], static::class)
-        );
-
-        if ($sniffName) {
-            $sniffFQCN .= '.' . $sniffName;
-        }
-
-        return $sniffFQCN;
+        $this->resetDocCommentPos();
     }
 }

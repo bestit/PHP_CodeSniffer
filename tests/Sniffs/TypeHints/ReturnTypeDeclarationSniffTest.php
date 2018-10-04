@@ -5,7 +5,10 @@ declare(strict_types=1);
 namespace BestIt\Sniffs\TypeHints;
 
 use BestIt\SniffTestCase;
-use PHP_CodeSniffer\Files\File;
+use BestIt\Sniffs\DefaultSniffIntegrationTestTrait;
+use BestIt\Sniffs\TestTokenRegistrationTrait;
+use BestIt\TestRequiredConstantsTrait;
+use const T_FUNCTION;
 
 /**
  * Test for ReturnTypeDeclarationSniff
@@ -15,64 +18,41 @@ use PHP_CodeSniffer\Files\File;
  */
 class ReturnTypeDeclarationSniffTest extends SniffTestCase
 {
+    use DefaultSniffIntegrationTestTrait;
+    use TestRequiredConstantsTrait;
+    use TestTokenRegistrationTrait;
+
     /**
-     * Test type hints with no errors.
+     * Returns the tokens which should be checked.
      *
-     * @return void
+     * @return array Returns the expected token ids.
      */
-    public function testCorrectTypeHints()
+    protected function getExpectedTokens(): array
     {
-        $this->assertNoSniffErrorInFile(
-            $this->checkFile($this->getFixtureFilePath('Correct.php'))
-        );
+        return [T_FUNCTION];
     }
 
     /**
-     * Test missing type hints and fix.
+     * Returns the names of the required constants.
      *
-     * @return void
+     * @return array The required constants of a class. The second value is a possible value which should be checked.
      */
-    public function testNoTypeHints()
+    public function getRequiredConstantAsserts(): array
     {
-        $report = $this->checkFile($this->getFixtureFilePath('NoTypeHints.php'));
-
-        $this->assertSniffError(
-            $report,
-            8,
-            ReturnTypeDeclarationSniff::CODE_MISSING_RETURN_TYPE_HINT
-        );
-
-        $this->assertSniffError(
-            $report,
-            16,
-            ReturnTypeDeclarationSniff::CODE_MISSING_RETURN_TYPE_HINT
-        );
-
-        $this->assertSniffError(
-            $report,
-            24,
-            ReturnTypeDeclarationSniff::CODE_MISSING_RETURN_TYPE_HINT
-        );
-
-        $this->assertAllFixedInFile($report);
+        return [
+            'CODE_MISSING_RETURN_TYPE_HINT' => ['CODE_MISSING_RETURN_TYPE_HINT', 'MissingReturnTypeHint']
+        ];
     }
 
     /**
-     * Checks the given file with defined error codes.
+     * Sets up the test.
      *
-     * @param string $file Filename of the fixture
-     * @param array $sniffProperties Array of sniff properties
-     *
-     * @return File The php cs file
+     * @return void
      */
-    protected function checkFileAgainstSniff(string $file, array $sniffProperties = []): File
+    protected function setUp()
     {
-        return $this->checkFile(
-            $file,
-            $sniffProperties,
-            [
-                ReturnTypeDeclarationSniff::CODE_MISSING_RETURN_TYPE_HINT
-            ]
-        );
+        parent::setUp();
+
+        $this->fixture = new ReturnTypeDeclarationSniff();
     }
 }

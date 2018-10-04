@@ -99,7 +99,7 @@ The base for the BestIt Standard is [PSR-12](https://github.com/php-fig/fig-stan
 | BestIt.Functions.FluentSetter | Every setter function MUST return $this if nothing else is returned.  | Yes |
 | BestIt.Functions.MultipleReturn.MultipleReturnsFound | You SHOULD only use a return per method. |
 | BestIt.Formatting.SpaceAfterDeclare | There MUST be one empty line after declare-statement. |
-| BestIt.TypeHints.TypeHintDeclaration | Every function or method MUST have a type hint if the return annotation is valid. |
+| BestIt.TypeHints.ReturnTypeDeclaration.MissingReturnTypeHint | Every function or method MUST have a type hint if the return annotation is valid. | Yes |
 | Squiz.Strings.DoubleQuoteUsage | Every String MUST be wrapped with single quotes. |
 | Generic.Formatting.SpaceAfterCast | There MUST be a space after cast. |
 | Generic.Arrays.DisallowLongArraySyntax | Every array syntax MUST be in short array syntax. |
