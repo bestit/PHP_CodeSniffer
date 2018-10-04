@@ -72,6 +72,8 @@ class SpaceAfterDeclareSniff implements Sniff
     /**
      * Called when one of the token types that this sniff is listening for is found.
      *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
+     *
      * @param File $phpcsFile The PHP_CodeSniffer file where the token was found.
      * @param int $stackPtr The position in the PHP_CodeSniffer file's token stack where the token was found.
      *

@@ -53,7 +53,7 @@ class DocHelper
      * @param File $file File object of file which is processed.
      * @param int $stackPos Position to the token which is processed.
      */
-    public function __construct(File $file, $stackPos)
+    public function __construct(File $file, int $stackPos)
     {
         $this->file = $file;
         $this->tokens = $file->getTokens();
