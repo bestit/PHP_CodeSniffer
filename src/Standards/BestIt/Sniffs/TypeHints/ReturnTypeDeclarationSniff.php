@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace BestIt\Sniffs\TypeHints;
 
+use BestIt\CodeSniffer\File as FileDecorator;
+use BestIt\Sniffs\SuppressingTrait;
 use PHP_CodeSniffer\Files\File;
 use SlevomatCodingStandard\Helpers\Annotation;
 use SlevomatCodingStandard\Helpers\DocCommentHelper;
@@ -11,6 +13,7 @@ use SlevomatCodingStandard\Helpers\FunctionHelper;
 use SlevomatCodingStandard\Helpers\SuppressHelper;
 use SlevomatCodingStandard\Helpers\TypeHintHelper;
 use SlevomatCodingStandard\Sniffs\TypeHints\TypeHintDeclarationSniff as BaseSniff;
+use const T_FUNCTION;
 
 /**
  * Class ReturnTypeDeclarationSniff
@@ -20,6 +23,8 @@ use SlevomatCodingStandard\Sniffs\TypeHints\TypeHintDeclarationSniff as BaseSnif
  */
 class ReturnTypeDeclarationSniff extends BaseSniff
 {
+    use SuppressingTrait;
+
     /**
      * The php cs file
      *
@@ -79,7 +84,6 @@ class ReturnTypeDeclarationSniff extends BaseSniff
         $this->enableVoidTypeHint = false;
         $this->enableNullableTypeHints = false;
 
-        $this->suppressHelper = new SuppressHelper();
         $this->functionHelper = new FunctionHelper();
         $this->typeHintHelper = new TypeHintHelper();
         $this->docCommentHelper = new DocCommentHelper();
@@ -97,16 +101,14 @@ class ReturnTypeDeclarationSniff extends BaseSniff
     {
         $token = $phpcsFile->getTokens()[$pointer];
 
+        $this->file = new FileDecorator($phpcsFile);
         $this->phpcsFile = $phpcsFile;
         $this->pointer = $pointer;
+        $this->stackPos = $pointer;
         $this->token = $token;
 
         $hasInheritedDoc = $this->hasInheritdocAnnotation($phpcsFile, $pointer);
-        $isSniffSuppressed = SuppressHelper::isSniffSuppressed(
-            $phpcsFile,
-            $pointer,
-            $this->getSniffName(static::CODE_MISSING_RETURN_TYPE_HINT)
-        );
+        $isSniffSuppressed = $this->isSniffSuppressed(static::CODE_MISSING_RETURN_TYPE_HINT);
 
         if ($token['code'] === T_FUNCTION && !$isSniffSuppressed && !$hasInheritedDoc) {
             $this->checkReturnTypeHints($phpcsFile, $pointer);
@@ -208,11 +210,7 @@ class ReturnTypeDeclarationSniff extends BaseSniff
     {
         return (
             $this->functionHelper::findReturnTypeHint($this->phpcsFile, $this->pointer) !== null
-            || $this->suppressHelper::isSniffSuppressed(
-                $this->phpcsFile,
-                $this->pointer,
-                $this->getSniffName(self::CODE_MISSING_RETURN_TYPE_HINT)
-            )
+            || $this->isSniffSuppressed(static::CODE_MISSING_RETURN_TYPE_HINT)
         );
     }
 

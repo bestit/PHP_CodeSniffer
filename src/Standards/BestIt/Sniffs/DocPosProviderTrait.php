@@ -30,20 +30,6 @@ trait DocPosProviderTrait
     private $docHelper = null;
 
     /**
-     * The used file.
-     *
-     * @var File|void
-     */
-    protected $file;
-
-    /**
-     * Position of the listened token.
-     *
-     * @var int|void
-     */
-    protected $stackPos;
-
-    /**
      * Returns the position of the doc block if there is one.
      *
      * @return int|null
@@ -72,24 +58,18 @@ trait DocPosProviderTrait
     }
 
     /**
-     * Type safe getter for the file.
+     * Type-safe getter for the file.
      *
      * @return File
      */
-    private function getFile(): File
-    {
-        return $this->file;
-    }
+    abstract protected function getFile(): File;
 
     /**
-     * Type safe getter for the stack position for this sniff.
+     * Type-safe getter for the stack position.
      *
      * @return int
      */
-    private function getStackPos(): int
-    {
-        return $this->stackPos;
-    }
+    abstract protected function getStackPos(): int;
 
     /**
      * Loads the position of the doc comment.
