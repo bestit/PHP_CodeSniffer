@@ -3,6 +3,14 @@
 class TypeHintDeclarationSniff
 {
     /**
+     * TypeHintDeclarationSniff constructor.
+     */
+    public function __construct()
+    {
+        // Do nothing.
+    }
+
+    /**
      * @return bool
      */
     public function testBoolMethod(): bool
@@ -46,7 +54,7 @@ class TypeHintDeclarationSniff
     /**
      * @return void
      */
-    public function testVoidMethod()
+    public function testVoidMethod(): void
     {
         //void
     }
@@ -54,7 +62,7 @@ class TypeHintDeclarationSniff
     /**
      * @return null
      */
-    public function testNullMethod()
+    public function testNullMethod(): ?string
     {
         return null;
     }
@@ -62,12 +70,28 @@ class TypeHintDeclarationSniff
     /**
      * @return array|null
      */
-    public function testMultipleTypesMethod()
+    public function testMultipleTypesMethod(): ?array
     {
         if (true) {
             return [];
         }
 
         return null;
+    }
+
+    /**
+     * @return array|string
+     */
+    public function testMultipleTypesMethodWithoutNative()
+    {
+        return 1 || 'foo';
+    }
+
+    /**
+     * @return null|null|File[]
+     */
+    public function testTypesArrayMethodWithInvalidNullableTypeAnnotation()
+    {
+        return [] || null;
     }
 }

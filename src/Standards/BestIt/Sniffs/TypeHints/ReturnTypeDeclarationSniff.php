@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace BestIt\Sniffs\TypeHints;
 
-use BestIt\CodeSniffer\File;
+use BestIt\CodeSniffer\CodeError;
+use BestIt\CodeSniffer\CodeWarning;
 use BestIt\Sniffs\AbstractSniff;
 use BestIt\Sniffs\DocPosProviderTrait;
 use BestIt\Sniffs\FunctionRegistrationTrait;
@@ -12,8 +13,14 @@ use BestIt\Sniffs\SuppressingTrait;
 use SlevomatCodingStandard\Helpers\Annotation;
 use SlevomatCodingStandard\Helpers\FunctionHelper;
 use SlevomatCodingStandard\Helpers\TypeHintHelper;
-use function strpos;
+use function array_filter;
+use function array_intersect;
+use function count;
+use function explode;
+use function in_array;
+use function phpversion;
 use function substr;
+use function version_compare;
 
 /**
  * Class ReturnTypeDeclarationSniff
@@ -28,11 +35,86 @@ class ReturnTypeDeclarationSniff extends AbstractSniff
     use SuppressingTrait;
 
     /**
-     * The error code for this sniff.
+     * You MUST provide a return type for your functions. If you can't give it, it becomes only a warning with a PHPDoc.
      *
      * @var string
      */
-    public const CODE_MISSING_RETURN_TYPE_HINT = 'MissingReturnTypeHint';
+    public const CODE_MISSING_RETURN_TYPE = 'MissingReturnTypeHint';
+
+    /**
+     * The simple message of a return type is missing.
+     *
+     * @var string
+     */
+    private const MESSAGE_MISSING_RETURN_TYPE = 'Function/Method %s does not have a return type.';
+
+    /**
+     * The return types which match null.
+     *
+     * @var array
+     */
+    private const NULL_TYPES = ['null', 'void'];
+
+    /**
+     * Null as a return has no real return type, so we use this as a fallback.
+     *
+     * @var string
+     */
+    public $defaultNullReturn = '?string';
+
+    /**
+     * The name of the function.
+     *
+     * @var string|null
+     */
+    private $functionName = null;
+
+    /**
+     * Has this function a return type?
+     *
+     * @var null|bool
+     */
+    private $hasReturnType = null;
+
+    /**
+     * This methods should be ignored.
+     *
+     * @var array
+     */
+    public $methodsWithoutVoidSupport = ['__construct', '__destruct', '__clone'];
+
+    /**
+     * Caches the types which can be used for an automatic fix.
+     *
+     * This array is only filled, if the return annotation situation of the phpdoc is usable for a fix.
+     *
+     * @var null|array
+     */
+    private $typesForFix = null;
+
+    /**
+     * Adds the return type to fix the error.
+     *
+     * @return void
+     */
+    private function addReturnType(): void
+    {
+        $file = $this->getFile();
+        $returnTypeHint = $this->createReturnType();
+
+        $file->fixer->beginChangeset();
+
+        if ($this->isCustomArrayType($returnTypeHint)) {
+            $returnTypeHint = ($returnTypeHint[0] === '?' ? '?' : '') . 'array';
+        }
+
+        $file->fixer->addContent(
+            $this->token['parenthesis_closer'],
+            ': ' . $returnTypeHint
+        );
+
+        $file->fixer->endChangeset();
+    }
 
     /**
      * Returns true if this sniff may run.
@@ -41,100 +123,135 @@ class ReturnTypeDeclarationSniff extends AbstractSniff
      */
     protected function areRequirementsMet(): bool
     {
-        return !$this->isSniffSuppressed(static::CODE_MISSING_RETURN_TYPE_HINT) && !$this->hasInheritdocAnnotation();
+        return !$this->isSniffSuppressed(static::CODE_MISSING_RETURN_TYPE) && !$this->hasReturnType() &&
+            !in_array($this->getFunctionName(), $this->methodsWithoutVoid);
     }
 
     /**
-     * Check method type hints based on return annotation.
+     * Creates the new return type for fixing or returns a null if not possible.
+     *
+     * @return string
+     */
+    private function createReturnType(): string
+    {
+        $returnTypeHint = '';
+        $typeCount = count($this->typesForFix);
+
+        foreach ($this->typesForFix as $type) {
+            // We add the default value if only null is used (which has no real native return type).
+            if ($type === 'null' && ($typeCount === 1)) {
+                $returnTypeHint = $this->defaultNullReturn;
+                break; // We still need this break to prevent further execution of the default value.
+            }
+
+            // We add the question mark if there is a nullable type.
+            if (in_array($type, self::NULL_TYPES, true) && ($typeCount > 1)) {
+                $returnTypeHint = '?' . $returnTypeHint;
+                continue; // We still need this continue to prevent further execution of the questionmark.
+            }
+
+            // We add a fixable "native" type. We do not fix custom classes (because it would have side effects to the
+            // imported usage of classes.
+            $returnTypeHint .= (TypeHintHelper::isSimpleTypeHint($type))
+                ? TypeHintHelper::convertLongSimpleTypeHintToShort($type)
+                : $type;
+        }
+
+        return $returnTypeHint;
+    }
+
+    /**
+     * Fixes the return type error.
+     *
+     * @param CodeWarning $exception
      *
      * @return void
      */
-    protected function processToken(): void
+    protected function fixDefaultProblem(CodeWarning $exception): void
     {
-        if ($this->hasReturnType()) {
-            return;
-        }
+        // Satisfy PHPMD
+        unset($exception);
 
-        $returnAnnotation = FunctionHelper::findReturnAnnotation($this->file->getBaseFile(), $this->stackPos);
-        $hasReturnAnnotation = $this->hasReturnAnnotation($returnAnnotation);
-        $returnTypeHintDef = '';
-
-        if ($hasReturnAnnotation) {
-            $returnTypeHintDef = preg_split('~\\s+~', $returnAnnotation->getContent())[0];
-        }
-
-        $returnsValue = $this->returnsValue($hasReturnAnnotation, $returnTypeHintDef);
-
-        if (!$hasReturnAnnotation && $returnsValue) {
-            $this->file->addError(
-                sprintf(
-                    '%s %s() does not have return type hint nor @return annotation for its return value.',
-                    $this->getFunctionTypeLabel($this->file, $this->stackPos),
-                    FunctionHelper::getFullyQualifiedName($this->file->getBaseFile(), $this->stackPos)
-                ),
-                $this->stackPos,
-                self::CODE_MISSING_RETURN_TYPE_HINT
-            );
-        }
-
-        if (!$hasReturnAnnotation || !$returnsValue) {
-            return;
-        }
-
-        $oneTypeHintDef = $this->definitionContainsOneTypeHint($returnTypeHintDef);
-        $isValidTypeHint = $this->isValidTypeHint($returnTypeHintDef);
-
-        if ($oneTypeHintDef && $isValidTypeHint) {
-            $possibleReturnType = $returnTypeHintDef;
-            $nullableReturnType = false;
-
-            $fixable = $this->file->addFixableError(
-                sprintf(
-                    '%s %s() does not have return type hint for its return value'
-                    . ' but it should be possible to add it based on @return annotation "%s".',
-                    $this->getFunctionTypeLabel($this->file, $this->stackPos),
-                    FunctionHelper::getFullyQualifiedName($this->file->getBaseFile(), $this->stackPos),
-                    $returnTypeHintDef
-                ),
-                $this->stackPos,
-                self::CODE_MISSING_RETURN_TYPE_HINT
-            );
-
-            $this->fixTypeHint(
-                $fixable,
-                $possibleReturnType,
-                $nullableReturnType
-            );
+        // This method is called, if it the error is not marked as fixable. So check our internal marker again.
+        if ($this->typesForFix) {
+            $this->addReturnType();
         }
     }
 
     /**
-     * Checks if the function returns a value
+     * Returns the name of the function.
      *
-     * @param bool $hasReturnAnnotation Function has a return annotation
-     * @param string $returnTypeHintDef Return annotation type
-     *
-     * @return bool Function returns a value other than void
+     * @return string
      */
-    private function returnsValue(bool $hasReturnAnnotation, string $returnTypeHintDef): bool
+    private function getFunctionName(): string
     {
-        $returnsValue = ($hasReturnAnnotation && $returnTypeHintDef !== 'void');
-
-        if (!FunctionHelper::isAbstract($this->file->getBaseFile(), $this->stackPos)) {
-            $returnsValue = FunctionHelper::returnsValue($this->file->getBaseFile(), $this->stackPos);
+        if (!$this->functionName) {
+            $this->functionName = $this->loadFunctionName();
         }
 
-        return $returnsValue;
+        return $this->functionName;
     }
 
     /**
-     * Check if type hint sniff should be suppressed
+     * Returns the return types of the annotation.
      *
-     * @return bool Suppressed or not
+     * @param null|Annotation $annotation
+     *
+     * @return array
+     */
+    private function getReturnsFromAnnotation(?Annotation $annotation): array
+    {
+        return $this->isFilledReturnAnnotation($annotation)
+            ? explode('|', preg_split('~\\s+~', $annotation->getContent())[0])
+            : [];
+    }
+
+    /**
+     * Returns the types of the annotation, if the types are usable?
+     *
+     * Usable means, that there should be one type in the return-annotation or a nullable type, which means 2 types
+     * like null|$ANYTYPE.
+     *
+     * @param Annotation $annotation
+     *
+     * @return array|null Null if there are no usable types or the usable types.
+     */
+    private function getUsableReturnTypes(Annotation $annotation): ?array
+    {
+        $returnTypes = $this->getReturnsFromAnnotation($annotation);
+        $returnTypeCount = count($returnTypes);
+
+        $isNullableType = ($returnTypeCount === 2) &&
+            version_compare(phpversion(), '7.1.0', '>') &&
+            (count(array_intersect($returnTypes, self::NULL_TYPES)) === 1);
+
+        return (($returnTypeCount === 1) || $isNullableType) ? $returnTypes : null;
+    }
+
+    /**
+     * Check if there is a return type.
+     *
+     * @return bool
      */
     private function hasReturnType(): bool
     {
-        return FunctionHelper::findReturnTypeHint($this->file->getBaseFile(), $this->stackPos) !== null;
+        if ($this->hasReturnType === null) {
+            $this->hasReturnType = FunctionHelper::hasReturnTypeHint($this->file->getBaseFile(), $this->stackPos);
+        }
+
+        return $this->hasReturnType;
+    }
+
+    /**
+     * Is the given array a custom array with the "[]" suffix?
+     *
+     * @param string $returnTypeHint
+     *
+     * @return bool
+     */
+    private function isCustomArrayType(string $returnTypeHint): bool
+    {
+        return substr($returnTypeHint, -2) === '[]';
     }
 
     /**
@@ -144,95 +261,132 @@ class ReturnTypeDeclarationSniff extends AbstractSniff
      *
      * @return bool Function has a annotation
      */
-    private function hasReturnAnnotation($returnAnnotation): bool
+    private function isFilledReturnAnnotation(?Annotation $returnAnnotation = null): bool
     {
-        return $returnAnnotation !== null && $returnAnnotation->getContent() !== null;
-    }
-
-    /**
-     * Fixes the type hint error
-     *
-     * @param bool $fix Error is fixable
-     * @param string $possibleReturnType Return annotation value
-     * @param bool $nullableReturnType Is the return type nullable
-     *
-     * @return void
-     */
-    private function fixTypeHint(bool $fix, string $possibleReturnType, bool $nullableReturnType)
-    {
-        if ($fix) {
-            $this->file->fixer->beginChangeset();
-            $returnTypeHint = $possibleReturnType;
-
-            if (TypeHintHelper::isSimpleTypeHint($possibleReturnType)) {
-                $returnTypeHint = TypeHintHelper::convertLongSimpleTypeHintToShort($possibleReturnType);
-            }
-
-            if (substr($returnTypeHint, -2) === '[]') {
-                $returnTypeHint = 'array';
-            }
-
-            $this->file->fixer->addContent(
-                $this->token['parenthesis_closer'],
-                sprintf(': %s%s', ($nullableReturnType ? '?' : ''), $returnTypeHint)
-            );
-            $this->file->fixer->endChangeset();
-        }
-    }
-
-    /**
-     * Check if method has an inheritdoc annotation
-     *
-     * @return bool Has inheritdoc
-     */
-    private function hasInheritdocAnnotation(): bool
-    {
-        $return = false;
-
-        if ($this->getDocCommentPos()) {
-            $docBlockContent = trim($this->getDocHelper()->getBlockStartToken()['content']);
-
-            $return = strpos($docBlockContent, '@inheritdoc') !== false;
-        }
-
-        return $return;
-    }
-
-    /**
-     * Check if method or function
-     *
-     * @param File $file The php cs file
-     * @param int $functionPointer The current token
-     *
-     * @return string Returns either Method or Function
-     */
-    private function getFunctionTypeLabel(File $file, int $functionPointer): string
-    {
-        return FunctionHelper::isMethod($file->getBaseFile(), $functionPointer) ? 'Method' : 'Function';
+        return $returnAnnotation && $returnAnnotation->getContent();
     }
 
     /**
      * Check if the return annotation type is valid.
      *
-     * @param string $typeHint The type value of the return annotation
+     * @param string $type The type value of the return annotation
      *
      * @return bool Type is valid
      */
-    private function isValidTypeHint(string $typeHint): bool
+    private function isFixableReturnType(string $type): bool
     {
-        return TypeHintHelper::isSimpleTypeHint($typeHint)
-            || !TypeHintHelper::isSimpleUnofficialTypeHints($typeHint);
+        // $type === null is not valid in our slevomat helper.
+        return TypeHintHelper::isSimpleTypeHint($type) || $type === 'null' || $this->isCustomArrayType($type);
     }
 
     /**
-     * Check if return annotation has only one type.
+     * Removes the return types from the given array, which are not compatible with our fix.
      *
-     * @param string $typeHintDefinition The type values of the return annotation
+     * @param array|null $returnTypes
      *
-     * @return bool Return annotation has only one type
+     * @return array The cleaned array.
      */
-    private function definitionContainsOneTypeHint(string $typeHintDefinition): bool
+    private function loadFixableTypes(?array $returnTypes): array
     {
-        return strpos($typeHintDefinition, '|') === false;
+        return array_filter($returnTypes ?? [], function (string $returnType): bool {
+            return $this->isFixableReturnType($returnType);
+        });
+    }
+
+    /**
+     * Loads the name of the function.
+     *
+     * @return string
+     */
+    private function loadFunctionName(): string
+    {
+        return FunctionHelper::getName($this->getFile()->getBaseFile(), $this->stackPos);
+    }
+
+    /**
+     * Loads the return annotation for this method.
+     *
+     * @return null|Annotation
+     */
+    protected function loadReturnAnnotation(): ?Annotation
+    {
+        return FunctionHelper::findReturnAnnotation($this->getFile()->getBaseFile(), $this->stackPos);
+    }
+
+    /**
+     * Check method return type based with its return annotation.
+     *
+     * @throws CodeWarning
+     *
+     * @return void
+     */
+    protected function processToken(): void
+    {
+        $this->getFile()->recordMetric($this->stackPos, 'Has return type', 'no');
+
+        $returnAnnotation = $this->loadReturnAnnotation();
+
+        if (!$this->isFilledReturnAnnotation($returnAnnotation) ||
+            ($returnTypes = $this->getUsableReturnTypes($returnAnnotation))) {
+            $this->validateReturnType($returnTypes ?? null);
+        }
+    }
+
+    /**
+     * Sets up the test.
+     *
+     * @return void
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        if ($this->hasReturnType()) {
+            $this->getFile()->recordMetric($this->stackPos, 'Has return type', 'yes');
+        }
+    }
+
+    /**
+     * Resets the data of this sniff.
+     *
+     * @return void
+     */
+    protected function tearDown(): void
+    {
+        $this->resetDocCommentPos();
+
+        $this->hasReturnType = null;
+        $this->functionName = null;
+        $this->typesForFix = null;
+    }
+
+    /**
+     * Validates the return type and registers an error if there is one.
+     *
+     * @param array|null $returnTypes
+     * @throws CodeWarning
+     *
+     * @return void
+     */
+    private function validateReturnType(?array $returnTypes): void
+    {
+        if (!$returnTypes) {
+            $returnTypes = [];
+        }
+
+        $fixableTypes = $this->loadFixableTypes($returnTypes);
+
+        if (count($returnTypes) === count($fixableTypes)) {
+            // Make sure this var is only filled, if it really is fixable for us.
+            $this->typesForFix = $fixableTypes;
+        }
+
+        $exception =
+            (new CodeError(static::CODE_MISSING_RETURN_TYPE, self::MESSAGE_MISSING_RETURN_TYPE, $this->stackPos))
+                ->setPayload([$this->getFunctionName()]);
+
+        $exception->isFixable((bool) $this->typesForFix);
+
+        throw $exception;
     }
 }
