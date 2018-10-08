@@ -27,7 +27,7 @@ class VarTagSniff extends AbstractTagSniff
      */
     protected function getValidPattern(): string
     {
-        return '/^(?P<type>[\w\|]+)(?P<var> \$\w+)?$|\s/';
+        return '/^(?P<type>[\w\|\[\]]+)(?P<var> \$\w+)?$|\s/';
     }
 
     /**
