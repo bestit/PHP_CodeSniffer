@@ -72,7 +72,7 @@ class DocDescriptionHelper
      *
      * @return void
      */
-    public function checkCommentDescription(bool $descriptionRequired)
+    public function checkCommentDescription(bool $descriptionRequired): void
     {
         $this->descriptionRequired = $descriptionRequired;
 
@@ -150,7 +150,7 @@ class DocDescriptionHelper
      *
      * @return void
      */
-    private function checkCommentDescriptionUcFirst(int $descriptionStartPtr)
+    private function checkCommentDescriptionUcFirst(int $descriptionStartPtr): void
     {
         $descStartToken = $this->tokens[$descriptionStartPtr];
 
@@ -240,7 +240,7 @@ class DocDescriptionHelper
      *
      * @return void
      */
-    private function addDescriptionNotFoundError(int $summaryPtr)
+    private function addDescriptionNotFoundError(int $summaryPtr): void
     {
         if ($this->descriptionRequired) {
             $this->file->addError(
@@ -256,7 +256,7 @@ class DocDescriptionHelper
      *
      * @return void
      */
-    private function fixNoLineAfterDescription()
+    private function fixNoLineAfterDescription(): void
     {
         $descEndPtr = $this->getCommentDescriptionEndPointer();
         $descEndToken = $this->tokens[$descEndPtr];
@@ -279,7 +279,7 @@ class DocDescriptionHelper
      *
      * @return void
      */
-    private function fixMuchLinesAfterDescription(int $startLine, int $endLine)
+    private function fixMuchLinesAfterDescription(int $startLine, int $endLine): void
     {
         $this->file->getFixer()->beginChangeset();
 
@@ -295,7 +295,7 @@ class DocDescriptionHelper
      *
      * @return void
      */
-    private function fixDescriptionUcFirst(int $descriptionStartPtr)
+    private function fixDescriptionUcFirst(int $descriptionStartPtr): void
     {
         $descStartToken = $this->tokens[$descriptionStartPtr];
 

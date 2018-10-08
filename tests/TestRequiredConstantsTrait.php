@@ -29,6 +29,8 @@ trait TestRequiredConstantsTrait
      * Used on objects, it asserts that two variables reference
      * the same object.
      *
+     * @phpcsSuppress BestIt.TypeHints.ReturnTypeDeclaration.MissingReturnTypeHint
+     *
      * @param mixed $expected The expected value.
      * @param mixed $actual The actual value.
      * @param string $message The optional error message.
@@ -54,7 +56,7 @@ trait TestRequiredConstantsTrait
      *
      * @return void
      */
-    public function testRequiredConstants(string $constant, ?string $constantValue = null)
+    public function testRequiredConstants(string $constant, ?string $constantValue = null): void
     {
         $fullConstantName = get_class($this->fixture) . '::' . $constant;
 

@@ -110,7 +110,7 @@ abstract class AbstractSniff implements Sniff
      *
      * @return void
      */
-    public function process(BaseFile $phpcsFile, $stackPos)
+    public function process(BaseFile $phpcsFile, $stackPos): void
     {
         $this->file = new File($phpcsFile);
         $this->stackPos = $stackPos;

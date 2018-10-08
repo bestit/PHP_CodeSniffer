@@ -5,6 +5,14 @@ use BestIt\CodeSniffer\File;
 class TypeHintDeclarationSniff
 {
     /**
+     * TypeHintDeclarationSniff constructor.
+     */
+    public function __construct()
+    {
+        // Do nothing.
+    }
+
+    /**
      * @return bool
      */
     public function testBoolMethod()
@@ -45,10 +53,38 @@ class TypeHintDeclarationSniff
     }
 
     /**
-     * @return File[]
+     * @return null|File[]
      */
     public function testTypesArrayMethod()
     {
         return [];
+    }
+
+    /**
+     * @return void
+     */
+    public function testVoidMethod()
+    {
+        //void
+    }
+
+    /**
+     * @return null
+     */
+    public function testNullMethod()
+    {
+        return null;
+    }
+
+    /**
+     * @return array|null
+     */
+    public function testMultipleTypesMethod()
+    {
+        if (true) {
+            return [];
+        }
+
+        return null;
     }
 }

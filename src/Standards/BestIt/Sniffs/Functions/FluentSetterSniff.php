@@ -211,7 +211,7 @@ class FluentSetterSniff extends MethodScopeSniff
      *
      * @return void
      */
-    private function fixNoReturnFound(File $phpcsFile, int $closingBracePtr)
+    private function fixNoReturnFound(File $phpcsFile, int $closingBracePtr): void
     {
         $tokens = $phpcsFile->getTokens();
         $closingBraceToken = $tokens[$closingBracePtr];
@@ -233,7 +233,7 @@ class FluentSetterSniff extends MethodScopeSniff
      *
      * @return void
      */
-    private function fixMustReturnThis(File $phpcsFile, $returnPtr)
+    private function fixMustReturnThis(File $phpcsFile, $returnPtr): void
     {
         $returnSemicolonPtr = $phpcsFile->findEndOfStatement($returnPtr);
 
