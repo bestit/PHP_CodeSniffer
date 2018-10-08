@@ -161,14 +161,4 @@ class RequiredDocBlockSniff extends AbstractSniff
     {
         return array_keys($this->registeredTokens);
     }
-
-    /**
-     * Resets the doc comment position after this test.
-     *
-     * @return void
-     */
-    protected function tearDown(): void
-    {
-        $this->resetDocCommentPos();
-    }
 }

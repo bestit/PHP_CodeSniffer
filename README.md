@@ -142,6 +142,9 @@ the need to "re-implement" the basic interface with its method arguments.
 * **setUp**: You can set up the test, before the requirements are checked with _areRequirementsMet_.
 * **tearDown**: If you want to "destroy" this sniff, you can tear it down after the sniff processing.
 
+**The CodeSniffer is meant to be stateless even if the sniff-classes are used as "singletons". So if you save a state in 
+your sniff, you MUST tearDown afterwards or initialize correctly in the setUp.**   
+
 ### BestIt\Sniffs\DocTags\AbstractTagSniff
 
 This abstract class helps you sniff for single doc tags. Just implement the given abstract methods and you can register

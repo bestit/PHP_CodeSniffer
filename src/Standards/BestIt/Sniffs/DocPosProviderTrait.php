@@ -93,4 +93,14 @@ trait DocPosProviderTrait
         $this->docCommentPos = -1;
         $this->docHelper = null;
     }
+
+    /**
+     * Removes the cached data.
+     *
+     * @return void
+     */
+    protected function tearDown(): void
+    {
+        $this->resetDocCommentPos();
+    }
 }

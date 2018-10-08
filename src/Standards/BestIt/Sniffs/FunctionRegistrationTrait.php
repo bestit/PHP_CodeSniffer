@@ -17,8 +17,6 @@ trait FunctionRegistrationTrait
     /**
      * Sniffs for constants.
      *
-     * @api
-     *
      * @return array
      */
     public function register(): array

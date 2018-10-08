@@ -132,4 +132,16 @@ abstract class AbstractDisallowedTagsSniff extends AbstractSniff
     {
         $this->checkAndRegisterDisallowedTagsError();
     }
+
+    /**
+     * Removes the cached data.
+     *
+     * @return void
+     */
+    protected function tearDown(): void
+    {
+        $this->resetDocCommentPos();
+
+        $this->tags = null;
+    }
 }

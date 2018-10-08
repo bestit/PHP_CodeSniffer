@@ -152,8 +152,6 @@ class ReturnTypeDeclarationSniff extends AbstractSniff
     /**
      * Fixes the type hint error
      *
-     * @todo Check prior php 7.1 with the void return type.
-     *
      * @param bool $fix Error is fixable
      * @param string $possibleReturnType Return annotation value
      * @param bool $nullableReturnType Is the return type nullable
@@ -236,15 +234,5 @@ class ReturnTypeDeclarationSniff extends AbstractSniff
     private function definitionContainsOneTypeHint(string $typeHintDefinition): bool
     {
         return strpos($typeHintDefinition, '|') === false;
-    }
-
-    /**
-     * Resets the data of this sniff.
-     *
-     * @return void
-     */
-    protected function tearDown(): void
-    {
-        $this->resetDocCommentPos();
     }
 }
