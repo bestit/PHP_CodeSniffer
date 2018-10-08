@@ -106,7 +106,7 @@ abstract class AbstractDocSniff extends AbstractSniff
      *
      * @return void
      */
-    private function fixDocCommentUcFirst(int $position, array $token)
+    private function fixDocCommentUcFirst(int $position, array $token): void
     {
         $this->file->fixer->beginChangeset();
         $this->file->fixer->replaceToken($position, ucfirst($token['content']));
@@ -121,7 +121,7 @@ abstract class AbstractDocSniff extends AbstractSniff
      *
      * @return void
      */
-    private function fixNoLineAfterDocComment(int $position, array $token)
+    private function fixNoLineAfterDocComment(int $position, array $token): void
     {
         $this->file->fixer->beginChangeset();
 

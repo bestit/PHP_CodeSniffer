@@ -77,7 +77,7 @@ class SpaceAfterDeclareSniff implements Sniff
      *
      * @return void Optionally returns a stack pointer.
      */
-    public function process(File $phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr): void
     {
         $tokens = $phpcsFile->getTokens();
 
@@ -133,7 +133,7 @@ class SpaceAfterDeclareSniff implements Sniff
      *
      * @return void
      */
-    private function handleNoWhitespaceFound(File $phpcsFile, int $semicolonPtr)
+    private function handleNoWhitespaceFound(File $phpcsFile, int $semicolonPtr): void
     {
         $fixNoWhitespace = $phpcsFile->addFixableError(
             self::MESSAGE_NO_WHITESPACE_FOUND,
@@ -163,7 +163,7 @@ class SpaceAfterDeclareSniff implements Sniff
         int $semicolonPtr,
         int $secondSpacePtr,
         int $nextNonSpacePtr
-    ) {
+    ): void {
         $fixMuchWhitespaces = $phpcsFile->addFixableError(
             self::MESSAGE_MUCH_WHITESPACE_FOUND,
             $semicolonPtr,
@@ -194,7 +194,7 @@ class SpaceAfterDeclareSniff implements Sniff
         int $semicolonPtr,
         int $secondSpacePtr,
         int $nextNonSpacePtr
-    ) {
+    ): void {
         $fixGroupBlankLines = $phpcsFile->addFixableError(
             self::MESSAGE_GROUP_BLANK_LINE_FOUND,
             $semicolonPtr,

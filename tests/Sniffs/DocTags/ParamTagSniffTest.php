@@ -72,7 +72,7 @@ class ParamTagSniffTest extends SniffTestCase
      *
      * @return void
      */
-    public function testType()
+    public function testType(): void
     {
         static::assertInstanceOf(AbstractTagSniff::class, $this->fixture);
     }

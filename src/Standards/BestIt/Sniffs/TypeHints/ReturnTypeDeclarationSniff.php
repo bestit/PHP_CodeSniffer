@@ -81,7 +81,7 @@ class ReturnTypeDeclarationSniff extends AbstractSniff
      *
      * @var array
      */
-    public $methodsWithoutVoidSupport = ['__construct', '__destruct', '__clone'];
+    public $methodsWithoutVoid = ['__construct', '__destruct', '__clone'];
 
     /**
      * Caches the types which can be used for an automatic fix.

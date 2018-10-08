@@ -75,9 +75,9 @@ class OpenTagSniff implements Sniff
      * @param File $phpcsFile The PHP_CodeSniffer file where the token was found.
      * @param int $stackPtr The position in the PHP_CodeSniffer file's token stack where the token was found.
      *
-     * @return void|int Optionally returns a stack pointer.
+     * @return void Optionally returns a stack pointer.
      */
-    public function process(File $phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr): void
     {
         $tokens = $phpcsFile->getTokens();
 
@@ -110,7 +110,7 @@ class OpenTagSniff implements Sniff
      *
      * @return void
      */
-    private function handleOpenTagNotFirstStatement(File $phpcsFile, int $stackPtr)
+    private function handleOpenTagNotFirstStatement(File $phpcsFile, int $stackPtr): void
     {
         $fixNotFirstStatement = $phpcsFile->addFixableError(
             self::ERROR_NOT_FIRST_STATEMENT,
@@ -136,7 +136,7 @@ class OpenTagSniff implements Sniff
      *
      * @return void
      */
-    private function handleNoSpaceAfterOpenTag(File $phpcsFile, int $stackPtr, int $whitespacePtr)
+    private function handleNoSpaceAfterOpenTag(File $phpcsFile, int $stackPtr, int $whitespacePtr): void
     {
         $fixNoSpaceAfterTag = $phpcsFile->addFixableError(
             self::ERROR_NO_SPACE_AFTER_OPEN_TAG,
@@ -159,7 +159,7 @@ class OpenTagSniff implements Sniff
      *
      * @return void
      */
-    private function handleLineNotEmpty(File $phpcsFile, int $whitespacePtr)
+    private function handleLineNotEmpty(File $phpcsFile, int $whitespacePtr): void
     {
         $fixSpaceNotScndLine = $phpcsFile->addFixableError(
             self::ERROR_LINE_NOT_EMPTY,
