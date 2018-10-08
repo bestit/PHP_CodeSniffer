@@ -12,6 +12,13 @@ use stdClass;
 class WithTags
 {
     /**
+     * A test with arrays.
+     *
+     * @var string[]
+     */
+    public $array = ['foo', 'bar'];
+
+    /**
      * The used file.
      *
      * @var stdClass|void
