@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace BestIt\Sniffs\DocTags;
 
+use BestIt\CodeSniffer\File;
 use Closure;
+use function sprintf;
 
 /**
  * Helps you validating tag contents.
@@ -39,6 +41,13 @@ trait TagContentFormatTrait
     }
 
     /**
+     * Type-safe getter for the file.
+     *
+     * @return File
+     */
+    abstract protected function getFile(): File;
+
+    /**
      * Returns the payload for the error or warning registration.
      *
      * @param null|string $tagContent The content of the tag.
@@ -57,6 +66,13 @@ trait TagContentFormatTrait
             ]
         ];
     }
+
+    /**
+     * Type-safe getter for the stack position.
+     *
+     * @return int
+     */
+    abstract protected function getStackPos(): int;
 
     /**
      * Returns a pattern to check if the content is valid.
@@ -84,6 +100,7 @@ trait TagContentFormatTrait
                 $isValidContent = Closure::fromCallable($callback)($this->matches);
             }
         }
+
         return $isValidContent;
     }
 
@@ -96,8 +113,21 @@ trait TagContentFormatTrait
      */
     protected function processTagContent(?string $tagContent = null): void
     {
-        if (!$this->isValidContent($tagContent)) {
+        if (!$isValid = $this->isValidContent($tagContent)) {
             $this->file->{'add' . ($this->asError() ? 'Error' : 'Warning')}(...$this->getReportData($tagContent));
         }
+
+        $this->getFile()->recordMetric(
+            $this->getStackPos(),
+            sprintf('Valid %s tag:', $this->registerTag()),
+            $isValid ? 'Yes' : 'No'
+        );
     }
+
+    /**
+     * For which tag should be sniffed?
+     *
+     * @return string The name of the tag without the "@"-prefix.
+     */
+    abstract protected function registerTag(): string;
 }

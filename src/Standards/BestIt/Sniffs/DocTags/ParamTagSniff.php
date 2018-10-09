@@ -245,8 +245,20 @@ class ParamTagSniff extends AbstractTagSniff
                 $this->checkType();
                 $this->checkDescription();
             }
+
+            $this->getFile()->recordMetric(
+                $this->getStackPos(),
+                sprintf('Valid %s tag:', $this->registerTag()),
+                'Yes'
+            );
         } catch (CodeWarning $exception) {
             $this->getExceptionHandler()->handleException($exception);
+
+            $this->getFile()->recordMetric(
+                $this->getStackPos(),
+                sprintf('Valid %s tag:', $this->registerTag()),
+                'No'
+            );
         }
     }
 

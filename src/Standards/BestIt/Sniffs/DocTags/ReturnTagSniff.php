@@ -67,15 +67,33 @@ class ReturnTagSniff extends AbstractTagSniff
         $type = $returnParts[0];
 
         if (strtolower($type) === 'mixed') {
+            $this->getFile()->recordMetric(
+                $this->getStackPos(),
+                sprintf('Valid %s tag:', $this->registerTag()),
+                'mixed'
+            );
+
             throw (new CodeWarning(static::CODE_TAG_MIXED_TYPE, self::MESSAGE_TAG_MIXED_TYPE, $this->stackPos))
                 ->setToken($this->token);
         }
 
         if (!in_array($type, $this->excludedTypes) && count($returnParts) <= 1) {
+            $this->getFile()->recordMetric(
+                $this->getStackPos(),
+                sprintf('Valid %s tag:', $this->registerTag()),
+                'No'
+            );
+
             $this->file->addWarning(
                 self::MESSAGE_CODE_TAG_MISSING_RETURN_DESC,
                 $this->stackPos,
                 static::CODE_TAG_MISSING_RETURN_DESC
+            );
+        } else {
+            $this->getFile()->recordMetric(
+                $this->getStackPos(),
+                sprintf('Valid %s tag:', $this->registerTag()),
+                'Yes'
             );
         }
     }

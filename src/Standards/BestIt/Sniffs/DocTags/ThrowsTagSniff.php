@@ -39,13 +39,19 @@ class ThrowsTagSniff extends AbstractTagSniff
     {
         $returnParts = explode(' ', (string) $tagContent);
 
-        if (count($returnParts) <= 1) {
+        if ($isNotValid = (count($returnParts) <= 1)) {
             $this->file->addWarning(
                 static::MESSAGE_CODE_TAG_MISSING_DESC_DESC,
                 $this->stackPos,
                 static::CODE_TAG_MISSING_DESC_DESC
             );
         }
+
+        $this->getFile()->recordMetric(
+            $this->getStackPos(),
+            sprintf('Valid %s tag:', $this->registerTag()),
+            $isNotValid ? 'No' : 'Yes'
+        );
     }
 
     /**

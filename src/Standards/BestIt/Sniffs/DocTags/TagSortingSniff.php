@@ -85,10 +85,12 @@ class TagSortingSniff extends AbstractSniff
      */
     private function checkAndRegisterLineBreakErrors(): void
     {
+        $file = $this->getFile();
         $tokens = $this->getTagTokens();
         $prevToken = [];
         $tagCounts = $this->docTagHelper->getTagCounts($tokens);
         $withReturn = false;
+        $withMissingBreaks = false;
 
         foreach ($tokens as $tokenPos => $token) {
             $thisTagContent = $token['content'];
@@ -102,7 +104,11 @@ class TagSortingSniff extends AbstractSniff
 
             // Insert new line between groups or before the return tag if there is no line break already.
             if ($isGroupSwitch && (($prevToken['line'] + 1) === $token['line'])) {
-                $isFixing = $this->file->addFixableWarning(
+                $withMissingBreaks = true;
+
+                $file->recordMetric($tokenPos, 'Insert break between tags/groups', 'Yes');
+
+                $isFixing = $file->addFixableWarning(
                     static::MESSAGE_MISSING_NEWLINE_BETWEEN_TAGS,
                     $tokenPos,
                     static::CODE_MISSING_NEWLINE_BETWEEN_TAGS,
@@ -120,6 +126,14 @@ class TagSortingSniff extends AbstractSniff
             // Return should be the last element, so this is ok.
             $withReturn = $isReturn;
         }
+
+        if (!$withMissingBreaks) {
+            $file->recordMetric(
+                $this->stackPos,
+                'Doc blocks without new needed breaks between tags/groups',
+                'Yes'
+            );
+        }
     }
 
     /**
@@ -135,6 +149,8 @@ class TagSortingSniff extends AbstractSniff
         $sortedTokens = $this->sortTokens($orgTokens);
 
         if (array_values($orgTokens) !== $sortedTokens) {
+            $this->getFile()->recordMetric($this->stackPos, 'Wrong sorted tags', 'Yes');
+
             $error = (new CodeWarning(
                 self::CODE_WRONG_TAG_SORTING,
                 self::MESSAGE_WRONG_TAG_SORTING,
@@ -145,6 +161,8 @@ class TagSortingSniff extends AbstractSniff
 
             throw $error;
         }
+
+        $this->getFile()->recordMetric($this->stackPos, 'Wrong sorted tags', 'No');
     }
 
     /**
@@ -316,7 +334,7 @@ class TagSortingSniff extends AbstractSniff
      *
      * @return string The tag name without "dynamic values".
      */
-    private function getRealtagName(string $tagName): string
+    private function getRealTagName(string $tagName): string
     {
         $matches = [];
 
@@ -340,8 +358,8 @@ class TagSortingSniff extends AbstractSniff
             $return = 0;
             $leftTagName = $leftToken['content'];
             $rightTagName = $rightToken['content'];
-            $realLeftTagName = $this->getRealtagName($leftTagName);
-            $realRightTagName = $this->getRealtagName($rightTagName);
+            $realLeftTagName = $this->getRealTagName($leftTagName);
+            $realRightTagName = $this->getRealTagName($rightTagName);
 
             if ($realLeftTagName !== $realRightTagName) {
                 $leftTagCount = $tagCounts[$leftTagName];

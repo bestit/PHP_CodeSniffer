@@ -49,7 +49,9 @@ abstract class AbstractTagSniff extends AbstractSniff
      */
     protected function areRequirementsMet(): bool
     {
-        return (substr($this->tokens[$this->stackPos]['content'], 1) === $this->registerTag());
+        $tag = substr($this->tokens[$this->stackPos]['content'], 1);
+
+        return $tag === $this->registerTag();
     }
 
     /**
@@ -86,6 +88,8 @@ abstract class AbstractTagSniff extends AbstractSniff
      */
     protected function processToken(): void
     {
+        $this->getFile()->recordMetric($this->stackPos, 'Sniffed tags', $this->registerTag());
+
         $this->processTagContent($this->loadTagContent());
     }
 

@@ -15,6 +15,7 @@ use function array_walk;
 use function count;
 use function in_array;
 use function is_callable;
+use function sprintf;
 use function substr;
 use function ucfirst;
 
@@ -89,12 +90,12 @@ abstract class AbstractRequiredTagsSniff extends AbstractSniff
     {
         $allTags = $this->getAllTags();
         $checkedTags = [];
+        $file = $this->getFile();
         $tagRules = $this->getRulesWithRequirement('max');
 
         array_walk(
             $allTags,
-            // TODO: Removed Duplicates
-            function (array $tag, int $tagPos) use (&$checkedTags, $tagRules): void {
+            function (array $tag, int $tagPos) use (&$checkedTags, $file, $tagRules): void {
                 $tagContent = substr($tag['content'], 1);
 
                 if (!in_array($tagContent, $checkedTags)) {
@@ -104,7 +105,13 @@ abstract class AbstractRequiredTagsSniff extends AbstractSniff
                     $maxCount = @$tagRules[$tagContent]['max'] ?? 0;
 
                     if ($maxCount && ($tagCount > $maxCount)) {
-                        $this->file->addError(
+                        $file->recordMetric(
+                            $tagPos,
+                            sprintf('Tags on %s occurred to often', $this->token['type']),
+                            $tagContent
+                        );
+
+                        $file->addError(
                             self::MESSAGE_TAG_OCCURRENCE_MAX,
                             $tagPos,
                             // We use an error code containing the tag name because we can't configure this rules from
@@ -130,18 +137,26 @@ abstract class AbstractRequiredTagsSniff extends AbstractSniff
     private function checkAndRegisterTagMinimumCounts(): void
     {
         $checkedRule = 'min';
+        $docPos = $this->getDocCommentPos();
+        $file = $this->getFile();
         $rulesWithReq = $this->getRulesWithRequirement($checkedRule);
 
         array_walk(
             $rulesWithReq,
-            function (array $tagRule, string $tag) use ($checkedRule): void {
+            function (array $tagRule, string $tag) use ($checkedRule, $docPos, $file): void {
                 $minCount = $tagRule[$checkedRule];
                 $tagCount = count($this->findTokensForTag($tag));
 
                 if ($minCount > $tagCount) {
-                    $this->file->addError(
+                    $file->recordMetric(
+                        $docPos,
+                        sprintf('Tags on %s occurred not often enough', $this->token['type']),
+                        $tag
+                    );
+
+                    $file->addError(
                         self::MESSAGE_TAG_OCCURRENCE_MIN,
-                        $this->getDocCommentPos(),
+                        $docPos,
                         // We use an error code containing the tag name because we can't configure this rules from the
                         // outside and need  specific code to exclude the rule for this special tag.
                         self::CODE_TAG_OCCURRENCE_MIN_PREFIX . ucfirst($tag),

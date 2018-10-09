@@ -56,7 +56,7 @@ class PackageTagSniff extends AbstractTagSniff
     {
         $currentNamespace = NamespaceHelper::findCurrentNamespaceName($this->file, $this->stackPos);
 
-        if ($currentNamespace && $tagContent !== $currentNamespace) {
+        if ($isNotValid = $currentNamespace && $tagContent !== $currentNamespace) {
             $isFixing = $this->file->addFixableError(
                 static::MESSAGE_CODE_TAG_WRONG_PACKAGE,
                 $this->stackPos,
@@ -70,6 +70,12 @@ class PackageTagSniff extends AbstractTagSniff
                 $this->fixWrongPackage($currentNamespace);
             }
         }
+
+        $this->getFile()->recordMetric(
+            $this->getStackPos(),
+            sprintf('Valid %s tag:', $this->registerTag()),
+            $isNotValid ? 'No' : 'Yes'
+        );
     }
 
     /**

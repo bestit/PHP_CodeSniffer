@@ -67,11 +67,14 @@ abstract class AbstractDisallowedTagsSniff extends AbstractSniff
     {
         $disallowedTags = $this->getDisallowedTags();
         $tags = $this->getAllTags();
+        $withDisallowedTags = false;
 
         foreach ($tags as $tagPos => $tag) {
             $tagContent = $tag['content'];
 
             if (in_array(substr($tagContent, 1), $disallowedTags)) {
+                $withDisallowedTags = true;
+
                 $this->file->addError(
                     self::MESSAGE_TAG_NOT_ALLOWED,
                     $tagPos,
@@ -80,6 +83,12 @@ abstract class AbstractDisallowedTagsSniff extends AbstractSniff
                 );
             }
         }
+
+        $this->getFile()->recordMetric(
+            $this->stackPos,
+            $this->token['type'] . ' has invalid tags',
+            $withDisallowedTags ? 'Yes' : 'No'
+        );
     }
 
     /**
