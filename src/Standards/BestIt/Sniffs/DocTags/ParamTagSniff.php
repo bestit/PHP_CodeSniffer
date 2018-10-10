@@ -98,6 +98,13 @@ class ParamTagSniff extends AbstractTagSniff
         'required types in detail.';
 
     /**
+     * The token of the real function argument if it exists or null.
+     *
+     * @var array|null Is filled by runtime.
+     */
+    private $argumentToken = null;
+
+    /**
      * The used variable tokens for this method.
      *
      * @var array
@@ -121,6 +128,27 @@ class ParamTagSniff extends AbstractTagSniff
         }
 
         return $return;
+    }
+
+    /**
+     * Checks if the argument of the function itself exists.
+     *
+     * @param null|string $tagContent
+     * @throws CodeWarning
+     *
+     * @return void
+     */
+    private function checkArgumentItself(?string $tagContent = null): void
+    {
+        if (!$this->getArgumentTokenOfTag()) {
+            throw (new CodeError(
+                static::CODE_TAG_MISSING_VARIABLE,
+                self::MESSAGE_TAG_MISSING_VARIABLE,
+                $this->stackPos
+            ))
+                ->setPayload([$tagContent])
+                ->setToken($this->token);
+        }
     }
 
     /**
@@ -187,22 +215,24 @@ class ParamTagSniff extends AbstractTagSniff
      */
     protected function getValidPattern(): string
     {
-        // Give me the other tags of this doc block before this one.
-        $tagPosBeforeThis = TokenHelper::findNextAll(
-            $this->file->getBaseFile(),
-            $this->register(),
-            $this->file->findPrevious([T_DOC_COMMENT_OPEN_TAG], $this->stackPos),
-            $this->stackPos - 1
-        );
-
-        $tagPosBeforeThis = array_filter($tagPosBeforeThis, function (int $position) {
-            return $this->tokens[$position]['content'] === '@param';
-        });
-
-        $varOfThisTag = array_values($this->varTokens)[count($tagPosBeforeThis)];
+        $varOfThisTag = $this->getArgumentTokenOfTag();
 
         return '/(?P<type>[\w|\|\[\]]*) ?(?P<var>' . preg_quote($varOfThisTag['content'], '/') .
             ') ?(?P<desc>.*)/m';
+    }
+
+    /**
+     * Returns the name of the real function argument for this parameter tag.
+     *
+     * @return array Null if there is no matching function argument.
+     */
+    private function getArgumentTokenOfTag(): array
+    {
+        if ($this->argumentToken === null) {
+            $this->argumentToken = $this->loadArgumentTokenOfTag();
+        }
+
+        return $this->argumentToken;
     }
 
     /**
@@ -217,8 +247,11 @@ class ParamTagSniff extends AbstractTagSniff
         $varPositions = $this->findAllVariablePositions();
 
         if (!$varPositions) {
-            throw (new CodeError(self::CODE_TAG_MISSING_VARIABLES, self::MESSAGE_TAG_MISSING_VARIABLES, $this->stackPos))
-                ->setToken($this->token);
+            throw (new CodeError(
+                self::CODE_TAG_MISSING_VARIABLES,
+                self::MESSAGE_TAG_MISSING_VARIABLES,
+                $this->stackPos
+            ))->setToken($this->token);
         }
 
         $this->varTokens = array_filter($this->tokens, function (array $token) use ($varPositions): bool {
@@ -229,24 +262,44 @@ class ParamTagSniff extends AbstractTagSniff
     }
 
     /**
+     * Loads the function argument of this tag.
+     *
+     * @return array
+     */
+    private function loadArgumentTokenOfTag(): array
+    {
+        // Give me the other tags of this doc block before this one.
+        $tagPosBeforeThis = TokenHelper::findNextAll(
+            $this->file->getBaseFile(),
+            $this->register(),
+            $this->file->findPrevious([T_DOC_COMMENT_OPEN_TAG], $this->stackPos),
+            $this->stackPos - 1
+        );
+
+        $tagPosBeforeThis = array_filter($tagPosBeforeThis, function (int $position) {
+            return $this->tokens[$position]['content'] === '@param';
+        });
+
+        return (array_values($this->varTokens)[count($tagPosBeforeThis)]) ?? [];
+    }
+
+    /**
      * Processed the content of the required tag.
      *
      * @param null|string $tagContent The possible tag content or null.
+     * @throws CodeWarning
      *
      * @return void
      */
     protected function processTagContent(?string $tagContent = null): void
     {
-        try {
-            $varPoss = $this->loadAndCheckVarPositions();
+        $varPoss = $this->loadAndCheckVarPositions();
 
-            if ($varPoss) {
-                $this->checkAgainstPattern($tagContent);
-                $this->checkType();
-                $this->checkDescription();
-            }
-        } catch (CodeWarning $exception) {
-            $this->getExceptionHandler()->handleException($exception);
+        if ($varPoss) {
+            $this->checkArgumentItself($tagContent);
+            $this->checkAgainstPattern($tagContent);
+            $this->checkType();
+            $this->checkDescription();
         }
     }
 
@@ -258,5 +311,17 @@ class ParamTagSniff extends AbstractTagSniff
     protected function registerTag(): string
     {
         return 'param';
+    }
+
+    /**
+     * Sets up the test and loads the matching var if there is one.
+     *
+     * @return void
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->argumentToken = null;
     }
 }

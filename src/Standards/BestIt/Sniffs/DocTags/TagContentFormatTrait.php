@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace BestIt\Sniffs\DocTags;
 
+use BestIt\CodeSniffer\File;
 use Closure;
 
 /**
@@ -37,6 +38,13 @@ trait TagContentFormatTrait
     {
         return $this->asError;
     }
+
+    /**
+     * Type-safe getter for the file.
+     *
+     * @return File
+     */
+    abstract protected function getFile(): File;
 
     /**
      * Returns the payload for the error or warning registration.
@@ -97,7 +105,7 @@ trait TagContentFormatTrait
     protected function processTagContent(?string $tagContent = null): void
     {
         if (!$this->isValidContent($tagContent)) {
-            $this->file->{'add' . ($this->asError() ? 'Error' : 'Warning')}(...$this->getReportData($tagContent));
+            $this->getFile()->{'add' . ($this->asError() ? 'Error' : 'Warning')}(...$this->getReportData($tagContent));
         }
     }
 }
