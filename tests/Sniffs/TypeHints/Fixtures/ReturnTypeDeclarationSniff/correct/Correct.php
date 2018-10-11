@@ -19,6 +19,16 @@ class TypeHintDeclarationSniff
     }
 
     /**
+     * Returns a file object.
+     *
+     * @return File
+     */
+    public function testCustomObject(): File
+    {
+        return new File();
+    }
+
+    /**
      * @phpcsSuppress BestIt.TypeHints.ReturnTypeDeclaration.MissingReturnTypeHint
      * @return int
      */

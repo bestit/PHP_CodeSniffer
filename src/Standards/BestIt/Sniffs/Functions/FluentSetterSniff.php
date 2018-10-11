@@ -153,6 +153,8 @@ class FluentSetterSniff extends MethodScopeSniff
     /**
      * Processes the tokens that this test is listening for.
      *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
+     *
      * @param File $file The file where this token was found.
      * @param int $functionPos The position in the stack where this token was found.
      * @param int $classPos The position in the tokens array that opened the scope that this test is listening for.
@@ -233,7 +235,7 @@ class FluentSetterSniff extends MethodScopeSniff
      *
      * @return void
      */
-    private function fixMustReturnThis(File $phpcsFile, $returnPtr): void
+    private function fixMustReturnThis(File $phpcsFile, int $returnPtr): void
     {
         $returnSemicolonPtr = $phpcsFile->findEndOfStatement($returnPtr);
 

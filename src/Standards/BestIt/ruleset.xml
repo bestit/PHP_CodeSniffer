@@ -53,6 +53,13 @@
         </properties>
     </rule>
 
+    <rule ref="SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint">
+        <properties>
+            <property name="allAnnotationsAreUseful" value="true"/>
+            <property name="enableEachParameterAndReturnInspection" value="true"/>
+        </properties>
+    </rule>
+
     <rule ref="Generic.Arrays.DisallowLongArraySyntax" />
 
     <rule ref="Generic.Formatting.SpaceAfterCast" />
