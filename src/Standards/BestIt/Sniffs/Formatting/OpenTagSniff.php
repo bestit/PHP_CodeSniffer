@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace BestIt\Sniffs\Formatting;
 
+use BestIt\CodeSniffer\File as FileDecorator;
+use BestIt\Sniffs\FileTrait;
+use BestIt\Sniffs\StackPosTrait;
+use BestIt\Sniffs\TimeTrackerTrait;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
 
@@ -15,6 +19,10 @@ use PHP_CodeSniffer\Sniffs\Sniff;
  */
 class OpenTagSniff implements Sniff
 {
+    use FileTrait;
+    use StackPosTrait;
+    use TimeTrackerTrait;
+
     /**
      * Error message when open tag is not first statement.
      *
@@ -79,6 +87,11 @@ class OpenTagSniff implements Sniff
      */
     public function process(File $phpcsFile, $stackPtr): void
     {
+        $this->file = new FileDecorator($phpcsFile);
+        $this->stackPos = $stackPtr;
+
+        $this->startTimeTracker();
+
         $tokens = $phpcsFile->getTokens();
 
         //Open tag is not first token in token stack
@@ -93,6 +106,7 @@ class OpenTagSniff implements Sniff
         if ($whitespaceToken['code'] !== T_WHITESPACE) {
             $this->handleNoSpaceAfterOpenTag($phpcsFile, $stackPtr, $whitespacePtr);
 
+            $this->recordTime();
             return;
         }
 
@@ -100,6 +114,8 @@ class OpenTagSniff implements Sniff
         if ($whitespaceToken['length'] !== 0) {
             $this->handleLineNotEmpty($phpcsFile, $whitespacePtr);
         }
+
+        $this->recordTime();
     }
 
     /**

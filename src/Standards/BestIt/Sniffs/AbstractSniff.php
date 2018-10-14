@@ -19,21 +19,10 @@ use PHP_CodeSniffer\Sniffs\Sniff;
  */
 abstract class AbstractSniff implements Sniff
 {
+    use FileTrait;
+    use StackPosTrait;
+    use TimeTrackerTrait;
     use SuppressingTrait;
-
-    /**
-     * The used file.
-     *
-     * @var File|void
-     */
-    protected $file;
-
-    /**
-     * Position of the listened token.
-     *
-     * @var int|void
-     */
-    protected $stackPos;
 
     /**
      * The used token.
@@ -83,26 +72,6 @@ abstract class AbstractSniff implements Sniff
     }
 
     /**
-     * Type-safe getter for the file.
-     *
-     * @return File
-     */
-    protected function getFile(): File
-    {
-        return $this->file;
-    }
-
-    /**
-     * Type-safe getter for the stack position.
-     *
-     * @return int
-     */
-    protected function getStackPos(): int
-    {
-        return $this->stackPos;
-    }
-
-    /**
      * Called when one of the token types that this sniff is listening for is found.
      *
      * @param BaseFile $phpcsFile The PHP_CodeSniffer file where the token was found.
@@ -112,6 +81,8 @@ abstract class AbstractSniff implements Sniff
      */
     public function process(BaseFile $phpcsFile, $stackPos): void
     {
+        $this->startTimeTracker();
+
         $this->file = new File($phpcsFile);
         $this->stackPos = $stackPos;
         $this->tokens = $this->getFile()->getTokens();
@@ -132,6 +103,8 @@ abstract class AbstractSniff implements Sniff
         }
 
         $this->tearDown();
+
+        $this->recordTime();
     }
 
     /**

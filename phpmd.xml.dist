@@ -17,11 +17,17 @@
         <exclude name="StaticAccess" />
         <!-- Disable opinionated things blocking us -->
         <exclude name="BooleanArgumentFlag" />
+        <exclude name="ElseExpression" />
     </rule>
 
     <rule ref="rulesets/codesize.xml"/>
     <rule ref="rulesets/controversial.xml"/>
-    <rule ref="rulesets/design.xml"/>
+
+    <rule ref="rulesets/design.xml">
+        <!-- Disable opinionated things blocking us -->
+        <exclude name="EvalExpression" />
+    </rule>
+
     <rule ref="rulesets/naming.xml"/>
     <rule ref="rulesets/unusedcode.xml"/>
 

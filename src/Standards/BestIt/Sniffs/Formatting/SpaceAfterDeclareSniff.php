@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace BestIt\Sniffs\Formatting;
 
+use BestIt\CodeSniffer\File as FileDecorator;
+use BestIt\Sniffs\FileTrait;
+use BestIt\Sniffs\StackPosTrait;
+use BestIt\Sniffs\TimeTrackerTrait;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
 
@@ -15,6 +19,10 @@ use PHP_CodeSniffer\Sniffs\Sniff;
  */
 class SpaceAfterDeclareSniff implements Sniff
 {
+    use FileTrait;
+    use StackPosTrait;
+    use TimeTrackerTrait;
+
     /**
      * Error message when no whitespace is found.
      *
@@ -79,6 +87,11 @@ class SpaceAfterDeclareSniff implements Sniff
      */
     public function process(File $phpcsFile, $stackPtr): void
     {
+        $this->file = new FileDecorator($phpcsFile);
+        $this->stackPos = $stackPtr;
+
+        $this->startTimeTracker();
+
         $tokens = $phpcsFile->getTokens();
 
         $semicolonPtr = $phpcsFile->findEndOfStatement($stackPtr);
@@ -93,12 +106,14 @@ class SpaceAfterDeclareSniff implements Sniff
 
         //Declare statement group detected
         if ($secondSpaceToken['code'] === T_DECLARE) {
+            $this->recordTime();
             return;
         }
 
         //Declare statement group with blank lines detected
         if ($nextDeclarePtr && $whiteSpaceInGroupPtr) {
             $this->handleBlankLineInGroup($phpcsFile, $semicolonPtr, $whiteSpaceInGroupPtr, $nextDeclarePtr);
+            $this->recordTime();
             return;
         }
 
@@ -106,12 +121,14 @@ class SpaceAfterDeclareSniff implements Sniff
         if ($secondSpaceToken['code'] !== T_WHITESPACE) {
             $this->handleNoWhitespaceFound($phpcsFile, $semicolonPtr);
 
+            $this->recordTime();
             return;
         }
 
         $nextNonSpacePtr = $phpcsFile->findNext(T_WHITESPACE, $secondSpacePtr, null, true);
 
         if ($nextNonSpacePtr === false) {
+            $this->recordTime();
             return;
         }
 
@@ -120,9 +137,9 @@ class SpaceAfterDeclareSniff implements Sniff
         //Detect too many whitespaces after declare statement
         if (($nextNonSpaceToken['line'] - $secondSpaceToken['line']) > 1) {
             $this->handleMuchWhitespacesFound($phpcsFile, $semicolonPtr, $secondSpacePtr, $nextNonSpacePtr);
-
-            return;
         }
+
+        $this->recordTime();
     }
 
     /**

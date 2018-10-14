@@ -54,8 +54,6 @@ class File extends AbstractFileDecorator
      *
      * Returns false if no token can be found.
      *
-     * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
-     *
      * @param array $types The type(s) of tokens to search for.
      * @param int $start The position to start searching from in the token stack.
      * @param int|null $end The end position to fail if no token is found. if not specified or null, end will default to the end of the token stack.
@@ -85,8 +83,6 @@ class File extends AbstractFileDecorator
      * containing the specified value will be returned.
      *
      * Returns -1 if no token can be found.
-     *
-     * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
      *
      * @param array $types The type(s) of tokens to search for.
      * @param int $start The position to start searching from in the token stack.
