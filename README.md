@@ -104,6 +104,7 @@ The base for the BestIt Standard is [PSR-12](https://github.com/php-fig/fig-stan
 | Generic.Formatting.SpaceAfterCast | There MUST be a space after cast. |
 | Generic.Arrays.DisallowLongArraySyntax | Every array syntax MUST be in short array syntax. |
 | BestIt.Formatting.OpenTagSniff | After the open tag there MUST be an empty line. |
+| BestIt.Formatting.EqualOperatorSniff | You should use the "Identical" operator (===). |
 
 ## Development
 
