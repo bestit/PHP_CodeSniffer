@@ -104,15 +104,15 @@ trait DefaultSniffIntegrationTestTrait
      * @dataProvider getWarningAsserts
      *
      * @param string $file Fixture file
-     * @param string $error Error code
+     * @param string $warning Error code
      * @param int[] $lines Lines where the error code occurs
      * @param bool $withFixable Should we test a fixable?
      *
      * @return void
      */
-    public function testWarnings(string $file, string $error, array $lines, bool $withFixable = false): void
+    public function testWarnings(string $file, string $warning, array $lines, bool $withFixable = false): void
     {
-        $report = $this->assertWarningsInFile($file, $error, $lines);
+        $report = $this->assertWarningsInFile($file, $warning, $lines);
 
         if ($withFixable) {
             $this->assertAllFixedInFile($report);

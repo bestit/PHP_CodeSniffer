@@ -93,6 +93,7 @@ The base for the BestIt Standard is [PSR-12](https://github.com/php-fig/fig-stan
 | BestIt.DocTags.VarTag.TagContentFormatInvalid | You MUST provide a type for your var tag. | 
 | BestIt.DocTags.VersionTag.TagContentFormatInvalid | If you provide a version tag, you MUST provide it in [semver 2.0-Format](https://semver.org) with Major.Minor.Patch-Version . |
 | BestIt.Formatting.AlphabeticClassContent.SortAlphabetically | You SHOULD sort you constants, methods and properties alphabetically. |
+| BestIt.Formatting.EqualOperatorSniff | You should use the "Identical" operator (===). |
 | BestIt.Formatting.SpaceAroundConcatSniff.MissingSpaceAroundConcat | You MUST wrap your concat-dot with a whitespace char. |
 | BestIt.Formatting.UCVFSorting.WrongPosition | You MUST sort the contents of your classes, traits, interface, etc. in the following order: T_USE, T_CONST, T_VARIABLE, T_FUNCTION. |
 | BestIt.NamingConvention.CamelCaseVariable.NotCamelCase | You MUST provide your vars in camel case, lower case first. | Yes |
