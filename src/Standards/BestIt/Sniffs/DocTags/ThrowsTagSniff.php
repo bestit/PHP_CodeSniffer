@@ -16,15 +16,11 @@ class ThrowsTagSniff extends AbstractTagSniff
 {
     /**
      * Code that the tag content format is invalid.
-     *
-     * @var string
      */
     public const CODE_TAG_MISSING_DESC_DESC = 'MissingThrowDescription';
 
     /**
      * Message that the tag content format is invalid.
-     *
-     * @var string
      */
     protected const MESSAGE_CODE_TAG_MISSING_DESC_DESC = 'Are you sure that you do not want to describe the throw?';
 

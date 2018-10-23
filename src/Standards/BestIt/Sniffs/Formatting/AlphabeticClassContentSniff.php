@@ -27,15 +27,11 @@ class AlphabeticClassContentSniff extends AbstractSniff
 
     /**
      * Error code for the sorting.
-     *
-     * @var string
      */
     public const CODE_SORT_ALPHABETICALLY = 'SortAlphabetically';
 
     /**
      * The message for the wrong sorting.
-     *
-     * @var string
      */
     private const MESSAGE_SORT_ALPHABETICALLY = 'Please sort you contents alphabetically.';
 

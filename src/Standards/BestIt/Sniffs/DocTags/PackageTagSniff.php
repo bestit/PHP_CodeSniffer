@@ -19,15 +19,11 @@ class PackageTagSniff extends AbstractTagSniff
 {
     /**
      * Code that the tag content format is invalid.
-     *
-     * @var string
      */
     public const CODE_TAG_WRONG_PACKAGE = 'WrongPackage';
 
     /**
      * Message that the tag content format is invalid.
-     *
-     * @var string
      */
     protected const MESSAGE_CODE_TAG_WRONG_PACKAGE = 'The package needs to match your real namespace: %s';
 

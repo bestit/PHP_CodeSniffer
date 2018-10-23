@@ -32,29 +32,21 @@ class TagSortingSniff extends AbstractSniff
 {
     /**
      * The error code for the missing new line between tags.
-     *
-     * @var string
      */
     public const CODE_MISSING_NEWLINE_BETWEEN_TAGS = 'MissingNewlineBetweenTags';
 
     /**
      * The error code for the wrong sorting order.
-     *
-     * @var string
      */
     public const CODE_WRONG_TAG_SORTING = 'WrongTagSorting';
 
     /**
      * The message for the missing new line between tags.
-     *
-     * @var string
      */
     private const MESSAGE_MISSING_NEWLINE_BETWEEN_TAGS = 'There should be a newline after the tag (group): %s.';
 
     /**
      * The message for the wrong sorting order.
-     *
-     * @var string
      */
     private const MESSAGE_WRONG_TAG_SORTING = 'Please provide the tags in occurrence and then alphabetical order 
         (a-z) but with return at last position.';

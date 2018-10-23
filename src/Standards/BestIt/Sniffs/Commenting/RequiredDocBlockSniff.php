@@ -29,29 +29,21 @@ class RequiredDocBlockSniff extends AbstractSniff
 
     /**
      * The error code for missing doc blocks.
-     *
-     * @var string
      */
     public const CODE_MISSING_DOC_BLOCK_PREFIX = 'MissingDocBlock';
 
     /**
      * The error code for the inline block.
-     *
-     * @var string
      */
     public const CODE_NO_MULTI_LINE_DOC_BLOCK_PREFIX = 'NoMultiLineDocBlock';
 
     /**
      * The message for missing doc blocks.
-     *
-     * @var string
      */
     private const MESSAGE_MISSING_DOC_BLOCK = 'Please provide a doc block for your %s.';
 
     /**
      * The error message for the inline block.
-     *
-     * @var string
      */
     private const MESSAGE_NO_MULTI_LINE_DOC_BLOCK_PREFIX = 'Please provide a multi line doc block for your %s.';
 
