@@ -25,57 +25,41 @@ abstract class AbstractDocSniff extends AbstractSniff
 
     /**
      * Code that the doc comment starts with an capital letter.
-     *
-     * @var string
      */
     public const CODE_DOC_COMMENT_UC_FIRST = 'DocCommentUcFirst';
 
     /**
      * Code that there is no line after the doc comment.
-     *
-     * @var string
      */
     public const CODE_NO_LINE_AFTER_DOC_COMMENT = 'NoLineAfterDocComment';
 
     /**
      * Code that there is no summary in doc comment.
-     *
-     * @var string
      */
     public const CODE_NO_SUMMARY = 'NoSummary';
 
     /**
      * Error code if the summary is too long.
-     *
-     * @var string
      */
     public const CODE_SUMMARY_TOO_LONG = 'SummaryTooLong';
 
     /**
      * Message that the doc comments does not start with an capital letter.
-     *
-     * @var string
      */
     private const MESSAGE_DOC_COMMENT_UC_FIRST = 'The first letter of the summary/long-description is not uppercase.';
 
     /**
      * Message that there is no line after the doc comment.
-     *
-     * @var string
      */
     private const MESSAGE_NO_LINE_AFTER_DOC_COMMENT = 'There is no empty line after the summary/long-description.';
 
     /**
      * Message that there is no summary in doc comment.
-     *
-     * @var string
      */
     private const MESSAGE_NO_SUMMARY = 'There must be a summary in the doc comment.';
 
     /**
      * The error message if the summary is too long.
-     *
-     * @var string
      */
     private const MESSAGE_SUMMARY_TOO_LONG = 'The summary should fit in one line. If you want more, use the long desc.';
 

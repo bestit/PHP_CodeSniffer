@@ -25,29 +25,21 @@ class FluentSetterSniff extends MethodScopeSniff
 {
     /**
      * Code when the method does not return $this.
-     *
-     * @var string
      */
     public const CODE_MUST_RETURN_THIS = 'MustReturnThis';
 
     /**
      * Code when no return statement is found.
-     *
-     * @var string
      */
     public const CODE_NO_RETURN_FOUND = 'NoReturnFound';
 
     /**
      * Error message when the method does not return $this.
-     *
-     * @var string
      */
     private const ERROR_MUST_RETURN_THIS = 'The method "%s" must return $this';
 
     /**
      * Error message when no return statement is found.
-     *
-     * @var string
      */
     private const ERROR_NO_RETURN_FOUND = 'Method "%s" has no return statement';
 

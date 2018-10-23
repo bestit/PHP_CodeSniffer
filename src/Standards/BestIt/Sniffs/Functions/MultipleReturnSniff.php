@@ -26,15 +26,11 @@ class MultipleReturnSniff extends AbstractSniff
 
     /**
      * Code for multiple returns.
-     *
-     * @var string
      */
     public const CODE_MULTIPLE_RETURNS_FOUND = 'MultipleReturnsFound';
 
     /**
      * Error message for multiple returns.
-     *
-     * @var string
      */
     private const WARNING_MULTIPLE_RETURNS_FOUND = 'Multiple returns detected. Did you refactor your method? Please ' .
         'do not use an early return if your method/function still is cluttered.';

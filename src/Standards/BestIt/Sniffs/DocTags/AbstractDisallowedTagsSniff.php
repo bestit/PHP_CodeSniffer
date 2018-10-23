@@ -22,15 +22,11 @@ abstract class AbstractDisallowedTagsSniff extends AbstractSniff
 
     /**
      * Code that comment tag is not allowed.
-     *
-     * @var string
      */
     public const CODE_TAG_NOT_ALLOWED = 'TagNotAllowed';
 
     /**
      * Message that comment tag is not allowed.
-     *
-     * @var string
      */
     private const MESSAGE_TAG_NOT_ALLOWED = 'The comment tag "%s" is not allowed.';
 

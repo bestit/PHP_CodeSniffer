@@ -36,22 +36,16 @@ class ReturnTypeDeclarationSniff extends AbstractSniff
 
     /**
      * You MUST provide a return type for your functions. If you can't give it, it becomes only a warning with a PHPDoc.
-     *
-     * @var string
      */
     public const CODE_MISSING_RETURN_TYPE = 'MissingReturnTypeHint';
 
     /**
      * The simple message of a return type is missing.
-     *
-     * @var string
      */
     private const MESSAGE_MISSING_RETURN_TYPE = 'Function/Method %s does not have a return type.';
 
     /**
      * The return types which match null.
-     *
-     * @var array
      */
     private const NULL_TYPES = ['null', 'void'];
 

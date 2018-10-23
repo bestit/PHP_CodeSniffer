@@ -30,29 +30,21 @@ abstract class AbstractRequiredTagsSniff extends AbstractSniff
 
     /**
      * Code that comment tag must appear maximum x times.
-     *
-     * @var string
      */
     public const CODE_TAG_OCCURRENCE_MAX_PREFIX = 'TagOccurrenceMax';
 
     /**
      * Code that comment tag must appear minimum x times.
-     *
-     * @var string
      */
     public const CODE_TAG_OCCURRENCE_MIN_PREFIX = 'TagOccurrenceMin';
 
     /**
      * Message that comment tag must appear maximum x times.
-     *
-     * @var string
      */
     private const MESSAGE_TAG_OCCURRENCE_MAX = 'The comment tag "%s" must appear maximum %d times. Found %d times.';
 
     /**
      * Message that comment tag must appear minimum x times.
-     *
-     * @var string
      */
     private const MESSAGE_TAG_OCCURRENCE_MIN = 'The comment tag "%s" must appear minimum %d times. Found %d times.';
 

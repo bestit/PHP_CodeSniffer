@@ -16,15 +16,11 @@ class DeprecatedTagSniff extends AbstractTagSniff
 
     /**
      * The error code for the missing dates.
-     *
-     * @var string
      */
     public const CODE_TAG_MISSING_DATES = 'MissingDates';
 
     /**
      * The message for the error.
-     *
-     * @var string
      */
     private const MESSAGE_TAG_MISSING_DATES = 'Please provide the version since when its deprecated and when it will ' .
         'be removed (Pattern: %s).';

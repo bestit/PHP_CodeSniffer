@@ -17,43 +17,31 @@ class OpenTagSniff implements Sniff
 {
     /**
      * Error message when open tag is not first statement.
-     *
-     * @var string
      */
     public const ERROR_NOT_FIRST_STATEMENT = 'Open tag is not first statement';
 
     /**
      * Code when open tag is not first statement.
-     *
-     * @var string
      */
     public const CODE_NOT_FIRST_STATEMENT = 'OpenTagNotFirstStatement';
 
     /**
      * Error message when there is no space after open tag.
-     *
-     * @var string
      */
     public const ERROR_NO_SPACE_AFTER_OPEN_TAG = 'No space after open tag';
 
     /**
      * Code when there is no space after open tag.
-     *
-     * @var string
      */
     public const CODE_NO_SPACE_AFTER_OPEN_TAG = 'NoSpaceAfterOpenTag';
 
     /**
      * Error message when line after open tag is not empty.
-     *
-     * @var string
      */
     public const ERROR_LINE_NOT_EMPTY = 'Line after open tag is not empty.';
 
     /**
      * Code when line after open tag is not empty.
-     *
-     * @var string
      */
     public const CODE_LINE_NOT_EMPTY = 'LineNotEmpty';
 
