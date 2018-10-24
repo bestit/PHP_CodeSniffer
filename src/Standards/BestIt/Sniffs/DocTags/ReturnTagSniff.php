@@ -19,29 +19,21 @@ class ReturnTagSniff extends AbstractTagSniff
 {
     /**
      * Code that the tag content format is invalid.
-     *
-     * @var string
      */
     public const CODE_TAG_MISSING_RETURN_DESC = 'MissingReturnDescription';
 
     /**
      * Error code for the mixed type.
-     *
-     * @var string
      */
     public const CODE_TAG_MIXED_TYPE = 'MixedType';
 
     /**
      * Message that the tag content format is invalid.
-     *
-     * @var string
      */
     private const MESSAGE_CODE_TAG_MISSING_RETURN_DESC = 'Are you sure that you do not want to describe your return?';
 
     /**
      * The message for the mixed type warning.
-     *
-     * @var string
      */
     private const MESSAGE_TAG_MIXED_TYPE = 'We suggest that you avoid the "mixed" type and declare the ' .
         'required types in detail.';

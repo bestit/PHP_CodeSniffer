@@ -28,71 +28,51 @@ class ParamTagSniff extends AbstractTagSniff
 
     /**
      * The error code for the missing description.
-     *
-     * @var string
      */
     public const CODE_TAG_MISSING_DESC = 'MissingDesc';
 
     /**
      * The error code if the type of the param tag is missing.
-     *
-     * @var string
      */
     public const CODE_TAG_MISSING_TYPE = 'MissingType';
 
     /**
      * The error code if the matching property is missing.
-     *
-     * @var string
      */
     public const CODE_TAG_MISSING_VARIABLE = 'MissingVariable';
 
     /**
      * The error code if every property is missing.
-     *
-     * @var string
      */
     public const CODE_TAG_MISSING_VARIABLES = 'MissingVariables';
 
     /**
      * Error code for the mixed type.
-     *
-     * @var string
      */
     public const CODE_TAG_MIXED_TYPE = 'MixedType';
 
     /**
      * Message for displaying the missing description.
-     *
-     * @var string
      */
     private const MESSAGE_TAG_MISSING_DESC = 'There is no description for your tag: %s.';
 
     /**
      * Message for displaying the missing type.
-     *
-     * @var string
      */
     private const MESSAGE_TAG_MISSING_TYPE = 'There is no type for your tag: %s.';
 
     /**
      * Message for displaying the missing property.
-     *
-     * @var string
      */
     private const MESSAGE_TAG_MISSING_VARIABLE = 'There is no property for your tag "%s".';
 
     /**
      * Message for displaying the missing properties.
-     *
-     * @var string
      */
     private const MESSAGE_TAG_MISSING_VARIABLES = 'There are no properties for your tags.';
 
     /**
      * The message for the mixed type warning.
-     *
-     * @var string
      */
     private const MESSAGE_TAG_MIXED_TYPE = 'We suggest that you avoid the "mixed" type and declare the ' .
         'required types in detail.';
