@@ -7,6 +7,7 @@ namespace BestIt\Sniffs;
 use BestIt\CodeSniffer\CodeError;
 use BestIt\CodeSniffer\CodeWarning;
 use BestIt\CodeSniffer\File;
+use BestIt\CodeSniffer\File\FileFactory;
 use BestIt\CodeSniffer\Helper\ExceptionHelper;
 use PHP_CodeSniffer\Files\File as BaseFile;
 use PHP_CodeSniffer\Sniffs\Sniff;
@@ -114,7 +115,7 @@ abstract class AbstractSniff implements Sniff
      */
     public function process(BaseFile $phpcsFile, $stackPos): void
     {
-        $this->file = new File($phpcsFile);
+        $this->file = FileFactory::getInstance()->getFile($phpcsFile);
         $this->stackPos = $stackPos;
         $this->tokens = $this->getFile()->getTokens();
         $this->token = $this->tokens[$stackPos];
