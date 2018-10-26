@@ -21,32 +21,6 @@ use function func_get_args;
 class File extends AbstractFileDecorator
 {
     /**
-     * File constructor.
-     *
-     * @param BaseFile $baseFile CodeSniffer file
-     */
-    public function __construct(BaseFile $baseFile)
-    {
-        parent::__construct($baseFile);
-
-        $this->tokens = $baseFile->getTokens();
-
-        $this->addPointerToTokens();
-    }
-
-    /**
-     * Adds the pointer to all token data arrays.
-     *
-     * @return void
-     */
-    private function addPointerToTokens(): void
-    {
-        foreach ($this->tokens as $tokenPtr => &$token) {
-            $token['pointer'] = $tokenPtr;
-        }
-    }
-
-    /**
      * Returns the position of the next specified token(s).
      *
      * If a value is specified, the next token of the specified type(s)

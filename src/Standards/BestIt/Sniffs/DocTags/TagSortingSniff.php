@@ -306,7 +306,9 @@ class TagSortingSniff extends AbstractSniff
      */
     protected function setUp(): void
     {
-        $this->docTagHelper = new DocTagHelper($this->token, $this->file, $this->stackPos);
+        $this->addPointerToTokens();
+
+        $this->docTagHelper = new DocTagHelper($this->token, $this->file, $this->stackPos, $this->tokens);
     }
 
     /**

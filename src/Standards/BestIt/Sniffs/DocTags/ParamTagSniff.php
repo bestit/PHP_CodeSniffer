@@ -322,6 +322,8 @@ class ParamTagSniff extends AbstractTagSniff
     {
         parent::setUp();
 
+        $this->addPointerToTokens();
+
         $this->argumentToken = null;
     }
 }

@@ -53,11 +53,12 @@ class DocTagHelper
      * @param array $commentStartToken The start token of the comment.
      * @param File $file The php cs file
      * @param int $stackPtr Pointer to the token which is to be listened
+     * @param array $tokens Another token array if we want to overwrite them,
      */
-    public function __construct(array $commentStartToken, File $file, int $stackPtr)
+    public function __construct(array $commentStartToken, File $file, int $stackPtr, array $tokens = [])
     {
         $this->file = $file;
-        $this->tokens = $file->getTokens();
+        $this->tokens = $tokens ?: $file->getTokens();
         $this->stackPtr = $stackPtr;
         $this->commentStartToken = $commentStartToken;
     }
