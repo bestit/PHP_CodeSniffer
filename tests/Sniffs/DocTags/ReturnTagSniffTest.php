@@ -22,6 +22,9 @@ class ReturnTagSniffTest extends AuthorTagSniffTest
         return [
             'CODE_TAG_MISSING_RETURN_DESC' => ['CODE_TAG_MISSING_RETURN_DESC', 'MissingReturnDescription'],
             'CODE_TAG_MIXED_TYPE' => ['CODE_TAG_MIXED_TYPE', 'MixedType'],
+            'CODE_TAG_NOT_EQUAL_TO_RETURN_TYPE' => ['CODE_TAG_NOT_EQUAL_TO_RETURN_TYPE', 'NotEqualToReturnType'],
+            'CODE_NO_ARRAY_FOUND' => ['CODE_NO_ARRAY_FOUND', 'NoArrayFound'],
+            'CODE_NULLABLE_RETURN_FOUND' => ['CODE_NULLABLE_RETURN_FOUND', 'NullableReturnFound']
         ];
     }
 
