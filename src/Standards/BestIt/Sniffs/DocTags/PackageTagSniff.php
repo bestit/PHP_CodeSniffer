@@ -41,7 +41,7 @@ class PackageTagSniff extends AbstractTagSniff
     {
         $this->file->getFixer()->replaceToken(
             TokenHelper::findNext($this->file->getBaseFile(), [T_DOC_COMMENT_STRING], $this->stackPos),
-            ' ' . $currentNamespace
+            $currentNamespace
         );
     }
 
