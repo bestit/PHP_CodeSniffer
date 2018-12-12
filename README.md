@@ -40,6 +40,11 @@ see warnings but get successful builds, call the code sniffer with the special c
 ```bash
 ./vendor/bin/phpcs --config-set ignore_warnings_on_exit 1
 ```
+or, if you want the option only for a single run:
+
+```bash
+./vendor/bin/phpcs --runtime-set ignore_warnings_on_exit 1
+```
 
 [Check original docs for more info.](https://github.com/squizlabs/PHP_CodeSniffer/wiki/Configuration-Options#ignoring-warnings-when-generating-the-exit-code)
 
