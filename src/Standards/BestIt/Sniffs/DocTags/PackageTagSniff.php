@@ -7,6 +7,7 @@ namespace BestIt\Sniffs\DocTags;
 use SlevomatCodingStandard\Helpers\NamespaceHelper;
 use SlevomatCodingStandard\Helpers\TokenHelper;
 use const T_DOC_COMMENT_STRING;
+use const T_NAMESPACE;
 
 /**
  * Checks if the package contains the actual namespace.
@@ -56,7 +57,8 @@ class PackageTagSniff extends AbstractTagSniff
     {
         $currentNamespace = NamespaceHelper::findCurrentNamespaceName($this->file, $this->stackPos);
 
-        if ($currentNamespace && $tagContent !== $currentNamespace) {
+        if (((int) $this->file->findPrevious([T_NAMESPACE], $this->stackPos) > 0) && $currentNamespace &&
+            $tagContent !== $currentNamespace) {
             $isFixing = $this->file->addFixableError(
                 static::MESSAGE_CODE_TAG_WRONG_PACKAGE,
                 $this->stackPos,
