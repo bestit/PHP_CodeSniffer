@@ -20,12 +20,14 @@ trait TestTrait
      * @param string $file Filename of the fixture
      * @param string $error Error code
      * @param int[] $lines Array of lines where the error code occurs
+     * @param File[] $files A collection of the last params
      *
      * @return File The php cs file
      */
     abstract protected function assertWarningsInFile(
         string $file,
         string $error,
-        array $lines
+        array $lines,
+        File ...$files
     ): File;
 }
