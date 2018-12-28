@@ -26,11 +26,7 @@ namespace Test;
  * @ignore
  * @internal
  * @license
- * @method
  * @param
- * @property
- * @property-read
- * @property-write
  * @return
  * @since
  * @source
