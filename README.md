@@ -102,6 +102,8 @@ The base for the BestIt Standard is [PSR-12](https://github.com/php-fig/fig-stan
 | SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnly.ReferenceViaFullyQualifiedName | No class may be used via its FQCN. You MUST import every class! |
 | SlevomatCodingStandard.TypeHints.DeclareStrictTypes | Every file MUST have "declare(strict_types=1);" two line breaks after the opening tag. There MUST be no spaces aroung the equal-sign. |
 | BestIt.Functions.FluentSetter | Every setter function MUST return $this if nothing else is returned.  | Yes |
+| BestIt.Functions.ForbiddenFunctions.Discouraged | You SHOULD not use eval. | Yes |
+| BestIt.Functions.ForbiddenFunctions.DiscouragedWithAlternative | You SHOULD not use alias but the original function names. | Yes |
 | BestIt.Functions.MultipleReturn.MultipleReturnsFound | You SHOULD only use a return per method. |
 | BestIt.Formatting.SpaceAfterDeclare | There MUST be one empty line after declare-statement. |
 | BestIt.TypeHints.ReturnTypeDeclaration.MissingReturnTypeHint | Every function or method MUST have a type hint if the return annotation is valid. | Yes |
