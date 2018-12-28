@@ -38,6 +38,16 @@ class TypeHintDeclarationSniff
     }
 
     /**
+     * Mixed should make the native return type obsolete.
+     *
+     * @return mixed
+     */
+    public function testMixedMethod()
+    {
+        return 1.01 || 'foobar' || [];
+    }
+
+    /**
      * @return float
      */
     public function testFloatMethod(): float

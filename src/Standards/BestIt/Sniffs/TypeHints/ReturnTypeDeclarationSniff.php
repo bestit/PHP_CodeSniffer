@@ -19,6 +19,7 @@ use function count;
 use function explode;
 use function in_array;
 use function phpversion;
+use function strtolower;
 use function substr;
 use function version_compare;
 
@@ -207,10 +208,10 @@ class ReturnTypeDeclarationSniff extends AbstractSniff
     }
 
     /**
-     * Returns the types of the annotation, if the types are usable?
+     * Returns the types of the annotation, if the types are usable.
      *
-     * Usable means, that there should be one type in the return-annotation or a nullable type, which means 2 types
-     * like null|$ANYTYPE.
+     * Usable means, that there should be one type != mixed in the return-annotation or a nullable type, which means
+     * 2 types like null|$ANYTYPE.
      *
      * @param Annotation $annotation
      *
@@ -218,14 +219,21 @@ class ReturnTypeDeclarationSniff extends AbstractSniff
      */
     private function getUsableReturnTypes(Annotation $annotation): ?array
     {
+        $return = null;
+
         $returnTypes = $this->getReturnsFromAnnotation($annotation);
         $returnTypeCount = count($returnTypes);
+        $justOneReturn = $returnTypeCount === 1;
 
-        $isNullableType = ($returnTypeCount === 2) &&
-            version_compare(phpversion(), '7.1.0', '>') &&
-            (count(array_intersect($returnTypes, self::NULL_TYPES)) === 1);
+        if (!$justOneReturn || strtolower($returnTypes[0]) !== 'mixed') {
+            $isNullableType = ($returnTypeCount === 2) &&
+                version_compare(phpversion(), '7.1.0', '>') &&
+                (count(array_intersect($returnTypes, self::NULL_TYPES)) === 1);
 
-        return (($returnTypeCount === 1) || $isNullableType) ? $returnTypes : null;
+            $return = ($justOneReturn || $isNullableType) ? $returnTypes : null;
+        }
+
+        return $return;
     }
 
     /**
