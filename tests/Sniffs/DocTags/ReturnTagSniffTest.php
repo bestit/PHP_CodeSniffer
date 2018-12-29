@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace BestIt\Sniffs\DocTags;
 
+use function array_merge;
+use function sprintf;
+
 /**
  * Checks the sniff for the return tags.
  *
@@ -20,8 +23,8 @@ class ReturnTagSniffTest extends AuthorTagSniffTest
     public function getRequiredConstantAsserts(): array
     {
         return [
-            'CODE_TAG_MISSING_RETURN_DESC' => ['CODE_TAG_MISSING_RETURN_DESC', 'MissingReturnDescription'],
-            'CODE_TAG_MIXED_TYPE' => ['CODE_TAG_MIXED_TYPE', 'MixedType'],
+            'CODE_TAG_MISSING_RETURN_DESC' => ['CODE_MISSING_RETURN_DESC', 'MissingReturnDescription'],
+            'CODE_TAG_MIXED_TYPE' => ['CODE_MIXED_TYPE', 'MixedType'],
         ];
     }
 
@@ -35,5 +38,28 @@ class ReturnTagSniffTest extends AuthorTagSniffTest
         parent::setUp();
 
         $this->fixture = new ReturnTagSniff();
+    }
+
+    /**
+     * Tests description warnings after config.
+     *
+     * @dataProvider getCorrectFileListAsDataProvider
+     *
+     * @param string $file Fixture file
+     *
+     * @return void
+     */
+    public function testDescriptionWarningsWithConfig(string $file): void
+    {
+        $unusedData = [];
+        $fileMetadata = $this->getMetadataFromFilenameAsAssertArray($file, $unusedData);
+
+        if (!$fileMetadata) {
+            static::markTestSkipped(sprintf('The file %s does not contain any metadata.', basename($file)));
+        }
+
+        $callData = array_merge($fileMetadata, [['descAsWarning' => true]]);
+
+        $this->assertWarningsInFile(...$callData);
     }
 }

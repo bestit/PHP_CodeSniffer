@@ -8,6 +8,8 @@ use BestIt\SniffTestCase;
 use BestIt\Sniffs\DefaultSniffIntegrationTestTrait;
 use BestIt\Sniffs\TestTokenRegistrationTrait;
 use BestIt\TestRequiredConstantsTrait;
+use function array_merge;
+use function sprintf;
 use const T_DOC_COMMENT_TAG;
 
 /**
@@ -65,6 +67,31 @@ class ParamTagSniffTest extends SniffTestCase
         parent::setUp();
 
         $this->fixture = new ParamTagSniff();
+
+        $this->fixture->descAsWarning = true;
+    }
+
+    /**
+     * Tests description warnings after config.
+     *
+     * @dataProvider getCorrectFileListAsDataProvider
+     *
+     * @param string $file Fixture file
+     *
+     * @return void
+     */
+    public function testDescriptionWarningsWithConfig(string $file): void
+    {
+        $unusedData = [];
+        $fileMetadata = $this->getMetadataFromFilenameAsAssertArray($file, $unusedData);
+
+        if (!$fileMetadata) {
+            static::markTestSkipped(sprintf('The file %s does not contain any metadata.', basename($file)));
+        }
+
+        $callData = array_merge($fileMetadata, [['descAsWarning' => true]]);
+
+        $this->assertWarningsInFile(...$callData);
     }
 
     /**

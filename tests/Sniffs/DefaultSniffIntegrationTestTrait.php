@@ -39,6 +39,47 @@ trait DefaultSniffIntegrationTestTrait
     }
 
     /**
+     * Returns the metadata from the given file name if there is one.
+     *
+     * @param string $file
+     * @param array $errorData This method changes a marker for other files, if there is a file with a fixed marker.
+     *
+     * @return array<string, string, ...int>
+     */
+    protected function getMetadataFromFilenameAsAssertArray(string $file, array &$errorData): array
+    {
+        $fileMetaData = [];
+        $fileName = basename($file);
+        $matches = [];
+        $pattern = '/(?P<code>\w+)(\(\w*\))?\.(?P<errorLines>[\d-\,]*)(?P<fixedSuffix>\.fixed)?\.php/';
+
+        if (preg_match($pattern, $fileName, $matches)) {
+            if (@$matches['fixedSuffix']) {
+                @$errorData[str_replace('.fixed', '', $fileName)][] = true;
+            } else {
+                $errorLines = explode(',', $matches['errorLines']);
+
+                // Check if there is a range.
+                foreach ($errorLines as $index => $errorLine) {
+                    if (strpos($errorLine, '-') !== false) {
+                        unset($errorLines[$index]);
+
+                        $errorLines = array_merge($errorLines, range(...explode('-', $errorLine)));
+                    }
+                }
+
+                $fileMetaData = [
+                    $file,
+                    $matches['code'],
+                    array_map('intval', $errorLines)
+                ];
+            }
+        }
+
+        return $fileMetaData;
+    }
+
+    /**
      * Test that the given files contain no errors.
      *
      * @dataProvider getCorrectFileListAsDataProvider
@@ -104,15 +145,15 @@ trait DefaultSniffIntegrationTestTrait
      * @dataProvider getWarningAsserts
      *
      * @param string $file Fixture file
-     * @param string $error Error code
+     * @param string $warning Code of the warning.
      * @param int[] $lines Lines where the error code occurs
      * @param bool $withFixable Should we test a fixable?
      *
      * @return void
      */
-    public function testWarnings(string $file, string $error, array $lines, bool $withFixable = false): void
+    public function testWarnings(string $file, string $warning, array $lines, bool $withFixable = false): void
     {
-        $report = $this->assertWarningsInFile($file, $error, $lines);
+        $report = $this->assertWarningsInFile($file, $warning, $lines);
 
         if ($withFixable) {
             $this->assertAllFixedInFile($report);
@@ -145,36 +186,11 @@ trait DefaultSniffIntegrationTestTrait
      */
     private function loadAssertData(bool $forErrors = true): array
     {
-        //
-        $pattern = '/(?P<code>\w+)(\(\w*\))?\.(?P<errorLines>[\d-\,]*)(?P<fixedSuffix>\.fixed)?\.php/';
         $errorData = [];
 
         foreach ($this->getFixtureFiles($forErrors) as $file) {
-            $fileName = basename($file);
-            $matches = [];
-
-            if (preg_match($pattern, $fileName, $matches)) {
-                if (@$matches['fixedSuffix']) {
-                    $errorData[str_replace('.fixed', '', $fileName)][] = true;
-                } else {
-                    $errorLines = explode(',', $matches['errorLines']);
-
-                    // Check if there is a range.
-                    foreach ($errorLines as $index => $errorLine) {
-                        if (strpos($errorLine, '-') !== false) {
-                            unset($errorLines[$index]);
-
-                            $errorLines = array_merge($errorLines, range(...explode('-', $errorLine)));
-                        }
-                    }
-
-
-                    $errorData[$fileName] = [
-                        $file,
-                        $matches['code'],
-                        array_map('intval', $errorLines)
-                    ];
-                }
+            if ($fileMetaData = $this->getMetadataFromFilenameAsAssertArray($file, $errorData)) {
+                $errorData[basename($file)] = $fileMetaData;
             }
         }
 
@@ -209,15 +225,19 @@ trait DefaultSniffIntegrationTestTrait
     /**
      * Asserts all warnings in a given file.
      *
+     * @throws Exception
+     *
      * @param string $file Filename of the fixture
      * @param string $error Error code
      * @param int[] $lines Array of lines where the error code occurs
+     * @param array $sniffProperties Array of sniff properties
      *
      * @return File The php cs file
      */
     abstract protected function assertWarningsInFile(
         string $file,
         string $error,
-        array $lines
+        array $lines,
+        array $sniffProperties = []
     ): File;
 }

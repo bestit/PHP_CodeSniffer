@@ -12,5 +12,6 @@ install:
 script:
   - ./vendor/bin/phpcs -n
   - ./vendor/bin/phpunit
-  - ./vendor/bin/phpmd src text phpmd.xml.dist
+  - ./vendor/bin/phpmd src,tests text phpmd.xml.dist
   - ./vendor/bin/phpcpd src
+  - ./vendor/bin/phpcpd tests

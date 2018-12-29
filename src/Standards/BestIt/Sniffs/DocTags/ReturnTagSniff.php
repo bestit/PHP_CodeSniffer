@@ -22,29 +22,36 @@ class ReturnTagSniff extends AbstractTagSniff
      *
      * @var string
      */
-    public const CODE_TAG_MISSING_RETURN_DESC = 'MissingReturnDescription';
+    public const CODE_MISSING_RETURN_DESC = 'MissingReturnDescription';
 
     /**
      * Error code for the mixed type.
      *
      * @var string
      */
-    public const CODE_TAG_MIXED_TYPE = 'MixedType';
+    public const CODE_MIXED_TYPE = 'MixedType';
 
     /**
      * Message that the tag content format is invalid.
      *
      * @var string
      */
-    private const MESSAGE_CODE_TAG_MISSING_RETURN_DESC = 'Are you sure that you do not want to describe your return?';
+    private const MESSAGE_MISSING_RETURN_DESC = 'Are you sure that you do not want to describe your return?';
 
     /**
      * The message for the mixed type warning.
      *
      * @var string
      */
-    private const MESSAGE_TAG_MIXED_TYPE = 'We suggest that you avoid the "mixed" type and declare the ' .
+    private const MESSAGE_MIXED_TYPE = 'We suggest that you avoid the "mixed" type and declare the ' .
         'required types in detail.';
+
+    /**
+     * Should the missing description emit a warning?
+     *
+     * @var bool
+     */
+    public $descAsWarning = false;
 
     /**
      * This return types will not need a summary in any case.
@@ -52,6 +59,45 @@ class ReturnTagSniff extends AbstractTagSniff
      * @var array
      */
     public $excludedTypes = ['void'];
+
+    /**
+     * Throws a code warning if you have no description.
+     *
+     * @throws CodeWarning
+     *
+     * @param string $type
+     * @param array $returnParts
+     *
+     * @return void
+     */
+    private function checkForMissingDesc(string $type, array $returnParts): void
+    {
+        if (!in_array($type, $this->excludedTypes) && (count($returnParts) <= 1) && $this->descAsWarning) {
+            throw (new CodeWarning(
+                static::CODE_MISSING_RETURN_DESC,
+                self::MESSAGE_MISSING_RETURN_DESC,
+                $this->stackPos
+            ))->setToken($this->token);
+        }
+    }
+
+    /**
+     * Throws a warning if you declare a mixed type.
+     *
+     * @param string $type
+     * @throws CodeWarning
+     *
+     * @return $this
+     */
+    private function checkForMixedType(string $type): self
+    {
+        if (strtolower($type) === 'mixed') {
+            throw (new CodeWarning(static::CODE_MIXED_TYPE, self::MESSAGE_MIXED_TYPE, $this->stackPos))
+                ->setToken($this->token);
+        }
+
+        return $this;
+    }
 
     /**
      * Processed the content of the required tag.
@@ -66,18 +112,9 @@ class ReturnTagSniff extends AbstractTagSniff
         $returnParts = explode(' ', (string) $tagContent);
         $type = $returnParts[0];
 
-        if (strtolower($type) === 'mixed') {
-            throw (new CodeWarning(static::CODE_TAG_MIXED_TYPE, self::MESSAGE_TAG_MIXED_TYPE, $this->stackPos))
-                ->setToken($this->token);
-        }
-
-        if (!in_array($type, $this->excludedTypes) && count($returnParts) <= 1) {
-            $this->file->addWarning(
-                self::MESSAGE_CODE_TAG_MISSING_RETURN_DESC,
-                $this->stackPos,
-                static::CODE_TAG_MISSING_RETURN_DESC
-            );
-        }
+        $this
+            ->checkForMixedType($type)
+            ->checkForMissingDesc($type, $returnParts);
     }
 
     /**

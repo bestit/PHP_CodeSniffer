@@ -105,6 +105,13 @@ class ParamTagSniff extends AbstractTagSniff
     private $argumentToken = null;
 
     /**
+     * Should the missing description emit a warning?
+     *
+     * @var bool
+     */
+    public $descAsWarning = false;
+
+    /**
      * The used variable tokens for this method.
      *
      * @var array
@@ -156,11 +163,11 @@ class ParamTagSniff extends AbstractTagSniff
      *
      * @throws CodeWarning
      *
-     * @return bool Returns true if there is a desc.
+     * @return bool|null Returns true if there is a desc.
      */
     private function checkDescription(): bool
     {
-        if ($hasNoDesc = !@$this->matches['desc']) {
+        if (($hasNoDesc = !@$this->matches['desc']) && ($this->descAsWarning)) {
             throw (new CodeWarning(self::CODE_TAG_MISSING_DESC, self::MESSAGE_TAG_MISSING_DESC, $this->stackPos))
                 ->setPayload([$this->matches['var']])
                 ->setToken($this->token);

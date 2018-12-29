@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace BestIt;
 
+use Exception;
 use PHP_CodeSniffer\Files\File;
 use ReflectionClass;
 use ReflectionException;
@@ -16,7 +17,7 @@ use const DIRECTORY_SEPARATOR;
  * The basic sniff test case.
  *
  * @author Nick Lubisch <nick.lubisch@bestit-online.de>
- * @package BestIt\Sniffs
+ * @package BestIt
  */
 abstract class SniffTestCase extends SlevomatTestCase
 {
@@ -84,24 +85,28 @@ abstract class SniffTestCase extends SlevomatTestCase
     /**
      * Asserts all warnings in a given file.
      *
+     * @throws Exception
+     *
      * @param string $file Filename of the fixture
-     * @param string $error Error code
+     * @param string $warning Code of the warning
      * @param int[] $lines Array of lines where the error code occurs
+     * @param array $sniffProperties Array of sniff properties
      *
      * @return File The php cs file
      */
     protected function assertWarningsInFile(
         string $file,
-        string $error,
-        array $lines
+        string $warning,
+        array $lines,
+        array $sniffProperties = []
     ): File {
-        $report = $this->checkFile($file);
+        $report = $this->checkFile($file, $sniffProperties);
 
         foreach ($lines as $line) {
             $this->assertSniffWarning(
                 $report,
                 $line,
-                $error
+                $warning
             );
         }
 

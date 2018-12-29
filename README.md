@@ -85,13 +85,14 @@ The base for the BestIt Standard is [PSR-12](https://github.com/php-fig/fig-stan
 | BestIt.DocTags.DeprecatedTag.TagContentFormatInvalid | If you provide a deprecated tag, you MUST provide it with versions since when its deprecated and when it will be removed. | 
 | BestIt.DocTags.(DisallowedClassTags,DisallowedConstantTags,DisallowedMethodTags,DisallowedPropertyTags).TagNotAllowed | You MUST not give one of the disallowed tags in your doc comment. | You can configure the disallowed tags. |
 | BestIt.DocTags.PackageTag.WrongPackage | If there is a namespace, you MUST provide the namespace as package tag. |
-| BestIt.DocTags.ParamTag.MissingDesc | You SHOULD provide a description for your parameter. |
+| BestIt.DocTags.ParamTag.MissingDesc | You SHOULD provide a description for your parameter. | It is disabled per default. You can enabled it per property "descAsWarning" | 
 | BestIt.DocTags.ParamTag.MissingVariables | Your method MUST have parameters if there is a param tag. |
 | BestIt.DocTags.ParamTag.MissingVariable | Your method MUST have a matching variable for your param tag. |
 | BestIt.DocTags.ParamTag.MissingType | You MUST provide a type for your param tag. |
 | BestIt.DocTags.(RequiredClassTags,RequiredConstantTags,RequiredMethodTags,RequiredPropertyTags).TagOccurrenceMax* | You MUST provide only the maximum amount of required tags. For example, only one return per method is allowed. The error is registered for every tag specifically. |
 | BestIt.DocTags.(RequiredClassTags,RequiredConstantTags,RequiredMethodTags,RequiredPropertyTags).TagOccurrenceMin* | You MUST provide the required tags. The error is registered for every tag specifically. |
-| BestIt.DocTags.ReturnTag.MissingReturnDescription | You SHOULD provide a description your return. |
+| BestIt.DocTags.ReturnTag.MissingReturnDescription | You SHOULD provide a description your return. | It is disabled per default. You can enabled it per property "descAsWarning" |
+| BestIt.DocTags.ReturnTag.MixedType | You SHOULD provide a native return and prevent "mixed". | 
 | BestIt.DocTags.TagSorting.MissingNewlineBetweenTags | You SHOULD separate tag groups and the final return with a newline. | Yes (By Sniff-Name) |
 | BestIt.DocTags.TagSorting.WrongTagSorting | You SHOULD sort the tags by their occurrence and then alphabetically, but @return SHOULD be the last. | Yes (By Sniff-Name) |
 | BestIt.DocTags.ThrowsTag.MissingThrowDescription | You SHOULD provide a description your throw tag. | 
