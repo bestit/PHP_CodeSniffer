@@ -81,6 +81,7 @@ The base for the BestIt Standard is [PSR-12](https://github.com/php-fig/fig-stan
 | BestIt.Commenting.(ClassDoc,ConstanctDoc,FunctionDoc,PropertyDoc).SummaryTooLong|  The summary should be in one line. |
 | BestIt.Commenting.RequiredDocBlock.MissingDocBlock* |  There MUST be a doc block before a Class, Constant, Interface, Function, Trait, Variable. The * will be replaced with the name of the structure like MissingDocBlockClass. |
 | BestIt.Commenting.RequiredDocBlock.NoMultiLineDocBlock* |  The doc block before a Class, Constant, Interface, Function, Trait, Variable must be multi-line. The * will be replaced with the name of the structure like NoMultiLineDocBlockClass. |
+| BestIt.Comparisons.EmptyArrayForComparison.EmptyArray | You MUST not create an empty array, to check for an empty array. |
 | BestIt.Comparisons.EqualOperator | You should use the "Identical" operator (===). |
 | BestIt.DocTags.AuthorTag.TagContentFormatInvalid | You MUST commit to your codes and give an [author tag](http://docs.phpdoc.org/references/phpdoc/tags/author.html). | 
 | BestIt.DocTags.DeprecatedTag.TagContentFormatInvalid | If you provide a deprecated tag, you MUST provide it with versions since when its deprecated and when it will be removed. | 

@@ -31,7 +31,7 @@
     <!-- There seemed to be a phpmd bug which complained about AbstractSniff without change or real existing error -->
     <rule ref="rulesets/design.xml/NumberOfChildren">
         <properties>
-            <property name="minimum" value="16"/>
+            <property name="minimum" value="17"/>
         </properties>
     </rule>
 
@@ -39,7 +39,16 @@
         <exclude name="NumberOfChildren" />
     </rule>
 
-    <rule ref="rulesets/naming.xml"/>
+    <rule ref="rulesets/naming.xml/LongVariable">
+        <properties>
+            <property name="maximum" value="25"/>
+        </properties>
+    </rule>
+
+    <rule ref="rulesets/naming.xml">
+        <exclude name="LongVariable" />
+    </rule>
+
     <rule ref="rulesets/unusedcode.xml"/>
 
     <exclude-pattern>Fixtures</exclude-pattern>
