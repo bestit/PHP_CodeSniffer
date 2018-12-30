@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace BestIt\Sniffs\Formatting;
+namespace BestIt\Sniffs\Comparisons;
 
 use BestIt\SniffTestCase;
 use BestIt\Sniffs\DefaultSniffIntegrationTestTrait;
@@ -13,7 +13,7 @@ use BestIt\TestRequiredConstantsTrait;
  * Class EqualOperatorSniffTest.
  *
  * @author Mika Bertels <mika.bertels@bestit-online.de>
- * @package BestIt\Sniffs\Formatting
+ * @package BestIt\Sniffs\Comparisons
  */
 class EqualOperatorSniffTest extends SniffTestCase
 {

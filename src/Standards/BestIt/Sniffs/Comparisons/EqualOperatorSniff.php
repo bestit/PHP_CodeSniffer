@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace BestIt\Sniffs\Formatting;
+namespace BestIt\Sniffs\Comparisons;
 
 use BestIt\Sniffs\AbstractSniff;
 use const T_IS_EQUAL;
@@ -11,7 +11,7 @@ use const T_IS_EQUAL;
  * Class EqualOperatorSniff.
  *
  * @author Mika Bertels <mika.bertels@bestit-online.de>
- * @package BestIt\Sniffs\Formatting
+ * @package BestIt\Sniffs\Comparisons
  */
 class EqualOperatorSniff extends AbstractSniff
 {
