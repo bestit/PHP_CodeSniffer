@@ -18,7 +18,7 @@ use const T_DOC_COMMENT_WHITESPACE;
 class RedundantWhitespaceSniff extends AbstractSniff
 {
     /**
-     * The error code.
+     * There MUST be no additional spaces around your doc tags.
      *
      * @var string
      */

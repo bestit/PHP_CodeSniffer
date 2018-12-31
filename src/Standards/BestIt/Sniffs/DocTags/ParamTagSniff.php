@@ -27,27 +27,27 @@ class ParamTagSniff extends AbstractTagSniff
     use TagContentFormatTrait;
 
     /**
-     * The error code for the missing description.
+     * You SHOULD provide a description for your parameter.
      */
     public const CODE_TAG_MISSING_DESC = 'MissingDesc';
 
     /**
-     * The error code if the type of the param tag is missing.
+     * You MUST provide a type for your param tag.
      */
     public const CODE_TAG_MISSING_TYPE = 'MissingType';
 
     /**
-     * The error code if the matching property is missing.
+     * Your method MUST have a matching variable for your param tag.
      */
     public const CODE_TAG_MISSING_VARIABLE = 'MissingVariable';
 
     /**
-     * The error code if every property is missing.
+     * Your method MUST have parameters if there is a param tag.
      */
     public const CODE_TAG_MISSING_VARIABLES = 'MissingVariables';
 
     /**
-     * Error code for the mixed type.
+     * You SHOULD prevent the mixed type and try to provide native types.
      */
     public const CODE_TAG_MIXED_TYPE = 'MixedType';
 
@@ -109,7 +109,7 @@ class ParamTagSniff extends AbstractTagSniff
     private function checkAgainstPattern(?string $tagContent = null): bool
     {
         if (!$return = $this->isValidContent($tagContent)) {
-            throw (new CodeError(self::CODE_TAG_MISSING_VARIABLE, self::MESSAGE_TAG_MISSING_VARIABLE, $this->stackPos))
+            throw (new CodeError(static::CODE_TAG_MISSING_VARIABLE, self::MESSAGE_TAG_MISSING_VARIABLE, $this->stackPos))
                 ->setPayload([$tagContent])
                 ->setToken($this->token);
         }
@@ -148,7 +148,7 @@ class ParamTagSniff extends AbstractTagSniff
     private function checkDescription(): bool
     {
         if (($hasNoDesc = !@$this->matches['desc']) && ($this->descAsWarning)) {
-            throw (new CodeWarning(self::CODE_TAG_MISSING_DESC, self::MESSAGE_TAG_MISSING_DESC, $this->stackPos))
+            throw (new CodeWarning(static::CODE_TAG_MISSING_DESC, self::MESSAGE_TAG_MISSING_DESC, $this->stackPos))
                 ->setPayload([$this->matches['var']])
                 ->setToken($this->token);
         }
@@ -166,13 +166,13 @@ class ParamTagSniff extends AbstractTagSniff
     private function checkType(): bool
     {
         if (!@$this->matches['type']) {
-            throw (new CodeError(self::CODE_TAG_MISSING_TYPE, self::MESSAGE_TAG_MISSING_TYPE, $this->stackPos))
+            throw (new CodeError(static::CODE_TAG_MISSING_TYPE, self::MESSAGE_TAG_MISSING_TYPE, $this->stackPos))
                 ->setPayload([$this->matches['var']])
                 ->setToken($this->token);
         }
 
         if (strtolower($this->matches['type']) === 'mixed') {
-            throw (new CodeWarning(self::CODE_TAG_MIXED_TYPE, self::MESSAGE_TAG_MIXED_TYPE, $this->stackPos))
+            throw (new CodeWarning(static::CODE_TAG_MIXED_TYPE, self::MESSAGE_TAG_MIXED_TYPE, $this->stackPos))
                 ->setToken($this->token);
         }
 
@@ -235,7 +235,7 @@ class ParamTagSniff extends AbstractTagSniff
 
         if (!$varPositions) {
             throw (new CodeError(
-                self::CODE_TAG_MISSING_VARIABLES,
+                static::CODE_TAG_MISSING_VARIABLES,
                 self::MESSAGE_TAG_MISSING_VARIABLES,
                 $this->stackPos
             ))->setToken($this->token);

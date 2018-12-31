@@ -29,12 +29,12 @@ abstract class AbstractRequiredTagsSniff extends AbstractSniff
     use DocPosProviderTrait;
 
     /**
-     * Code that comment tag must appear maximum x times.
+     * You MUST provide only the maximum amount of required tags. For example, only one return per method is allowed. The error is registered for every tag specifically.
      */
     public const CODE_TAG_OCCURRENCE_MAX_PREFIX = 'TagOccurrenceMax';
 
     /**
-     * Code that comment tag must appear minimum x times.
+     * You MUST provide the required tags. The error is registered for every tag specifically.
      */
     public const CODE_TAG_OCCURRENCE_MIN_PREFIX = 'TagOccurrenceMin';
 
@@ -101,7 +101,7 @@ abstract class AbstractRequiredTagsSniff extends AbstractSniff
                             $tagPos,
                             // We use an error code containing the tag name because we can't configure this rules from
                             // the outside and need  specific code to exclude the rule for this special tag.
-                            self::CODE_TAG_OCCURRENCE_MAX_PREFIX . ucfirst($tagContent),
+                            static::CODE_TAG_OCCURRENCE_MAX_PREFIX . ucfirst($tagContent),
                             [
                                 $tagContent,
                                 $maxCount,
@@ -136,7 +136,7 @@ abstract class AbstractRequiredTagsSniff extends AbstractSniff
                         $this->getDocCommentPos(),
                         // We use an error code containing the tag name because we can't configure this rules from the
                         // outside and need  specific code to exclude the rule for this special tag.
-                        self::CODE_TAG_OCCURRENCE_MIN_PREFIX . ucfirst($tag),
+                        static::CODE_TAG_OCCURRENCE_MIN_PREFIX . ucfirst($tag),
                         [
                             $tag,
                             $minCount,

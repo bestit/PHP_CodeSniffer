@@ -17,6 +17,11 @@ class AuthorTagSniff extends AbstractTagSniff
     }
 
     /**
+     * You MUST commit to your codes and give an [author tag](http://docs.phpdoc.org/references/phpdoc/tags/author.html).
+     */
+    public const CODE_TAG_CONTENT_FORMAT_INVALID = 'TagContentFormatInvalid';
+
+    /**
      * Returns the payload for the error or warning registration.
      *
      * @param null|string $tagContent The content of the tag.

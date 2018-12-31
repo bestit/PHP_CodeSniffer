@@ -15,7 +15,7 @@ use function explode;
 class ThrowsTagSniff extends AbstractTagSniff
 {
     /**
-     * Code that the tag content format is invalid.
+     * You SHOULD provide a description your throw tag.
      */
     public const CODE_TAG_MISSING_DESC_DESC = 'MissingThrowDescription';
 

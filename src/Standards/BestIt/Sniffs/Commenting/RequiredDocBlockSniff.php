@@ -28,12 +28,16 @@ class RequiredDocBlockSniff extends AbstractSniff
     use DocPosProviderTrait;
 
     /**
-     * The error code for missing doc blocks.
+     * There MUST be a doc block before a Class, Constant, Interface, Function, Trait, Variable.
+     *
+     * It will get suffixed like MissingDocBlockClass.
      */
     public const CODE_MISSING_DOC_BLOCK_PREFIX = 'MissingDocBlock';
 
     /**
-     * The error code for the inline block.
+     * The doc block before a Class, Constant, Interface, Function, Trait, Variable must be multi-line.
+     *
+     * It will be suffixed with the name of the structure like NoMultiLineDocBlockClass.
      */
     public const CODE_NO_MULTI_LINE_DOC_BLOCK_PREFIX = 'NoMultiLineDocBlock';
 
@@ -84,7 +88,7 @@ class RequiredDocBlockSniff extends AbstractSniff
             $tokenIdent = $this->getTokenName();
 
             $exception = (new CodeError(
-                self::CODE_MISSING_DOC_BLOCK_PREFIX . ucfirst($tokenIdent),
+                static::CODE_MISSING_DOC_BLOCK_PREFIX . ucfirst($tokenIdent),
                 self::MESSAGE_MISSING_DOC_BLOCK,
                 $this->stackPos
             ))->setPayload([lcfirst($tokenIdent)]);
@@ -110,7 +114,7 @@ class RequiredDocBlockSniff extends AbstractSniff
             $tokenIdent = $this->getTokenName();
 
             $exception = (new CodeError(
-                self::CODE_NO_MULTI_LINE_DOC_BLOCK_PREFIX . ucfirst($tokenIdent),
+                static::CODE_NO_MULTI_LINE_DOC_BLOCK_PREFIX . ucfirst($tokenIdent),
                 self::MESSAGE_NO_MULTI_LINE_DOC_BLOCK_PREFIX,
                 $docCommentPos
             ))->setPayload([lcfirst($tokenIdent)]);

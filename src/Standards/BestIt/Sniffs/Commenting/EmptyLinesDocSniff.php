@@ -17,16 +17,16 @@ use PHP_CodeSniffer\Files\File;
 class EmptyLinesDocSniff extends AbstractSniff
 {
     /**
-     * Code when an empty line is detected.
+     * There MUST be no redundant lines in your doc block.
      *
-     * @var string CODE_EMPTY_LINES_FOUND
+     * @var string
      */
     public const CODE_EMPTY_LINES_FOUND = 'EmptyLinesFound';
 
     /**
      * Error message when empty line is detected.
      *
-     * @var string ERROR_EMPTY_LINES_FOUND
+     * @var string
      */
     private const ERROR_EMPTY_LINES_FOUND = 'There are too many empty lines in your doc-block!';
 
@@ -118,7 +118,7 @@ class EmptyLinesDocSniff extends AbstractSniff
                     $isFixing = $phpcsFile->addFixableError(
                         self::ERROR_EMPTY_LINES_FOUND,
                         $nextTokenPosition,
-                        self::CODE_EMPTY_LINES_FOUND
+                        static::CODE_EMPTY_LINES_FOUND
                     );
 
                     if ($isFixing) {

@@ -31,7 +31,7 @@ class UCVFSortingSniff extends AbstractSniff
     use ClassRegistrationTrait;
 
     /**
-     * Error code for the wrong position of a structure.
+     * You MUST sort the contents of your classes, traits, interface, etc. in the following order: T_USE, T_CONST, T_VARIABLE, T_FUNCTION.
      *
      * @var string
      */
@@ -201,7 +201,7 @@ class UCVFSortingSniff extends AbstractSniff
                 $this->file->addError(
                     self::MESSAGE_WRONG_POSITION,
                     $originalPosition,
-                    self::CODE_WRONG_POSITION,
+                    static::CODE_WRONG_POSITION,
                     [
                         $sortedToken['type'],
                         $sortedToken['content']

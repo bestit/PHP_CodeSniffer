@@ -25,7 +25,7 @@ class MultipleReturnSniff extends AbstractSniff
     use FunctionRegistrationTrait;
 
     /**
-     * Code for multiple returns.
+     * You SHOULD only use a return per method.
      */
     public const CODE_MULTIPLE_RETURNS_FOUND = 'MultipleReturnsFound';
 
@@ -84,7 +84,7 @@ class MultipleReturnSniff extends AbstractSniff
                 $this->file->addWarning(
                     self::WARNING_MULTIPLE_RETURNS_FOUND,
                     $returnPos,
-                    self::CODE_MULTIPLE_RETURNS_FOUND
+                    static::CODE_MULTIPLE_RETURNS_FOUND
                 );
             });
         }

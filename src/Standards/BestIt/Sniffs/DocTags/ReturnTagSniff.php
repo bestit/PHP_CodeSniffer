@@ -18,12 +18,14 @@ use function strtolower;
 class ReturnTagSniff extends AbstractTagSniff
 {
     /**
-     * Code that the tag content format is invalid.
+     * You SHOULD provide a description your return.
+     *
+     * It is disabled per default. You can enabled it per property "descAsWarning".
      */
     public const CODE_MISSING_RETURN_DESC = 'MissingReturnDescription';
 
     /**
-     * Error code for the mixed type.
+     * You SHOULD provide a native return and prevent "mixed".
      */
     public const CODE_MIXED_TYPE = 'MixedType';
 

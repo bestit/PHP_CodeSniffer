@@ -26,7 +26,7 @@ class AlphabeticClassContentSniff extends AbstractSniff
     use  ClassRegistrationTrait;
 
     /**
-     * Error code for the sorting.
+     * You SHOULD sort you constants, methods and properties alphabetically.
      */
     public const CODE_SORT_ALPHABETICALLY = 'SortAlphabetically';
 
@@ -52,7 +52,7 @@ class AlphabeticClassContentSniff extends AbstractSniff
                 $this->file->getBaseFile()->addWarning(
                     self::MESSAGE_SORT_ALPHABETICALLY,
                     $foundContentPos,
-                    self::CODE_SORT_ALPHABETICALLY
+                    static::CODE_SORT_ALPHABETICALLY
                 );
             }
         }

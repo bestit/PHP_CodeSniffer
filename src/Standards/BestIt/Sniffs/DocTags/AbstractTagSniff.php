@@ -29,7 +29,7 @@ if (!class_exists(Tokens::class, false)) {
 abstract class AbstractTagSniff extends AbstractSniff
 {
     /**
-     * Code that the tag content format is invalid.
+     * You MUST provide a special tag format.
      */
     public const CODE_TAG_CONTENT_FORMAT_INVALID = 'TagContentFormatInvalid';
 

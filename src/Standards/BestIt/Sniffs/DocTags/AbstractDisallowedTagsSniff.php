@@ -21,7 +21,7 @@ abstract class AbstractDisallowedTagsSniff extends AbstractSniff
     use DocPosProviderTrait;
 
     /**
-     * Code that comment tag is not allowed.
+     * You MUST not give one of the disallowed tags in your doc comment.
      */
     public const CODE_TAG_NOT_ALLOWED = 'TagNotAllowed';
 
@@ -71,7 +71,7 @@ abstract class AbstractDisallowedTagsSniff extends AbstractSniff
                 $this->file->addError(
                     self::MESSAGE_TAG_NOT_ALLOWED,
                     $tagPos,
-                    self::CODE_TAG_NOT_ALLOWED,
+                    static::CODE_TAG_NOT_ALLOWED,
                     [$tagContent]
                 );
             }

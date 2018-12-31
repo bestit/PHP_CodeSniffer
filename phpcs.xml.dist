@@ -4,6 +4,7 @@
 
    <rule ref="./src/Standards/BestIt/ruleset.xml" />
 
+   <file>./build/</file>
    <file>./src/</file>
    <file>./tests/</file>
 

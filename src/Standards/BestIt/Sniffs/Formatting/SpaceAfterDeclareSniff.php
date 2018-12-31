@@ -21,7 +21,7 @@ class SpaceAfterDeclareSniff implements Sniff
     public const MESSAGE_NO_WHITESPACE_FOUND = 'There is no whitespace after declare-statement.';
 
     /**
-     * Code when no whitespace is found.
+     * There MUST be one empty line after declare-statement.
      */
     public const CODE_NO_WHITESPACE_FOUND = 'NoWhitespaceFound';
 
@@ -31,7 +31,7 @@ class SpaceAfterDeclareSniff implements Sniff
     public const MESSAGE_MUCH_WHITESPACE_FOUND = 'There are more than one whitespaces after declare-statement.';
 
     /**
-     * Code when more than one whitespaces are found.
+     * THERE MUST be just one single line after the declare statement.
      */
     public const CODE_MUCH_WHITESPACE_FOUND = 'MuchWhitespaceFound';
 
@@ -41,7 +41,7 @@ class SpaceAfterDeclareSniff implements Sniff
     public const MESSAGE_GROUP_BLANK_LINE_FOUND = 'Multpile declare-statements should be grouped without a blank line.';
 
     /**
-     * Code when whitespaces in a group are found.
+     * Multiple declare-statements SHOULD be grouped without a blank line.
      */
     public const CODE_GROUP_BLANK_LINE_FOUND = 'GroupBlankLineFound';
 
@@ -128,7 +128,7 @@ class SpaceAfterDeclareSniff implements Sniff
         $fixNoWhitespace = $phpcsFile->addFixableError(
             self::MESSAGE_NO_WHITESPACE_FOUND,
             $semicolonPtr,
-            self::CODE_NO_WHITESPACE_FOUND
+            static::CODE_NO_WHITESPACE_FOUND
         );
 
         if ($fixNoWhitespace) {
@@ -157,7 +157,7 @@ class SpaceAfterDeclareSniff implements Sniff
         $fixMuchWhitespaces = $phpcsFile->addFixableError(
             self::MESSAGE_MUCH_WHITESPACE_FOUND,
             $semicolonPtr,
-            self::CODE_MUCH_WHITESPACE_FOUND
+            static::CODE_MUCH_WHITESPACE_FOUND
         );
 
         if ($fixMuchWhitespaces) {
@@ -188,7 +188,7 @@ class SpaceAfterDeclareSniff implements Sniff
         $fixGroupBlankLines = $phpcsFile->addFixableError(
             self::MESSAGE_GROUP_BLANK_LINE_FOUND,
             $semicolonPtr,
-            self::CODE_GROUP_BLANK_LINE_FOUND
+            static::CODE_GROUP_BLANK_LINE_FOUND
         );
 
         if ($fixGroupBlankLines) {

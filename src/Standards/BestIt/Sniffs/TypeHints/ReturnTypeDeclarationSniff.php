@@ -36,7 +36,7 @@ class ReturnTypeDeclarationSniff extends AbstractSniff
     use SuppressingTrait;
 
     /**
-     * You MUST provide a return type for your functions. If you can't give it, it becomes only a warning with a PHPDoc.
+     * Every function or method MUST have a type hint if the return annotation is valid.
      */
     public const CODE_MISSING_RETURN_TYPE = 'MissingReturnTypeHint';
 

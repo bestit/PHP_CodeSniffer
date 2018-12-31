@@ -6,9 +6,9 @@ namespace BestIt\Sniffs\Functions;
 
 use BestIt\CodeSniffer\File as FileDecorator;
 use BestIt\CodeSniffer\Helper\PropertyHelper;
+use BestIt\Sniffs\SuppressingTrait;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Standards\Squiz\Sniffs\Scope\MethodScopeSniff;
-use SlevomatCodingStandard\Helpers\SuppressHelper;
 use SlevomatCodingStandard\Helpers\TokenHelper;
 use function in_array;
 use function substr;
@@ -23,13 +23,15 @@ use function substr;
  */
 class FluentSetterSniff extends MethodScopeSniff
 {
+    use SuppressingTrait;
+
     /**
-     * Code when the method does not return $this.
+     * Every setter function MUST return $this if nothing else is returned.
      */
     public const CODE_MUST_RETURN_THIS = 'MustReturnThis';
 
     /**
-     * Code when no return statement is found.
+     * Your method MUST contain a return.
      */
     public const CODE_NO_RETURN_FOUND = 'NoReturnFound';
 
@@ -49,6 +51,20 @@ class FluentSetterSniff extends MethodScopeSniff
      * @var string
      */
     public $identation = '    ';
+
+    /**
+     * The used file decorated for the interface.
+     *
+     * @var FileDecorator
+     */
+    private $file;
+
+    /**
+     * The position of this node.
+     *
+     * @var int
+     */
+    private $stackPos;
 
     /**
      * Registers an error if an empty return (return null; or return;) is given.
@@ -72,7 +88,7 @@ class FluentSetterSniff extends MethodScopeSniff
             $fixMustReturnThis = $file->addFixableError(
                 self::ERROR_MUST_RETURN_THIS,
                 $functionPos,
-                self::CODE_MUST_RETURN_THIS,
+                static::CODE_MUST_RETURN_THIS,
                 $methodIdent
             );
 
@@ -106,7 +122,7 @@ class FluentSetterSniff extends MethodScopeSniff
             $fixNoReturnFound = $phpcsFile->addFixableError(
                 self::ERROR_NO_RETURN_FOUND,
                 $functionPos,
-                self::CODE_NO_RETURN_FOUND,
+                static::CODE_NO_RETURN_FOUND,
                 $errorData
             );
 
@@ -121,25 +137,22 @@ class FluentSetterSniff extends MethodScopeSniff
     }
 
     /**
-     * Get the sniff name.
+     * Returns the used file decorated for the interface.
      *
-     * @param string $sniffName If there is an optional sniff name.
-     *
-     * @return string Returns the special sniff name in the code sniffer context.
+     * @return FileDecorator
      */
-    private function getSniffName(string $sniffName = ''): string
+    public function getFile(): FileDecorator
     {
-        $sniffClassName = preg_replace(
-            '/Sniff$/',
-            '',
-            str_replace(['\\', '.Sniffs'], ['.', ''], static::class)
-        );
+        return $this->file;
+    }
 
-        if ($sniffName) {
-            $sniffClassName .= '.' . $sniffName;
-        }
-
-        return $sniffClassName;
+    /**
+     * Returns the position of this node.
+     * @return int
+     */
+    public function getStackPos(): int
+    {
+        return $this->stackPos;
     }
 
     /**
@@ -158,11 +171,10 @@ class FluentSetterSniff extends MethodScopeSniff
         $functionPos,
         $classPos
     ): void {
-        $isSuppressed = SuppressHelper::isSniffSuppressed(
-            $file,
-            $functionPos,
-            $this->getSniffName(static::CODE_NO_RETURN_FOUND)
-        );
+        $this->file = new FileDecorator($file);
+        $this->stackPos = $functionPos;
+
+        $isSuppressed = $this->isSniffSuppressed(static::CODE_NO_RETURN_FOUND);
 
         if (!$isSuppressed && $this->checkIfSetterFunction($classPos, $file, $functionPos)) {
             $this->checkForFluentSetterErrors($file, $functionPos, $classPos);

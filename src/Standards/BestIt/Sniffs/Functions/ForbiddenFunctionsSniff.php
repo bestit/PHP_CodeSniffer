@@ -20,6 +20,16 @@ class ForbiddenFunctionsSniff extends BaseSniff
     use SuppressingTrait;
 
     /**
+     * You SHOULD not use eval.
+     */
+    public const CODE_DISCOURAGED_WITHOUT_ALTERNATIVE = 'Discouraged';
+
+    /**
+     * You SHOULD not use alias but the original function names.
+     */
+    public const CODE_DISCOURAGED_WITH_ALTERNATIVE = 'DiscouragedWithAlternative';
+
+    /**
      * If true, an error will be thrown; otherwise a warning.
      *
      * @var boolean
@@ -89,8 +99,8 @@ class ForbiddenFunctionsSniff extends BaseSniff
         $this->file = new FileDecorator($phpcsFile);
         $this->stackPos = $stackPtr;
 
-        if (!$this->isSniffSuppressed('Discouraged') &&
-            !$this->isSniffSuppressed('DiscouragedWithAlternative')) {
+        if (!$this->isSniffSuppressed(static::CODE_DISCOURAGED_WITHOUT_ALTERNATIVE) &&
+            !$this->isSniffSuppressed(static::CODE_DISCOURAGED_WITH_ALTERNATIVE)) {
             parent::process($phpcsFile, $stackPtr);
         }
     }

@@ -19,7 +19,7 @@ use const T_WHITESPACE;
 class SpaceAroundConcatSniff extends AbstractSniff
 {
     /**
-     * Error code for this sniff.
+     * You MUST wrap your concat-dot with a whitespace char.
      *
      * @var string
      */
@@ -86,7 +86,7 @@ class SpaceAroundConcatSniff extends AbstractSniff
     {
         if (!(($this->nextIsWhitespace) && ($this->prevIsWhitespace))) {
             $error = new CodeError(
-                self::CODE_MISSING_SPACE_AROUND_CONCAT,
+                static::CODE_MISSING_SPACE_AROUND_CONCAT,
                 self::MESSAGE_MISSING_SPACE_AROUND_CONCAT,
                 $this->stackPos
             );

@@ -16,9 +16,7 @@ use const T_IS_EQUAL;
 class EqualOperatorSniff extends AbstractSniff
 {
     /**
-     * You should use the "Identical" operator (===)
-     *
-     * @var string CODE_EQUAL_OPERATOR_FOUND
+     * You SHOULD use the "Identical" operator (===).
      */
     public const CODE_EQUAL_OPERATOR_FOUND = 'EqualOperatorFound';
 
@@ -49,7 +47,7 @@ class EqualOperatorSniff extends AbstractSniff
         $isFixing = $file->addFixableWarning(
             self::MESSAGE_EQUAL_OPERATOR_FOUND,
             $stackPos,
-            self::CODE_EQUAL_OPERATOR_FOUND
+            static::CODE_EQUAL_OPERATOR_FOUND
         );
 
         $file->recordMetric($stackPos, 'Found not wanted T_IS_EQUAL', 'yes');

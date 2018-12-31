@@ -24,22 +24,22 @@ abstract class AbstractDocSniff extends AbstractSniff
     use DocPosProviderTrait;
 
     /**
-     * Code that the doc comment starts with an capital letter.
+     * Every doc comment block SHOULD start ucfirst.
      */
     public const CODE_DOC_COMMENT_UC_FIRST = 'DocCommentUcFirst';
 
     /**
-     * Code that there is no line after the doc comment.
+     * Every doc comment block (the summary or a long description paragrah) SHOULD finish with double newline.
      */
     public const CODE_NO_LINE_AFTER_DOC_COMMENT = 'NoLineAfterDocComment';
 
     /**
-     * Code that there is no summary in doc comment.
+     * There SHOULD be a summary.
      */
     public const CODE_NO_SUMMARY = 'NoSummary';
 
     /**
-     * Error code if the summary is too long.
+     * The summary SHOULD be in one line.
      */
     public const CODE_SUMMARY_TOO_LONG = 'SummaryTooLong';
 

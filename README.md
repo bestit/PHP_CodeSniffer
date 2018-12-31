@@ -75,48 +75,80 @@ The base for the BestIt Standard is [PSR-12](https://github.com/php-fig/fig-stan
 
 | Sniff | Description | suppressable |
 | ----- | ----------- | ------------ |
-| BestIt.Commenting.(ClassDoc,ConstanctDoc,FunctionDoc,PropertyDoc).DocCommentUcFirst| Every doc comment block SHOULD start ucfirst. |
-| BestIt.Commenting.(ClassDoc,ConstanctDoc,FunctionDoc,PropertyDoc).NoLineAfterDocComment|  Every doc comment block (the summary or a long description paragrah) SHOULD finish with double newline. |
-| BestIt.Commenting.(ClassDoc,ConstanctDoc,FunctionDoc,PropertyDoc).NoSummary|  There SHOULD be a summary. |
-| BestIt.Commenting.(ClassDoc,ConstanctDoc,FunctionDoc,PropertyDoc).SummaryTooLong|  The summary should be in one line. |
-| BestIt.Commenting.RequiredDocBlock.MissingDocBlock* |  There MUST be a doc block before a Class, Constant, Interface, Function, Trait, Variable. The * will be replaced with the name of the structure like MissingDocBlockClass. |
-| BestIt.Commenting.RequiredDocBlock.NoMultiLineDocBlock* |  The doc block before a Class, Constant, Interface, Function, Trait, Variable must be multi-line. The * will be replaced with the name of the structure like NoMultiLineDocBlockClass. |
-| BestIt.Comparisons.EmptyArrayForComparison.EmptyArray | You MUST not create an empty array, to check for an empty array. |
-| BestIt.Comparisons.EqualOperator | You should use the "Identical" operator (===). |
-| BestIt.DocTags.AuthorTag.TagContentFormatInvalid | You MUST commit to your codes and give an [author tag](http://docs.phpdoc.org/references/phpdoc/tags/author.html). | 
-| BestIt.DocTags.DeprecatedTag.TagContentFormatInvalid | If you provide a deprecated tag, you MUST provide it with versions since when its deprecated and when it will be removed. | 
-| BestIt.DocTags.(DisallowedClassTags,DisallowedConstantTags,DisallowedMethodTags,DisallowedPropertyTags).TagNotAllowed | You MUST not give one of the disallowed tags in your doc comment. | You can configure the disallowed tags. |
-| BestIt.DocTags.PackageTag.WrongPackage | If there is a namespace, you MUST provide the namespace as package tag. |
-| BestIt.DocTags.ParamTag.MissingDesc | You SHOULD provide a description for your parameter. | It is disabled per default. You can enabled it per property "descAsWarning" | 
-| BestIt.DocTags.ParamTag.MissingVariables | Your method MUST have parameters if there is a param tag. |
-| BestIt.DocTags.ParamTag.MissingVariable | Your method MUST have a matching variable for your param tag. |
-| BestIt.DocTags.ParamTag.MissingType | You MUST provide a type for your param tag. |
-| BestIt.DocTags.(RequiredClassTags,RequiredConstantTags,RequiredMethodTags,RequiredPropertyTags).TagOccurrenceMax* | You MUST provide only the maximum amount of required tags. For example, only one return per method is allowed. The error is registered for every tag specifically. |
-| BestIt.DocTags.(RequiredClassTags,RequiredConstantTags,RequiredMethodTags,RequiredPropertyTags).TagOccurrenceMin* | You MUST provide the required tags. The error is registered for every tag specifically. |
-| BestIt.DocTags.ReturnTag.MissingReturnDescription | You SHOULD provide a description your return. | It is disabled per default. You can enabled it per property "descAsWarning" |
-| BestIt.DocTags.ReturnTag.MixedType | You SHOULD provide a native return and prevent "mixed". | 
-| BestIt.DocTags.TagSorting.MissingNewlineBetweenTags | You SHOULD separate tag groups and the final return with a newline. | Yes (By Sniff-Name) |
-| BestIt.DocTags.TagSorting.WrongTagSorting | You SHOULD sort the tags by their occurrence and then alphabetically, but @return SHOULD be the last. | Yes (By Sniff-Name) |
-| BestIt.DocTags.ThrowsTag.MissingThrowDescription | You SHOULD provide a description your throw tag. | 
-| BestIt.DocTags.VarTag.TagContentFormatInvalid | You MUST provide a type for your var tag. | 
-| BestIt.DocTags.VersionTag.TagContentFormatInvalid | If you provide a version tag, you MUST provide it in [semver 2.0-Format](https://semver.org) with Major.Minor.Patch-Version . |
-| BestIt.Formatting.AlphabeticClassContent.SortAlphabetically | You SHOULD sort you constants, methods and properties alphabetically. |
-| BestIt.Formatting.SpaceAroundConcatSniff.MissingSpaceAroundConcat | You MUST wrap your concat-dot with a whitespace char. |
-| BestIt.Formatting.UCVFSorting.WrongPosition | You MUST sort the contents of your classes, traits, interface, etc. in the following order: T_USE, T_CONST, T_VARIABLE, T_FUNCTION. |
-| BestIt.NamingConvention.CamelCaseVariable.NotCamelCase | You MUST provide your vars in camel case, lower case first. | Yes |
+| BestIt.Commenting.ClassDoc.DocCommentUcFirst | Every doc comment block SHOULD start ucfirst. | no |
+| BestIt.Commenting.ClassDoc.NoLineAfterDocComment | Every doc comment block (the summary or a long description paragrah) SHOULD finish with double newline. | no |
+| BestIt.Commenting.ClassDoc.NoSummary | There SHOULD be a summary. | no |
+| BestIt.Commenting.ClassDoc.SummaryTooLong | The summary SHOULD be in one line. | no |
+| BestIt.Commenting.ConstantDoc.DocCommentUcFirst | Every doc comment block SHOULD start ucfirst. | no |
+| BestIt.Commenting.ConstantDoc.NoLineAfterDocComment | Every doc comment block (the summary or a long description paragrah) SHOULD finish with double newline. | no |
+| BestIt.Commenting.ConstantDoc.NoSummary | There SHOULD be a summary. | no |
+| BestIt.Commenting.ConstantDoc.SummaryTooLong | The summary SHOULD be in one line. | no |
+| BestIt.Commenting.EmptyLinesDoc.EmptyLinesFound | There MUST be no redundant lines in your doc block. | no |
+| BestIt.Commenting.FunctionDoc.DocCommentUcFirst | Every doc comment block SHOULD start ucfirst. | no |
+| BestIt.Commenting.FunctionDoc.NoLineAfterDocComment | Every doc comment block (the summary or a long description paragrah) SHOULD finish with double newline. | no |
+| BestIt.Commenting.FunctionDoc.NoSummary | There SHOULD be a summary. | no |
+| BestIt.Commenting.FunctionDoc.SummaryTooLong | The summary SHOULD be in one line. | no |
+| BestIt.Commenting.PropertyDoc.DocCommentUcFirst | Every doc comment block SHOULD start ucfirst. | no |
+| BestIt.Commenting.PropertyDoc.NoLineAfterDocComment | Every doc comment block (the summary or a long description paragrah) SHOULD finish with double newline. | no |
+| BestIt.Commenting.PropertyDoc.NoSummary | There SHOULD be a summary. | no |
+| BestIt.Commenting.PropertyDoc.SummaryTooLong | The summary SHOULD be in one line. | no |
+| BestIt.Commenting.RedundantWhitespace.RedundantWhitespace | There MUST be no additonal spaces around your doc tags. | no |
+| BestIt.Commenting.RequiredDocBlock.MissingDocBlock | There MUST be a doc block before a Class, Constant, Interface, Function, Trait, Variable. | no |
+| BestIt.Commenting.RequiredDocBlock.NoMultiLineDocBlock | The doc block before a Class, Constant, Interface, Function, Trait, Variable must be multi-line. | no |
+| BestIt.Comparisons.EmptyArrayForComparison.EmptyArray | You MUST not create an empty array, to check for an empty array. | no |
+| BestIt.Comparisons.EqualOperator.EqualOperatorFound | You SHOULD use the "Identical" operator (===). | no |
+| BestIt.DocTags.AuthorTag.TagContentFormatInvalid | You MUST commit to your codes and give an [author tag](http://docs.phpdoc.org/references/phpdoc/tags/author.html). | no |
+| BestIt.DocTags.DeprecatedTag.MissingDates | The error code for the missing dates. | no |
+| BestIt.DocTags.DeprecatedTag.TagContentFormatInvalid | If you provide a deprecated tag, you MUST provide it with versions since when its deprecated and when it will be removed. | no |
+| BestIt.DocTags.DisallowedClassTags.TagNotAllowed | You MUST not give one of the disallowed tags in your doc comment. | no |
+| BestIt.DocTags.DisallowedConstantTags.TagNotAllowed | You MUST not give one of the disallowed tags in your doc comment. | no |
+| BestIt.DocTags.DisallowedMethodTags.TagNotAllowed | You MUST not give one of the disallowed tags in your doc comment. | no |
+| BestIt.DocTags.DisallowedPropertyTags.TagNotAllowed | You MUST not give one of the disallowed tags in your doc comment. | no |
+| BestIt.DocTags.PackageTag.TagContentFormatInvalid | You MUST provide a special tag format. | no |
+| BestIt.DocTags.PackageTag.WrongPackage | If there is a namespace, you MUST provide this namespace as package tag. | no |
+| BestIt.DocTags.ParamTag.MissingDesc | You SHOULD provide a description for your parameter. | no |
+| BestIt.DocTags.ParamTag.MissingType | You MUST provide a type for your param tag. | no |
+| BestIt.DocTags.ParamTag.MissingVariable | Your method MUST have a matching variable for your param tag. | no |
+| BestIt.DocTags.ParamTag.MissingVariables | Your method MUST have parameters if there is a param tag. | no |
+| BestIt.DocTags.ParamTag.MixedType | You SHOULD prevent the mixed type and try to provide native types. | no |
+| BestIt.DocTags.ParamTag.TagContentFormatInvalid | You MUST provide a special tag format. | no |
+| BestIt.DocTags.RequiredClassTags.TagOccurrenceMax | You MUST provide only the maximum amount of required tags. For example, only one return per method is allowed. The error is registered for every tag specifically. | no |
+| BestIt.DocTags.RequiredClassTags.TagOccurrenceMin | You MUST provide the required tags. The error is registered for every tag specifically. | no |
+| BestIt.DocTags.RequiredMethodTags.TagOccurrenceMax | You MUST provide only the maximum amount of required tags. For example, only one return per method is allowed. The error is registered for every tag specifically. | no |
+| BestIt.DocTags.RequiredMethodTags.TagOccurrenceMin | You MUST provide the required tags. The error is registered for every tag specifically. | no |
+| BestIt.DocTags.RequiredPropertyTags.TagOccurrenceMax | You MUST provide only the maximum amount of required tags. For example, only one return per method is allowed. The error is registered for every tag specifically. | no |
+| BestIt.DocTags.RequiredPropertyTags.TagOccurrenceMin | You MUST provide the required tags. The error is registered for every tag specifically. | no |
+| BestIt.DocTags.ReturnTag.MissingReturnDescription | You SHOULD provide a description your return. | no |
+| BestIt.DocTags.ReturnTag.MixedType | You SHOULD provide a native return and prevent "mixed". | no |
+| BestIt.DocTags.ReturnTag.TagContentFormatInvalid | You MUST provide a special tag format. | no |
+| BestIt.DocTags.TagSorting.MissingNewlineBetweenTags | You SHOULD separate tag groups and the final return with a newline. | yes by class |
+| BestIt.DocTags.TagSorting.WrongTagSorting | You SHOULD sort the tags by their occurrence and then alphabetically, but @return SHOULD be the last. | yes by class |
+| BestIt.DocTags.ThrowsTag.MissingThrowDescription | You SHOULD provide a description your throw tag. | no |
+| BestIt.DocTags.ThrowsTag.TagContentFormatInvalid | You MUST provide a special tag format. | no |
+| BestIt.DocTags.VarTag.TagContentFormatInvalid | You MUST provide a type for your var tag. | no |
+| BestIt.DocTags.VersionTag.TagContentFormatInvalid | If you provide a version tag, you MUST provide it in [semver 2.0-Format](https://semver.org) with Major.Minor.Patch-Version . | no |
+| BestIt.Formatting.AlphabeticClassContent.SortAlphabetically | You SHOULD sort you constants, methods and properties alphabetically. | no |
+| BestIt.Formatting.OpenTag.LineNotEmpty | The next line after the open tag MUST be empty. | no |
+| BestIt.Formatting.OpenTag.NoSpaceAfterOpenTag | There MUST be whitespace after the open tag. | no |
+| BestIt.Formatting.OpenTag.OpenTagNotFirstStatement | After the open tag there MUST be an empty line. | no |
+| BestIt.Formatting.SpaceAfterDeclare.GroupBlankLineFound | Multiple declare-statements SHOULD be grouped without a blank line. | no |
+| BestIt.Formatting.SpaceAfterDeclare.MuchWhitespaceFound | THERE MUST be just one single line after the declare statement. | no |
+| BestIt.Formatting.SpaceAfterDeclare.NoWhitespaceFound | There MUST be one empty line after declare-statement. | no |
+| BestIt.Formatting.SpaceAroundConcat.MissingSpaceAroundConcat | You MUST wrap your concat-dot with a whitespace char. | no |
+| BestIt.Formatting.UCVFSorting.WrongPosition | You MUST sort the contents of your classes, traits, interface, etc. in the following order: T_USE, T_CONST, T_VARIABLE, T_FUNCTION. | no |
+| BestIt.Functions.FluentSetter.MustReturnThis | Every setter function MUST return $this if nothing else is returned. | no |
+| BestIt.Functions.FluentSetter.NoReturnFound | Your method MUST contain a return. | yes |
+| BestIt.Functions.ForbiddenFunctions.Discouraged | You SHOULD not use eval. | yes |
+| BestIt.Functions.ForbiddenFunctions.DiscouragedWithAlternative | You SHOULD not use alias but the original function names. | yes |
+| BestIt.Functions.MultipleReturn.MultipleReturnsFound | You SHOULD only use a return per method. | no |
+| BestIt.NamingConventions.CamelCaseVariable.NotCamelCase | You MUST provide your vars in camel case, lower case first. | yes |
+| BestIt.TypeHints.ReturnTypeDeclaration.MissingReturnTypeHint | Every function or method MUST have a type hint if the return annotation is valid. | yes |
+| Generic.Formatting.SpaceAfterCast | There MUST be a space after cast. |
+| Generic.Arrays.DisallowLongArraySyntax | Every array syntax MUST be in short array syntax. |
 | SlevomatCodingStandard.Classes.ClassConstantVisibility.MissingConstantVisibility | Constants MUST be marked with a visibility. |
 | SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnly.ReferenceViaFullyQualifiedName | No class may be used via its FQCN. You MUST import every class! |
 | SlevomatCodingStandard.TypeHints.DeclareStrictTypes | Every file MUST have "declare(strict_types=1);" two line breaks after the opening tag. There MUST be no spaces aroung the equal-sign. |
-| BestIt.Functions.FluentSetter | Every setter function MUST return $this if nothing else is returned.  | Yes |
-| BestIt.Functions.ForbiddenFunctions.Discouraged | You SHOULD not use eval. | Yes |
-| BestIt.Functions.ForbiddenFunctions.DiscouragedWithAlternative | You SHOULD not use alias but the original function names. | Yes |
-| BestIt.Functions.MultipleReturn.MultipleReturnsFound | You SHOULD only use a return per method. |
-| BestIt.Formatting.SpaceAfterDeclare | There MUST be one empty line after declare-statement. |
-| BestIt.TypeHints.ReturnTypeDeclaration.MissingReturnTypeHint | Every function or method MUST have a type hint if the return annotation is valid. | Yes |
 | Squiz.Strings.DoubleQuoteUsage | Every String MUST be wrapped with single quotes. |
-| Generic.Formatting.SpaceAfterCast | There MUST be a space after cast. |
-| Generic.Arrays.DisallowLongArraySyntax | Every array syntax MUST be in short array syntax. |
-| BestIt.Formatting.OpenTagSniff | After the open tag there MUST be an empty line. |
 
 ## Development
 

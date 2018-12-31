@@ -18,7 +18,7 @@ use const T_NAMESPACE;
 class PackageTagSniff extends AbstractTagSniff
 {
     /**
-     * Code that the tag content format is invalid.
+     * If there is a namespace, you MUST provide this namespace as package tag.
      */
     public const CODE_TAG_WRONG_PACKAGE = 'WrongPackage';
 

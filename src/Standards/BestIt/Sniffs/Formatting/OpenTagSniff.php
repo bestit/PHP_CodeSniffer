@@ -21,7 +21,7 @@ class OpenTagSniff implements Sniff
     public const ERROR_NOT_FIRST_STATEMENT = 'Open tag is not first statement';
 
     /**
-     * Code when open tag is not first statement.
+     * After the open tag there MUST be an empty line.
      */
     public const CODE_NOT_FIRST_STATEMENT = 'OpenTagNotFirstStatement';
 
@@ -31,7 +31,7 @@ class OpenTagSniff implements Sniff
     public const ERROR_NO_SPACE_AFTER_OPEN_TAG = 'No space after open tag';
 
     /**
-     * Code when there is no space after open tag.
+     * There MUST be whitespace after the open tag.
      */
     public const CODE_NO_SPACE_AFTER_OPEN_TAG = 'NoSpaceAfterOpenTag';
 
@@ -41,7 +41,7 @@ class OpenTagSniff implements Sniff
     public const ERROR_LINE_NOT_EMPTY = 'Line after open tag is not empty.';
 
     /**
-     * Code when line after open tag is not empty.
+     * The next line after the open tag MUST be empty.
      */
     public const CODE_LINE_NOT_EMPTY = 'LineNotEmpty';
 
@@ -105,7 +105,7 @@ class OpenTagSniff implements Sniff
         $fixNotFirstStatement = $phpcsFile->addFixableError(
             self::ERROR_NOT_FIRST_STATEMENT,
             $stackPtr,
-            self::CODE_NOT_FIRST_STATEMENT
+            static::CODE_NOT_FIRST_STATEMENT
         );
 
         if ($fixNotFirstStatement) {
@@ -131,7 +131,7 @@ class OpenTagSniff implements Sniff
         $fixNoSpaceAfterTag = $phpcsFile->addFixableError(
             self::ERROR_NO_SPACE_AFTER_OPEN_TAG,
             $whitespacePtr,
-            self::CODE_NO_SPACE_AFTER_OPEN_TAG
+            static::CODE_NO_SPACE_AFTER_OPEN_TAG
         );
 
         if ($fixNoSpaceAfterTag) {
@@ -154,7 +154,7 @@ class OpenTagSniff implements Sniff
         $fixSpaceNotScndLine = $phpcsFile->addFixableError(
             self::ERROR_LINE_NOT_EMPTY,
             $whitespacePtr,
-            self::CODE_LINE_NOT_EMPTY
+            static::CODE_LINE_NOT_EMPTY
         );
 
         if ($fixSpaceNotScndLine) {

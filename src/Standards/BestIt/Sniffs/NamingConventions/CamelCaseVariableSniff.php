@@ -25,7 +25,7 @@ class CamelCaseVariableSniff extends AbstractSniff
     use VariableRegistrationTrait;
 
     /**
-     * The error code for this sniff.
+     * You MUST provide your vars in camel case, lower case first.
      *
      * @var string
      */

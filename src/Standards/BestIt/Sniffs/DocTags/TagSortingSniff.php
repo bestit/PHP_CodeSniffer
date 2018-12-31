@@ -31,12 +31,12 @@ use const T_DOC_COMMENT_OPEN_TAG;
 class TagSortingSniff extends AbstractSniff
 {
     /**
-     * The error code for the missing new line between tags.
+     * You SHOULD separate tag groups and the final return with a newline.
      */
     public const CODE_MISSING_NEWLINE_BETWEEN_TAGS = 'MissingNewlineBetweenTags';
 
     /**
-     * The error code for the wrong sorting order.
+     * You SHOULD sort the tags by their occurrence and then alphabetically, but @return SHOULD be the last.
      */
     public const CODE_WRONG_TAG_SORTING = 'WrongTagSorting';
 
@@ -128,7 +128,7 @@ class TagSortingSniff extends AbstractSniff
 
         if (array_values($orgTokens) !== $sortedTokens) {
             $error = (new CodeWarning(
-                self::CODE_WRONG_TAG_SORTING,
+                static::CODE_WRONG_TAG_SORTING,
                 self::MESSAGE_WRONG_TAG_SORTING,
                 array_shift($orgTokens)['pointer']
             ))->setToken($this->token);

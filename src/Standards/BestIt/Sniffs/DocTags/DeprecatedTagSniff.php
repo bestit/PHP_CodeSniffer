@@ -15,6 +15,11 @@ class DeprecatedTagSniff extends AbstractTagSniff
     use TagContentFormatTrait;
 
     /**
+     * If you provide a deprecated tag, you MUST provide it with versions since when its deprecated and when it will be removed.
+     */
+    public const CODE_TAG_CONTENT_FORMAT_INVALID = 'TagContentFormatInvalid';
+
+    /**
      * The error code for the missing dates.
      */
     public const CODE_TAG_MISSING_DATES = 'MissingDates';
@@ -40,7 +45,7 @@ class DeprecatedTagSniff extends AbstractTagSniff
         return [
             self::MESSAGE_TAG_MISSING_DATES,
             $this->stackPos,
-            self::CODE_TAG_MISSING_DATES,
+            static::CODE_TAG_MISSING_DATES,
             [
                 $this->getValidPattern()
             ]
