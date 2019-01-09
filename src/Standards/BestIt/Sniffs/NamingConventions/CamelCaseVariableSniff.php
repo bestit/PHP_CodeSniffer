@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace BestIt\Sniffs\NamingConventions;
 
+use BestIt\CodeSniffer\Helper\TokenHelper;
 use BestIt\Sniffs\AbstractSniff;
 use BestIt\Sniffs\VariableRegistrationTrait;
 use PHP_CodeSniffer\Util\Common;
 use SlevomatCodingStandard\Helpers\PropertyHelper;
-use SlevomatCodingStandard\Helpers\TokenHelper;
 use function array_key_exists;
 use function substr;
 use const T_EQUAL;

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace BestIt\Sniffs\DocTags;
 
+use BestIt\CodeSniffer\Helper\TokenHelper;
 use SlevomatCodingStandard\Helpers\NamespaceHelper;
-use SlevomatCodingStandard\Helpers\TokenHelper;
 use const T_DOC_COMMENT_STRING;
 use const T_NAMESPACE;
 

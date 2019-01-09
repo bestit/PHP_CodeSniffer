@@ -6,10 +6,10 @@ namespace BestIt\Sniffs\Functions;
 
 use BestIt\CodeSniffer\File as FileDecorator;
 use BestIt\CodeSniffer\Helper\PropertyHelper;
+use BestIt\CodeSniffer\Helper\TokenHelper;
 use BestIt\Sniffs\SuppressingTrait;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Standards\Squiz\Sniffs\Scope\MethodScopeSniff;
-use SlevomatCodingStandard\Helpers\TokenHelper;
 use function in_array;
 use function substr;
 

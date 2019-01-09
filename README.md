@@ -128,6 +128,7 @@ The base for the BestIt Standard is [PSR-12](https://github.com/php-fig/fig-stan
 | BestIt.DocTags.VarTag.TagContentFormatInvalid | You MUST provide a type for your var tag. | no |
 | BestIt.DocTags.VersionTag.TagContentFormatInvalid | If you provide a version tag, you MUST provide it in [semver 2.0-Format](https://semver.org) with Major.Minor.Patch-Version . | no |
 | BestIt.Formatting.AlphabeticClassContent.SortAlphabetically | You SHOULD sort you constants, methods and properties alphabetically. | no |
+| BestIt.Formatting.AlphabeticallySortedUses.IncorrectlyOrderedUses | You MUST provide your imports in alphabetically order, PSR-12 compatible. | no |
 | BestIt.Formatting.OpenTag.LineNotEmpty | The next line after the open tag MUST be empty. | no |
 | BestIt.Formatting.OpenTag.NoSpaceAfterOpenTag | There MUST be whitespace after the open tag. | no |
 | BestIt.Formatting.OpenTag.OpenTagNotFirstStatement | After the open tag there MUST be an empty line. | no |
@@ -135,6 +136,10 @@ The base for the BestIt Standard is [PSR-12](https://github.com/php-fig/fig-stan
 | BestIt.Formatting.SpaceAfterDeclare.MuchWhitespaceFound | THERE MUST be just one single line after the declare statement. | no |
 | BestIt.Formatting.SpaceAfterDeclare.NoWhitespaceFound | There MUST be one empty line after declare-statement. | no |
 | BestIt.Formatting.SpaceAroundConcat.MissingSpaceAroundConcat | You MUST wrap your concat-dot with a whitespace char. | no |
+| BestIt.Formatting.TraitUseDeclaration.MultipleTraitsPerDeclaration | You MUST provide only one "use" per Line for importing traits etc. in classes. | no |
+| BestIt.Formatting.TraitUseSpacing.IncorrectLinesCountAfterLastUse | You MUST not provide additional lines after your last rait usage. | no |
+| BestIt.Formatting.TraitUseSpacing.IncorrectLinesCountBeforeFirstUse | You MUST not provide additional new lines before your first trait use. | no |
+| BestIt.Formatting.TraitUseSpacing.IncorrectLinesCountBetweenUses | You MUST not provide additional new lines between trait usages. | no |
 | BestIt.Formatting.UCVFSorting.WrongPosition | You MUST sort the contents of your classes, traits, interface, etc. in the following order: T_USE, T_CONST, T_VARIABLE, T_FUNCTION. | no |
 | BestIt.Functions.FluentSetter.MustReturnThis | Every setter function MUST return $this if nothing else is returned. | no |
 | BestIt.Functions.FluentSetter.NoReturnFound | Your method MUST contain a return. | yes |

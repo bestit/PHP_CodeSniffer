@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace BestIt\Sniffs\DocTags;
 
-use SlevomatCodingStandard\Helpers\TokenHelper;
+use BestIt\CodeSniffer\Helper\TokenHelper;
 use function array_column;
 use function array_map;
 use function implode;

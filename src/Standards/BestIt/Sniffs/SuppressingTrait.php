@@ -76,14 +76,15 @@ trait SuppressingTrait
      * Returns true if this sniff or a rule of this sniff is suppressed with the slevomat suppress annotation.
      *
      * @param null|string $rule The optional rule.
+     * @param int|null $stackPos Do you want ot overload the position for the which position the sniff is suppressed.
      *
      * @return bool Returns true if the sniff is suppressed.
      */
-    protected function isSniffSuppressed(?string $rule = null): bool
+    protected function isSniffSuppressed(?string $rule = null, ?int $stackPos = null): bool
     {
         return $this->getSuppressHelper()->isSniffSuppressed(
             $this->getFile(),
-            $this->getStackPos(),
+            $stackPos ?? $this->getStackPos(),
             $this->getSniffName($rule)
         );
     }

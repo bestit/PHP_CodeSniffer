@@ -7,7 +7,6 @@ namespace BestIt\CodeSniffer\Helper;
 use DomainException;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Util\Tokens;
-use SlevomatCodingStandard\Helpers\TokenHelper;
 use function sprintf;
 use const T_DOC_COMMENT_CLOSE_TAG;
 

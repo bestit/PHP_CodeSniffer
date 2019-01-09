@@ -19,7 +19,7 @@
     },
     "autoload-dev": {
         "files": [
-            "vendor/squizlabs/php_codesniffer/autoload.php"
+            "vendor/squizlabs/php_codesniffer/tests/bootstrap.php"
         ],
         "psr-4": {
           "BestIt\\": "tests/"

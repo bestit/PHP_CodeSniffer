@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace BestIt\Sniffs\Formatting;
 
 use BestIt\CodeSniffer\Helper\PropertyHelper;
+use BestIt\CodeSniffer\Helper\TokenHelper;
 use BestIt\Sniffs\AbstractSniff;
 use BestIt\Sniffs\ClassRegistrationTrait;
-use SlevomatCodingStandard\Helpers\TokenHelper;
 use function array_values;
 use function natsort;
 use const T_CONST;

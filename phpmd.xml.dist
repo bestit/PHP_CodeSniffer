@@ -11,10 +11,12 @@
         <properties>
             <property
                 name="exceptions"
-                value="Closure, \PHP_CodeSniffer\Util\Common, \SlevomatCodingStandard\Helpers\FunctionHelper,
-                    \SlevomatCodingStandard\Helpers\NamespaceHelper, \SlevomatCodingStandard\Helpers\PropertyHelper,
-                    \SlevomatCodingStandard\Helpers\SuppressHelper, \SlevomatCodingStandard\Helpers\TokenHelper,
-                    \SlevomatCodingStandard\Helpers\TypeHintHelper, \SlevomatCodingStandard\Helpers\UseStatementHelper"
+                value="\BestIt\CodeSniffer\Helper\ClassHelper, \BestIt\CodeSniffer\Helper\TokenHelper,
+                    \BestIt\CodeSniffer\Helper\UseStatementHelper, Closure, \PHP_CodeSniffer\Util\Common,
+                    \SlevomatCodingStandard\Helpers\FunctionHelper, \SlevomatCodingStandard\Helpers\NamespaceHelper,
+                    \SlevomatCodingStandard\Helpers\PropertyHelper, \SlevomatCodingStandard\Helpers\SuppressHelper,
+                    \SlevomatCodingStandard\Helpers\TokenHelper, \SlevomatCodingStandard\Helpers\TypeHintHelper,
+                    \SlevomatCodingStandard\Helpers\UseStatement"
             />
         </properties>
     </rule>
@@ -31,7 +33,7 @@
     <!-- There seemed to be a phpmd bug which complained about AbstractSniff without change or real existing error -->
     <rule ref="rulesets/design.xml/NumberOfChildren">
         <properties>
-            <property name="minimum" value="17"/>
+            <property name="minimum" value="20"/>
         </properties>
     </rule>
 

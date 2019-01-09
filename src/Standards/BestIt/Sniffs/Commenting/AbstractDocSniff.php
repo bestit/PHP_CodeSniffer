@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace BestIt\Sniffs\Commenting;
 
 use BestIt\CodeSniffer\CodeWarning;
+use BestIt\CodeSniffer\Helper\TokenHelper;
 use BestIt\Sniffs\AbstractSniff;
 use BestIt\Sniffs\DocPosProviderTrait;
-use SlevomatCodingStandard\Helpers\TokenHelper;
 use function ucfirst;
 use const T_DOC_COMMENT_OPEN_TAG;
 use const T_DOC_COMMENT_STRING;

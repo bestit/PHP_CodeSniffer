@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace BestIt\CodeSniffer\Helper;
 
 use BestIt\CodeSniffer\File;
-use SlevomatCodingStandard\Helpers\TokenHelper;
 use function array_key_exists;
 use const T_DOC_COMMENT_CLOSE_TAG;
 use const T_DOC_COMMENT_STRING;

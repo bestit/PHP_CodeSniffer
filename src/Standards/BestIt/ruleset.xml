@@ -17,25 +17,7 @@
         </properties>
     </rule>
 
-    <rule ref="SlevomatCodingStandard.Classes.TraitUseDeclaration" />
-
-    <rule ref="SlevomatCodingStandard.Classes.TraitUseSpacing">
-        <properties>
-            <property name="linesCountBeforeFirstUse" value="0" />
-            <property name="linesCountBetweenUses" value="0" />
-            <property name="linesCountAfterLastUse" value="1" />
-            <property name="linesCountAfterLastUseWhenLastInClass" value="0"/>
-        </properties>
-    </rule>
-
     <rule ref="SlevomatCodingStandard.Commenting.InlineDocCommentDeclaration" />
-
-    <rule ref="SlevomatCodingStandard.Namespaces.AlphabeticallySortedUses">
-        <properties>
-            <property name="psr12Compatible" value="true" />
-            <property name="caseSensitive" value="true" />
-        </properties>
-    </rule>
 
     <rule ref="SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnly">
         <properties>

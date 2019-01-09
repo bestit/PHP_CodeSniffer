@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace BestIt\Sniffs\Comparisons;
 
 use BestIt\CodeSniffer\CodeError;
+use BestIt\CodeSniffer\Helper\TokenHelper;
 use BestIt\Sniffs\AbstractSniff;
-use SlevomatCodingStandard\Helpers\TokenHelper;
 use function array_key_exists;
 use const T_ARRAY;
 use const T_CLOSE_PARENTHESIS;

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace BestIt\Sniffs\Functions;
 
+use BestIt\CodeSniffer\Helper\TokenHelper;
 use BestIt\Sniffs\AbstractSniff;
 use BestIt\Sniffs\FunctionRegistrationTrait;
-use SlevomatCodingStandard\Helpers\TokenHelper;
 use function array_filter;
 use function array_shift;
 use function array_walk;

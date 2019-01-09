@@ -6,7 +6,7 @@ namespace BestIt\Sniffs\DocTags;
 
 use BestIt\CodeSniffer\CodeError;
 use BestIt\CodeSniffer\CodeWarning;
-use SlevomatCodingStandard\Helpers\TokenHelper;
+use BestIt\CodeSniffer\Helper\TokenHelper;
 use function array_filter;
 use function array_values;
 use function in_array;

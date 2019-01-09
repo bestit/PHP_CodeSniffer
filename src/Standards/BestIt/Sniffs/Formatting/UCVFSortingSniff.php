@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace BestIt\Sniffs\Formatting;
 
 use BestIt\CodeSniffer\Helper\PropertyHelper;
+use BestIt\CodeSniffer\Helper\TokenHelper;
+use BestIt\CodeSniffer\Helper\UseStatementHelper;
 use BestIt\Sniffs\AbstractSniff;
 use BestIt\Sniffs\ClassRegistrationTrait;
-use SlevomatCodingStandard\Helpers\TokenHelper;
-use SlevomatCodingStandard\Helpers\UseStatementHelper;
 use function array_combine;
 use function array_filter;
 use function array_keys;

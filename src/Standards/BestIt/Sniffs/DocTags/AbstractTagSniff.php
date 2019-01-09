@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace BestIt\Sniffs\DocTags;
 
+use BestIt\CodeSniffer\Helper\TokenHelper;
 use BestIt\Sniffs\AbstractSniff;
 use PHP_CodeSniffer\Util\Tokens;
-use SlevomatCodingStandard\Helpers\TokenHelper;
 use function class_exists;
 use function implode;
 use function spl_autoload_call;
