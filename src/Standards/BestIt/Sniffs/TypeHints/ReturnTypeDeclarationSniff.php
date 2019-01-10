@@ -221,7 +221,7 @@ class ReturnTypeDeclarationSniff extends AbstractSniff
 
         if (!$justOneReturn || strtolower($returnTypes[0]) !== 'mixed') {
             $isNullableType = ($returnTypeCount === 2) &&
-                version_compare(phpversion(), '7.1.0', '>') &&
+                version_compare(phpversion(), '7.1.0', '>=') &&
                 (count(array_intersect($returnTypes, self::NULL_TYPES)) === 1);
 
             $return = ($justOneReturn || $isNullableType) ? $returnTypes : null;
