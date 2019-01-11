@@ -29,52 +29,52 @@ class ParamTagSniff extends AbstractTagSniff
     /**
      * You SHOULD provide a description for your parameter.
      */
-    public const CODE_TAG_MISSING_DESC = 'MissingDesc';
+    const CODE_TAG_MISSING_DESC = 'MissingDesc';
 
     /**
      * You MUST provide a type for your param tag.
      */
-    public const CODE_TAG_MISSING_TYPE = 'MissingType';
+    const CODE_TAG_MISSING_TYPE = 'MissingType';
 
     /**
      * Your method MUST have a matching variable for your param tag.
      */
-    public const CODE_TAG_MISSING_VARIABLE = 'MissingVariable';
+    const CODE_TAG_MISSING_VARIABLE = 'MissingVariable';
 
     /**
      * Your method MUST have parameters if there is a param tag.
      */
-    public const CODE_TAG_MISSING_VARIABLES = 'MissingVariables';
+    const CODE_TAG_MISSING_VARIABLES = 'MissingVariables';
 
     /**
      * You SHOULD prevent the mixed type and try to provide native types.
      */
-    public const CODE_TAG_MIXED_TYPE = 'MixedType';
+    const CODE_TAG_MIXED_TYPE = 'MixedType';
 
     /**
      * Message for displaying the missing description.
      */
-    private const MESSAGE_TAG_MISSING_DESC = 'There is no description for your tag: %s.';
+    const MESSAGE_TAG_MISSING_DESC = 'There is no description for your tag: %s.';
 
     /**
      * Message for displaying the missing type.
      */
-    private const MESSAGE_TAG_MISSING_TYPE = 'There is no type for your tag: %s.';
+    const MESSAGE_TAG_MISSING_TYPE = 'There is no type for your tag: %s.';
 
     /**
      * Message for displaying the missing property.
      */
-    private const MESSAGE_TAG_MISSING_VARIABLE = 'There is no property for your tag "%s".';
+    const MESSAGE_TAG_MISSING_VARIABLE = 'There is no property for your tag "%s".';
 
     /**
      * Message for displaying the missing properties.
      */
-    private const MESSAGE_TAG_MISSING_VARIABLES = 'There are no properties for your tags.';
+    const MESSAGE_TAG_MISSING_VARIABLES = 'There are no properties for your tags.';
 
     /**
      * The message for the mixed type warning.
      */
-    private const MESSAGE_TAG_MIXED_TYPE = 'We suggest that you avoid the "mixed" type and declare the ' .
+    const MESSAGE_TAG_MIXED_TYPE = 'We suggest that you avoid the "mixed" type and declare the ' .
         'required types in detail.';
 
     /**
@@ -106,7 +106,7 @@ class ParamTagSniff extends AbstractTagSniff
      *
      * @return bool True if it matches.
      */
-    private function checkAgainstPattern(?string $tagContent = null): bool
+    private function checkAgainstPattern(string $tagContent = null): bool
     {
         if (!$return = $this->isValidContent($tagContent)) {
             throw (new CodeError(static::CODE_TAG_MISSING_VARIABLE, self::MESSAGE_TAG_MISSING_VARIABLE, $this->stackPos))
@@ -125,7 +125,7 @@ class ParamTagSniff extends AbstractTagSniff
      *
      * @return void
      */
-    private function checkArgumentItself(?string $tagContent = null): void
+    private function checkArgumentItself(string $tagContent = null)
     {
         if (!$this->getArgumentTokenOfTag()) {
             throw (new CodeError(
@@ -278,7 +278,7 @@ class ParamTagSniff extends AbstractTagSniff
      *
      * @return void
      */
-    protected function processTagContent(?string $tagContent = null): void
+    protected function processTagContent(string $tagContent = null)
     {
         $varPoss = $this->loadAndCheckVarPositions();
 
@@ -305,7 +305,7 @@ class ParamTagSniff extends AbstractTagSniff
      *
      * @return void
      */
-    protected function setUp(): void
+    protected function setUp()
     {
         parent::setUp();
 

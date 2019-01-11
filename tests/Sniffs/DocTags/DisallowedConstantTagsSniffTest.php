@@ -29,7 +29,7 @@ class DisallowedConstantTagsSniffTest extends DisallowedClassTagsSniffTest
      *
      * @return void
      */
-    protected function setUp(): void
+    protected function setUp()
     {
         parent::setUp();
 

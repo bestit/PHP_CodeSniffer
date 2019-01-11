@@ -23,12 +23,12 @@ abstract class AbstractDisallowedTagsSniff extends AbstractSniff
     /**
      * You MUST not give one of the disallowed tags in your doc comment.
      */
-    public const CODE_TAG_NOT_ALLOWED = 'TagNotAllowed';
+    const CODE_TAG_NOT_ALLOWED = 'TagNotAllowed';
 
     /**
      * Message that comment tag is not allowed.
      */
-    private const MESSAGE_TAG_NOT_ALLOWED = 'The comment tag "%s" is not allowed.';
+    const MESSAGE_TAG_NOT_ALLOWED = 'The comment tag "%s" is not allowed.';
 
     /**
      * This tags are disallowed and could be injected from the outside.
@@ -59,7 +59,7 @@ abstract class AbstractDisallowedTagsSniff extends AbstractSniff
      *
      * @return void
      */
-    private function checkAndRegisterDisallowedTagsError(): void
+    private function checkAndRegisterDisallowedTagsError()
     {
         $disallowedTags = $this->getDisallowedTags();
         $tags = $this->getAllTags();
@@ -124,7 +124,7 @@ abstract class AbstractDisallowedTagsSniff extends AbstractSniff
      *
      * @return void
      */
-    protected function processToken(): void
+    protected function processToken()
     {
         $this->checkAndRegisterDisallowedTagsError();
     }
@@ -134,7 +134,7 @@ abstract class AbstractDisallowedTagsSniff extends AbstractSniff
      *
      * @return void
      */
-    protected function tearDown(): void
+    protected function tearDown()
     {
         $this->resetDocCommentPos();
 

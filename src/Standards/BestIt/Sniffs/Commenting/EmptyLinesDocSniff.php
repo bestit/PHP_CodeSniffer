@@ -21,21 +21,21 @@ class EmptyLinesDocSniff extends AbstractSniff
      *
      * @var string
      */
-    public const CODE_EMPTY_LINES_FOUND = 'EmptyLinesFound';
+    const CODE_EMPTY_LINES_FOUND = 'EmptyLinesFound';
 
     /**
      * Error message when empty line is detected.
      *
      * @var string
      */
-    private const ERROR_EMPTY_LINES_FOUND = 'There are too many empty lines in your doc-block!';
+    const ERROR_EMPTY_LINES_FOUND = 'There are too many empty lines in your doc-block!';
 
     /**
      * Process token within scope.
      *
      * @return void
      */
-    protected function processToken(): void
+    protected function processToken()
     {
         $this->searchEmptyLines($this->file, $this->stackPos);
     }
@@ -71,7 +71,7 @@ class EmptyLinesDocSniff extends AbstractSniff
      *
      * @return void
      */
-    private function removeUnnecessaryLines(File $phpcsFile, array $nextToken, array $currentToken): void
+    private function removeUnnecessaryLines(File $phpcsFile, array $nextToken, array $currentToken)
     {
         $movement = 2;
 
@@ -97,7 +97,7 @@ class EmptyLinesDocSniff extends AbstractSniff
      *
      * @return void
      */
-    private function searchEmptyLines(File $phpcsFile, int $searchPosition): void
+    private function searchEmptyLines(File $phpcsFile, int $searchPosition)
     {
         $endOfDoc = $phpcsFile->findEndOfStatement($searchPosition);
 

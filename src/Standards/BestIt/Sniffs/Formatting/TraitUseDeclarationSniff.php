@@ -26,12 +26,12 @@ class TraitUseDeclarationSniff extends AbstractSniff
     /**
      * You MUST provide only one "use" per Line for importing traits etc. in classes.
      */
-    public const CODE_MULTIPLE_TRAITS_PER_DECLARATION = 'MultipleTraitsPerDeclaration';
+    const CODE_MULTIPLE_TRAITS_PER_DECLARATION = 'MultipleTraitsPerDeclaration';
 
     /**
      * Readable error message.
      */
-    private const MESSAGE_MULTIPLE_TRAITS_PER_DECLARATION = 'Multiple traits per use statement are forbidden.';
+    const MESSAGE_MULTIPLE_TRAITS_PER_DECLARATION = 'Multiple traits per use statement are forbidden.';
 
     /**
      * The use declarations positions of this "class".
@@ -57,7 +57,7 @@ class TraitUseDeclarationSniff extends AbstractSniff
      *
      * @return void
      */
-    private function checkDeclaration(int $usePos): void
+    private function checkDeclaration(int $usePos)
     {
         $file = $this->getFile()->getBaseFile();
 
@@ -93,7 +93,7 @@ class TraitUseDeclarationSniff extends AbstractSniff
      *
      * @return void
      */
-    protected function fixeUse(int $endPos, int $usePos): void
+    protected function fixeUse(int $endPos, int $usePos)
     {
         $indentation = $this->getIndentationForFix($usePos);
         $file = $this->getFile()->getBaseFile();
@@ -141,7 +141,7 @@ class TraitUseDeclarationSniff extends AbstractSniff
      *
      * @return void
      */
-    protected function processToken(): void
+    protected function processToken()
     {
         foreach ($this->uses as $use) {
             $this->checkDeclaration($use);

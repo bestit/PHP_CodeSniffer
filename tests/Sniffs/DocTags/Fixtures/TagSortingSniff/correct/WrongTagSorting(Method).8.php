@@ -14,7 +14,7 @@ class Multiples
      * @todo Test3
      * @phpcsSuppress BestIt.DocTags.TagSorting
      */
-    public function test(string $param1, string $param2): void
+    public function test(string $param1, string $param2)
     {
         throw new RuntimeException('To be implemented');
     }

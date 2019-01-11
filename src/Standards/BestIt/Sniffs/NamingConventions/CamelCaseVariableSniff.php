@@ -29,14 +29,14 @@ class CamelCaseVariableSniff extends AbstractSniff
      *
      * @var string
      */
-    public const CODE_NOT_CAMEL_CASE = 'NotCamelCase';
+    const CODE_NOT_CAMEL_CASE = 'NotCamelCase';
 
     /**
      * The error message for this sniff.
      *
      * @var string
      */
-    private const MESSAGE_NOT_CAMEL_CASE = 'Variable %s should be in camelCase (lowercase first).';
+    const MESSAGE_NOT_CAMEL_CASE = 'Variable %s should be in camelCase (lowercase first).';
 
     /**
      * The previously sniffed file.
@@ -84,7 +84,7 @@ class CamelCaseVariableSniff extends AbstractSniff
      *
      * @return void
      */
-    protected function processToken(): void
+    protected function processToken()
     {
         // "Sniff" the var name only once, but register the possible error everytime the var is declared.
         if (!$this->sniffedVars[$var = $this->token['content']]) {
@@ -110,7 +110,7 @@ class CamelCaseVariableSniff extends AbstractSniff
      *
      * @return void
      */
-    protected function setUp(): void
+    protected function setUp()
     {
         parent::setUp();
 
@@ -127,7 +127,7 @@ class CamelCaseVariableSniff extends AbstractSniff
      *
      * @return void
      */
-    protected function tearDown(): void
+    protected function tearDown()
     {
         parent::tearDown();
 

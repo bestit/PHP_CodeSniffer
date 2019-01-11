@@ -12,5 +12,5 @@ class Multiples
      * @phpcsSuppress BestIt.DocTags.TagSorting
      * @todo Test3
      */
-    public const FOO = 'bar';
+    const FOO = 'bar';
 }

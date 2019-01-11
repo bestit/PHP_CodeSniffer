@@ -20,12 +20,12 @@ class PackageTagSniff extends AbstractTagSniff
     /**
      * If there is a namespace, you MUST provide this namespace as package tag.
      */
-    public const CODE_TAG_WRONG_PACKAGE = 'WrongPackage';
+    const CODE_TAG_WRONG_PACKAGE = 'WrongPackage';
 
     /**
      * Message that the tag content format is invalid.
      */
-    protected const MESSAGE_CODE_TAG_WRONG_PACKAGE = 'The package needs to match your real namespace: %s';
+    const MESSAGE_CODE_TAG_WRONG_PACKAGE = 'The package needs to match your real namespace: %s';
 
     /**
      * Fixes the wrong package and replaces it with the correct namespace.
@@ -34,7 +34,7 @@ class PackageTagSniff extends AbstractTagSniff
      *
      * @return void
      */
-    private function fixWrongPackage(string $currentNamespace): void
+    private function fixWrongPackage(string $currentNamespace)
     {
         $this->file->getFixer()->replaceToken(
             TokenHelper::findNext($this->file->getBaseFile(), [T_DOC_COMMENT_STRING], $this->stackPos),
@@ -49,7 +49,7 @@ class PackageTagSniff extends AbstractTagSniff
      *
      * @return void
      */
-    protected function processTagContent(?string $tagContent = null): void
+    protected function processTagContent(string $tagContent = null)
     {
         $currentNamespace = NamespaceHelper::findCurrentNamespaceName($this->file, $this->stackPos);
 

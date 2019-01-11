@@ -7,11 +7,11 @@ namespace BestIt\Sniffs\DocTags;
 use BestIt\CodeSniffer\Helper\DocTagHelper;
 use BestIt\Sniffs\AbstractSniff;
 use BestIt\Sniffs\DocPosProviderTrait;
-use Closure;
 use function array_filter;
 use function array_key_exists;
 use function array_map;
 use function array_walk;
+use function call_user_func;
 use function count;
 use function in_array;
 use function is_callable;
@@ -31,22 +31,22 @@ abstract class AbstractRequiredTagsSniff extends AbstractSniff
     /**
      * You MUST provide only the maximum amount of required tags. For example, only one return per method is allowed. The error is registered for every tag specifically.
      */
-    public const CODE_TAG_OCCURRENCE_MAX_PREFIX = 'TagOccurrenceMax';
+    const CODE_TAG_OCCURRENCE_MAX_PREFIX = 'TagOccurrenceMax';
 
     /**
      * You MUST provide the required tags. The error is registered for every tag specifically.
      */
-    public const CODE_TAG_OCCURRENCE_MIN_PREFIX = 'TagOccurrenceMin';
+    const CODE_TAG_OCCURRENCE_MIN_PREFIX = 'TagOccurrenceMin';
 
     /**
      * Message that comment tag must appear maximum x times.
      */
-    private const MESSAGE_TAG_OCCURRENCE_MAX = 'The comment tag "%s" must appear maximum %d times. Found %d times.';
+    const MESSAGE_TAG_OCCURRENCE_MAX = 'The comment tag "%s" must appear maximum %d times. Found %d times.';
 
     /**
      * Message that comment tag must appear minimum x times.
      */
-    private const MESSAGE_TAG_OCCURRENCE_MIN = 'The comment tag "%s" must appear minimum %d times. Found %d times.';
+    const MESSAGE_TAG_OCCURRENCE_MIN = 'The comment tag "%s" must appear minimum %d times. Found %d times.';
 
     /**
      * Caches the processed tag rules.
@@ -77,7 +77,7 @@ abstract class AbstractRequiredTagsSniff extends AbstractSniff
      *
      * @return void
      */
-    private function checkAndRegisterTagMaximumCounts(): void
+    private function checkAndRegisterTagMaximumCounts()
     {
         $allTags = $this->getAllTags();
         $checkedTags = [];
@@ -86,7 +86,7 @@ abstract class AbstractRequiredTagsSniff extends AbstractSniff
         array_walk(
             $allTags,
             // TODO: Removed Duplicates
-            function (array $tag, int $tagPos) use (&$checkedTags, $tagRules): void {
+            function (array $tag, int $tagPos) use (&$checkedTags, $tagRules) {
                 $tagContent = substr($tag['content'], 1);
 
                 if (!in_array($tagContent, $checkedTags)) {
@@ -119,14 +119,14 @@ abstract class AbstractRequiredTagsSniff extends AbstractSniff
      *
      * @return void
      */
-    private function checkAndRegisterTagMinimumCounts(): void
+    private function checkAndRegisterTagMinimumCounts()
     {
         $checkedRule = 'min';
         $rulesWithReq = $this->getRulesWithRequirement($checkedRule);
 
         array_walk(
             $rulesWithReq,
-            function (array $tagRule, string $tag) use ($checkedRule): void {
+            function (array $tagRule, string $tag) use ($checkedRule) {
                 $minCount = $tagRule[$checkedRule];
                 $tagCount = count($this->findTokensForTag($tag));
 
@@ -245,7 +245,7 @@ abstract class AbstractRequiredTagsSniff extends AbstractSniff
         array_walk($processedTagRules, function (&$tagRule) {
             $tagRule = array_map(function ($valueOrCallback) {
                 return is_callable($valueOrCallback, true)
-                    ? Closure::fromCallable($valueOrCallback)->call($this)
+                    ? call_user_func($valueOrCallback)
                     : $valueOrCallback;
             }, $tagRule);
         });
@@ -258,7 +258,7 @@ abstract class AbstractRequiredTagsSniff extends AbstractSniff
      *
      * @return void
      */
-    protected function processToken(): void
+    protected function processToken()
     {
         $this->checkAndRegisterTagMaximumCounts();
         $this->checkAndRegisterTagMinimumCounts();
@@ -269,7 +269,7 @@ abstract class AbstractRequiredTagsSniff extends AbstractSniff
      *
      * @return void
      */
-    protected function tearDown(): void
+    protected function tearDown()
     {
         parent::tearDown();
 

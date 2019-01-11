@@ -5,9 +5,9 @@ use BestIt\Sniffs\DefaultSniffIntegrationTestTrait;
 class Complete {
     use DefaultSniffIntegrationTestTrait;
 
-    public const FOO = 'BAR';
+    const FOO = 'BAR';
 
-    public const BAR = 'BAZ';
+    const BAR = 'BAZ';
 
     public $foo = 'bar';
 

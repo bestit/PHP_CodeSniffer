@@ -98,7 +98,7 @@ class CodeWarning extends Exception
      *
      * @return bool Returns the "old" status if this is fixable.
      */
-    public function isFixable(?bool $newStatus = null): bool
+    public function isFixable(bool $newStatus = null): bool
     {
         $oldStatus = $this->isFixable;
 

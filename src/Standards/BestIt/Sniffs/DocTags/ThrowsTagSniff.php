@@ -17,12 +17,12 @@ class ThrowsTagSniff extends AbstractTagSniff
     /**
      * You SHOULD provide a description your throw tag.
      */
-    public const CODE_TAG_MISSING_DESC_DESC = 'MissingThrowDescription';
+    const CODE_TAG_MISSING_DESC_DESC = 'MissingThrowDescription';
 
     /**
      * Message that the tag content format is invalid.
      */
-    protected const MESSAGE_CODE_TAG_MISSING_DESC_DESC = 'Are you sure that you do not want to describe the throw?';
+    const MESSAGE_CODE_TAG_MISSING_DESC_DESC = 'Are you sure that you do not want to describe the throw?';
 
     /**
      * Processed the content of the required tag.
@@ -31,7 +31,7 @@ class ThrowsTagSniff extends AbstractTagSniff
      *
      * @return void
      */
-    protected function processTagContent(?string $tagContent = null): void
+    protected function processTagContent(string $tagContent = null)
     {
         $returnParts = explode(' ', (string) $tagContent);
 

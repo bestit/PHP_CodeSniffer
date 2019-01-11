@@ -29,7 +29,7 @@ class AlphabeticallySortedUsesSniff extends AbstractSniff
     /**
      * You MUST provide your imports in alphabetically order, PSR-12 compatible.
      */
-    public const CODE_INCORRECT_ORDER = 'IncorrectlyOrderedUses';
+    const CODE_INCORRECT_ORDER = 'IncorrectlyOrderedUses';
 
     /**
      * The found use statements.
@@ -87,7 +87,7 @@ class AlphabeticallySortedUsesSniff extends AbstractSniff
      *
      * @return int|null 1 <=> -1 To move statements in a direction.
      */
-    private function compareUseStatementsByContent(UseStatement $leftStatement, UseStatement $rightStatement): ?int
+    private function compareUseStatementsByContent(UseStatement $leftStatement, UseStatement $rightStatement)
     {
         $compareByContent = null;
 
@@ -138,7 +138,7 @@ class AlphabeticallySortedUsesSniff extends AbstractSniff
      *
      * @return int|null 1 <=> -1 To move statements in a direction.
      */
-    private function compareUseStatementsByType(UseStatement $leftStatement, UseStatement $rightStatement): ?int
+    private function compareUseStatementsByType(UseStatement $leftStatement, UseStatement $rightStatement)
     {
         $comparedByType = null;
 
@@ -164,7 +164,7 @@ class AlphabeticallySortedUsesSniff extends AbstractSniff
      *
      * @return void
      */
-    protected function fixDefaultProblem(CodeWarning $error): void
+    protected function fixDefaultProblem(CodeWarning $error)
     {
         // Satisfy phpmd
         unset($error);
@@ -232,7 +232,7 @@ class AlphabeticallySortedUsesSniff extends AbstractSniff
      *
      * @return void
      */
-    protected function processToken(): void
+    protected function processToken()
     {
         $prevStatement = null;
 
@@ -283,7 +283,7 @@ class AlphabeticallySortedUsesSniff extends AbstractSniff
      *
      * @return void
      */
-    private function removeOldUseStatements(UseStatement $firstUseStatement): void
+    private function removeOldUseStatements(UseStatement $firstUseStatement)
     {
         $file = $this->getFile()->getBaseFile();
         $lastUseStatement = end($this->useStatements);
@@ -299,7 +299,7 @@ class AlphabeticallySortedUsesSniff extends AbstractSniff
      *
      * @return void
      */
-    private function sortUseStatements(): void
+    private function sortUseStatements()
     {
         uasort($this->useStatements, function (UseStatement $leftStatement, UseStatement $rightStatement) {
             return $this->compareUseStatements($leftStatement, $rightStatement);

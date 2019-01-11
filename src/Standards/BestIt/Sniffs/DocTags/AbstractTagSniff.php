@@ -31,12 +31,12 @@ abstract class AbstractTagSniff extends AbstractSniff
     /**
      * You MUST provide a special tag format.
      */
-    public const CODE_TAG_CONTENT_FORMAT_INVALID = 'TagContentFormatInvalid';
+    const CODE_TAG_CONTENT_FORMAT_INVALID = 'TagContentFormatInvalid';
 
     /**
      * Message that the tag content format is invalid.
      */
-    protected const MESSAGE_TAG_CONTENT_FORMAT_INVALID = '%s is invalid. Expected format: "%s"';
+    const MESSAGE_TAG_CONTENT_FORMAT_INVALID = '%s is invalid. Expected format: "%s"';
 
     /**
      * Returns true if there is a matching tag.
@@ -53,7 +53,7 @@ abstract class AbstractTagSniff extends AbstractSniff
      *
      * @return null|string The content of the tag comment or null if there is nothing.
      */
-    private function loadTagContent(): ?string
+    private function loadTagContent()
     {
         $contents = [];
         $nextOrClosingPos = $this->file->findNext([T_DOC_COMMENT_CLOSE_TAG, T_DOC_COMMENT_TAG], $this->stackPos + 1);
@@ -73,14 +73,14 @@ abstract class AbstractTagSniff extends AbstractSniff
      *
      * @return void
      */
-    abstract protected function processTagContent(?string $tagContent = null): void;
+    abstract protected function processTagContent(string $tagContent = null);
 
     /**
      * Processes a found registered token.
      *
      * @return void
      */
-    protected function processToken(): void
+    protected function processToken()
     {
         $this->processTagContent($this->loadTagContent());
     }

@@ -33,22 +33,22 @@ class TagSortingSniff extends AbstractSniff
     /**
      * You SHOULD separate tag groups and the final return with a newline.
      */
-    public const CODE_MISSING_NEWLINE_BETWEEN_TAGS = 'MissingNewlineBetweenTags';
+    const CODE_MISSING_NEWLINE_BETWEEN_TAGS = 'MissingNewlineBetweenTags';
 
     /**
      * You SHOULD sort the tags by their occurrence and then alphabetically, but @return SHOULD be the last.
      */
-    public const CODE_WRONG_TAG_SORTING = 'WrongTagSorting';
+    const CODE_WRONG_TAG_SORTING = 'WrongTagSorting';
 
     /**
      * The message for the missing new line between tags.
      */
-    private const MESSAGE_MISSING_NEWLINE_BETWEEN_TAGS = 'There should be a newline after the tag (group): %s.';
+    const MESSAGE_MISSING_NEWLINE_BETWEEN_TAGS = 'There should be a newline after the tag (group): %s.';
 
     /**
      * The message for the wrong sorting order.
      */
-    private const MESSAGE_WRONG_TAG_SORTING = 'Please provide the tags in occurrence and then alphabetical order 
+    const MESSAGE_WRONG_TAG_SORTING = 'Please provide the tags in occurrence and then alphabetical order 
         (a-z) but with return at last position.';
 
     /**
@@ -75,7 +75,7 @@ class TagSortingSniff extends AbstractSniff
      *
      * @return void
      */
-    private function checkAndRegisterLineBreakErrors(): void
+    private function checkAndRegisterLineBreakErrors()
     {
         $tokens = $this->getTagTokens();
         $prevToken = [];
@@ -121,7 +121,7 @@ class TagSortingSniff extends AbstractSniff
      *
      * @return void
      */
-    private function checkAndRegisterSortingError(): void
+    private function checkAndRegisterSortingError()
     {
         $orgTokens = $this->getTagTokens();
         $sortedTokens = $this->sortTokens($orgTokens);
@@ -194,7 +194,7 @@ class TagSortingSniff extends AbstractSniff
      *
      * @return void
      */
-    private function fixSorting(): void
+    private function fixSorting()
     {
         $fixer = $this->file->getFixer();
 
@@ -224,7 +224,7 @@ class TagSortingSniff extends AbstractSniff
      *
      * @return void
      */
-    private function insertNewLine(array $token): void
+    private function insertNewLine(array $token)
     {
         $fixer = $this->file->getFixer();
         $lineStartPadding = str_pad('', $token['column'] - 3, ' ');
@@ -247,7 +247,7 @@ class TagSortingSniff extends AbstractSniff
      *
      * @return void
      */
-    protected function processToken(): void
+    protected function processToken()
     {
         try {
             $this->checkAndRegisterSortingError();
@@ -296,7 +296,7 @@ class TagSortingSniff extends AbstractSniff
      *
      * @return void
      */
-    protected function setUp(): void
+    protected function setUp()
     {
         $this->addPointerToTokens();
 

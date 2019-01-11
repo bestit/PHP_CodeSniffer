@@ -7,5 +7,5 @@ class ClassWithDocBlock {
     /**
      * Valid Doc Block.
      */
-    public const FOO = 'BAR';
+    const FOO = 'BAR';
 }

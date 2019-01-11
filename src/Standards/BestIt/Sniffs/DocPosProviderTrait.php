@@ -34,7 +34,7 @@ trait DocPosProviderTrait
      *
      * @return int|null
      */
-    protected function getDocCommentPos(): ?int
+    protected function getDocCommentPos()
     {
         if ($this->docCommentPos === -1) {
             $this->docCommentPos = $this->loadDocCommentPos();
@@ -76,7 +76,7 @@ trait DocPosProviderTrait
      *
      * @return int|null
      */
-    protected function loadDocCommentPos(): ?int
+    protected function loadDocCommentPos()
     {
         $docHelper = $this->getDocHelper();
 
@@ -88,7 +88,7 @@ trait DocPosProviderTrait
      *
      * @return void
      */
-    protected function resetDocCommentPos(): void
+    protected function resetDocCommentPos()
     {
         $this->docCommentPos = -1;
         $this->docHelper = null;
@@ -99,7 +99,7 @@ trait DocPosProviderTrait
      *
      * @return void
      */
-    protected function tearDown(): void
+    protected function tearDown()
     {
         $this->resetDocCommentPos();
     }

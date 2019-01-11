@@ -36,7 +36,7 @@ class LineHelper
      * @param File $file The used file.
      * @param Fixer|null $fixer Dou you want to reuse a fixer?
      */
-    public function __construct(File $file, ?Fixer $fixer = null)
+    public function __construct(File $file, Fixer $fixer = null)
     {
         $this->file = $file;
 
@@ -54,7 +54,7 @@ class LineHelper
      *
      * @return void
      */
-    public function removeLine(int $line): void
+    public function removeLine(int $line)
     {
         foreach ($this->file->getTokens() as $tagPtr => $tagToken) {
             if ($tagToken['line'] !== $line) {
@@ -77,7 +77,7 @@ class LineHelper
      *
      * @return void
      */
-    public function removeLines(int $startLine, int $endLine): void
+    public function removeLines(int $startLine, int $endLine)
     {
         for ($line = $startLine; $line <= $endLine; $line++) {
             $this->removeLine($line);

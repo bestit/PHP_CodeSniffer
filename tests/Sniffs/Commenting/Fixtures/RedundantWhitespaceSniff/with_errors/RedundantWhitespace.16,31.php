@@ -55,7 +55,7 @@ abstract class RedundantWhitespace extends SniffTestCase
      *
      * @return void
      */
-    public function testRequiredConstants(string $constant): void
+    public function testRequiredConstants(string $constant)
     {
         static::assertTrue(
 

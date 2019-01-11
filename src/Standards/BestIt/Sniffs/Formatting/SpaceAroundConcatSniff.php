@@ -23,14 +23,14 @@ class SpaceAroundConcatSniff extends AbstractSniff
      *
      * @var string
      */
-    public const CODE_MISSING_SPACE_AROUND_CONCAT = 'MissingSpaceAroundConcat';
+    const CODE_MISSING_SPACE_AROUND_CONCAT = 'MissingSpaceAroundConcat';
 
     /**
      * The message to the user for this error.
      *
      * @var string
      */
-    private const MESSAGE_MISSING_SPACE_AROUND_CONCAT = 'Please wrap your concatinations with a whitespace char.';
+    const MESSAGE_MISSING_SPACE_AROUND_CONCAT = 'Please wrap your concatinations with a whitespace char.';
 
     /**
      * Is the next token whitespace?
@@ -53,7 +53,7 @@ class SpaceAroundConcatSniff extends AbstractSniff
      *
      * @return void
      */
-    protected function fixDefaultProblem(CodeWarning $warning): void
+    protected function fixDefaultProblem(CodeWarning $warning)
     {
         $newContent = '';
 
@@ -82,7 +82,7 @@ class SpaceAroundConcatSniff extends AbstractSniff
      * @return void
      *
      */
-    protected function processToken(): void
+    protected function processToken()
     {
         if (!(($this->nextIsWhitespace) && ($this->prevIsWhitespace))) {
             $error = new CodeError(
@@ -123,7 +123,7 @@ class SpaceAroundConcatSniff extends AbstractSniff
      *
      * @return void
      */
-    protected function setUp(): void
+    protected function setUp()
     {
         parent::setUp();
 

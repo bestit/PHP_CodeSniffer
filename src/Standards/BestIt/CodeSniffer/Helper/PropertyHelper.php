@@ -40,7 +40,7 @@ class PropertyHelper
      *
      * @return array The names of the properties.
      */
-    public function getProperties(array $classToken, ?File $file = null): array
+    public function getProperties(array $classToken, File $file = null): array
     {
         if (!$file) {
             $file = $this->file;

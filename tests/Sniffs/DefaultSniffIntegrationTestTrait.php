@@ -87,7 +87,7 @@ trait DefaultSniffIntegrationTestTrait
      *
      * @return void
      */
-    public function testCorrect(string $file): void
+    public function testCorrect(string $file)
     {
         $this->assertFileCorrect($file);
     }
@@ -99,7 +99,7 @@ trait DefaultSniffIntegrationTestTrait
      *
      * @return void
      */
-    abstract protected function assertFileCorrect(string $file): void;
+    abstract protected function assertFileCorrect(string $file);
 
     /**
      * Tests errors.
@@ -113,7 +113,7 @@ trait DefaultSniffIntegrationTestTrait
      *
      * @return void
      */
-    public function testErrors(string $file, string $error, array $lines, bool $withFixable = false): void
+    public function testErrors(string $file, string $error, array $lines, bool $withFixable = false)
     {
         $report = $this->assertErrorsInFile($file, $error, $lines);
 
@@ -151,7 +151,7 @@ trait DefaultSniffIntegrationTestTrait
      *
      * @return void
      */
-    public function testWarnings(string $file, string $warning, array $lines, bool $withFixable = false): void
+    public function testWarnings(string $file, string $warning, array $lines, bool $withFixable = false)
     {
         $report = $this->assertWarningsInFile($file, $warning, $lines);
 

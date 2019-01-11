@@ -156,7 +156,6 @@ The base for the BestIt Standard is [PSR-12](https://github.com/php-fig/fig-stan
 | BestIt.TypeHints.ReturnTypeDeclaration.MissingReturnTypeHint | Every function or method MUST have a type hint if the return annotation is valid. | yes |
 | Generic.Formatting.SpaceAfterCast | There MUST be a space after cast. |
 | Generic.Arrays.DisallowLongArraySyntax | Every array syntax MUST be in short array syntax. |
-| SlevomatCodingStandard.Classes.ClassConstantVisibility.MissingConstantVisibility | Constants MUST be marked with a visibility. |
 | SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnly.ReferenceViaFullyQualifiedName | No class may be used via its FQCN. You MUST import every class! |
 | SlevomatCodingStandard.TypeHints.DeclareStrictTypes | Every file MUST have "declare(strict_types=1);" two line breaks after the opening tag. There MUST be no spaces aroung the equal-sign. |
 | Squiz.Strings.DoubleQuoteUsage | Every String MUST be wrapped with single quotes. |

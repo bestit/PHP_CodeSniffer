@@ -35,14 +35,14 @@ class UCVFSortingSniff extends AbstractSniff
      *
      * @var string
      */
-    public const CODE_WRONG_POSITION = 'WrongPosition';
+    const CODE_WRONG_POSITION = 'WrongPosition';
 
     /**
      * The error message of a structure is at the wrong position.
      *
      * @var string
      */
-    private const MESSAGE_WRONG_POSITION = 'Your php structure is at a wrong position. ' .
+    const MESSAGE_WRONG_POSITION = 'Your php structure is at a wrong position. ' .
         'The sorting order is: T_USE, T_CONST, T_VARIABLE, T_FUNCTION. We expect a %s (%s).';
 
     /**
@@ -105,7 +105,7 @@ class UCVFSortingSniff extends AbstractSniff
      *
      * @return void
      */
-    protected function processToken(): void
+    protected function processToken()
     {
         $subTokens = $this->loadSubTokens();
         $sortedTokens = $this->sortTokens($subTokens);
@@ -145,7 +145,7 @@ class UCVFSortingSniff extends AbstractSniff
      *
      * @return void
      */
-    protected function setUp(): void
+    protected function setUp()
     {
         parent::setUp();
 
@@ -187,7 +187,7 @@ class UCVFSortingSniff extends AbstractSniff
      *
      * @return void
      */
-    private function validateSorting(array $originalTokens, array $sortedTokens): void
+    private function validateSorting(array $originalTokens, array $sortedTokens)
     {
         $sortedPositions = array_keys($sortedTokens);
         $sortedIndex = 0;

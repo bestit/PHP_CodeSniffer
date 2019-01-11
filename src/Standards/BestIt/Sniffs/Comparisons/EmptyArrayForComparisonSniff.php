@@ -29,12 +29,12 @@ class EmptyArrayForComparisonSniff extends AbstractSniff
     /**
      * You MUST not create an empty array, to check for an empty array.
      */
-    public const CODE_EMPTY_ARRAY = 'EmptyArray';
+    const CODE_EMPTY_ARRAY = 'EmptyArray';
 
     /**
      * Used message to display the error.
      */
-    private const MESSAGE_EMPTY_ARRAY = 'Please do not initalize an empty array to check for an empty array!';
+    const MESSAGE_EMPTY_ARRAY = 'Please do not initalize an empty array to check for an empty array!';
 
     /**
      * The check must not contain just an empty array.
@@ -53,7 +53,7 @@ class EmptyArrayForComparisonSniff extends AbstractSniff
      *
      * @return void
      */
-    private function checkArrayStructure(array $invalidCodes, int $searchPos): void
+    private function checkArrayStructure(array $invalidCodes, int $searchPos)
     {
         // Rename the var to get more readable code.
         $remainingInvalidCodes = $invalidCodes;
@@ -93,7 +93,7 @@ class EmptyArrayForComparisonSniff extends AbstractSniff
      *
      * @return void
      */
-    protected function processToken(): void
+    protected function processToken()
     {
         $this->file->recordMetric($this->getStackPos(), 'Used comparison (for array checks)', $this->token['type']);
 
@@ -139,7 +139,7 @@ class EmptyArrayForComparisonSniff extends AbstractSniff
      *
      * @return void
      */
-    protected function setUp(): void
+    protected function setUp()
     {
         parent::setUp();
 

@@ -36,7 +36,7 @@ trait SuppressingTrait
      *
      * @return string Returns the special sniff name in the code sniffer context.
      */
-    private function getSniffName(?string $sniffName = null): string
+    private function getSniffName(string $sniffName = null): string
     {
         $sniffClassName = preg_replace(
             '/Sniff$/',
@@ -80,7 +80,7 @@ trait SuppressingTrait
      *
      * @return bool Returns true if the sniff is suppressed.
      */
-    protected function isSniffSuppressed(?string $rule = null, ?int $stackPos = null): bool
+    protected function isSniffSuppressed(string $rule = null, int $stackPos = null): bool
     {
         return $this->getSuppressHelper()->isSniffSuppressed(
             $this->getFile(),

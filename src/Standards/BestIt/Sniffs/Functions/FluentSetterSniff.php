@@ -28,22 +28,22 @@ class FluentSetterSniff extends MethodScopeSniff
     /**
      * Every setter function MUST return $this if nothing else is returned.
      */
-    public const CODE_MUST_RETURN_THIS = 'MustReturnThis';
+    const CODE_MUST_RETURN_THIS = 'MustReturnThis';
 
     /**
      * Your method MUST contain a return.
      */
-    public const CODE_NO_RETURN_FOUND = 'NoReturnFound';
+    const CODE_NO_RETURN_FOUND = 'NoReturnFound';
 
     /**
      * Error message when the method does not return $this.
      */
-    private const ERROR_MUST_RETURN_THIS = 'The method "%s" must return $this';
+    const ERROR_MUST_RETURN_THIS = 'The method "%s" must return $this';
 
     /**
      * Error message when no return statement is found.
      */
-    private const ERROR_NO_RETURN_FOUND = 'Method "%s" has no return statement';
+    const ERROR_NO_RETURN_FOUND = 'Method "%s" has no return statement';
 
     /**
      * Specifies how an identation looks like.
@@ -81,7 +81,7 @@ class FluentSetterSniff extends MethodScopeSniff
         int $functionPos,
         int $returnPos,
         string $methodIdent
-    ): void {
+    ) {
         $nextToken = $file->getTokens()[TokenHelper::findNextEffective($file, $returnPos + 1)];
 
         if (!$nextToken || (in_array($nextToken['content'], ['null', ';']))) {
@@ -107,7 +107,7 @@ class FluentSetterSniff extends MethodScopeSniff
      *
      * @return void
      */
-    private function checkForFluentSetterErrors(File $phpcsFile, int $functionPos, int $classPos): void
+    private function checkForFluentSetterErrors(File $phpcsFile, int $functionPos, int $classPos)
     {
         $tokens = $phpcsFile->getTokens();
         $errorData = $phpcsFile->getDeclarationName($classPos) . '::' . $phpcsFile->getDeclarationName($functionPos);
@@ -170,7 +170,7 @@ class FluentSetterSniff extends MethodScopeSniff
         File $file,
         $functionPos,
         $classPos
-    ): void {
+    ) {
         $this->file = new FileDecorator($file);
         $this->stackPos = $functionPos;
 
@@ -217,7 +217,7 @@ class FluentSetterSniff extends MethodScopeSniff
      *
      * @return void
      */
-    private function fixNoReturnFound(File $phpcsFile, int $closingBracePtr): void
+    private function fixNoReturnFound(File $phpcsFile, int $closingBracePtr)
     {
         $tokens = $phpcsFile->getTokens();
         $closingBraceToken = $tokens[$closingBracePtr];
@@ -239,7 +239,7 @@ class FluentSetterSniff extends MethodScopeSniff
      *
      * @return void
      */
-    private function fixMustReturnThis(File $phpcsFile, int $returnPtr): void
+    private function fixMustReturnThis(File $phpcsFile, int $returnPtr)
     {
         $returnSemicolonPtr = $phpcsFile->findEndOfStatement($returnPtr);
 

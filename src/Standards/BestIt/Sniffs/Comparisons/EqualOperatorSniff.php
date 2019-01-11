@@ -18,14 +18,14 @@ class EqualOperatorSniff extends AbstractSniff
     /**
      * You SHOULD use the "Identical" operator (===).
      */
-    public const CODE_EQUAL_OPERATOR_FOUND = 'EqualOperatorFound';
+    const CODE_EQUAL_OPERATOR_FOUND = 'EqualOperatorFound';
 
     /**
      * Warning when an equal operator was found.
      *
      * @var string WARNING_EQUAL_OPERATOR_FOUND
      */
-    private const MESSAGE_EQUAL_OPERATOR_FOUND = 'Please check if you could use the "Identical" operator (===).';
+    const MESSAGE_EQUAL_OPERATOR_FOUND = 'Please check if you could use the "Identical" operator (===).';
 
     /**
      * Is this sniff allowed to fix?
@@ -39,7 +39,7 @@ class EqualOperatorSniff extends AbstractSniff
      *
      * @return void
      */
-    protected function processToken(): void
+    protected function processToken()
     {
         $file = $this->getFile();
         $stackPos = $this->getStackPos();
@@ -85,7 +85,7 @@ class EqualOperatorSniff extends AbstractSniff
      *
      * @return void
      */
-    private function replaceToken(): void
+    private function replaceToken()
     {
         $file = $this->getFile();
 

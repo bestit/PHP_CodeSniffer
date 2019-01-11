@@ -43,7 +43,7 @@ abstract class SniffTestCase extends SlevomatTestCase
         string $error,
         array $lines,
         array $sniffProperties = []
-    ): void {
+    ) {
         $report = $this->assertErrorsInFile($file, $error, $lines, $sniffProperties);
 
         $this->assertAllFixedInFile($report);
@@ -120,7 +120,7 @@ abstract class SniffTestCase extends SlevomatTestCase
      *
      * @return void
      */
-    protected function assertFileCorrect(string $file): void
+    protected function assertFileCorrect(string $file)
     {
         $report = $this->checkFile($file);
 
@@ -204,7 +204,7 @@ abstract class SniffTestCase extends SlevomatTestCase
      *
      * @return void
      */
-    protected static function assertNoSniffWarningInFile(File $file): void
+    protected static function assertNoSniffWarningInFile(File $file)
     {
         $warnings = $file->getWarnings();
 
@@ -229,8 +229,8 @@ abstract class SniffTestCase extends SlevomatTestCase
         File $codeSnifferFile,
         int $line,
         string $code,
-        ?string $message = null
-    ): void {
+        $message = null
+    ) {
         $warnings = $codeSnifferFile->getWarnings();
         self::assertTrue(isset($warnings[$line]), sprintf('Expected warning on line %s, but none found.', $line));
 
@@ -262,7 +262,7 @@ abstract class SniffTestCase extends SlevomatTestCase
      *
      * @return void
      */
-    protected static function assertNoSniffWarning(File $codeSnifferFile, int $line): void
+    protected static function assertNoSniffWarning(File $codeSnifferFile, int $line)
     {
         $warnings = $codeSnifferFile->getWarnings();
         self::assertFalse(
@@ -288,7 +288,7 @@ abstract class SniffTestCase extends SlevomatTestCase
      *
      * @return bool
      */
-    private static function hasWarning(array $warningsOnLine, string $sniffCode, ?string $message = null): bool
+    private static function hasWarning(array $warningsOnLine, string $sniffCode, $message = null): bool
     {
         foreach ($warningsOnLine as $warningsOnPosition) {
             foreach ($warningsOnPosition as $warning) {

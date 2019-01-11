@@ -49,7 +49,7 @@ class DisallowedClassTagsSniffTest extends SniffTestCase
      *
      * @return void
      */
-    protected function setUp(): void
+    protected function setUp()
     {
         parent::setUp();
 
@@ -61,7 +61,7 @@ class DisallowedClassTagsSniffTest extends SniffTestCase
      *
      * @return void
      */
-    public function testType(): void
+    public function testType()
     {
         static::assertInstanceOf(AbstractDisallowedTagsSniff::class, $this->fixture);
     }

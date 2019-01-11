@@ -758,7 +758,7 @@ abstract class AbstractFileDecorator extends File
      *
      * @return void
      */
-    private function takeProperties(File $baseFile): void
+    private function takeProperties(File $baseFile)
     {
         $baseProps = get_object_vars($baseFile);
 

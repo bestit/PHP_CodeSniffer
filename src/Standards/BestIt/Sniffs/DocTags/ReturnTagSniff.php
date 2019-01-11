@@ -22,22 +22,22 @@ class ReturnTagSniff extends AbstractTagSniff
      *
      * It is disabled per default. You can enabled it per property "descAsWarning".
      */
-    public const CODE_MISSING_RETURN_DESC = 'MissingReturnDescription';
+    const CODE_MISSING_RETURN_DESC = 'MissingReturnDescription';
 
     /**
      * You SHOULD provide a native return and prevent "mixed".
      */
-    public const CODE_MIXED_TYPE = 'MixedType';
+    const CODE_MIXED_TYPE = 'MixedType';
 
     /**
      * Message that the tag content format is invalid.
      */
-    private const MESSAGE_MISSING_RETURN_DESC = 'Are you sure that you do not want to describe your return?';
+    const MESSAGE_MISSING_RETURN_DESC = 'Are you sure that you do not want to describe your return?';
 
     /**
      * The message for the mixed type warning.
      */
-    private const MESSAGE_MIXED_TYPE = 'We suggest that you avoid the "mixed" type and declare the ' .
+    const MESSAGE_MIXED_TYPE = 'We suggest that you avoid the "mixed" type and declare the ' .
         'required types in detail.';
 
     /**
@@ -64,7 +64,7 @@ class ReturnTagSniff extends AbstractTagSniff
      *
      * @return void
      */
-    private function checkForMissingDesc(string $type, array $returnParts): void
+    private function checkForMissingDesc(string $type, array $returnParts)
     {
         if (!in_array($type, $this->excludedTypes) && (count($returnParts) <= 1) && $this->descAsWarning) {
             throw (new CodeWarning(
@@ -101,7 +101,7 @@ class ReturnTagSniff extends AbstractTagSniff
      *
      * @return void
      */
-    protected function processTagContent(?string $tagContent = null): void
+    protected function processTagContent(string $tagContent = null)
     {
         $returnParts = explode(' ', (string) $tagContent);
         $type = $returnParts[0];

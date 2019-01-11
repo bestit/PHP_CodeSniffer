@@ -64,7 +64,7 @@ class DocHelper
      *
      * @return int|null Position to the class comment end.
      */
-    public function getBlockEndPosition(): ?int
+    public function getBlockEndPosition()
     {
         if ($this->blockEndPosition === false) {
             $this->blockEndPosition = $this->loadBlockEndPosition();
@@ -141,7 +141,7 @@ class DocHelper
      *
      * @return int|null
      */
-    private function loadBlockEndPosition(): ?int
+    private function loadBlockEndPosition()
     {
         $endPos = $this->file->findPrevious(
             [T_DOC_COMMENT_CLOSE_TAG],

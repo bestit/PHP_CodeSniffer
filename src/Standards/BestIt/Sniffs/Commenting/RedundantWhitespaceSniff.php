@@ -22,21 +22,21 @@ class RedundantWhitespaceSniff extends AbstractSniff
      *
      * @var string
      */
-    public const CODE_ERROR_REDUNDANT_WHITESPACE = 'RedundantWhitespace';
+    const CODE_ERROR_REDUNDANT_WHITESPACE = 'RedundantWhitespace';
 
     /**
      * The message for the user.
      *
      * @var string
      */
-    private const MESSAGE_ERROR_REDUNDANT_WHITESPACE = 'Please remove unnecessary whitespace.';
+    const MESSAGE_ERROR_REDUNDANT_WHITESPACE = 'Please remove unnecessary whitespace.';
 
     /**
      * Processes the token.
      *
      * @return void
      */
-    protected function processToken(): void
+    protected function processToken()
     {
         $file = $this->getFile();
         $stackPos = $this->getStackPos();

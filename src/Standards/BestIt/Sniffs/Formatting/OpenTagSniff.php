@@ -18,32 +18,32 @@ class OpenTagSniff implements Sniff
     /**
      * Error message when open tag is not first statement.
      */
-    public const ERROR_NOT_FIRST_STATEMENT = 'Open tag is not first statement';
+    const ERROR_NOT_FIRST_STATEMENT = 'Open tag is not first statement';
 
     /**
      * After the open tag there MUST be an empty line.
      */
-    public const CODE_NOT_FIRST_STATEMENT = 'OpenTagNotFirstStatement';
+    const CODE_NOT_FIRST_STATEMENT = 'OpenTagNotFirstStatement';
 
     /**
      * Error message when there is no space after open tag.
      */
-    public const ERROR_NO_SPACE_AFTER_OPEN_TAG = 'No space after open tag';
+    const ERROR_NO_SPACE_AFTER_OPEN_TAG = 'No space after open tag';
 
     /**
      * There MUST be whitespace after the open tag.
      */
-    public const CODE_NO_SPACE_AFTER_OPEN_TAG = 'NoSpaceAfterOpenTag';
+    const CODE_NO_SPACE_AFTER_OPEN_TAG = 'NoSpaceAfterOpenTag';
 
     /**
      * Error message when line after open tag is not empty.
      */
-    public const ERROR_LINE_NOT_EMPTY = 'Line after open tag is not empty.';
+    const ERROR_LINE_NOT_EMPTY = 'Line after open tag is not empty.';
 
     /**
      * The next line after the open tag MUST be empty.
      */
-    public const CODE_LINE_NOT_EMPTY = 'LineNotEmpty';
+    const CODE_LINE_NOT_EMPTY = 'LineNotEmpty';
 
     /**
      * Registers the tokens that this sniff wants to listen for.
@@ -67,7 +67,7 @@ class OpenTagSniff implements Sniff
      *
      * @return void Optionally returns a stack pointer.
      */
-    public function process(File $phpcsFile, $stackPtr): void
+    public function process(File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
 
@@ -100,7 +100,7 @@ class OpenTagSniff implements Sniff
      *
      * @return void
      */
-    private function handleOpenTagNotFirstStatement(File $phpcsFile, int $stackPtr): void
+    private function handleOpenTagNotFirstStatement(File $phpcsFile, int $stackPtr)
     {
         $fixNotFirstStatement = $phpcsFile->addFixableError(
             self::ERROR_NOT_FIRST_STATEMENT,
@@ -126,7 +126,7 @@ class OpenTagSniff implements Sniff
      *
      * @return void
      */
-    private function handleNoSpaceAfterOpenTag(File $phpcsFile, int $stackPtr, int $whitespacePtr): void
+    private function handleNoSpaceAfterOpenTag(File $phpcsFile, int $stackPtr, int $whitespacePtr)
     {
         $fixNoSpaceAfterTag = $phpcsFile->addFixableError(
             self::ERROR_NO_SPACE_AFTER_OPEN_TAG,
@@ -149,7 +149,7 @@ class OpenTagSniff implements Sniff
      *
      * @return void
      */
-    private function handleLineNotEmpty(File $phpcsFile, int $whitespacePtr): void
+    private function handleLineNotEmpty(File $phpcsFile, int $whitespacePtr)
     {
         $fixSpaceNotScndLine = $phpcsFile->addFixableError(
             self::ERROR_LINE_NOT_EMPTY,

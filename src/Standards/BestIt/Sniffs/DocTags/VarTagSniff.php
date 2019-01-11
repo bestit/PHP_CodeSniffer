@@ -23,7 +23,7 @@ class VarTagSniff extends AbstractTagSniff
     /**
      * You MUST provide a type for your var tag.
      */
-    public const CODE_TAG_CONTENT_FORMAT_INVALID = 'TagContentFormatInvalid';
+    const CODE_TAG_CONTENT_FORMAT_INVALID = 'TagContentFormatInvalid';
 
 
     /**

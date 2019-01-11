@@ -12,5 +12,5 @@ class Multiples
      * @todo Test2
      * @todo Test3
      */
-    public const FOO = 'bar';
+    const FOO = 'bar';
 }

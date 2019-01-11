@@ -52,7 +52,7 @@ trait TestTokenRegistrationTrait
      *
      * @return void
      */
-    public function testRegisteredTokens(): void
+    public function testRegisteredTokens()
     {
         static::assertSame($this->getExpectedTokens(), $this->fixture->register());
     }

@@ -26,7 +26,7 @@ use function version_compare;
 /**
  * Class ReturnTypeDeclarationSniff
  *
- * @author Stephan Weber <stephan.weber@bestit-online.de>
+ * @author blange <bjoern.lange@bestit-online.de>
  * @package BestIt\Sniffs\TypeHints
  */
 class ReturnTypeDeclarationSniff extends AbstractSniff
@@ -38,17 +38,17 @@ class ReturnTypeDeclarationSniff extends AbstractSniff
     /**
      * Every function or method MUST have a type hint if the return annotation is valid.
      */
-    public const CODE_MISSING_RETURN_TYPE = 'MissingReturnTypeHint';
+    const CODE_MISSING_RETURN_TYPE = 'MissingReturnTypeHint';
 
     /**
      * The simple message of a return type is missing.
      */
-    private const MESSAGE_MISSING_RETURN_TYPE = 'Function/Method %s does not have a return type.';
+    const MESSAGE_MISSING_RETURN_TYPE = 'Function/Method %s does not have a return type.';
 
     /**
      * The return types which match null.
      */
-    private const NULL_TYPES = ['null', 'void'];
+    const NULL_TYPES = ['null', 'void'];
 
     /**
      * Null as a return has no real return type, so we use this as a fallback.
@@ -92,7 +92,7 @@ class ReturnTypeDeclarationSniff extends AbstractSniff
      *
      * @return void
      */
-    private function addReturnType(): void
+    private function addReturnType()
     {
         $file = $this->getFile();
         $returnTypeHint = $this->createReturnType();
@@ -162,7 +162,7 @@ class ReturnTypeDeclarationSniff extends AbstractSniff
      *
      * @return void
      */
-    protected function fixDefaultProblem(CodeWarning $exception): void
+    protected function fixDefaultProblem(CodeWarning $exception)
     {
         // Satisfy PHPMD
         unset($exception);
@@ -194,7 +194,7 @@ class ReturnTypeDeclarationSniff extends AbstractSniff
      *
      * @return array
      */
-    private function getReturnsFromAnnotation(?Annotation $annotation): array
+    private function getReturnsFromAnnotation(Annotation $annotation = null): array
     {
         return $this->isFilledReturnAnnotation($annotation)
             ? explode('|', preg_split('~\\s+~', $annotation->getContent())[0])
@@ -211,7 +211,7 @@ class ReturnTypeDeclarationSniff extends AbstractSniff
      *
      * @return array|null Null if there are no usable types or the usable types.
      */
-    private function getUsableReturnTypes(Annotation $annotation): ?array
+    private function getUsableReturnTypes(Annotation $annotation)
     {
         $return = null;
 
@@ -220,8 +220,7 @@ class ReturnTypeDeclarationSniff extends AbstractSniff
         $justOneReturn = $returnTypeCount === 1;
 
         if (!$justOneReturn || strtolower($returnTypes[0]) !== 'mixed') {
-            $isNullableType = ($returnTypeCount === 2) &&
-                version_compare(phpversion(), '7.1.0', '>=') &&
+            $isNullableType = ($returnTypeCount === 2) && $this->isVoidSupportedVersion() &&
                 (count(array_intersect($returnTypes, self::NULL_TYPES)) === 1);
 
             $return = ($justOneReturn || $isNullableType) ? $returnTypes : null;
@@ -263,7 +262,7 @@ class ReturnTypeDeclarationSniff extends AbstractSniff
      *
      * @return bool Function has a annotation
      */
-    private function isFilledReturnAnnotation(?Annotation $returnAnnotation = null): bool
+    private function isFilledReturnAnnotation(Annotation $returnAnnotation = null): bool
     {
         return $returnAnnotation && $returnAnnotation->getContent();
     }
@@ -277,8 +276,34 @@ class ReturnTypeDeclarationSniff extends AbstractSniff
      */
     private function isFixableReturnType(string $type): bool
     {
-        // $type === null is not valid in our slevomat helper.
-        return TypeHintHelper::isSimpleTypeHint($type) || $type === 'null' || $this->isCustomArrayType($type);
+        return ($type === 'void')
+            ? $this->isVoidSupportedVersion()
+            // $type === null is not valid in our slevomat helper.
+            : TypeHintHelper::isSimpleTypeHint($type) || $type === 'null' || $this->isCustomArrayType($type);
+    }
+
+    /**
+     * Returns true, if the given return types only defines a "void" return.
+     *
+     * @param array $returnTypes
+     *
+     * @return bool
+     */
+    private function isUnsupportedVoidReturn(array $returnTypes): bool
+    {
+
+        return count($returnTypes) === 1 && in_array($returnTypes[0], ['null', 'void']) &&
+            !$this->isVoidSupportedVersion();
+    }
+
+    /**
+     * Does this php version support void as return type which usually means php >= 7.1.0.
+     *
+     * @return bool
+     */
+    private function isVoidSupportedVersion(): bool
+    {
+        return (bool) version_compare(phpversion(), '7.1.0', '>=');
     }
 
     /**
@@ -288,7 +313,7 @@ class ReturnTypeDeclarationSniff extends AbstractSniff
      *
      * @return array The cleaned array.
      */
-    private function loadFixableTypes(?array $returnTypes): array
+    private function loadFixableTypes(array $returnTypes = null): array
     {
         return array_filter($returnTypes ?? [], function (string $returnType): bool {
             return $this->isFixableReturnType($returnType);
@@ -310,7 +335,7 @@ class ReturnTypeDeclarationSniff extends AbstractSniff
      *
      * @return null|Annotation
      */
-    protected function loadReturnAnnotation(): ?Annotation
+    protected function loadReturnAnnotation()
     {
         return FunctionHelper::findReturnAnnotation($this->getFile()->getBaseFile(), $this->stackPos);
     }
@@ -322,7 +347,7 @@ class ReturnTypeDeclarationSniff extends AbstractSniff
      *
      * @return void
      */
-    protected function processToken(): void
+    protected function processToken()
     {
         $this->getFile()->recordMetric($this->stackPos, 'Has return type', 'no');
 
@@ -339,7 +364,7 @@ class ReturnTypeDeclarationSniff extends AbstractSniff
      *
      * @return void
      */
-    protected function setUp(): void
+    protected function setUp()
     {
         parent::setUp();
 
@@ -353,7 +378,7 @@ class ReturnTypeDeclarationSniff extends AbstractSniff
      *
      * @return void
      */
-    protected function tearDown(): void
+    protected function tearDown()
     {
         $this->resetDocCommentPos();
 
@@ -370,7 +395,7 @@ class ReturnTypeDeclarationSniff extends AbstractSniff
      *
      * @return void
      */
-    private function validateReturnType(?array $returnTypes): void
+    private function validateReturnType(array $returnTypes = null)
     {
         if (!$returnTypes) {
             $returnTypes = [];
@@ -381,6 +406,10 @@ class ReturnTypeDeclarationSniff extends AbstractSniff
         if (count($returnTypes) === count($fixableTypes)) {
             // Make sure this var is only filled, if it really is fixable for us.
             $this->typesForFix = $fixableTypes;
+        }
+
+        if ($this->isUnsupportedVoidReturn($returnTypes)) {
+            return;
         }
 
         $exception =

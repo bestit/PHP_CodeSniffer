@@ -10,7 +10,7 @@ class Multiples
      *
      * @return void
      */
-    public function test(string $param1): void
+    public function test(string $param1)
     {
         throw new RuntimeException('To be implemented');
     }

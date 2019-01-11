@@ -40,7 +40,7 @@ class UseStatementHelperTest extends TestCase
      *
      * @return void
      */
-    public function testGetType(string $type): void
+    public function testGetType(string $type)
     {
         $useStatement = new UseStatement(
             'bar',
@@ -65,7 +65,7 @@ class UseStatementHelperTest extends TestCase
      *
      * @return void
      */
-    public function testGetTypeName(string $type, string $name = ''): void
+    public function testGetTypeName(string $type, string $name = '')
     {
         $useStatement = new UseStatement(
             'bar',
@@ -86,7 +86,7 @@ class UseStatementHelperTest extends TestCase
      *
      * @return void
      */
-    public function testType(): void
+    public function testType()
     {
         $fixture = new UseStatementHelper();
 

@@ -20,7 +20,7 @@ class EmptyLinesDocSniff
      *
      * @return void
      */
-    private function correct(): void
+    private function correct()
     {
         /** @var int $something One line comment. */
         $something = 1;

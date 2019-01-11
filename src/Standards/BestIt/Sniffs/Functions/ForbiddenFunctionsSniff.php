@@ -22,12 +22,12 @@ class ForbiddenFunctionsSniff extends BaseSniff
     /**
      * You SHOULD not use eval.
      */
-    public const CODE_DISCOURAGED_WITHOUT_ALTERNATIVE = 'Discouraged';
+    const CODE_DISCOURAGED_WITHOUT_ALTERNATIVE = 'Discouraged';
 
     /**
      * You SHOULD not use alias but the original function names.
      */
-    public const CODE_DISCOURAGED_WITH_ALTERNATIVE = 'DiscouragedWithAlternative';
+    const CODE_DISCOURAGED_WITH_ALTERNATIVE = 'DiscouragedWithAlternative';
 
     /**
      * If true, an error will be thrown; otherwise a warning.
@@ -94,7 +94,7 @@ class ForbiddenFunctionsSniff extends BaseSniff
      *
      * @return void
      */
-    public function process(File $phpcsFile, $stackPtr): void
+    public function process(File $phpcsFile, $stackPtr)
     {
         $this->file = new FileDecorator($phpcsFile);
         $this->stackPos = $stackPtr;

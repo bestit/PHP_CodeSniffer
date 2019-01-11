@@ -28,12 +28,12 @@ class AlphabeticClassContentSniff extends AbstractSniff
     /**
      * You SHOULD sort you constants, methods and properties alphabetically.
      */
-    public const CODE_SORT_ALPHABETICALLY = 'SortAlphabetically';
+    const CODE_SORT_ALPHABETICALLY = 'SortAlphabetically';
 
     /**
      * The message for the wrong sorting.
      */
-    private const MESSAGE_SORT_ALPHABETICALLY = 'Please sort you contents alphabetically.';
+    const MESSAGE_SORT_ALPHABETICALLY = 'Please sort you contents alphabetically.';
 
     /**
      * Checks the sorting of both arrays and registered warnings, if a token is not on the correct position.
@@ -43,7 +43,7 @@ class AlphabeticClassContentSniff extends AbstractSniff
      *
      * @return void
      */
-    private function checkAndRegisterSortingProblems(array $foundContentsOrg, array $foundContentsSorted): void
+    private function checkAndRegisterSortingProblems(array $foundContentsOrg, array $foundContentsSorted)
     {
         $checkIndex = 0;
 
@@ -65,7 +65,7 @@ class AlphabeticClassContentSniff extends AbstractSniff
      *
      * @return void
      */
-    private function checkAndRegisterSortingProblemsOfTypes(int $token): void
+    private function checkAndRegisterSortingProblemsOfTypes(int $token)
     {
         $foundContentsOrg = $this->getContentsOfTokenType($token);
 
@@ -115,7 +115,7 @@ class AlphabeticClassContentSniff extends AbstractSniff
      *
      * @return void
      */
-    protected function processToken(): void
+    protected function processToken()
     {
         $tokenTypes = [T_CONST, T_FUNCTION, T_VARIABLE];
 

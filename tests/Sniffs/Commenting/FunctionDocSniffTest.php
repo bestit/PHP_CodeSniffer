@@ -32,7 +32,7 @@ class FunctionDocSniffTest extends AbstractDocSniffTest
      *
      * @return void
      */
-    protected function setUp(): void
+    protected function setUp()
     {
         parent::setUp();
 

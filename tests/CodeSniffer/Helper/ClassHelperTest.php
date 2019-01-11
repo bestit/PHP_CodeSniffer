@@ -40,7 +40,7 @@ class ClassHelperTest extends TestCase
      *
      * @return void
      */
-    protected function setUp(): void
+    protected function setUp()
     {
         $this->file = new File(
             $filePath = __DIR__ . DIRECTORY_SEPARATOR . 'Fixtures/ClassHelper/TestClass.php',
@@ -59,7 +59,7 @@ class ClassHelperTest extends TestCase
      *
      * @return void
      */
-    public function testGetTraitUsePointers(): void
+    public function testGetTraitUsePointers()
     {
         static::assertSame([51, 57], ClassHelper::getTraitUsePointers($this->file, 44));
     }
@@ -69,7 +69,7 @@ class ClassHelperTest extends TestCase
      *
      * @return void
      */
-    public function testType(): void
+    public function testType()
     {
         static::assertInstanceOf(BaseHelper::class, new ClassHelper());
     }

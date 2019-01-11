@@ -52,11 +52,11 @@ trait TestRequiredConstantsTrait
      * @dataProvider getRequiredConstantAsserts
      *
      * @param string $constant The name of the constant.
-     * @param string $constantValue We check the value as well, because some constants are fixed in ruleset.xmls.
+     * @param string|null $constantValue We check the value as well, because some constants are fixed in ruleset.xmls.
      *
      * @return void
      */
-    public function testRequiredConstants(string $constant, ?string $constantValue = null): void
+    public function testRequiredConstants(string $constant, string $constantValue = null)
     {
         $fullConstantName = get_class($this->fixture) . '::' . $constant;
 

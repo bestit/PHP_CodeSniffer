@@ -48,7 +48,7 @@ class EqualOperatorSniffTest extends SniffTestCase
      *
      * @return void
      */
-    protected function setUp(): void
+    protected function setUp()
     {
         parent::setUp();
 
@@ -67,7 +67,7 @@ class EqualOperatorSniffTest extends SniffTestCase
      *
      * @return void
      */
-    public function testWarnings(string $file, string $warning, array $lines, bool $withFixable = false): void
+    public function testWarnings(string $file, string $warning, array $lines, bool $withFixable = false)
     {
         $report = $this->assertWarningsInFile($file, $warning, $lines, ['isFixable' => true]);
 
@@ -87,7 +87,7 @@ class EqualOperatorSniffTest extends SniffTestCase
      *
      * @return void
      */
-    public function testWarningsWithoutFix(string $file, string $error, array $lines): void
+    public function testWarningsWithoutFix(string $file, string $error, array $lines)
     {
         $this->assertWarningsInFile($file, $error, $lines);
     }

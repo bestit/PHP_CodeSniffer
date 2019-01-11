@@ -27,12 +27,12 @@ class MultipleReturnSniff extends AbstractSniff
     /**
      * You SHOULD only use a return per method.
      */
-    public const CODE_MULTIPLE_RETURNS_FOUND = 'MultipleReturnsFound';
+    const CODE_MULTIPLE_RETURNS_FOUND = 'MultipleReturnsFound';
 
     /**
      * Error message for multiple returns.
      */
-    private const WARNING_MULTIPLE_RETURNS_FOUND = 'Multiple returns detected. Did you refactor your method? Please ' .
+    const WARNING_MULTIPLE_RETURNS_FOUND = 'Multiple returns detected. Did you refactor your method? Please ' .
         'do not use an early return if your method/function still is cluttered.';
 
     /**
@@ -73,14 +73,14 @@ class MultipleReturnSniff extends AbstractSniff
      *
      * @return void
      */
-    protected function processToken(): void
+    protected function processToken()
     {
         $returnPositions = $this->loadReturnsOfThisFunction();
 
         if (count($returnPositions) > 1) {
             array_shift($returnPositions);
 
-            array_walk($returnPositions, function (int $returnPos): void {
+            array_walk($returnPositions, function (int $returnPos) {
                 $this->file->addWarning(
                     self::WARNING_MULTIPLE_RETURNS_FOUND,
                     $returnPos,

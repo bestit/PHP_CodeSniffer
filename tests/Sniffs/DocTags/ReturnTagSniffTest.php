@@ -33,7 +33,7 @@ class ReturnTagSniffTest extends AuthorTagSniffTest
      *
      * @return void
      */
-    protected function setUp(): void
+    protected function setUp()
     {
         parent::setUp();
 
@@ -49,7 +49,7 @@ class ReturnTagSniffTest extends AuthorTagSniffTest
      *
      * @return void
      */
-    public function testDescriptionWarningsWithConfig(string $file): void
+    public function testDescriptionWarningsWithConfig(string $file)
     {
         $unusedData = [];
         $fileMetadata = $this->getMetadataFromFilenameAsAssertArray($file, $unusedData);

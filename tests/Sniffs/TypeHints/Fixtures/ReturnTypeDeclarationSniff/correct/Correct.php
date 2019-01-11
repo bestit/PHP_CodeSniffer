@@ -74,7 +74,7 @@ class TypeHintDeclarationSniff
     /**
      * @return void
      */
-    public function testVoidMethod(): void
+    public function testVoidMethod()
     {
         //void
     }
@@ -82,7 +82,7 @@ class TypeHintDeclarationSniff
     /**
      * @return null
      */
-    public function testNullMethod(): ?string
+    public function testNullMethod()
     {
         return null;
     }
@@ -90,7 +90,7 @@ class TypeHintDeclarationSniff
     /**
      * @return array|null
      */
-    public function testMultipleTypesMethod(): ?array
+    public function testMultipleTypesMethod()
     {
         if (true) {
             return [];

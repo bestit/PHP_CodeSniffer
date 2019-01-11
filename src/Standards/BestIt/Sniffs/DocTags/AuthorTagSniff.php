@@ -19,7 +19,7 @@ class AuthorTagSniff extends AbstractTagSniff
     /**
      * You MUST commit to your codes and give an [author tag](http://docs.phpdoc.org/references/phpdoc/tags/author.html).
      */
-    public const CODE_TAG_CONTENT_FORMAT_INVALID = 'TagContentFormatInvalid';
+    const CODE_TAG_CONTENT_FORMAT_INVALID = 'TagContentFormatInvalid';
 
     /**
      * Returns the payload for the error or warning registration.
@@ -28,7 +28,7 @@ class AuthorTagSniff extends AbstractTagSniff
      *
      * @return array|void
      */
-    protected function getReportData(?string $tagContent = null): ?array
+    protected function getReportData(string $tagContent = null)
     {
         return [
             static::MESSAGE_TAG_CONTENT_FORMAT_INVALID,
@@ -59,7 +59,7 @@ class AuthorTagSniff extends AbstractTagSniff
      *
      * @return bool True if the given content matches the valid pattern and the given callback returns.
      */
-    protected function isValidContent(?string $tagContent = null, ?callable $callback = null): bool
+    protected function isValidContent(string $tagContent = null, callable $callback = null): bool
     {
         // Satisfy php md
         unset($callback);

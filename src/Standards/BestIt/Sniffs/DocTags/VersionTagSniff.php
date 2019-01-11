@@ -17,7 +17,7 @@ class VersionTagSniff extends AbstractTagSniff
     /**
      * If you provide a version tag, you MUST provide it in [semver 2.0-Format](https://semver.org) with Major.Minor.Patch-Version .
      */
-    public const CODE_TAG_CONTENT_FORMAT_INVALID = 'TagContentFormatInvalid';
+    const CODE_TAG_CONTENT_FORMAT_INVALID = 'TagContentFormatInvalid';
 
     /**
      * Returns a pattern to check if the content is valid.

@@ -17,17 +17,17 @@ class DeprecatedTagSniff extends AbstractTagSniff
     /**
      * If you provide a deprecated tag, you MUST provide it with versions since when its deprecated and when it will be removed.
      */
-    public const CODE_TAG_CONTENT_FORMAT_INVALID = 'TagContentFormatInvalid';
+    const CODE_TAG_CONTENT_FORMAT_INVALID = 'TagContentFormatInvalid';
 
     /**
      * The error code for the missing dates.
      */
-    public const CODE_TAG_MISSING_DATES = 'MissingDates';
+    const CODE_TAG_MISSING_DATES = 'MissingDates';
 
     /**
      * The message for the error.
      */
-    private const MESSAGE_TAG_MISSING_DATES = 'Please provide the version since when its deprecated and when it will ' .
+    const MESSAGE_TAG_MISSING_DATES = 'Please provide the version since when its deprecated and when it will ' .
         'be removed (Pattern: %s).';
 
     /**
@@ -37,7 +37,7 @@ class DeprecatedTagSniff extends AbstractTagSniff
      *
      * @return array|void
      */
-    protected function getReportData(?string $tagContent = null): ?array
+    protected function getReportData(string $tagContent = null)
     {
         // Satisfy php md
         unset($tagContent);

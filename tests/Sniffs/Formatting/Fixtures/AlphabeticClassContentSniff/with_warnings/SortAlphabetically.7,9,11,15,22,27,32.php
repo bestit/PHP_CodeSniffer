@@ -4,7 +4,7 @@ namespace Test;
 
 class AlphabeticallySorted
 {
-    public const SECOND = 'bar';
+    const SECOND = 'bar';
 
     const FIRST = 'foo';
 

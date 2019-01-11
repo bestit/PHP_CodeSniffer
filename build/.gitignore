@@ -1,3 +1,5 @@
 *
 !.gitignore
+!backports/
+!backports/*
 !refreshReadmeTable.php

@@ -26,42 +26,42 @@ abstract class AbstractDocSniff extends AbstractSniff
     /**
      * Every doc comment block SHOULD start ucfirst.
      */
-    public const CODE_DOC_COMMENT_UC_FIRST = 'DocCommentUcFirst';
+    const CODE_DOC_COMMENT_UC_FIRST = 'DocCommentUcFirst';
 
     /**
      * Every doc comment block (the summary or a long description paragrah) SHOULD finish with double newline.
      */
-    public const CODE_NO_LINE_AFTER_DOC_COMMENT = 'NoLineAfterDocComment';
+    const CODE_NO_LINE_AFTER_DOC_COMMENT = 'NoLineAfterDocComment';
 
     /**
      * There SHOULD be a summary.
      */
-    public const CODE_NO_SUMMARY = 'NoSummary';
+    const CODE_NO_SUMMARY = 'NoSummary';
 
     /**
      * The summary SHOULD be in one line.
      */
-    public const CODE_SUMMARY_TOO_LONG = 'SummaryTooLong';
+    const CODE_SUMMARY_TOO_LONG = 'SummaryTooLong';
 
     /**
      * Message that the doc comments does not start with an capital letter.
      */
-    private const MESSAGE_DOC_COMMENT_UC_FIRST = 'The first letter of the summary/long-description is not uppercase.';
+    const MESSAGE_DOC_COMMENT_UC_FIRST = 'The first letter of the summary/long-description is not uppercase.';
 
     /**
      * Message that there is no line after the doc comment.
      */
-    private const MESSAGE_NO_LINE_AFTER_DOC_COMMENT = 'There is no empty line after the summary/long-description.';
+    const MESSAGE_NO_LINE_AFTER_DOC_COMMENT = 'There is no empty line after the summary/long-description.';
 
     /**
      * Message that there is no summary in doc comment.
      */
-    private const MESSAGE_NO_SUMMARY = 'There must be a summary in the doc comment.';
+    const MESSAGE_NO_SUMMARY = 'There must be a summary in the doc comment.';
 
     /**
      * The error message if the summary is too long.
      */
-    private const MESSAGE_SUMMARY_TOO_LONG = 'The summary should fit in one line. If you want more, use the long desc.';
+    const MESSAGE_SUMMARY_TOO_LONG = 'The summary should fit in one line. If you want more, use the long desc.';
 
     /**
      * The cached position of the summary.
@@ -90,7 +90,7 @@ abstract class AbstractDocSniff extends AbstractSniff
      *
      * @return void
      */
-    private function fixDocCommentUcFirst(int $position, array $token): void
+    private function fixDocCommentUcFirst(int $position, array $token)
     {
         $this->file->fixer->beginChangeset();
         $this->file->fixer->replaceToken($position, ucfirst($token['content']));
@@ -105,7 +105,7 @@ abstract class AbstractDocSniff extends AbstractSniff
      *
      * @return void
      */
-    private function fixNoLineAfterDocComment(int $position, array $token): void
+    private function fixNoLineAfterDocComment(int $position, array $token)
     {
         $this->file->fixer->beginChangeset();
 
@@ -122,7 +122,7 @@ abstract class AbstractDocSniff extends AbstractSniff
      *
      * @return int|null
      */
-    private function getSummaryPosition(): ?int
+    private function getSummaryPosition()
     {
         if ($this->summaryPosition === -1) {
             $this->summaryPosition = $this->loadSummaryPosition();
@@ -227,7 +227,7 @@ abstract class AbstractDocSniff extends AbstractSniff
      *
      * @return int|null
      */
-    private function loadSummaryPosition(): ?int
+    private function loadSummaryPosition()
     {
         $return = null;
         $possSummaryPos = $this->loadNextDocBlockContent($this->getDocCommentPos());
@@ -248,7 +248,7 @@ abstract class AbstractDocSniff extends AbstractSniff
      *
      * @return void
      */
-    protected function processToken(): void
+    protected function processToken()
     {
         $this
             ->validateSummaryExistence()
@@ -260,7 +260,7 @@ abstract class AbstractDocSniff extends AbstractSniff
      *
      * @return void
      */
-    protected function tearDown(): void
+    protected function tearDown()
     {
         $this->resetDocCommentPos();
         $this->summaryPosition = -1;
@@ -314,7 +314,7 @@ abstract class AbstractDocSniff extends AbstractSniff
      *
      * @return void
      */
-    private function validateNewLineAfterDocComment(int $position, array $token, bool $asSingleLine = true): void
+    private function validateNewLineAfterDocComment(int $position, array $token, bool $asSingleLine = true)
     {
         if (!$this->isNextLineEmpty($position)) {
             $nextRelevantPos = $this->loadNextDocBlockContent($position);
@@ -393,7 +393,7 @@ abstract class AbstractDocSniff extends AbstractSniff
      *
      * @return void
      */
-    private function validateUCFirstDocComment(int $position, array $token): void
+    private function validateUCFirstDocComment(int $position, array $token)
     {
         $commentText = $token['content'];
 

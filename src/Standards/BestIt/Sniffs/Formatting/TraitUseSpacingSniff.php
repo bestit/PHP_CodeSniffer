@@ -29,54 +29,54 @@ class TraitUseSpacingSniff extends AbstractSniff
     /**
      * You MUST not provide additional lines after your last rait usage.
      */
-    public const CODE_INCORRECT_LINES_COUNT_AFTER_LAST_USE = 'IncorrectLinesCountAfterLastUse';
+    const CODE_INCORRECT_LINES_COUNT_AFTER_LAST_USE = 'IncorrectLinesCountAfterLastUse';
 
     /**
      * You MUST not provide additional new lines before your first trait use.
      */
-    public const CODE_INCORRECT_LINES_COUNT_BEFORE_FIRST_USE = 'IncorrectLinesCountBeforeFirstUse';
+    const CODE_INCORRECT_LINES_COUNT_BEFORE_FIRST_USE = 'IncorrectLinesCountBeforeFirstUse';
 
     /**
      * You MUST not provide additional new lines between trait usages.
      */
-    public const CODE_INCORRECT_LINES_COUNT_BETWEEN_USES = 'IncorrectLinesCountBetweenUses';
+    const CODE_INCORRECT_LINES_COUNT_BETWEEN_USES = 'IncorrectLinesCountBetweenUses';
 
     /**
      * How many lines after the last use.
      */
-    private const LINES_AFTER_LAST_USE = 1;
+    const LINES_AFTER_LAST_USE = 1;
 
     /**
      * How many lines after the last use.
      */
-    private const LINES_AFTER_LAST_USE_WHEN_LAST_IN_CLASS = 0;
+    const LINES_AFTER_LAST_USE_WHEN_LAST_IN_CLASS = 0;
 
     /**
      * How many use before the first one.
      */
-    private const LINES_BEFORE_FIRST_USE = 0;
+    const LINES_BEFORE_FIRST_USE = 0;
 
     /**
      * How many lines between the uses.
      */
-    private const LINES_BETWEEN_USES = 0;
+    const LINES_BETWEEN_USES = 0;
 
     /**
      * The message to the user for the error before usages.
      */
-    private const MESSAGE_INCORRECT_LINES_COUNT_BEFORE_FIRST_USE =
+    const MESSAGE_INCORRECT_LINES_COUNT_BEFORE_FIRST_USE =
         'Expected %d lines before first use statement, found %d.';
 
     /**
      * The message to the user for the error after the last usage.
      */
-    private const MESSAGE_INCORRECT_LINES_COUNT_AFTER_LAST_USE =
+    const MESSAGE_INCORRECT_LINES_COUNT_AFTER_LAST_USE =
         'Expected %d lines after last use statement, found %d.';
 
     /**
      * The message to the user for the error between uses.
      */
-    private const MESSAGE_INCORRECT_LINES_COUNT_BETWEEN_USES =
+    const MESSAGE_INCORRECT_LINES_COUNT_BETWEEN_USES =
         'Expected %d lines between same types of use statement, found %d.';
 
     /**
@@ -103,7 +103,7 @@ class TraitUseSpacingSniff extends AbstractSniff
      *
      * @return void
      */
-    private function checkLinesAfterLastUse(int $lastUsePos): void
+    private function checkLinesAfterLastUse(int $lastUsePos)
     {
         $lastUseEndPos = $this->getLastUseEndPos($lastUsePos);
 
@@ -137,7 +137,7 @@ class TraitUseSpacingSniff extends AbstractSniff
      *
      * @return void
      */
-    private function checkLinesBeforeFirstUse(int $firstUsePos): void
+    private function checkLinesBeforeFirstUse(int $firstUsePos)
     {
         $posBeforeFirstUse = TokenHelper::findPreviousExcluding($this->getFile(), T_WHITESPACE, $firstUsePos - 1);
         $realLinesBeforeUse = $this->getRealLinesBeforeFirstUse($firstUsePos, $posBeforeFirstUse);
@@ -164,7 +164,7 @@ class TraitUseSpacingSniff extends AbstractSniff
      *
      * @return void
      */
-    private function checkLinesBetweenUses(): void
+    private function checkLinesBetweenUses()
     {
         $file = $this->getFile();
         $previousUsePos = null;
@@ -226,7 +226,7 @@ class TraitUseSpacingSniff extends AbstractSniff
         int $lastUseEndPos,
         int $whitespaceEnd,
         int $requiredLinesAfter
-    ): void {
+    ) {
         $file = $this->getFile();
 
         $file->fixer->beginChangeset();
@@ -253,7 +253,7 @@ class TraitUseSpacingSniff extends AbstractSniff
     private function fixLinesBeforeFirstUse(
         int $firstUsePos,
         int $posBeforeFirstUse
-    ): void {
+    ) {
         $file = $this->getFile();
         $file->fixer->beginChangeset();
 
@@ -285,7 +285,7 @@ class TraitUseSpacingSniff extends AbstractSniff
      *
      * @return void
      */
-    private function fixLinesBetweenUses(int $usePos, int $previousUseEndPos): void
+    private function fixLinesBetweenUses(int $usePos, int $previousUseEndPos)
     {
         $file = $this->getFile();
 
@@ -430,7 +430,7 @@ class TraitUseSpacingSniff extends AbstractSniff
      *
      * @return void
      */
-    protected function processToken(): void
+    protected function processToken()
     {
         $this->checkLinesBeforeFirstUse($this->uses[0]);
         $this->checkLinesAfterLastUse($this->uses[count($this->uses) - 1]);

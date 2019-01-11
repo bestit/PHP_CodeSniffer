@@ -9,5 +9,5 @@ class Multiples
      * @todo Test1
      * @var string
      */
-    public const FOO ='bar';
+    const FOO ='bar';
 }

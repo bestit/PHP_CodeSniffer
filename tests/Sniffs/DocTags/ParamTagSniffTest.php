@@ -62,7 +62,7 @@ class ParamTagSniffTest extends SniffTestCase
      *
      * @return void
      */
-    protected function setUp(): void
+    protected function setUp()
     {
         parent::setUp();
 
@@ -80,7 +80,7 @@ class ParamTagSniffTest extends SniffTestCase
      *
      * @return void
      */
-    public function testDescriptionWarningsWithConfig(string $file): void
+    public function testDescriptionWarningsWithConfig(string $file)
     {
         $unusedData = [];
         $fileMetadata = $this->getMetadataFromFilenameAsAssertArray($file, $unusedData);
@@ -99,7 +99,7 @@ class ParamTagSniffTest extends SniffTestCase
      *
      * @return void
      */
-    public function testType(): void
+    public function testType()
     {
         static::assertInstanceOf(AbstractTagSniff::class, $this->fixture);
     }

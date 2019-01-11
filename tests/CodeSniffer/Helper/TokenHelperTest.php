@@ -44,7 +44,7 @@ class TokenHelperTest extends TestCase
      *
      * @return void
      */
-    protected function setUp(): void
+    protected function setUp()
     {
         $this->file = new File(
             $filePath = __DIR__ . DIRECTORY_SEPARATOR . 'Fixtures/TokenHelper/phpdoc.php',
@@ -63,7 +63,7 @@ class TokenHelperTest extends TestCase
      *
      * @return void
      */
-    public function testFindNextAllNone(): void
+    public function testFindNextAllNone()
     {
         static::assertSame([], TokenHelper::findNextAll($this->file, [T_IF], $this->searchStart));
     }
@@ -73,7 +73,7 @@ class TokenHelperTest extends TestCase
      *
      * @return void
      */
-    public function testFindNextAllPrematureEnd(): void
+    public function testFindNextAllPrematureEnd()
     {
         static::assertSame([38], TokenHelper::findNextAll($this->file, [T_DOC_COMMENT_TAG], $this->searchStart, 39));
     }
@@ -83,7 +83,7 @@ class TokenHelperTest extends TestCase
      *
      * @return void
      */
-    public function testFindNextAllSuccess(): void
+    public function testFindNextAllSuccess()
     {
         static::assertSame([38, 45], TokenHelper::findNextAll($this->file, [T_DOC_COMMENT_TAG], $this->searchStart));
     }
@@ -93,7 +93,7 @@ class TokenHelperTest extends TestCase
      *
      * @return void
      */
-    public function testFindPreviousContentNone(): void
+    public function testFindPreviousContentNone()
     {
         static::assertNull(
             TokenHelper::findPreviousContent($this->file, [T_DOC_COMMENT_TAG], '@foobar', 45)
@@ -105,7 +105,7 @@ class TokenHelperTest extends TestCase
      *
      * @return void
      */
-    public function testFindPreviousContentSuccess(): void
+    public function testFindPreviousContentSuccess()
     {
         static::assertSame(
             38,
@@ -118,7 +118,7 @@ class TokenHelperTest extends TestCase
      *
      * @return void
      */
-    public function testType(): void
+    public function testType()
     {
         static::assertInstanceOf(BaseHelper::class, new TokenHelper());
     }

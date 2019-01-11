@@ -46,7 +46,7 @@ class AlphabeticClassContentSniffTest extends SniffTestCase
      *
      * @return void
      */
-    protected function setUp(): void
+    protected function setUp()
     {
         parent::setUp();
 

@@ -20,7 +20,7 @@ class SpaceAfterDeclareSniffTest extends SniffTestCase
      *
      * @return void
      */
-    public function testSpaceAfterDeclareCorrect(): void
+    public function testSpaceAfterDeclareCorrect()
     {
         $this->assertNoSniffErrorInFile(
             $this->checkFile($this->getFixtureFilePath('Correct.php'))
@@ -32,7 +32,7 @@ class SpaceAfterDeclareSniffTest extends SniffTestCase
      *
      * @return void
      */
-    public function testEarlyReturn(): void
+    public function testEarlyReturn()
     {
         $this->assertNoSniffErrorInFile(
             $this->checkFile($this->getFixtureFilePath('NoFollowingStatement.php'))
@@ -44,7 +44,7 @@ class SpaceAfterDeclareSniffTest extends SniffTestCase
      *
      * @return void
      */
-    public function testNoWhitespaceFound(): void
+    public function testNoWhitespaceFound()
     {
         $report = $this->checkFile($this->getFixtureFilePath('NoWhitespaceFound.php'));
 
@@ -62,7 +62,7 @@ class SpaceAfterDeclareSniffTest extends SniffTestCase
      *
      * @return void
      */
-    public function testMuchWhitespaceFound(): void
+    public function testMuchWhitespaceFound()
     {
         $report = $this->checkFile($this->getFixtureFilePath('MuchWhitespaceFound.php'));
 
@@ -80,7 +80,7 @@ class SpaceAfterDeclareSniffTest extends SniffTestCase
      *
      * @return void
      */
-    public function testMultipleDeclareStatements(): void
+    public function testMultipleDeclareStatements()
     {
         $report = $this->checkFile(
             $this->getFixtureFilePath('MultipleDeclareStatements.php')

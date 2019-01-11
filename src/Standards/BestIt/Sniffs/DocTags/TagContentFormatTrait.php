@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace BestIt\Sniffs\DocTags;
 
 use BestIt\CodeSniffer\File;
-use Closure;
+use function call_user_func;
 
 /**
  * Helps you validating tag contents.
@@ -53,7 +53,7 @@ trait TagContentFormatTrait
      *
      * @return array|void
      */
-    protected function getReportData(?string $tagContent = null): ?array
+    protected function getReportData(string $tagContent = null)
     {
         return [
             static::MESSAGE_TAG_CONTENT_FORMAT_INVALID,
@@ -81,7 +81,7 @@ trait TagContentFormatTrait
      *
      * @return bool True if the given content matches the valid pattern and the given callback returns.
      */
-    protected function isValidContent(?string $tagContent = null, ?callable $callback = null): bool
+    protected function isValidContent(string $tagContent = null, callable $callback = null): bool
     {
         $isValidContent = false;
 
@@ -89,7 +89,7 @@ trait TagContentFormatTrait
             $isValidContent = true;
 
             if ($callback) {
-                $isValidContent = Closure::fromCallable($callback)($this->matches);
+                $isValidContent = call_user_func($callback, $this->matches);
             }
         }
         return $isValidContent;
@@ -102,7 +102,7 @@ trait TagContentFormatTrait
      *
      * @return void
      */
-    protected function processTagContent(?string $tagContent = null): void
+    protected function processTagContent(string $tagContent = null)
     {
         if (!$this->isValidContent($tagContent)) {
             $this->getFile()->{'add' . ($this->asError() ? 'Error' : 'Warning')}(...$this->getReportData($tagContent));

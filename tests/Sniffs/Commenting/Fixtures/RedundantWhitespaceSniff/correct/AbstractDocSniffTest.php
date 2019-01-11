@@ -55,7 +55,7 @@ abstract class AbstractDocSniffsTest extends SniffTestCase
      *
      * @return void
      */
-    public function testRequiredConstants(string $constant): void
+    public function testRequiredConstants(string $constant)
     {
         static::assertTrue(
 

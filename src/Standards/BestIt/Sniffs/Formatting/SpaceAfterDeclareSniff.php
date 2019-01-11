@@ -18,32 +18,32 @@ class SpaceAfterDeclareSniff implements Sniff
     /**
      * Error message when no whitespace is found.
      */
-    public const MESSAGE_NO_WHITESPACE_FOUND = 'There is no whitespace after declare-statement.';
+    const MESSAGE_NO_WHITESPACE_FOUND = 'There is no whitespace after declare-statement.';
 
     /**
      * There MUST be one empty line after declare-statement.
      */
-    public const CODE_NO_WHITESPACE_FOUND = 'NoWhitespaceFound';
+    const CODE_NO_WHITESPACE_FOUND = 'NoWhitespaceFound';
 
     /**
      * Error message when more than one whitespaces are found.
      */
-    public const MESSAGE_MUCH_WHITESPACE_FOUND = 'There are more than one whitespaces after declare-statement.';
+    const MESSAGE_MUCH_WHITESPACE_FOUND = 'There are more than one whitespaces after declare-statement.';
 
     /**
      * THERE MUST be just one single line after the declare statement.
      */
-    public const CODE_MUCH_WHITESPACE_FOUND = 'MuchWhitespaceFound';
+    const CODE_MUCH_WHITESPACE_FOUND = 'MuchWhitespaceFound';
 
     /**
      * Error message when blank lines in a group are found.
      */
-    public const MESSAGE_GROUP_BLANK_LINE_FOUND = 'Multpile declare-statements should be grouped without a blank line.';
+    const MESSAGE_GROUP_BLANK_LINE_FOUND = 'Multpile declare-statements should be grouped without a blank line.';
 
     /**
      * Multiple declare-statements SHOULD be grouped without a blank line.
      */
-    public const CODE_GROUP_BLANK_LINE_FOUND = 'GroupBlankLineFound';
+    const CODE_GROUP_BLANK_LINE_FOUND = 'GroupBlankLineFound';
 
     /**
      * Registers the tokens that this sniff wants to listen for.
@@ -67,7 +67,7 @@ class SpaceAfterDeclareSniff implements Sniff
      *
      * @return void Optionally returns a stack pointer.
      */
-    public function process(File $phpcsFile, $stackPtr): void
+    public function process(File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
 
@@ -123,7 +123,7 @@ class SpaceAfterDeclareSniff implements Sniff
      *
      * @return void
      */
-    private function handleNoWhitespaceFound(File $phpcsFile, int $semicolonPtr): void
+    private function handleNoWhitespaceFound(File $phpcsFile, int $semicolonPtr)
     {
         $fixNoWhitespace = $phpcsFile->addFixableError(
             self::MESSAGE_NO_WHITESPACE_FOUND,
@@ -153,7 +153,7 @@ class SpaceAfterDeclareSniff implements Sniff
         int $semicolonPtr,
         int $secondSpacePtr,
         int $nextNonSpacePtr
-    ): void {
+    ) {
         $fixMuchWhitespaces = $phpcsFile->addFixableError(
             self::MESSAGE_MUCH_WHITESPACE_FOUND,
             $semicolonPtr,
@@ -184,7 +184,7 @@ class SpaceAfterDeclareSniff implements Sniff
         int $semicolonPtr,
         int $secondSpacePtr,
         int $nextNonSpacePtr
-    ): void {
+    ) {
         $fixGroupBlankLines = $phpcsFile->addFixableError(
             self::MESSAGE_GROUP_BLANK_LINE_FOUND,
             $semicolonPtr,

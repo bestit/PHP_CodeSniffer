@@ -54,7 +54,7 @@ abstract class AbstractSniff implements Sniff
      *
      * @return void
      */
-    protected function addPointerToTokens(): void
+    protected function addPointerToTokens()
     {
         foreach ($this->tokens as $tokenPtr => &$token) {
             $token['pointer'] = $tokenPtr;
@@ -78,7 +78,7 @@ abstract class AbstractSniff implements Sniff
      *
      * @return void
      */
-    protected function fixDefaultProblem(CodeWarning $exception): void
+    protected function fixDefaultProblem(CodeWarning $exception)
     {
         // Satisfy PHP MD
         unset($exception);
@@ -124,7 +124,7 @@ abstract class AbstractSniff implements Sniff
      *
      * @return void
      */
-    public function process(BaseFile $phpcsFile, $stackPos): void
+    public function process(BaseFile $phpcsFile, $stackPos)
     {
         $this->file = new File($phpcsFile);
         $this->stackPos = $stackPos;
@@ -136,7 +136,7 @@ abstract class AbstractSniff implements Sniff
         if ($this->areRequirementsMet()) {
             try {
                 $this->processToken();
-            } catch (CodeWarning | CodeError $exception) {
+            } catch (CodeWarning $exception) {
                 $withFix = $this->getExceptionHandler()->handleException($exception);
 
                 if ($withFix) {
@@ -153,14 +153,14 @@ abstract class AbstractSniff implements Sniff
      *
      * @return void
      */
-    abstract protected function processToken(): void;
+    abstract protected function processToken();
 
     /**
      * Do you want to setup things before processing the token?
      *
      * @return void
      */
-    protected function setUp(): void
+    protected function setUp()
     {
     }
 
@@ -169,7 +169,7 @@ abstract class AbstractSniff implements Sniff
      *
      * @return void
      */
-    protected function tearDown(): void
+    protected function tearDown()
     {
     }
 }

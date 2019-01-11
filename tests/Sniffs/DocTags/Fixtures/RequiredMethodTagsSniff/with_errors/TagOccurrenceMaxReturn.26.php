@@ -26,7 +26,7 @@ class AllTags
      * @return string
      * @return string
      */
-    public function foo(string $bar = 'baz', ?string $baz = null): string
+    public function foo(string $bar = 'baz', $baz = null): string
     {
         return $bar;
     }

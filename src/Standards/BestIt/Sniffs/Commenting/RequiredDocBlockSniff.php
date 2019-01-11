@@ -32,24 +32,24 @@ class RequiredDocBlockSniff extends AbstractSniff
      *
      * It will get suffixed like MissingDocBlockClass.
      */
-    public const CODE_MISSING_DOC_BLOCK_PREFIX = 'MissingDocBlock';
+    const CODE_MISSING_DOC_BLOCK_PREFIX = 'MissingDocBlock';
 
     /**
      * The doc block before a Class, Constant, Interface, Function, Trait, Variable must be multi-line.
      *
      * It will be suffixed with the name of the structure like NoMultiLineDocBlockClass.
      */
-    public const CODE_NO_MULTI_LINE_DOC_BLOCK_PREFIX = 'NoMultiLineDocBlock';
+    const CODE_NO_MULTI_LINE_DOC_BLOCK_PREFIX = 'NoMultiLineDocBlock';
 
     /**
      * The message for missing doc blocks.
      */
-    private const MESSAGE_MISSING_DOC_BLOCK = 'Please provide a doc block for your %s.';
+    const MESSAGE_MISSING_DOC_BLOCK = 'Please provide a doc block for your %s.';
 
     /**
      * The error message for the inline block.
      */
-    private const MESSAGE_NO_MULTI_LINE_DOC_BLOCK_PREFIX = 'Please provide a multi line doc block for your %s.';
+    const MESSAGE_NO_MULTI_LINE_DOC_BLOCK_PREFIX = 'Please provide a multi line doc block for your %s.';
 
     /**
      * Maps the registered tokens to a readable key.
@@ -82,7 +82,7 @@ class RequiredDocBlockSniff extends AbstractSniff
      *
      * @return void
      */
-    private function checkAndRegisterMissingDocBlock(): void
+    private function checkAndRegisterMissingDocBlock()
     {
         if (!$this->getDocCommentPos()) {
             $tokenIdent = $this->getTokenName();
@@ -104,7 +104,7 @@ class RequiredDocBlockSniff extends AbstractSniff
      *
      * @return void
      */
-    private function checkAndRegisterNoMultiLine(): void
+    private function checkAndRegisterNoMultiLine()
     {
         $docCommentPos = $this->getDocCommentPos();
         $openingToken = $this->tokens[$docCommentPos];
@@ -138,7 +138,7 @@ class RequiredDocBlockSniff extends AbstractSniff
      *
      * @return void
      */
-    protected function processToken(): void
+    protected function processToken()
     {
         try {
             $this->checkAndRegisterMissingDocBlock();

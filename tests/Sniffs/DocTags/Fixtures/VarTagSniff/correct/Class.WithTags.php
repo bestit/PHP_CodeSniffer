@@ -30,7 +30,7 @@ class WithTags
      *
      * @var string
      */
-    public const CODE_TAG_CONTENT_FORMAT_INVALID = 'TagContentFormatInvalid';
+    const CODE_TAG_CONTENT_FORMAT_INVALID = 'TagContentFormatInvalid';
 
     public function __construct()
     {
