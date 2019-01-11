@@ -51,7 +51,7 @@ trait DefaultSniffIntegrationTestTrait
         $fileMetaData = [];
         $fileName = basename($file);
         $matches = [];
-        $pattern = '/(?P<code>\w+)(\(\w*\))?\.(?P<errorLines>[\d-\,]*)(?P<fixedSuffix>\.fixed)?\.php/';
+        $pattern = '/(?P<code>\w+)(\(\w*\))?\.(?P<errorLines>[\d\-\,]*)(?P<fixedSuffix>\.fixed)?\.php/';
 
         if (preg_match($pattern, $fileName, $matches)) {
             if (@$matches['fixedSuffix']) {
