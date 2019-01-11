@@ -17,6 +17,7 @@ use function array_search;
 use function uasort;
 use const T_CONST;
 use const T_FUNCTION;
+use const T_OPEN_PARENTHESIS;
 use const T_USE;
 use const T_VARIABLE;
 
@@ -56,6 +57,20 @@ class UCVFSortingSniff extends AbstractSniff
         T_VARIABLE,
         T_FUNCTION
     ];
+
+    /**
+     * Returns true if the use seems to be used for an anon function.
+     *
+     * @param int $usePos
+     *
+     * @return bool
+     */
+    private function isAnonymousFunctionUse(int $usePos): bool
+    {
+        $nextPos = TokenHelper::findNextEffective($this->getFile(), $usePos + 1);
+
+        return $this->tokens[$nextPos]['code'] === T_OPEN_PARENTHESIS;
+    }
 
     /**
      * Loads the positons for the tokens of $this->>sortedTokens.
@@ -129,7 +144,8 @@ class UCVFSortingSniff extends AbstractSniff
                     break;
 
                 case T_USE:
-                    $return = UseStatementHelper::isTraitUse($this->file, $subToken['pointer']);
+                    $return = UseStatementHelper::isTraitUse($this->file, $subToken['pointer']) &&
+                        !$this->isAnonymousFunctionUse($subToken['pointer']);
                     break;
 
                 default:

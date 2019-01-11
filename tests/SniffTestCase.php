@@ -225,7 +225,7 @@ abstract class SniffTestCase extends SlevomatTestCase
      *
      * @return void
      */
-    protected static function assertSniffWarning(
+    protected function assertSniffWarning(
         File $codeSnifferFile,
         int $line,
         string $code,
@@ -234,7 +234,7 @@ abstract class SniffTestCase extends SlevomatTestCase
         $warnings = $codeSnifferFile->getWarnings();
         self::assertTrue(isset($warnings[$line]), sprintf('Expected warning on line %s, but none found.', $line));
 
-        $sniffCode = sprintf('%s.%s', static::getSniffName(), $code);
+        $sniffCode = sprintf('%s.%s', $this->getSniffName(), $code);
 
         self::assertTrue(
             self::hasWarning($warnings[$line], $sniffCode, $message),

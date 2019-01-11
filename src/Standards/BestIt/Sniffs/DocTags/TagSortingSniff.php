@@ -7,6 +7,7 @@ namespace BestIt\Sniffs\DocTags;
 use BestIt\CodeSniffer\CodeWarning;
 use BestIt\CodeSniffer\Helper\DocTagHelper;
 use BestIt\CodeSniffer\Helper\LineHelper;
+use BestIt\CodeSniffer\Helper\TokenHelper;
 use BestIt\Sniffs\AbstractSniff;
 use function array_column;
 use function array_shift;
@@ -65,7 +66,10 @@ class TagSortingSniff extends AbstractSniff
      */
     protected function areRequirementsMet(): bool
     {
-        return !$this->isSniffSuppressed() && (bool) $this->getTagTokens();
+        // The slevomat-helper in this version can not check annotations in a comment itself, so search the next element.
+        $nextEffectivePos = TokenHelper::findNextEffective($this->getFile(), $this->getStackPos());
+
+        return !$this->isSniffSuppressed(null, $nextEffectivePos) && (bool) $this->getTagTokens();
     }
 
     /**
