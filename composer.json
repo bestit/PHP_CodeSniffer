@@ -19,7 +19,8 @@
     },
     "autoload-dev": {
         "files": [
-            "vendor/squizlabs/php_codesniffer/tests/bootstrap.php"
+            "vendor/squizlabs/php_codesniffer/tests/bootstrap.php",
+            "vendor/slevomat/coding-standard/tests/Sniffs/TestCase.php"
         ],
         "psr-4": {
           "BestIt\\": "tests/"
@@ -27,8 +28,8 @@
     },
     "prefer-stable": true,
     "require": {
-        "php": "^7.1",
-        "slevomat/coding-standard": "^4.7.0",
+        "php": "7.0.*",
+        "slevomat/coding-standard": "4.0.*",
         "squizlabs/php_codesniffer": "^3.3",
         "phpcompatibility/php-compatibility": "^9.0"
     },
