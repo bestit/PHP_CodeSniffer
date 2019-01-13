@@ -28,6 +28,12 @@ Create a PHP_CodeSniffer configuration (phpcs.xml.dist / phpcs.xml) like this:
 </ruleset>
 ```
 
+If you want to sniff for special PHP Versions just declare a ["testVersion"](https://github.com/PHPCompatibility/PHPCompatibility#using-a-custom-ruleset) like:
+
+```xml
+<config name="testVersion" value="7.1" />
+```
+
 Execute the PHP_CodeSniffer (path can vary on your composer configuration):
 
 ```bash

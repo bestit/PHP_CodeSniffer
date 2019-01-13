@@ -4,12 +4,13 @@
     <arg name="tab-width" value="4" />
 
     <!-- This is needed to reuse SlevomatCodingStandard-Sniffs without custom php code. -->
-    <config name="installed_paths" value="../../slevomat/coding-standard"/>
+    <config name="installed_paths" value="../../slevomat/coding-standard,../../phpcompatibility/php-compatibility/" />
 
     <description>The best it coding standard.</description>
 
     <!-- PSR12 includes PSR-1, extends PSR-2 and even contains rules for the line length itself! -->
     <rule ref="PSR12" />
+    <rule ref="PHPCompatibility" />
 
     <rule ref="SlevomatCodingStandard.Classes.ClassConstantVisibility">
         <properties>

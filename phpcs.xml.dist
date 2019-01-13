@@ -4,6 +4,8 @@
 
     <rule ref="./src/Standards/BestIt/ruleset.xml" />
 
+    <config name="testVersion" value="7.1" />
+
     <file>./build/</file>
     <file>./src/</file>
     <file>./tests/</file>
