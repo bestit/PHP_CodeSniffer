@@ -10,6 +10,7 @@ use BestIt\Sniffs\AbstractSniff;
 use BestIt\Sniffs\DocPosProviderTrait;
 use BestIt\Sniffs\FunctionRegistrationTrait;
 use BestIt\Sniffs\SuppressingTrait;
+use PHP_CodeSniffer\Config;
 use SlevomatCodingStandard\Helpers\Annotation;
 use SlevomatCodingStandard\Helpers\FunctionHelper;
 use SlevomatCodingStandard\Helpers\TypeHintHelper;
@@ -174,6 +175,18 @@ class ReturnTypeDeclarationSniff extends AbstractSniff
     }
 
     /**
+     * Get the value of a single PHPCS config key.
+     *
+     * @param string $key The name of the config value.
+     *
+     * @return string
+     */
+    public static function getConfigData(string $key): string
+    {
+        return Config::getConfigData($key);
+    }
+
+    /**
      * Returns the name of the function.
      *
      * @return string
@@ -303,7 +316,7 @@ class ReturnTypeDeclarationSniff extends AbstractSniff
      */
     private function isVoidSupportedVersion(): bool
     {
-        return (bool) version_compare(phpversion(), '7.1.0', '>=');
+        return (bool) version_compare(self::getConfigData('testVersion'), '7.1.0', '>=');
     }
 
     /**
