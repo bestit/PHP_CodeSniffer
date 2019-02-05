@@ -1,5 +1,7 @@
 <?php
 
+namespace BestIt\Sniffs\DocTags\Fixtures\RequiredMethodTagsSniff\WithErrors;
+
 /**
  * Class Testeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
  *
@@ -15,7 +17,7 @@
  * @deprecated since 1.0.0. To be removed in 2.0.0.
  * @version 0.9.0
  */
-class AllTags
+class VoidReturn
 {
     /**
      * Returns a test string.
@@ -23,8 +25,8 @@ class AllTags
      * @param string $bar
      * @param null|string $baz
      */
-    public function foo(string $bar = 'baz', ?string $baz = null): string
+    public function foo(string $bar = 'baz', ?string $baz = null)
     {
-        return $bar;
+        return;
     }
 }

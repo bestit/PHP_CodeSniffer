@@ -5,7 +5,10 @@ declare(strict_types=1);
 namespace BestIt\Sniffs\DocTags;
 
 use BestIt\Sniffs\FunctionRegistrationTrait;
+use SlevomatCodingStandard\Helpers\FunctionHelper;
 use function in_array;
+use function str_repeat;
+use const T_FUNCTION;
 use const T_STRING;
 
 /**
@@ -19,11 +22,44 @@ class RequiredMethodTagsSniff extends AbstractRequiredTagsSniff
     use FunctionRegistrationTrait;
 
     /**
+     * Adds a return annotation if there is none.
+     *
+     * @param int $stackPos
+     *
+     * @return void
+     */
+    protected function fixMinReturn(int $stackPos): void
+    {
+        $closePos = $this->tokens[$stackPos]['comment_closer'];
+        $closeTag = $this->tokens[$closePos];
+        $indent = str_repeat(' ', $closeTag['column'] - 1);
+        $fileDecorator = $this->getFile();
+
+        $returnTypeHint = FunctionHelper::findReturnTypeHint(
+            $fileDecorator->getBaseFile(),
+            $fileDecorator->findNext([T_FUNCTION], $closePos + 1)
+        );
+
+        $typeHint = $returnTypeHint ? $returnTypeHint->getTypeHint() : 'void';
+
+        $fixer = $fileDecorator->fixer;
+
+        $fixer->beginChangeset();
+
+        $fixer->replaceToken(
+            $closePos,
+            "*\n{$indent}* @return {$typeHint}\n{$indent}{$closeTag['content']}"
+        );
+
+        $fixer->endChangeset();
+    }
+
+    /**
      * Returns the minimum count for the return tag.
      *
      * @return int
      */
-    protected function getReturnMinmumCount(): int
+    protected function getReturnMinimumCount(): int
     {
         return $this->isMagicFunctionWithoutReturn() ? 0 : 1;
     }
@@ -39,7 +75,7 @@ class RequiredMethodTagsSniff extends AbstractRequiredTagsSniff
     {
         return [
             'return' => [
-                'min' => [$this, 'getReturnMinmumCount'],
+                'min' => [$this, 'getReturnMinimumCount'],
                 'max' => 1,
             ]
         ];
