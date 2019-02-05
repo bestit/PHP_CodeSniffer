@@ -25,7 +25,7 @@ class VoidReturn
      * @param string $bar
      * @param null|string $baz
      */
-    public function foo(string $bar = 'baz', ?string $baz = null)
+    public function foo(string $bar = 'baz', $baz = null)
     {
         return;
     }

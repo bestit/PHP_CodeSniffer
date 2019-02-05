@@ -28,7 +28,7 @@ class RequiredMethodTagsSniff extends AbstractRequiredTagsSniff
      *
      * @return void
      */
-    protected function fixMinReturn(int $stackPos): void
+    protected function fixMinReturn(int $stackPos)
     {
         $closePos = $this->tokens[$stackPos]['comment_closer'];
         $closeTag = $this->tokens[$closePos];
