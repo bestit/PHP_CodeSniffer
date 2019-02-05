@@ -15,6 +15,8 @@ use function array_walk;
 use function count;
 use function in_array;
 use function is_callable;
+use function method_exists;
+use function sprintf;
 use function substr;
 use function ucfirst;
 
@@ -131,7 +133,9 @@ abstract class AbstractRequiredTagsSniff extends AbstractSniff
                 $tagCount = count($this->findTokensForTag($tag));
 
                 if ($minCount > $tagCount) {
-                    $this->file->addError(
+                    $fixCallback = $this->hasFixCallback($checkedRule, $tag);
+                    $method = $fixCallback ? 'addFixableError' : 'addError';
+                    $fixable = $this->file->{$method}(
                         self::MESSAGE_TAG_OCCURRENCE_MIN,
                         $this->getDocCommentPos(),
                         // We use an error code containing the tag name because we can't configure this rules from the
@@ -143,6 +147,10 @@ abstract class AbstractRequiredTagsSniff extends AbstractSniff
                             $tagCount
                         ]
                     );
+
+                    if ($fixable && $fixCallback) {
+                        $this->{$fixCallback}($this->getDocCommentPos(), $minCount, $tagCount, $tag);
+                    }
                 }
             }
         );
@@ -217,6 +225,21 @@ abstract class AbstractRequiredTagsSniff extends AbstractSniff
      * @return array List of tag metadata
      */
     abstract protected function getTagRules(): array;
+
+    /**
+     * Returns true if there is a callback for the given rule and tag.
+     *
+     * @param string $rule
+     * @param string $tag
+     *
+     * @return bool|string
+     */
+    private function hasFixCallback(string $rule, string $tag)
+    {
+        return method_exists($this, $method = sprintf('fix%s%s', ucfirst($rule), ucfirst($tag)))
+            ? $method
+            : false;
+    }
 
     /**
      * Loads all tags of the structures doc block.
