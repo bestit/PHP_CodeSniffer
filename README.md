@@ -11,6 +11,8 @@ Our PHP_CodeSniffer package can be installed with composer with the following co
 composer require bestit/php_codesniffer --dev
 ```
 
+**Please use Version 1 for PHP 7.0!**
+
 ## Usage
 
 Create a PHP_CodeSniffer configuration (phpcs.xml.dist / phpcs.xml) like this:
