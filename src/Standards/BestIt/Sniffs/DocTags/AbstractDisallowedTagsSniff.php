@@ -112,11 +112,11 @@ abstract class AbstractDisallowedTagsSniff extends AbstractSniff
     private function loadAllTags(): array
     {
         return (new DocTagHelper(
-            $this->tokens[$this->getDocCommentPos()],
             $this->file,
-            $this->stackPos
+            $this->getDocCommentPos(),
+            $this->tokens
         )
-        )->getCommentTagTokens();
+        )->getTagTokens();
     }
 
     /**

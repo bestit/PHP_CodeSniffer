@@ -8,12 +8,14 @@ use BestIt\CodeSniffer\CodeWarning;
 use BestIt\CodeSniffer\Helper\DocTagHelper;
 use BestIt\CodeSniffer\Helper\LineHelper;
 use BestIt\Sniffs\AbstractSniff;
-use function array_column;
+use function array_filter;
+use function array_key_exists;
 use function array_shift;
-use function implode;
 use function preg_match;
 use function str_pad;
+use function str_repeat;
 use function strcasecmp;
+use function strlen;
 use function usort;
 use const T_DOC_COMMENT_OPEN_TAG;
 
@@ -57,6 +59,13 @@ class TagSortingSniff extends AbstractSniff
      * @var DocTagHelper
      */
     private $docTagHelper;
+
+    /**
+     * The loaded tokens of this comment.
+     *
+     * @var array|null
+     */
+    private $loadedTagTokens;
 
     /**
      * Returns true if the requirements for this sniff are met.
@@ -140,6 +149,60 @@ class TagSortingSniff extends AbstractSniff
     }
 
     /**
+     * The callback to sort tokens.
+     *
+     * 1. @return goes to the bottom
+     * 2. Single tags are group alphabetically in the top group.
+     * 3. Groups are sorted then by occurrence, that the largest group is the last one before the return.
+     * 4. Same annotations are kept in the order of their code.
+     *
+     * @param array $leftToken Provided by usort.
+     * @param array $rightToken Provided by usort.
+     * @param array $tagCounts Saves the occurence count for every tag.
+     *
+     * @return int
+     */
+    private function compareTokensForSorting(array $leftToken, array $rightToken, array $tagCounts): int
+    {
+        $leftTagName = $leftToken['content'];
+        $rightTagName = $rightToken['content'];
+        $realLeftTagName = $this->getRealtagName($leftTagName);
+        $realRightTagName = $this->getRealtagName($rightTagName);
+
+        // If they have the same content, leave them, where they where ...
+        $return = $leftToken['line'] > $rightToken['line'] ? 1 : -1;
+
+        // But if they are different.
+        if ($realLeftTagName !== $realRightTagName) {
+            $leftTagCount = $tagCounts[$leftTagName];
+            $rightTagCount = $tagCounts[$rightTagName];
+
+            switch (true) {
+                // Move return to bottom everytime ...
+                case ($realLeftTagName === '@return'):
+                    $return = 1;
+                    break;
+
+                // ... yes, everytime
+                case ($realRightTagName === '@return'):
+                    $return = -1;
+                    break;
+
+                // Move single items to the top.
+                case ($leftTagCount !== $rightTagCount):
+                    $return = $leftTagCount > $rightTagCount ? +1 : -1;
+                    break;
+
+                // Compare tag name
+                default:
+                    $return = strcasecmp($realLeftTagName, $realRightTagName) > 1 ? 1 : -1;
+            }
+        }
+
+        return $return;
+    }
+
+    /**
      * Sorts the tags and creates a new doc comment part for them to replace it with the old content.
      *
      * @return string The new content.
@@ -171,14 +234,27 @@ class TagSortingSniff extends AbstractSniff
             }
 
             // Create the new Tag.
-            // WARNING We do not a line break in the tag summary.
-            $newContent .= $lineStartingPadding . '* ' .
-                // Remove the "ending" whitespace if there are no more contents
-                trim(
-                    $thisTagContent . ' ' .
-                    implode(' ', array_column($tag['contents'] ?? [], 'content'))
-                ) .
-                $eolChar;
+            // WARNING We do not need a line break in the tag summary.
+            $newContent .= $lineStartingPadding . '* ' . trim($thisTagContent);
+
+            if ($tag['contents']) {
+                $prevLine = $tag['line'];
+                foreach ($tag['contents'] as $subToken) {
+                    // If we have a line switch, we need to create the correct indentation from before ...
+                    if ($withLineSwitch = $subToken['line'] > $prevLine) {
+                        $newContent .= $eolChar .
+                            $lineStartingPadding . '*' .
+                            str_repeat(' ', $subToken['column'] - strlen($lineStartingPadding) - 2);
+
+                        $prevLine = $subToken['line'];
+                    }
+
+                    // ... if we have no line switch, then an additional whitespace is enough.
+                    $newContent .= ($withLineSwitch ? '' : ' ') . $subToken['content'];
+                }
+            }
+
+            $newContent .= $eolChar;
 
             $prevTagContent = $thisTagContent;
             $withReturn = $isReturn;
@@ -208,13 +284,33 @@ class TagSortingSniff extends AbstractSniff
     }
 
     /**
+     * Support for annotations with variable values (like the symfony annotations) which should not influence sorting!
+     *
+     * @param string $tagName The tag name out of the code.
+     *
+     * @return string The tag name without "dynamic values".
+     */
+    private function getRealtagName(string $tagName): string
+    {
+        $matches = [];
+
+        return (preg_match('/(?P<realTag>@\w+)(?P<separator>$|\(|\\\\|\s)/', $tagName, $matches))
+            ? $matches['realTag']
+            : $tagName;
+    }
+
+    /**
      * Returns the tokens of the comment tags.
      *
      * @return array The tokens of the comment tags.
      */
     private function getTagTokens(): array
     {
-        return $this->docTagHelper->getCommentTagTokens();
+        if ($this->loadedTagTokens === null) {
+            $this->loadedTagTokens = $this->loadTagTokens();
+        }
+
+        return $this->loadedTagTokens;
     }
 
     /**
@@ -240,6 +336,35 @@ class TagSortingSniff extends AbstractSniff
         );
 
         $fixer->endChangeset();
+    }
+
+    /**
+     * Loads the tokens of this comment.
+     *
+     * @return array
+     */
+    private function loadTagTokens(): array
+    {
+        $barrier = 0;
+        $tokens = $this->docTagHelper->getTagTokens();
+
+        $tokens = array_filter($tokens, function (array $token) use (&$barrier): bool {
+            $allowed = true;
+
+            if ($barrier) {
+                if ($allowed = $token['column'] <= $barrier) {
+                    $barrier = 0;
+                }
+            }
+
+            if ($allowed && array_key_exists('contents', $token)) {
+                $barrier = $token['column'];
+            }
+
+            return $allowed;
+        });
+
+        return $tokens;
     }
 
     /**
@@ -300,23 +425,11 @@ class TagSortingSniff extends AbstractSniff
     {
         $this->addPointerToTokens();
 
-        $this->docTagHelper = new DocTagHelper($this->token, $this->file, $this->stackPos, $this->tokens);
-    }
-
-    /**
-     * Support for annotations with variable values like symfony annotations which should not influence sorting!
-     *
-     * @param string $tagName The tag name out of the code.
-     *
-     * @return string The tag name without "dynamic values".
-     */
-    private function getRealtagName(string $tagName): string
-    {
-        $matches = [];
-
-        return (preg_match('/(?P<realTag>@\w+)(?P<separator>$|\(|\\\\|\s)/', $tagName, $matches))
-            ? $matches['realTag']
-            : $tagName;
+        $this->docTagHelper = new DocTagHelper(
+            $this->file,
+            $this->stackPos,
+            $this->tokens
+        );
     }
 
     /**
@@ -331,37 +444,21 @@ class TagSortingSniff extends AbstractSniff
         $tagCounts = $this->docTagHelper->getTagCounts($tokens);
 
         usort($tokens, function (array $leftToken, array $rightToken) use ($tagCounts): int {
-            $return = 0;
-            $leftTagName = $leftToken['content'];
-            $rightTagName = $rightToken['content'];
-            $realLeftTagName = $this->getRealtagName($leftTagName);
-            $realRightTagName = $this->getRealtagName($rightTagName);
-
-            if ($realLeftTagName !== $realRightTagName) {
-                $leftTagCount = $tagCounts[$leftTagName];
-                $rightTagCount = $tagCounts[$rightTagName];
-
-                switch (true) {
-                    case ($realLeftTagName === '@return'):
-                        $return = 1;
-                        break;
-
-                    case ($realRightTagName === '@return'):
-                        $return = -1;
-                        break;
-
-                    case ($leftTagCount !== $rightTagCount):
-                        $return = $leftTagCount > $rightTagCount ? +1 : -1;
-                        break;
-
-                    default:
-                        $return = strcasecmp($realLeftTagName, $realRightTagName);
-                }
-            }
-
-            return $return;
+            return $this->compareTokensForSorting($leftToken, $rightToken, $tagCounts);
         });
 
         return $tokens;
+    }
+
+    /**
+     * Removes the loaded tag tokens.
+     *
+     * @return void
+     */
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+
+        $this->loadedTagTokens = null;
     }
 }
