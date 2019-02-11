@@ -5,12 +5,8 @@ declare(strict_types=1);
 namespace BestIt\CodeSniffer\Helper;
 
 use PHPUnit\Framework\TestCase;
-use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Exceptions\RuntimeException;
-use PHP_CodeSniffer\Files\File;
-use PHP_CodeSniffer\Ruleset;
 use SlevomatCodingStandard\Helpers\TokenHelper as BaseHelper;
-use function file_get_contents;
 use const DIRECTORY_SEPARATOR;
 use const T_DOC_COMMENT_TAG;
 use const T_IF;
@@ -23,12 +19,7 @@ use const T_IF;
  */
 class TokenHelperTest extends TestCase
 {
-    /**
-     * The used file for testing.
-     *
-     * @var File|null
-     */
-    private $file;
+    use FileHelperTrait;
 
     /**
      * This is the relevant search start for the tests.
@@ -46,14 +37,9 @@ class TokenHelperTest extends TestCase
      */
     protected function setUp()
     {
-        $this->file = new File(
-            $filePath = __DIR__ . DIRECTORY_SEPARATOR . 'Fixtures/TokenHelper/phpdoc.php',
-            new Ruleset($config = new Config()),
-            $config
-        );
+        $file = $this->getFile(__DIR__ . DIRECTORY_SEPARATOR . 'Fixtures/TokenHelper/phpdoc.php');
 
-        $this->file->setContent(file_get_contents($filePath));
-        $this->file->parse();
+        $this->file = $file;
 
         $this->searchStart = 16;
     }

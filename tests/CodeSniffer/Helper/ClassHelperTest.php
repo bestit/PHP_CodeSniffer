@@ -5,9 +5,6 @@ declare(strict_types=1);
 namespace BestIt\CodeSniffer\Helper;
 
 use PHPUnit\Framework\TestCase;
-use PHP_CodeSniffer\Config;
-use PHP_CodeSniffer\Files\File;
-use PHP_CodeSniffer\Ruleset;
 use RuntimeException;
 use SlevomatCodingStandard\Helpers\ClassHelper as BaseHelper;
 
@@ -19,12 +16,7 @@ use SlevomatCodingStandard\Helpers\ClassHelper as BaseHelper;
  */
 class ClassHelperTest extends TestCase
 {
-    /**
-     * The used file for testing.
-     *
-     * @var File|null
-     */
-    private $file;
+    use FileHelperTrait;
 
     /**
      * This is the relevant search start for the tests.
@@ -42,14 +34,7 @@ class ClassHelperTest extends TestCase
      */
     protected function setUp()
     {
-        $this->file = new File(
-            $filePath = __DIR__ . DIRECTORY_SEPARATOR . 'Fixtures/ClassHelper/TestClass.php',
-            new Ruleset($config = new Config()),
-            $config
-        );
-
-        $this->file->setContent(file_get_contents($filePath));
-        $this->file->parse();
+        $this->file = $this->getFile(__DIR__ . DIRECTORY_SEPARATOR . 'Fixtures/ClassHelper/TestClass.php');
 
         $this->searchStart = 44;
     }

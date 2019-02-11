@@ -6,6 +6,7 @@ namespace BestIt\CodeSniffer\Helper;
 
 use BestIt\CodeSniffer\File;
 use function array_key_exists;
+use function in_array;
 use const T_DOC_COMMENT_CLOSE_TAG;
 use const T_DOC_COMMENT_STRING;
 use const T_DOC_COMMENT_TAG;
@@ -23,7 +24,7 @@ class DocTagHelper
      *
      * @var array
      */
-    private $commentStartToken;
+    private $token;
 
     /**
      * The PHP CS file
@@ -40,26 +41,17 @@ class DocTagHelper
     private $tokens;
 
     /**
-     * Current stack pointer to the token stack of the php cs file.
-     *
-     * @var int
-     */
-    private $stackPtr;
-
-    /**
      * DocTagHelper constructor.
      *
-     * @param array $commentStartToken The start token of the comment.
      * @param File $file The php cs file
-     * @param int $stackPtr Pointer to the token which is to be listened
-     * @param array $tokens Another token array if we want to overwrite them,
+     * @param int $stackPos Position to the token which is to be listened
+     * @param array $tokens Another token array if we want to overwrite them.
      */
-    public function __construct(array $commentStartToken, File $file, int $stackPtr, array $tokens = [])
+    public function __construct(File $file, int $stackPos, array $tokens = [])
     {
         $this->file = $file;
         $this->tokens = $tokens ?: $file->getTokens();
-        $this->stackPtr = $stackPtr;
-        $this->commentStartToken = $commentStartToken;
+        $this->token = $this->tokens[$stackPos];
     }
 
     /**
@@ -69,29 +61,35 @@ class DocTagHelper
      */
     private function getCommentStartToken(): array
     {
-        return $this->commentStartToken;
+        return $this->token;
     }
 
     /**
      * Loads the tag content for the given tag position.
      *
      * @param int $tagPosition The position of the tag.
+     * @param int $iteratedPosition
      *
      * @return array The content tokens of the tag.
      */
-    private function loadTagContentTokens(int $tagPosition): array
+    private function loadTagContentTokens(int $tagPosition, int &$iteratedPosition): array
     {
         $contents = [];
-        $nextOrClosingPos = $this->file->findNext([T_DOC_COMMENT_CLOSE_TAG, T_DOC_COMMENT_TAG], $tagPosition + 1);
-        $positionsTillEnd = TokenHelper::findNextAll(
-            $this->file->getBaseFile(),
-            [T_DOC_COMMENT_STRING],
-            $tagPosition,
-            $nextOrClosingPos
-        );
+        $myColumn = $this->tokens[$tagPosition]['column'];
+        $closingPos = $this->file->findNext([T_DOC_COMMENT_CLOSE_TAG], $position = $tagPosition + 1);
 
-        foreach ($positionsTillEnd as $position) {
-            $contents[] = $this->tokens[$position];
+        while ($position < $closingPos) {
+            $contentToken = $this->tokens[$position++];
+
+            if (($contentToken['code'] === T_DOC_COMMENT_TAG) && ($contentToken['column'] <= $myColumn)) {
+                break;
+            }
+
+            if (in_array($contentToken['code'], [T_DOC_COMMENT_STRING, T_DOC_COMMENT_TAG])) {
+                $contents[$position] = $contentToken;
+            }
+
+            $iteratedPosition = $position;
         }
 
         return $contents;
@@ -100,16 +98,21 @@ class DocTagHelper
     /**
      * Returns array of all comment tag tokens.
      *
-     * @return array List of all comment tag tokens indexed by token pointer
+     * @return array List of all comment tag tokens indexed by token position
      */
-    public function getCommentTagTokens(): array
+    public function getTagTokens(): array
     {
+        $iteratedPos = 0;
         $tagPositions = $this->getCommentStartToken()['comment_tags'];
         $tagTokens = [];
 
         /** @var int $tagPos */
         foreach ($tagPositions as $tagPos) {
-            $tagTokens[$tagPos] = $this->tokens[$tagPos] + ['contents' => $this->loadTagContentTokens($tagPos)];
+            if ($tagPos >= $iteratedPos) {
+                $tagTokens[$tagPos] = $this->tokens[$tagPos] + [
+                    'contents' => $this->loadTagContentTokens($tagPos, $iteratedPos)
+                ];
+            }
         }
 
         return $tagTokens;
