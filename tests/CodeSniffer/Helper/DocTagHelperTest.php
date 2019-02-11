@@ -29,7 +29,7 @@ class DocTagHelperTest extends TestCase
      *
      * @return void
      */
-    protected function setUp(): void
+    protected function setUp()
     {
         $file = $this->getFile(__DIR__ . DIRECTORY_SEPARATOR . 'Fixtures/DocTagHelper/ORMJoinsOnMethod.php');
 
@@ -44,7 +44,7 @@ class DocTagHelperTest extends TestCase
      *
      * @return void
      */
-    public function testGetCommentTagTokens(): void
+    public function testGetCommentTagTokens()
     {
         $expectedArray = [
             36 => [

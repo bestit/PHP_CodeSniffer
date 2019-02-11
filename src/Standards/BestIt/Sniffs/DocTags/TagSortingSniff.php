@@ -459,7 +459,7 @@ class TagSortingSniff extends AbstractSniff
      *
      * @return void
      */
-    protected function tearDown(): void
+    protected function tearDown()
     {
         parent::tearDown();
 
