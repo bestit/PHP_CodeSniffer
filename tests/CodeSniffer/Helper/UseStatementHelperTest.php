@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace BestIt\CodeSniffer\Helper;
 
-use PHPUnit\Framework\TestCase;
 use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Exceptions\RuntimeException;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Ruleset;
+use PHPUnit\Framework\TestCase;
 use SlevomatCodingStandard\Helpers\UseStatement;
 use SlevomatCodingStandard\Helpers\UseStatementHelper as BaseHelper;
 use function file_get_contents;
