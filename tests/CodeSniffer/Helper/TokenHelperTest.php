@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace BestIt\CodeSniffer\Helper;
 
-use PHPUnit\Framework\TestCase;
 use PHP_CodeSniffer\Exceptions\RuntimeException;
+use PHPUnit\Framework\TestCase;
 use SlevomatCodingStandard\Helpers\TokenHelper as BaseHelper;
 use const DIRECTORY_SEPARATOR;
 use const T_DOC_COMMENT_TAG;

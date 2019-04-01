@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace BestIt\Sniffs\Comparisons;
 
-use BestIt\SniffTestCase;
 use BestIt\Sniffs\DefaultSniffIntegrationTestTrait;
 use BestIt\Sniffs\TestTokenRegistrationTrait;
+use BestIt\SniffTestCase;
 use BestIt\TestRequiredConstantsTrait;
 use const T_IS_EQUAL;
 use const T_IS_IDENTICAL;

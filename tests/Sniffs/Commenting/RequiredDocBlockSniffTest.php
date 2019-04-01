@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace BestIt\Sniffs\Commenting;
 
-use BestIt\SniffTestCase;
 use BestIt\Sniffs\DefaultSniffIntegrationTestTrait;
 use BestIt\Sniffs\TestTokenRegistrationTrait;
+use BestIt\SniffTestCase;
 use BestIt\TestRequiredConstantsTrait;
 use const T_CLASS;
 use const T_CONST;
