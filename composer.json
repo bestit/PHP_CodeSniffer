@@ -1,5 +1,6 @@
 {
-    "name": "bestit/php_codesniffer",
+    "license": "MIT",
+    "name": "best-it/php_codesniffer",
     "description": "PHP_CodeSniffer ruleset and custom rules from best it.",
     "type": "library",
     "authors": [

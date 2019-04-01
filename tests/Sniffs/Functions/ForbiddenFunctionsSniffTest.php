@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace BestIt\Sniffs\Functions;
 
-use BestIt\SniffTestCase;
 use BestIt\Sniffs\DefaultSniffIntegrationTestTrait;
+use BestIt\SniffTestCase;
 
 /**
  * Class ForbiddenFunctionsSniffTest.

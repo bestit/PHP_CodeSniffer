@@ -8,11 +8,13 @@ use BestIt\Sniffs\DefaultSniffIntegrationTestTrait;
 use BestIt\Sniffs\TestTokenRegistrationTrait;
 use BestIt\SniffTestCase;
 use BestIt\TestRequiredConstantsTrait;
+use Exception;
 use PHPUnit\Framework\TestCase;
-use const T_OPEN_TAG;
-use const T_ANON_CLASS;
-use function typeHint;
+use stdClass;
 use function array_map;
+use function typeHint;
+use const T_ANON_CLASS;
+use const T_OPEN_TAG;
 
 class WrongClass
 {

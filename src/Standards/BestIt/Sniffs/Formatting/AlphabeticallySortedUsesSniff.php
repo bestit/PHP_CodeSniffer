@@ -13,7 +13,7 @@ use SlevomatCodingStandard\Helpers\NamespaceHelper;
 use SlevomatCodingStandard\Helpers\UseStatement;
 use function end;
 use function reset;
-use function strcmp;
+use function strcasecmp;
 use function uasort;
 use const T_OPEN_TAG;
 use const T_SEMICOLON;
@@ -29,7 +29,7 @@ class AlphabeticallySortedUsesSniff extends AbstractSniff
     /**
      * You MUST provide your imports in alphabetically order, PSR-12 compatible.
      */
-    const CODE_INCORRECT_ORDER = 'IncorrectlyOrderedUses';
+    public const CODE_INCORRECT_ORDER = 'IncorrectlyOrderedUses';
 
     /**
      * The found use statements.
@@ -54,12 +54,12 @@ class AlphabeticallySortedUsesSniff extends AbstractSniff
     /**
      * Will removing a compare marker for the given use statements.
      *
-     * @param UseStatement $leftStatement
-     * @param UseStatement $rightStatement
+     * @param UseStatement $prevStatement
+     * @param UseStatement $nextStatement
      *
      * @return int 1 <=> -1 To move statements in a direction.
      */
-    private function compareUseStatements(UseStatement $leftStatement, UseStatement $rightStatement): int
+    private function compareUseStatements(UseStatement $prevStatement, UseStatement $nextStatement): int
     {
         $callbacks = [
             'compareUseStatementsByType',
@@ -69,7 +69,7 @@ class AlphabeticallySortedUsesSniff extends AbstractSniff
         ];
 
         foreach ($callbacks as $callback) {
-            $compared = $this->$callback($leftStatement, $rightStatement);
+            $compared = $this->$callback($prevStatement, $nextStatement);
 
             if ($compared !== null) {
                 return $compared;
@@ -82,22 +82,22 @@ class AlphabeticallySortedUsesSniff extends AbstractSniff
      *
      * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
      *
-     * @param UseStatement $leftStatement
-     * @param UseStatement $rightStatement
+     * @param UseStatement $prevStatement
+     * @param UseStatement $nextStatement
      *
      * @return int|null 1 <=> -1 To move statements in a direction.
      */
-    private function compareUseStatementsByContent(UseStatement $leftStatement, UseStatement $rightStatement)
+    private function compareUseStatementsByContent(UseStatement $prevStatement, UseStatement $nextStatement): ?int
     {
         $compareByContent = null;
 
-        $aNameParts = explode(NamespaceHelper::NAMESPACE_SEPARATOR, $leftStatement->getFullyQualifiedTypeName());
-        $bNameParts = explode(NamespaceHelper::NAMESPACE_SEPARATOR, $rightStatement->getFullyQualifiedTypeName());
+        $prevParts = explode(NamespaceHelper::NAMESPACE_SEPARATOR, $prevStatement->getFullyQualifiedTypeName());
+        $nextParts = explode(NamespaceHelper::NAMESPACE_SEPARATOR, $nextStatement->getFullyQualifiedTypeName());
 
-        $minPartsCount = min(count($aNameParts), count($bNameParts));
+        $minPartsCount = min(count($prevParts), count($nextParts));
 
         for ($i = 0; $i < $minPartsCount; ++$i) {
-            $comparison = strcmp($aNameParts[$i], $bNameParts[$i]);
+            $comparison = strcasecmp($prevParts[$i], $nextParts[$i]);
 
             if ($comparison) {
                 $compareByContent = $comparison;
@@ -113,17 +113,17 @@ class AlphabeticallySortedUsesSniff extends AbstractSniff
      *
      * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
      *
-     * @param UseStatement $leftStatement
-     * @param UseStatement $rightStatement
+     * @param UseStatement $prevStatement
+     * @param UseStatement $nextStatement
      *
      * @return int 1 <=> -1 To move statements in a direction.
      */
     private function compareUseStatementsByNamespaceCount(
-        UseStatement $leftStatement,
-        UseStatement $rightStatement
+        UseStatement $prevStatement,
+        UseStatement $nextStatement
     ): int {
-        $aNameParts = explode(NamespaceHelper::NAMESPACE_SEPARATOR, $leftStatement->getFullyQualifiedTypeName());
-        $bNameParts = explode(NamespaceHelper::NAMESPACE_SEPARATOR, $rightStatement->getFullyQualifiedTypeName());
+        $aNameParts = explode(NamespaceHelper::NAMESPACE_SEPARATOR, $prevStatement->getFullyQualifiedTypeName());
+        $bNameParts = explode(NamespaceHelper::NAMESPACE_SEPARATOR, $nextStatement->getFullyQualifiedTypeName());
 
         return count($aNameParts) <=> count($bNameParts);
     }
@@ -133,16 +133,16 @@ class AlphabeticallySortedUsesSniff extends AbstractSniff
      *
      * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
      *
-     * @param UseStatement $leftStatement
-     * @param UseStatement $rightStatement
+     * @param UseStatement $prevStatement
+     * @param UseStatement $nextStatement
      *
      * @return int|null 1 <=> -1 To move statements in a direction.
      */
-    private function compareUseStatementsByType(UseStatement $leftStatement, UseStatement $rightStatement)
+    private function compareUseStatementsByType(UseStatement $prevStatement, UseStatement $nextStatement): ?int
     {
         $comparedByType = null;
 
-        if (!$leftStatement->hasSameType($rightStatement)) {
+        if (!$prevStatement->hasSameType($nextStatement)) {
             $order = [
                 UseStatement::TYPE_DEFAULT => 1,
                 UseStatement::TYPE_FUNCTION => 2,
@@ -150,8 +150,8 @@ class AlphabeticallySortedUsesSniff extends AbstractSniff
             ];
 
             $file = $this->getFile();
-            $comparedByType = $order[UseStatementHelper::getType($file, $leftStatement)] <=>
-                $order[UseStatementHelper::getType($file, $rightStatement)];
+            $comparedByType = $order[UseStatementHelper::getType($file, $prevStatement)] <=>
+                $order[UseStatementHelper::getType($file, $nextStatement)];
         }
 
         return $comparedByType;
@@ -164,7 +164,7 @@ class AlphabeticallySortedUsesSniff extends AbstractSniff
      *
      * @return void
      */
-    protected function fixDefaultProblem(CodeWarning $error)
+    protected function fixDefaultProblem(CodeWarning $error): void
     {
         // Satisfy phpmd
         unset($error);
@@ -232,12 +232,12 @@ class AlphabeticallySortedUsesSniff extends AbstractSniff
      *
      * @return void
      */
-    protected function processToken()
+    protected function processToken(): void
     {
         $prevStatement = null;
 
         foreach ($this->useStatements as $useStatement) {
-            if ($prevStatement && ($this->compareUseStatements($useStatement, $prevStatement) < 0)) {
+            if ($prevStatement && ($this->compareUseStatements($prevStatement, $useStatement) > 0)) {
                 $exception = new CodeError(
                     static::CODE_INCORRECT_ORDER,
                     'Use statements should be sorted alphabetically. The first wrong one is %s.',
@@ -283,7 +283,7 @@ class AlphabeticallySortedUsesSniff extends AbstractSniff
      *
      * @return void
      */
-    private function removeOldUseStatements(UseStatement $firstUseStatement)
+    private function removeOldUseStatements(UseStatement $firstUseStatement): void
     {
         $file = $this->getFile()->getBaseFile();
         $lastUseStatement = end($this->useStatements);
@@ -299,10 +299,10 @@ class AlphabeticallySortedUsesSniff extends AbstractSniff
      *
      * @return void
      */
-    private function sortUseStatements()
+    private function sortUseStatements(): void
     {
-        uasort($this->useStatements, function (UseStatement $leftStatement, UseStatement $rightStatement) {
-            return $this->compareUseStatements($leftStatement, $rightStatement);
+        uasort($this->useStatements, function (UseStatement $prevStatement, UseStatement $nextStatement) {
+            return $this->compareUseStatements($prevStatement, $nextStatement);
         });
     }
 }

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace BestIt\Sniffs\DocTags;
 
-use BestIt\SniffTestCase;
 use BestIt\Sniffs\DefaultSniffIntegrationTestTrait;
 use BestIt\Sniffs\TestTokenRegistrationTrait;
+use BestIt\SniffTestCase;
 use BestIt\TestRequiredConstantsTrait;
 use function array_merge;
 use function sprintf;
