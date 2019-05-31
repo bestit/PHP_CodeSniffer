@@ -1,0 +1,15 @@
+parameters:
+    ignoreErrors:
+        - '#.* expects ([a-zA-Z\\]*), (?1)\|(void|true|bool) given\.#'
+        - '#.*\:\:getFile\(\) should return BestIt\\CodeSniffer\\File but returns BestIt\\CodeSniffer\\File\|void#'
+        - '#BestIt\\CodeSniffer\\AbstractFileDecorator\:\:__construct\(\) does not call parent constructor from PHP_CodeSniffer\\Files\\File\.#'
+        - '#Binary operation "(\+|\-)" between int\|void and 1 results in an error\.#'
+        - '#Cannot access offset .* on array\|void\.#'
+        - '#Cannot access property .* on BestIt\\CodeSniffer\\File\|void\.#'
+        - '#Cannot call method .* on BestIt\\CodeSniffer\\File\|void\.#'
+        - '#Method .*\:\:register\(\) should return array\<int\> but returns array\<int, string\>\.#'
+        - '#Parameter \#1 \$version1 of function version_compare expects string, string\|false given\.#'
+        - '#PHPDoc tag @return with type array\|void is not subtype of native type array\|null\.#'
+    level: max
+    paths:
+        - src

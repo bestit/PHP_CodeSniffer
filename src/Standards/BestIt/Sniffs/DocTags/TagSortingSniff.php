@@ -211,6 +211,7 @@ class TagSortingSniff extends AbstractSniff
     {
         $file = $this->file;
         $eolChar = $file->getEolChar();
+        $lineStartingPadding = '';
         $newContent = '';
         $prevTagContent = '';
         $sortedTags = $this->sortTokens($this->getTagTokens());

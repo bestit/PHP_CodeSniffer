@@ -18,7 +18,9 @@ trait SuppressingTrait
     /**
      * The used suppresshelper.
      *
-     * @var SuppressHelper
+     * Filled by the lazy load getter.
+     *
+     * @var SuppressHelper|null
      */
     private $suppressHelper = null;
 

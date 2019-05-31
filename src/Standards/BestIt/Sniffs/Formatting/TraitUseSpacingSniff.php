@@ -154,7 +154,7 @@ class TraitUseSpacingSniff extends AbstractSniff
             );
 
             if ($fix) {
-                $this->fixLinesBeforeFirstUse($firstUsePos, $posBeforeFirstUse, self::LINES_BEFORE_FIRST_USE);
+                $this->fixLinesBeforeFirstUse($firstUsePos, $posBeforeFirstUse);
             }
         }
     }
@@ -206,7 +206,7 @@ class TraitUseSpacingSniff extends AbstractSniff
                     $fix = $file->addFixableError(...$errorParameters);
 
                     if ($fix) {
-                        $this->fixLinesBetweenUses($usePos, $previousUseEndPos, self::LINES_BETWEEN_USES);
+                        $this->fixLinesBetweenUses($usePos, $previousUseEndPos);
                     }
                 }
             }

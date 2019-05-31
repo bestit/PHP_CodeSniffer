@@ -10,6 +10,7 @@ use BestIt\Sniffs\AbstractSniff;
 use BestIt\Sniffs\DocPosProviderTrait;
 use BestIt\Sniffs\FunctionRegistrationTrait;
 use BestIt\Sniffs\SuppressingTrait;
+use function is_array;
 use SlevomatCodingStandard\Helpers\Annotation;
 use SlevomatCodingStandard\Helpers\FunctionHelper;
 use SlevomatCodingStandard\Helpers\TypeHintHelper;
@@ -130,9 +131,9 @@ class ReturnTypeDeclarationSniff extends AbstractSniff
     private function createReturnType(): string
     {
         $returnTypeHint = '';
-        $typeCount = count($this->typesForFix);
+        $typeCount = is_array($this->typesForFix) ? count($this->typesForFix) : 0;
 
-        foreach ($this->typesForFix as $type) {
+        foreach ($this->typesForFix ?? [] as $type) {
             // We add the default value if only null is used (which has no real native return type).
             if ($type === 'null' && ($typeCount === 1)) {
                 $returnTypeHint = $this->defaultNullReturn;
@@ -265,7 +266,7 @@ class ReturnTypeDeclarationSniff extends AbstractSniff
      */
     private function isFilledReturnAnnotation(?Annotation $returnAnnotation = null): bool
     {
-        return $returnAnnotation && $returnAnnotation->getContent();
+        return $returnAnnotation instanceof Annotation && $returnAnnotation->getContent();
     }
 
     /**

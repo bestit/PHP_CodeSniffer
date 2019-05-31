@@ -143,7 +143,7 @@ class ParamTagSniff extends AbstractTagSniff
      *
      * @throws CodeWarning
      *
-     * @return bool|null Returns true if there is a desc.
+     * @return bool Returns true if there is a desc.
      */
     private function checkDescription(): bool
     {

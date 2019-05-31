@@ -8,6 +8,7 @@ use BestIt\CodeSniffer\CodeWarning;
 use BestIt\CodeSniffer\Helper\TokenHelper;
 use BestIt\Sniffs\AbstractSniff;
 use BestIt\Sniffs\DocPosProviderTrait;
+use PHP_CodeSniffer\Files\File;
 use function ucfirst;
 use const T_DOC_COMMENT_OPEN_TAG;
 use const T_DOC_COMMENT_STRING;
@@ -92,6 +93,8 @@ abstract class AbstractDocSniff extends AbstractSniff
      */
     private function fixDocCommentUcFirst(int $position, array $token): void
     {
+        assert($this->file instanceof File);
+
         $this->file->fixer->beginChangeset();
         $this->file->fixer->replaceToken($position, ucfirst($token['content']));
         $this->file->fixer->endChangeset();

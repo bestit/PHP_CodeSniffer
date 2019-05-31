@@ -89,7 +89,7 @@ class FluentSetterSniff extends MethodScopeSniff
                 self::ERROR_MUST_RETURN_THIS,
                 $functionPos,
                 static::CODE_MUST_RETURN_THIS,
-                $methodIdent
+                [$methodIdent]
             );
 
             if ($fixMustReturnThis) {
@@ -123,7 +123,7 @@ class FluentSetterSniff extends MethodScopeSniff
                 self::ERROR_NO_RETURN_FOUND,
                 $functionPos,
                 static::CODE_NO_RETURN_FOUND,
-                $errorData
+                [$errorData]
             );
 
             if ($fixNoReturnFound) {

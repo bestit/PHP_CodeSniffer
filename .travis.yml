@@ -17,3 +17,4 @@ script:
   - ./vendor/bin/phpmd build,src,tests text phpmd.xml.dist
   - ./vendor/bin/phpcpd src
   - ./vendor/bin/phpcpd tests
+  - ./vendor/bin/phpstan analyse --no-progress --memory-limit=1G

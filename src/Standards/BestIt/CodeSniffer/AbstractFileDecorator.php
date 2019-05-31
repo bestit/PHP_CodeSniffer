@@ -633,7 +633,7 @@ abstract class AbstractFileDecorator extends File
      *
      * @param int $start The position to start from in the token stack.
      * @param int $length The length of tokens to traverse from the start pos.
-     * @param int $origContent Whether the original content or the tab replaced
+     * @param bool $origContent Whether the original content or the tab replaced
      *                         content should be used.
      *
      * @return string The token contents.

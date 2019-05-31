@@ -25,7 +25,7 @@ trait DocPosProviderTrait
     /**
      * The used doc Helper.
      *
-     * @var DocHelper
+     * @var DocHelper|null
      */
     private $docHelper = null;
 
