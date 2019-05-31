@@ -140,6 +140,8 @@ The base for the BestIt Standard is [PSR-12](https://github.com/php-fig/fig-stan
 | BestIt.Formatting.OpenTag.LineNotEmpty | The next line after the open tag MUST be empty. | no |
 | BestIt.Formatting.OpenTag.NoSpaceAfterOpenTag | There MUST be whitespace after the open tag. | no |
 | BestIt.Formatting.OpenTag.OpenTagNotFirstStatement | After the open tag there MUST be an empty line. | no |
+| BestIt.Formatting.ReturnTypeHintSpacingSniff.NoSpaceBetweenColonAndTypeHint | There MUST be no whitespace after the return type colon. |
+| BestIt.Formatting.ReturnTypeHintSpacingSniff.WhitespaceBeforeColon | There MUST be no whitespace before the return type colon. |
 | BestIt.Formatting.SpaceAfterDeclare.GroupBlankLineFound | Multiple declare-statements SHOULD be grouped without a blank line. | no |
 | BestIt.Formatting.SpaceAfterDeclare.MuchWhitespaceFound | THERE MUST be just one single line after the declare statement. | no |
 | BestIt.Formatting.SpaceAfterDeclare.NoWhitespaceFound | There MUST be one empty line after declare-statement. | no |
