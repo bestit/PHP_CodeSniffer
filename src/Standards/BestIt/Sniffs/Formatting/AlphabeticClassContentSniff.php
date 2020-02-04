@@ -23,7 +23,7 @@ use const T_VARIABLE;
  */
 class AlphabeticClassContentSniff extends AbstractSniff
 {
-    use  ClassRegistrationTrait;
+    use ClassRegistrationTrait;
 
     /**
      * You SHOULD sort you constants, methods and properties alphabetically.

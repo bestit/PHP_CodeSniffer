@@ -353,8 +353,10 @@ class ReturnTypeDeclarationSniff extends AbstractSniff
 
         $returnAnnotation = $this->loadReturnAnnotation();
 
-        if (!$this->isFilledReturnAnnotation($returnAnnotation) ||
-            ($returnTypes = $this->getUsableReturnTypes($returnAnnotation))) {
+        if (
+            !$this->isFilledReturnAnnotation($returnAnnotation) ||
+            ($returnTypes = $this->getUsableReturnTypes($returnAnnotation))
+        ) {
             $this->validateReturnType($returnTypes ?? null);
         }
     }

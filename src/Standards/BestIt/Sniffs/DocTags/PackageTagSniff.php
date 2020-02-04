@@ -53,8 +53,10 @@ class PackageTagSniff extends AbstractTagSniff
     {
         $currentNamespace = NamespaceHelper::findCurrentNamespaceName($this->file, $this->stackPos);
 
-        if (((int) $this->file->findPrevious([T_NAMESPACE], $this->stackPos) > 0) && $currentNamespace &&
-            $tagContent !== $currentNamespace) {
+        if (
+            ((int) $this->file->findPrevious([T_NAMESPACE], $this->stackPos) > 0) && $currentNamespace &&
+            $tagContent !== $currentNamespace
+        ) {
             $isFixing = $this->file->addFixableError(
                 static::MESSAGE_CODE_TAG_WRONG_PACKAGE,
                 $this->stackPos,
