@@ -127,8 +127,10 @@ class TraitUseDeclarationSniff extends AbstractSniff
         $currentPointer = $usePos - 1;
         $tokens = $file->getTokens();
 
-        while ($tokens[$currentPointer]['code'] === T_WHITESPACE &&
-            $tokens[$currentPointer]['content'] !== $file->eolChar) {
+        while (
+            $tokens[$currentPointer]['code'] === T_WHITESPACE &&
+            $tokens[$currentPointer]['content'] !== $file->eolChar
+        ) {
             $indentation .= $tokens[$currentPointer]['content'];
             $currentPointer--;
         }

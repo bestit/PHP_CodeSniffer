@@ -23,9 +23,13 @@
 
     <rule ref="rulesets/cleancode.xml">
         <exclude name="ElseExpression" />
+        <exclude name="IfStatementAssignment" />
+        <exclude name="MissingImport" />
         <exclude name="StaticAccess" />
         <!-- Disable opinionated things blocking us -->
         <exclude name="BooleanArgumentFlag" />
+        <!-- This one seems kind of buggy for PHP 7.x codes -->
+        <exclude name="UndefinedVariable" />
     </rule>
 
     <rule ref="rulesets/controversial.xml"/>

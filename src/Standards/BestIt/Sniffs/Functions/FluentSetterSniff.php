@@ -148,6 +148,7 @@ class FluentSetterSniff extends MethodScopeSniff
 
     /**
      * Returns the position of this node.
+     *
      * @return int
      */
     public function getStackPos(): int
