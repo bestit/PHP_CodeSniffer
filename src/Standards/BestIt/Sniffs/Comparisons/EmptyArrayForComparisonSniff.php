@@ -126,8 +126,9 @@ class EmptyArrayForComparisonSniff extends AbstractSniff
      *           );
      * </code>
      *
+     * @see Tokens.php
+     *
      * @return int[]
-     * @see    Tokens.php
      */
     public function register(): array
     {

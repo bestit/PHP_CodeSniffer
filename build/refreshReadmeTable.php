@@ -108,11 +108,13 @@ function handleFiles(Iterator $regexIterator, string $baseFolder): array
                                 $foundSuppressValue = str_replace(['self::', 'static::'], '', $foundSuppress);
 
 
-                                if ($codeHasMatchingSuppress = in_array(
-                                    $foundSuppressValue,
-                                    [$constant, $constantValue],
-                                    true
-                                )) {
+                                if (
+                                    $codeHasMatchingSuppress = in_array(
+                                        $foundSuppressValue,
+                                        [$constant, $constantValue],
+                                        true
+                                    )
+                                ) {
                                     $codes[$sniffRule][1] = 'yes';
 
                                     break;

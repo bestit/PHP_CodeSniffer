@@ -99,8 +99,10 @@ class ForbiddenFunctionsSniff extends BaseSniff
         $this->file = new FileDecorator($phpcsFile);
         $this->stackPos = $stackPtr;
 
-        if (!$this->isSniffSuppressed(static::CODE_DISCOURAGED_WITHOUT_ALTERNATIVE) &&
-            !$this->isSniffSuppressed(static::CODE_DISCOURAGED_WITH_ALTERNATIVE)) {
+        if (
+            !$this->isSniffSuppressed(static::CODE_DISCOURAGED_WITHOUT_ALTERNATIVE) &&
+            !$this->isSniffSuppressed(static::CODE_DISCOURAGED_WITH_ALTERNATIVE)
+        ) {
             parent::process($phpcsFile, $stackPtr);
         }
     }

@@ -420,10 +420,14 @@ abstract class AbstractFileDecorator extends File
      *
      * @param int $stackPtr The position of the token we are checking.
      * @param int $type The type of token to search for.
+     * @param bool $first If TRUE, will return the matched condition
+     *                    furtherest away from the passed token.
+     *                    If FALSE, will return the matched condition
+     *                    closest to the passed token.
      *
      * @return int
      */
-    public function getCondition($stackPtr, $type)
+    public function getCondition($stackPtr, $type, $first = true)
     {
         return $this->__call(__FUNCTION__, func_get_args());
     }

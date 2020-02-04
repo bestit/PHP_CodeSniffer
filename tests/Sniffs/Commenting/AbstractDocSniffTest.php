@@ -56,7 +56,6 @@ abstract class AbstractDocSniffTest extends SniffTestCase
     public function testRequiredConstants(string $constant): void
     {
         static::assertTrue(
-
             defined(get_class($this->fixture) . '::' . $constant),
             'Constant ' . $constant . ' is missing.'
         );

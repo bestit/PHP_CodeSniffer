@@ -60,6 +60,7 @@ class UseStatementHelperTest extends TestCase
      * Checks if the correct value is returned.
      *
      * @dataProvider getTypeAsserts
+     *
      * @param string $type
      * @param string $name The name which should be used in php codes for uses.
      *

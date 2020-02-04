@@ -9,7 +9,9 @@
     <description>The best it coding standard.</description>
 
     <!-- PSR12 includes PSR-1, extends PSR-2 and even contains rules for the line length itself! -->
-    <rule ref="PSR12" />
+    <rule ref="PSR12">
+        <exclude name="PSR12.Files.FileHeader.SpacingAfterBlock" />
+    </rule>
     <rule ref="PHPCompatibility" />
 
     <rule ref="SlevomatCodingStandard.Classes.ClassConstantVisibility">

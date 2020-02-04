@@ -38,7 +38,7 @@ trait TestTokenRegistrationTrait
      *
      * @return void
      */
-    abstract public static function assertSame($expected, $actual, $message = '');
+    abstract public static function assertSame($expected, $actual, string $message = ''): void;
 
     /**
      * Returns the tokens which should be checked.

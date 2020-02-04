@@ -12,6 +12,7 @@ use const T_OPEN_TAG;
 
 /**
  * Class AlphabeticallySortedUsesSniffTest
+ *
  * @author b3nl <code@b3nl.de>
  * @package BestIt\Sniffs\Formatting
  */
