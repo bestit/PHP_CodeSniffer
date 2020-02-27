@@ -28,7 +28,7 @@ class RequiredClassTagsSniff extends AbstractRequiredTagsSniff
             0
         );
 
-        return (int) ($namespacePtr !== -1);
+        return (int) ($namespacePtr !== false);
     }
 
     /**

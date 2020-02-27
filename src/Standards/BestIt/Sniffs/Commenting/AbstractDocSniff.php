@@ -66,9 +66,9 @@ abstract class AbstractDocSniff extends AbstractSniff
     /**
      * The cached position of the summary.
      *
-     * @var int|null
+     * @var int|bool
      */
-    private $summaryPosition = -1;
+    private $summaryPosition = false;
 
     /**
      * Returns true if there is a doc block.
@@ -124,7 +124,7 @@ abstract class AbstractDocSniff extends AbstractSniff
      */
     private function getSummaryPosition(): ?int
     {
-        if ($this->summaryPosition === -1) {
+        if ($this->summaryPosition === false) {
             $this->summaryPosition = $this->loadSummaryPosition();
         }
 
@@ -143,7 +143,7 @@ abstract class AbstractDocSniff extends AbstractSniff
         $istNextLineEmpty = true;
         $nextRelevantPos = $this->loadNextDocBlockContent($startPosition);
 
-        if ($nextRelevantPos !== -1) {
+        if ($nextRelevantPos !== false) {
             $istNextLineEmpty = $this->tokens[$startPosition]['line'] + 1 < $this->tokens[$nextRelevantPos]['line'];
         }
 
@@ -162,7 +162,7 @@ abstract class AbstractDocSniff extends AbstractSniff
         $isPrevLineEmpty = true;
         $posPrevContentPos = $this->loadPrevDocBlockContent($startPosition);
 
-        if ($posPrevContentPos !== -1) {
+        if ($posPrevContentPos !== false) {
             $isPrevLineEmpty = $this->tokens[$startPosition]['line'] - 1 > $this->tokens[$posPrevContentPos]['line'];
         }
 
@@ -186,9 +186,9 @@ abstract class AbstractDocSniff extends AbstractSniff
      *
      * @param int $startPosition
      *
-     * @return int
+     * @return int|bool
      */
-    private function loadNextDocBlockContent(int $startPosition): int
+    private function loadNextDocBlockContent(int $startPosition)
     {
         return $this->file->findNext(
             [
@@ -206,9 +206,9 @@ abstract class AbstractDocSniff extends AbstractSniff
      *
      * @param int $startPosition
      *
-     * @return int
+     * @return int|bool
      */
-    private function loadPrevDocBlockContent(int $startPosition): int
+    private function loadPrevDocBlockContent(int $startPosition)
     {
         return $this->file->findPrevious(
             [
@@ -263,7 +263,7 @@ abstract class AbstractDocSniff extends AbstractSniff
     protected function tearDown(): void
     {
         $this->resetDocCommentPos();
-        $this->summaryPosition = -1;
+        $this->summaryPosition = false;
     }
 
     /**
@@ -346,7 +346,7 @@ abstract class AbstractDocSniff extends AbstractSniff
         $summaryPos = $this->getSummaryPosition();
         $nextPossiblePos = $this->loadNextDocBlockContent($summaryPos);
 
-        if ($nextPossiblePos > -1) {
+        if ($nextPossiblePos !== false && $nextPossiblePos > 0) {
             $nextToken = $this->tokens[$nextPossiblePos];
 
             if (($nextToken['code'] === T_DOC_COMMENT_STRING) && !$this->isNextLineEmpty($summaryPos)) {
