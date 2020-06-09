@@ -18,9 +18,9 @@ trait DocPosProviderTrait
     /**
      * The position of the doc comment or null.
      *
-     * @var int|null
+     * @var int|bool
      */
-    private $docCommentPos = -1;
+    private $docCommentPos = false;
 
     /**
      * The used doc Helper.
@@ -32,11 +32,11 @@ trait DocPosProviderTrait
     /**
      * Returns the position of the doc block if there is one.
      *
-     * @return int|null
+     * @return int|bool
      */
-    protected function getDocCommentPos(): ?int
+    protected function getDocCommentPos()
     {
-        if ($this->docCommentPos === -1) {
+        if ($this->docCommentPos === false) {
             $this->docCommentPos = $this->loadDocCommentPos();
         }
 
@@ -90,7 +90,7 @@ trait DocPosProviderTrait
      */
     protected function resetDocCommentPos(): void
     {
-        $this->docCommentPos = -1;
+        $this->docCommentPos = false;
         $this->docHelper = null;
     }
 

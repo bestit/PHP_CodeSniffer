@@ -47,6 +47,11 @@ class RequiredDocBlockSniff extends AbstractSniff
     private const MESSAGE_MISSING_DOC_BLOCK = 'Please provide a doc block for your %s.';
 
     /**
+     * The message for missing doc blocks in variable declarations.
+     */
+    private const MESSAGE_MISSING_DOC_BLOCK_VAR = 'Please provide a doc block for your %s or define a property type.';
+
+    /**
      * The error message for the inline block.
      */
     private const MESSAGE_NO_MULTI_LINE_DOC_BLOCK_PREFIX = 'Please provide a multi line doc block for your %s.';
@@ -87,11 +92,19 @@ class RequiredDocBlockSniff extends AbstractSniff
         if (!$this->getDocCommentPos()) {
             $tokenIdent = $this->getTokenName();
 
-            $exception = (new CodeError(
-                static::CODE_MISSING_DOC_BLOCK_PREFIX . ucfirst($tokenIdent),
-                self::MESSAGE_MISSING_DOC_BLOCK,
-                $this->stackPos
-            ))->setPayload([lcfirst($tokenIdent)]);
+            if ($tokenIdent == $this->registeredTokens[T_VARIABLE]) {
+                $exception = (new CodeError(
+                    static::CODE_MISSING_DOC_BLOCK_PREFIX . ucfirst($tokenIdent),
+                    self::MESSAGE_MISSING_DOC_BLOCK_VAR,
+                    $this->stackPos
+                ))->setPayload([lcfirst($tokenIdent)]);
+            } else {
+                $exception = (new CodeError(
+                    static::CODE_MISSING_DOC_BLOCK_PREFIX . ucfirst($tokenIdent),
+                    self::MESSAGE_MISSING_DOC_BLOCK,
+                    $this->stackPos
+                ))->setPayload([lcfirst($tokenIdent)]);
+            }
 
             throw $exception;
         }

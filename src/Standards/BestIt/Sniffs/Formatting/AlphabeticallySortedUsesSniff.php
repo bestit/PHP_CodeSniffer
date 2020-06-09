@@ -45,7 +45,7 @@ class AlphabeticallySortedUsesSniff extends AbstractSniff
      */
     protected function areRequirementsMet(): bool
     {
-        return (bool) $this->useStatements = UseStatementHelper::getUseStatements(
+        return (bool) $this->useStatements = UseStatementHelper::getUseStatementsForPointer(
             $this->getFile()->getBaseFile(),
             $this->getStackPos()
         );

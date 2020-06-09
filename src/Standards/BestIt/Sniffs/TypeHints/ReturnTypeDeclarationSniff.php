@@ -11,6 +11,7 @@ use BestIt\Sniffs\DocPosProviderTrait;
 use BestIt\Sniffs\FunctionRegistrationTrait;
 use BestIt\Sniffs\SuppressingTrait;
 use SlevomatCodingStandard\Helpers\Annotation;
+use SlevomatCodingStandard\Helpers\Annotation\ReturnAnnotation;
 use SlevomatCodingStandard\Helpers\FunctionHelper;
 use SlevomatCodingStandard\Helpers\TypeHintHelper;
 use function array_filter;
@@ -190,11 +191,11 @@ class ReturnTypeDeclarationSniff extends AbstractSniff
     /**
      * Returns the return types of the annotation.
      *
-     * @param null|Annotation $annotation
+     * @param null|ReturnAnnotation $annotation
      *
      * @return array
      */
-    private function getReturnsFromAnnotation(?Annotation $annotation): array
+    private function getReturnsFromAnnotation(?ReturnAnnotation $annotation): array
     {
         return $this->isFilledReturnAnnotation($annotation)
             ? explode('|', preg_split('~\\s+~', $annotation->getContent())[0])
@@ -207,11 +208,11 @@ class ReturnTypeDeclarationSniff extends AbstractSniff
      * Usable means, that there should be one type != mixed in the return-annotation or a nullable type, which means
      * 2 types like null|$ANYTYPE.
      *
-     * @param Annotation $annotation
+     * @param ReturnAnnotation $annotation
      *
      * @return array|null Null if there are no usable types or the usable types.
      */
-    private function getUsableReturnTypes(Annotation $annotation): ?array
+    private function getUsableReturnTypes(ReturnAnnotation $annotation): ?array
     {
         $return = null;
 
@@ -259,11 +260,11 @@ class ReturnTypeDeclarationSniff extends AbstractSniff
     /**
      * Check if function has a return annotation
      *
-     * @param Annotation|null $returnAnnotation Annotation of the function
+     * @param ReturnAnnotation|null $returnAnnotation Annotation of the function
      *
      * @return bool Function has a annotation
      */
-    private function isFilledReturnAnnotation(?Annotation $returnAnnotation = null): bool
+    private function isFilledReturnAnnotation(?ReturnAnnotation $returnAnnotation = null): bool
     {
         return $returnAnnotation && $returnAnnotation->getContent();
     }
@@ -308,9 +309,9 @@ class ReturnTypeDeclarationSniff extends AbstractSniff
     /**
      * Loads the return annotation for this method.
      *
-     * @return null|Annotation
+     * @return null\ReturnAnnotation
      */
-    protected function loadReturnAnnotation(): ?Annotation
+    protected function loadReturnAnnotation(): ?ReturnAnnotation
     {
         return FunctionHelper::findReturnAnnotation($this->getFile()->getBaseFile(), $this->stackPos);
     }
