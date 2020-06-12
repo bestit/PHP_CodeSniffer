@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace BestIt\Sniffs;
 
-use BestIt\CodeSniffer\File;
 use BestIt\CodeSniffer\Helper\DocHelper;
+use PHP_CodeSniffer\Files\File;
 
 /**
  * Trait DocPosProviderTrait.
@@ -51,7 +51,7 @@ trait DocPosProviderTrait
     protected function getDocHelper(): DocHelper
     {
         if ($this->docHelper === null) {
-            $this->docHelper = new DocHelper($this->getFile()->getBaseFile(), $this->getStackPos());
+            $this->docHelper = new DocHelper($this->getFile(), $this->getStackPos());
         }
 
         return $this->docHelper;

@@ -210,7 +210,7 @@ class TagSortingSniff extends AbstractSniff
     private function createNewSortedTagsContent(): string
     {
         $file = $this->file;
-        $eolChar = $file->getEolChar();
+        $eolChar = $file->eolChar;
         $newContent = '';
         $prevTagContent = '';
         $sortedTags = $this->sortTokens($this->getTagTokens());
@@ -272,7 +272,7 @@ class TagSortingSniff extends AbstractSniff
      */
     private function fixSorting(): void
     {
-        $fixer = $this->file->getFixer();
+        $fixer = $this->file->fixer;
 
         $fixer->beginChangeset();
 
@@ -322,7 +322,7 @@ class TagSortingSniff extends AbstractSniff
      */
     private function insertNewLine(array $token): void
     {
-        $fixer = $this->file->getFixer();
+        $fixer = $this->file->fixer;
         $lineStartPadding = str_pad('', $token['column'] - 3, ' ');
 
         $fixer->beginChangeset();
@@ -332,7 +332,7 @@ class TagSortingSniff extends AbstractSniff
 
         $fixer->addContentBefore(
             $token['pointer'],
-            $this->file->getEolChar() . $lineStartPadding . '* '
+            $this->file->eolChar . $lineStartPadding . '* '
         );
 
         $fixer->endChangeset();

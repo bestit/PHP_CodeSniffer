@@ -6,9 +6,8 @@ namespace BestIt\Sniffs;
 
 use BestIt\CodeSniffer\CodeError;
 use BestIt\CodeSniffer\CodeWarning;
-use BestIt\CodeSniffer\File;
 use BestIt\CodeSniffer\Helper\ExceptionHelper;
-use PHP_CodeSniffer\Files\File as BaseFile;
+use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
 
 /**
@@ -119,14 +118,14 @@ abstract class AbstractSniff implements Sniff
      *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
      *
-     * @param BaseFile $phpcsFile The PHP_CodeSniffer file where the token was found.
+     * @param File $file The PHP_CodeSniffer file where the token was found.
      * @param int $stackPos The position in the PHP_CodeSniffer file's token stack where the token was found.
      *
      * @return void
      */
-    public function process(BaseFile $phpcsFile, $stackPos): void
+    public function process(File $file, $stackPos): void
     {
-        $this->file = new File($phpcsFile);
+        $this->file = $file;
         $this->stackPos = $stackPos;
         $this->tokens = $this->getFile()->getTokens();
         $this->token = $this->tokens[$stackPos];

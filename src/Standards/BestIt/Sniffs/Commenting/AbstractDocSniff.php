@@ -111,7 +111,7 @@ abstract class AbstractDocSniff extends AbstractSniff
 
         $this->file->fixer->addContent(
             $position,
-            $this->file->getEolChar() . str_repeat('    ', $token['level']) . ' *'
+            $this->file->eolChar . str_repeat('    ', $token['level']) . ' *'
         );
 
         $this->file->fixer->endChangeset();
@@ -274,7 +274,7 @@ abstract class AbstractDocSniff extends AbstractSniff
     private function validateDescriptions(): self
     {
         $commentPoss = TokenHelper::findNextAll(
-            $this->file->getBaseFile(),
+            $this->file,
             [T_DOC_COMMENT_STRING, T_DOC_COMMENT_TAG],
             $this->getDocCommentPos(),
             $this->getDocHelper()->getBlockEndPosition()

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace BestIt\Sniffs\DocTags;
 
-use BestIt\CodeSniffer\File;
 use Closure;
+use PHP_CodeSniffer\Files\File;
 
 /**
  * Helps you validating tag contents.

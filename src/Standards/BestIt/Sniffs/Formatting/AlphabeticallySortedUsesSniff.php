@@ -46,7 +46,7 @@ class AlphabeticallySortedUsesSniff extends AbstractSniff
     protected function areRequirementsMet(): bool
     {
         return (bool) $this->useStatements = UseStatementHelper::getUseStatementsForPointer(
-            $this->getFile()->getBaseFile(),
+            $this->getFile(),
             $this->getStackPos()
         );
     }
@@ -171,7 +171,7 @@ class AlphabeticallySortedUsesSniff extends AbstractSniff
 
         $firstUseStatement = reset($this->useStatements);
 
-        $file = $this->getFile()->getBaseFile();
+        $file = $this->getFile();
 
         $file->fixer->beginChangeset();
 
@@ -194,7 +194,7 @@ class AlphabeticallySortedUsesSniff extends AbstractSniff
     {
         $this->sortUseStatements();
 
-        $file = $this->getFile()->getBaseFile();
+        $file = $this->getFile();
 
         return implode(
             $file->eolChar,
@@ -285,7 +285,7 @@ class AlphabeticallySortedUsesSniff extends AbstractSniff
      */
     private function removeOldUseStatements(UseStatement $firstUseStatement): void
     {
-        $file = $this->getFile()->getBaseFile();
+        $file = $this->getFile();
         $lastUseStatement = end($this->useStatements);
         $lastSemicolonPointer = TokenHelper::findNext($file, T_SEMICOLON, $lastUseStatement->getPointer());
 

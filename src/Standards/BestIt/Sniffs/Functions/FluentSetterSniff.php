@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace BestIt\Sniffs\Functions;
 
-use BestIt\CodeSniffer\File as FileDecorator;
 use BestIt\CodeSniffer\Helper\PropertyHelper;
 use BestIt\CodeSniffer\Helper\TokenHelper;
 use BestIt\Sniffs\SuppressingTrait;
@@ -55,7 +54,7 @@ class FluentSetterSniff extends MethodScopeSniff
     /**
      * The used file decorated for the interface.
      *
-     * @var FileDecorator
+     * @var File
      */
     private $file;
 
@@ -139,9 +138,9 @@ class FluentSetterSniff extends MethodScopeSniff
     /**
      * Returns the used file decorated for the interface.
      *
-     * @return FileDecorator
+     * @return File
      */
-    public function getFile(): FileDecorator
+    public function getFile(): File
     {
         return $this->file;
     }
@@ -172,7 +171,7 @@ class FluentSetterSniff extends MethodScopeSniff
         $functionPos,
         $classPos
     ): void {
-        $this->file = new FileDecorator($file);
+        $this->file = $file;
         $this->stackPos = $functionPos;
 
         $isSuppressed = $this->isSniffSuppressed(static::CODE_NO_RETURN_FOUND);
@@ -198,7 +197,7 @@ class FluentSetterSniff extends MethodScopeSniff
 
         if (substr($methodName, 0, 3) === 'set') {
             // We define in our styleguide, that there is only one class per file!
-            $properties = (new PropertyHelper(new FileDecorator($file)))->getProperties(
+            $properties = (new PropertyHelper($file))->getProperties(
                 $file->getTokens()[$classPosition]
             );
 

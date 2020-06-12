@@ -1,6 +1,6 @@
 <?php
 
-use BestIt\CodeSniffer\File;
+use PHP_CodeSniffer\Files\File;
 
 class TypeHintDeclarationSniff
 {

@@ -239,7 +239,7 @@ class ReturnTypeDeclarationSniff extends AbstractSniff
     private function hasReturnType(): bool
     {
         if ($this->hasReturnType === null) {
-            $this->hasReturnType = FunctionHelper::hasReturnTypeHint($this->file->getBaseFile(), $this->stackPos);
+            $this->hasReturnType = FunctionHelper::hasReturnTypeHint($this->file, $this->stackPos);
         }
 
         return $this->hasReturnType;
@@ -303,7 +303,7 @@ class ReturnTypeDeclarationSniff extends AbstractSniff
      */
     private function loadFunctionName(): string
     {
-        return FunctionHelper::getName($this->getFile()->getBaseFile(), $this->stackPos);
+        return FunctionHelper::getName($this->getFile(), $this->stackPos);
     }
 
     /**
@@ -313,7 +313,7 @@ class ReturnTypeDeclarationSniff extends AbstractSniff
      */
     protected function loadReturnAnnotation(): ?ReturnAnnotation
     {
-        return FunctionHelper::findReturnAnnotation($this->getFile()->getBaseFile(), $this->stackPos);
+        return FunctionHelper::findReturnAnnotation($this->getFile(), $this->stackPos);
     }
 
     /**

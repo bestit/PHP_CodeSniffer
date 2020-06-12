@@ -33,16 +33,16 @@ class RequiredMethodTagsSniff extends AbstractRequiredTagsSniff
         $closePos = $this->tokens[$stackPos]['comment_closer'];
         $closeTag = $this->tokens[$closePos];
         $indent = str_repeat(' ', $closeTag['column'] - 1);
-        $fileDecorator = $this->getFile();
+        $file = $this->getFile();
 
         $returnTypeHint = FunctionHelper::findReturnTypeHint(
-            $fileDecorator->getBaseFile(),
-            $fileDecorator->findNext([T_FUNCTION], $closePos + 1)
+            $file,
+            $file->findNext([T_FUNCTION], $closePos + 1)
         );
 
         $typeHint = $returnTypeHint ? $returnTypeHint->getTypeHint() : 'void';
 
-        $fixer = $fileDecorator->fixer;
+        $fixer = $file->fixer;
 
         $fixer->beginChangeset();
 
@@ -99,7 +99,7 @@ class RequiredMethodTagsSniff extends AbstractRequiredTagsSniff
 
         $stackToken = $this->tokens[$this->stackPos];
 
-        $functionNamePtr = $this->file->getBaseFile()->findNext(
+        $functionNamePtr = $this->file->findNext(
             [T_STRING],
             $this->stackPos + 1,
             $stackToken['parenthesis_opener']

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace BestIt\Sniffs;
 
-use BestIt\CodeSniffer\File;
+use PHP_CodeSniffer\Files\File;
 use SlevomatCodingStandard\Helpers\SuppressHelper;
 
 /**
