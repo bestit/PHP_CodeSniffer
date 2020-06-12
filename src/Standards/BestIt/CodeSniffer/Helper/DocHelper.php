@@ -30,21 +30,21 @@ class DocHelper
      *
      * @var File
      */
-    private $file;
+    private File $file;
 
     /**
      * Position to the token which is to be listened.
      *
      * @var int
      */
-    private $stackPos;
+    private int $stackPos;
 
     /**
      * Token stack of the current file.
      *
      * @var array
      */
-    private $tokens;
+    private array $tokens;
 
     /**
      * DocHelper constructor.
@@ -154,6 +154,6 @@ class DocHelper
             )
         );
 
-        return ((int) $endPos) > 0 ? $endPos : null;
+        return $endPos !== false ? $endPos : null;
     }
 }

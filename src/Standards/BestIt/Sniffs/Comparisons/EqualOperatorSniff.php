@@ -32,7 +32,7 @@ class EqualOperatorSniff extends AbstractSniff
      *
      * @var bool $isFixing
      */
-    public $isFixable = false;
+    public bool $isFixable = false;
     
     /**
      * Processes the token.

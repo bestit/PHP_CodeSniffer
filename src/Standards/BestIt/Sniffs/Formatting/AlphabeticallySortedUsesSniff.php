@@ -36,7 +36,7 @@ class AlphabeticallySortedUsesSniff extends AbstractSniff
      *
      * @var UseStatement[]
      */
-    private $useStatements;
+    private array $useStatements;
 
     /**
      * Returns true if we have use statements.

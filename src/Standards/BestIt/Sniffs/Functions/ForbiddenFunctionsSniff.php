@@ -61,7 +61,7 @@ class ForbiddenFunctionsSniff extends BaseSniff
      *
      * @var int|void
      */
-    protected $stackPos;
+    protected ?int $stackPos = null;
 
     /**
      * Type-safe getter for the file.

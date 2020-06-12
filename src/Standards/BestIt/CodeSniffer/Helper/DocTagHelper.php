@@ -24,21 +24,21 @@ class DocTagHelper
      *
      * @var array
      */
-    private $token;
+    private array $token;
 
     /**
      * The PHP CS file
      *
      * @var File
      */
-    private $file;
+    private File $file;
 
     /**
      * The token stack from php cs file.
      *
      * @var array
      */
-    private $tokens;
+    private array $tokens;
 
     /**
      * DocTagHelper constructor.

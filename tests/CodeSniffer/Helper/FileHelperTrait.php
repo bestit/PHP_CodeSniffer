@@ -20,7 +20,7 @@ trait FileHelperTrait
      *
      * @var File|null
      */
-    protected $file;
+    protected ?File $file = null;
 
     /**
      * Fills a codesniffer file object for the given file path.

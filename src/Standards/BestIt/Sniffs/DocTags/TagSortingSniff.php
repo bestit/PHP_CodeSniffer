@@ -58,14 +58,14 @@ class TagSortingSniff extends AbstractSniff
      *
      * @var DocTagHelper
      */
-    private $docTagHelper;
+    private DocTagHelper $docTagHelper;
 
     /**
      * The loaded tokens of this comment.
      *
      * @var array|null
      */
-    private $loadedTagTokens;
+    private ?array $loadedTagTokens = null;
 
     /**
      * Returns true if the requirements for this sniff are met.

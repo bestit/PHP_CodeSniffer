@@ -20,14 +20,14 @@ trait TagContentFormatTrait
      *
      * @var bool
      */
-    protected $asError = true;
+    protected bool $asError = true;
 
     /**
      * The found matches or void.
      *
-     * @var array
+     * @var array|null
      */
-    protected $matches;
+    protected ?array $matches = null;
 
     /**
      * The invalid tag should lead to an error.

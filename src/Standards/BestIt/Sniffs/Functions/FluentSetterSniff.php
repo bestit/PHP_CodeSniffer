@@ -49,21 +49,21 @@ class FluentSetterSniff extends MethodScopeSniff
      *
      * @var string
      */
-    public $identation = '    ';
+    public string $identation = '    ';
 
     /**
      * The used file decorated for the interface.
      *
      * @var File
      */
-    private $file;
+    private File $file;
 
     /**
      * The position of this node.
      *
      * @var int
      */
-    private $stackPos;
+    private int $stackPos;
 
     /**
      * Registers an error if an empty return (return null; or return;) is given.

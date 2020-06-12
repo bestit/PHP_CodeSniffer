@@ -43,14 +43,14 @@ class CamelCaseVariableSniff extends AbstractSniff
      *
      * @var string
      */
-    private $prevSniffedFile = '';
+    private string $prevSniffedFile = '';
 
     /**
      * The vars which were sniffed in this file.
      *
      * @var array
      */
-    private $sniffedVars = [];
+    private array $sniffedVars = [];
 
     /**
      * Returns true if there is a value assignment or a property declaration, but which can be without an assignment.

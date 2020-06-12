@@ -25,9 +25,9 @@ trait DocPosProviderTrait
     /**
      * The used doc Helper.
      *
-     * @var DocHelper
+     * @var DocHelper|null
      */
-    private $docHelper = null;
+    private ?DocHelper $docHelper = null;
 
     /**
      * Returns the position of the doc block if there is one.

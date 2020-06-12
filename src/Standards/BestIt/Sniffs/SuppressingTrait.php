@@ -18,9 +18,9 @@ trait SuppressingTrait
     /**
      * The used suppresshelper.
      *
-     * @var SuppressHelper
+     * @var SuppressHelper|null
      */
-    private $suppressHelper = null;
+    private ?SuppressHelper $suppressHelper = null;
 
     /**
      * Type-safe getter for the file.

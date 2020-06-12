@@ -45,14 +45,14 @@ class ReturnTagSniff extends AbstractTagSniff
      *
      * @var bool
      */
-    public $descAsWarning = false;
+    public bool $descAsWarning = false;
 
     /**
      * This return types will not need a summary in any case.
      *
      * @var array
      */
-    public $excludedTypes = ['void'];
+    public array $excludedTypes = ['void'];
 
     /**
      * Throws a code warning if you have no description.

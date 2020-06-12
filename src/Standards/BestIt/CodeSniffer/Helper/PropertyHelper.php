@@ -20,7 +20,7 @@ class PropertyHelper
      *
      * @var File
      */
-    private $file;
+    private File $file;
 
     /**
      * PropertyHelper constructor.

@@ -38,21 +38,15 @@
         </properties>
     </rule>
 
-    <rule ref="BestIt.TypeHints.ParameterTypeHint.MissingAnyTypeHint">
-        <exclude name="BestIt.TypeHints.ParameterTypeHint.UselessAnnotation"/>
-        <exclude name="BestIt.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification"/>
-        <exclude name="BestIt.TypeHints.ParameterTypeHint.MissingNativeTypeHint"/>
-    </rule>
-
     <rule ref="Generic.Arrays.DisallowLongArraySyntax" />
 
     <rule ref="Generic.Formatting.SpaceAfterCast" />
 
     <rule ref="Squiz.Strings.DoubleQuoteUsage.NotRequired" />
 
-    <rule ref="BestIt.TypeHints.PropertyTypeHint.MissingAnyTypeHint">
+    <rule ref="BestIt.TypeHints.PropertyTypeHint">
         <type>Warning</type>
+        <exclude name="BestIt.TypeHints.PropertyTypeHint.UselessAnnotation"/>
         <exclude name="BestIt.TypeHints.PropertyTypeHint.MissingTraversableTypeHintSpecification"/>
-        <exclude name="BestIt.TypeHints.PropertyTypeHint.MissingNativeTypeHint"/>
     </rule>
 </ruleset>

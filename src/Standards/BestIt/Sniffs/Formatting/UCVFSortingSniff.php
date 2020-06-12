@@ -50,7 +50,7 @@ class UCVFSortingSniff extends AbstractSniff
      *
      * @var array
      */
-    private $sortedTokens = [
+    private array $sortedTokens = [
         T_USE,
         T_CONST,
         T_VARIABLE,

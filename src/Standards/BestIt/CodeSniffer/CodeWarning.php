@@ -21,21 +21,21 @@ class CodeWarning extends Exception
      *
      * @var bool
      */
-    private $isFixable = false;
+    private bool $isFixable = false;
 
     /**
      * The payload for displaying the error message.
      *
      * @var array
      */
-    private $payload = [];
+    private array $payload = [];
 
     /**
      * The position of the error.
      *
      * @var int
      */
-    private $stackPosition;
+    private int $stackPosition;
 
     /**
      * The erroneous token.

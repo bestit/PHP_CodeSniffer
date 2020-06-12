@@ -41,7 +41,7 @@ class EmptyArrayForComparisonSniff extends AbstractSniff
      *
      * @var array|null Is filled by the setup method.
      */
-    private $invalidStructure;
+    private ?array $invalidStructure = null;
 
     /**
      * Search starting with the given search pos for the invalid codes in consecutive order.

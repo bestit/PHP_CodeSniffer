@@ -55,14 +55,14 @@ abstract class AbstractRequiredTagsSniff extends AbstractSniff
      *
      * @var array|null
      */
-    private $processedTagRules = null;
+    private ?array $processedTagRules = null;
 
     /**
      * The possible tags of this php structure.
      *
      * @var array|null Tag tokens.
      */
-    private $tags = null;
+    private ?array $tags = null;
 
     /**
      * Returns true if the requirements for this sniff are met.

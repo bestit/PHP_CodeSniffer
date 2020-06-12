@@ -82,21 +82,21 @@ class ParamTagSniff extends AbstractTagSniff
      *
      * @var array|null Is filled by runtime.
      */
-    private $argumentToken = null;
+    private ?array $argumentToken = null;
 
     /**
      * Should the missing description emit a warning?
      *
      * @var bool
      */
-    public $descAsWarning = false;
+    public bool $descAsWarning = false;
 
     /**
      * The used variable tokens for this method.
      *
      * @var array
      */
-    protected $varTokens;
+    protected array $varTokens;
 
     /**
      * Simple check if the pattern is correct.

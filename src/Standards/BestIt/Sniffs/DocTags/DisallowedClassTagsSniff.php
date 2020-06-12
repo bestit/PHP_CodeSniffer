@@ -21,7 +21,7 @@ class DisallowedClassTagsSniff extends AbstractDisallowedTagsSniff
      *
      * @var array
      */
-    public $disallowedTags = [
+    public array $disallowedTags = [
         'api',
         'category',
         'copyright',

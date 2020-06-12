@@ -12,6 +12,9 @@ use const T_CLASS;
 use const T_CONST;
 use const T_FUNCTION;
 use const T_INTERFACE;
+use const T_PRIVATE;
+use const T_PROTECTED;
+use const T_PUBLIC;
 use const T_TRAIT;
 use const T_VARIABLE;
 
@@ -52,6 +55,9 @@ class RequiredDocBlockSniffTest extends SniffTestCase
             T_CONST,
             T_INTERFACE,
             T_FUNCTION,
+            T_PRIVATE,
+            T_PROTECTED,
+            T_PUBLIC,
             T_TRAIT,
             T_VARIABLE
         ];

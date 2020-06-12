@@ -16,6 +16,9 @@ use const T_CLASS;
 use const T_CONST;
 use const T_FUNCTION;
 use const T_INTERFACE;
+use const T_PRIVATE;
+use const T_PROTECTED;
+use const T_PUBLIC;
 use const T_TRAIT;
 use const T_VARIABLE;
 
@@ -61,13 +64,16 @@ class RequiredDocBlockSniff extends AbstractSniff
      *
      * @var array
      */
-    private $registeredTokens = [
+    private array $registeredTokens = [
         T_CLASS => 'Class',
         T_CONST => 'Constant',
         T_INTERFACE => 'Interface',
         T_FUNCTION => 'Function',
+        T_PRIVATE => 'MethodOrProperty',
+        T_PROTECTED => 'MethodOrProperty',
+        T_PUBLIC => 'MethodOrProperty',
         T_TRAIT => 'Trait',
-        T_VARIABLE => 'Variable'
+        T_VARIABLE => 'Variable',
     ];
 
     /**
@@ -92,21 +98,11 @@ class RequiredDocBlockSniff extends AbstractSniff
         if (!$this->getDocCommentPos()) {
             $tokenIdent = $this->getTokenName();
 
-            if ($tokenIdent == $this->registeredTokens[T_VARIABLE]) {
-                $exception = (new CodeError(
-                    static::CODE_MISSING_DOC_BLOCK_PREFIX . ucfirst($tokenIdent),
-                    self::MESSAGE_MISSING_DOC_BLOCK_VAR,
-                    $this->stackPos
-                ))->setPayload([lcfirst($tokenIdent)]);
-            } else {
-                $exception = (new CodeError(
-                    static::CODE_MISSING_DOC_BLOCK_PREFIX . ucfirst($tokenIdent),
-                    self::MESSAGE_MISSING_DOC_BLOCK,
-                    $this->stackPos
-                ))->setPayload([lcfirst($tokenIdent)]);
-            }
-
-            throw $exception;
+            throw (new CodeError(
+                static::CODE_MISSING_DOC_BLOCK_PREFIX . ucfirst($tokenIdent),
+                self::MESSAGE_MISSING_DOC_BLOCK,
+                $this->stackPos
+            ))->setPayload([lcfirst($tokenIdent)]);
         }
     }
 

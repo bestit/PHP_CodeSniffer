@@ -7,6 +7,8 @@ namespace BestIt\Sniffs\DocTags;
 /**
  * Checks if the content of the author tag is valid.
  *
+ * phpcs:disable
+ *
  * @author blange <bjoern.lange@bestit-online.de>
  * @package BestIt\Sniffs\DocTags
  */
@@ -15,6 +17,8 @@ class AuthorTagSniff extends AbstractTagSniff
     use TagContentFormatTrait {
         isValidContent as protected isValidContentInTrait;
     }
+
+    // phpcs:disable
 
     /**
      * You MUST commit to your codes and give an [author tag](http://docs.phpdoc.org/references/phpdoc/tags/author.html).

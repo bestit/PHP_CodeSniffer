@@ -84,7 +84,7 @@ class TraitUseSpacingSniff extends AbstractSniff
      *
      * @var array
      */
-    private $uses;
+    private array $uses;
 
     /**
      * Returns false if there are no uses.

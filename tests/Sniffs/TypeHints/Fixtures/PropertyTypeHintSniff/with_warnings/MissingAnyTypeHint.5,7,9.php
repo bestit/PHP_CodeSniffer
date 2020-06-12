@@ -1,6 +1,6 @@
 <?php
 
-class PropertyTypeHintSniff
+class MissingAnyTypeHint
 {
     private $number;
 

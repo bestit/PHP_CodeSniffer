@@ -22,7 +22,7 @@ class DocTagHelperTest extends TestCase
      *
      * @var DocTagHelper
      */
-    private $fixture;
+    private DocTagHelper $fixture;
 
     /**
      * Sets up the test.

@@ -18,6 +18,11 @@ class ReturnTypeHintSpacingSniffTest extends SniffTestCase
 {
     use DefaultSniffIntegrationTestTrait;
 
+    /**
+     * The tested class.
+     *
+     * @var ReturnTypeHintSpacingSniff
+     */
     private ReturnTypeHintSpacingSniff $fixture;
 
     /**

@@ -20,14 +20,14 @@ class LineHelper
      *
      * @var File
      */
-    private $file;
+    private File $file;
 
     /**
      * Dou you want to reuse a fixer?
      *
      * @var Fixer
      */
-    private $fixer;
+    private Fixer $fixer;
 
     /**
      * LineHelper constructor.

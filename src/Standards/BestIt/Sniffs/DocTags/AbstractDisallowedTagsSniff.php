@@ -35,14 +35,14 @@ abstract class AbstractDisallowedTagsSniff extends AbstractSniff
      *
      * @var array
      */
-    public $disallowedTags = [];
+    public array $disallowedTags = [];
 
     /**
      * The possible tags of this php structure.
      *
      * @var array|null Tag tokens.
      */
-    private $tags = null;
+    private ?array $tags = null;
 
     /**
      * Returns true if the requirements for this sniff are met.

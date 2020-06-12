@@ -23,7 +23,7 @@ class ClassHelperTest extends TestCase
      *
      * @var int|null
      */
-    private $searchStart;
+    private ?int $searchStart = null;
 
     /**
      * Sets up the test.

@@ -101,7 +101,7 @@ The base for the BestIt Standard is [PSR-12](https://github.com/php-fig/fig-stan
 | BestIt.Commenting.PropertyDoc.NoSummary | There SHOULD be a summary. | no |
 | BestIt.Commenting.PropertyDoc.SummaryTooLong | The summary SHOULD be in one line. | no |
 | BestIt.Commenting.RedundantWhitespace.RedundantWhitespace | There MUST be no additonal spaces around your doc tags. | no |
-| BestIt.Commenting.RequiredDocBlock.MissingDocBlock | There MUST be a doc block before a Class, Constant, Interface, Function, Trait, Variable. | no |
+| BestIt.Commenting.RequiredDocBlock.MissingDocBlock* | There MUST be a doc block before a Class, Constant, Interface, Function, Trait, Variable. | no |
 | BestIt.Commenting.RequiredDocBlock.NoMultiLineDocBlock | The doc block before a Class, Constant, Interface, Function, Trait, Variable must be multi-line. | no |
 | BestIt.Comparisons.EmptyArrayForComparison.EmptyArray | You MUST not create an empty array, to check for an empty array. | no |
 | BestIt.Comparisons.EqualOperator.EqualOperatorFound | You SHOULD use the "Identical" operator (===). | no |
@@ -163,6 +163,8 @@ The base for the BestIt Standard is [PSR-12](https://github.com/php-fig/fig-stan
 | SlevomatCodingStandard.Classes.ClassConstantVisibility.MissingConstantVisibility | Constants MUST be marked with a visibility. |
 | SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnly.ReferenceViaFullyQualifiedName | No class may be used via its FQCN. You MUST import every class! |
 | SlevomatCodingStandard.TypeHints.DeclareStrictTypes | Every file MUST have "declare(strict_types=1);" two line breaks after the opening tag. There MUST be no spaces aroung the equal-sign. |
+| SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingAnyTypeHint | Should have any type hint if possible. | yes |
+| SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint | Should have a native type hint matching the doc block. | yes |
 | Squiz.Strings.DoubleQuoteUsage | Every String MUST be wrapped with single quotes. |
 
 ## Development

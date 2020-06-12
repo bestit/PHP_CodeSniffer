@@ -21,7 +21,7 @@ class ExceptionHelper
      *
      * @var File
      */
-    private $file;
+    private File $file;
 
     /**
      * ExceptionHelper constructor.

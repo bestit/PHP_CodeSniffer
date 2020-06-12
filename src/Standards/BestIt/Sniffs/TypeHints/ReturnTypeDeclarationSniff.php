@@ -56,28 +56,28 @@ class ReturnTypeDeclarationSniff extends AbstractSniff
      *
      * @var string
      */
-    public $defaultNullReturn = '?string';
+    public string $defaultNullReturn = '?string';
 
     /**
      * The name of the function.
      *
      * @var string|null
      */
-    private $functionName = null;
+    private ?string $functionName = null;
 
     /**
      * Has this function a return type?
      *
      * @var null|bool
      */
-    private $hasReturnType = null;
+    private ?bool $hasReturnType = null;
 
     /**
      * This methods should be ignored.
      *
      * @var array
      */
-    public $methodsWithoutVoid = ['__construct', '__destruct', '__clone'];
+    public array $methodsWithoutVoid = ['__construct', '__destruct', '__clone'];
 
     /**
      * Caches the types which can be used for an automatic fix.
@@ -86,7 +86,7 @@ class ReturnTypeDeclarationSniff extends AbstractSniff
      *
      * @var null|array
      */
-    private $typesForFix = null;
+    private ?array $typesForFix = null;
 
     /**
      * Adds the return type to fix the error.
