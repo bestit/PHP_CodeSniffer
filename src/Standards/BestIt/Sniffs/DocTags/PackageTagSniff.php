@@ -36,8 +36,8 @@ class PackageTagSniff extends AbstractTagSniff
      */
     private function fixWrongPackage(string $currentNamespace): void
     {
-        $this->file->getFixer()->replaceToken(
-            TokenHelper::findNext($this->file->getBaseFile(), [T_DOC_COMMENT_STRING], $this->stackPos),
+        $this->file->fixer->replaceToken(
+            TokenHelper::findNext($this->file, [T_DOC_COMMENT_STRING], $this->stackPos),
             $currentNamespace
         );
     }

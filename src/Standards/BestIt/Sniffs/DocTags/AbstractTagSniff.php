@@ -57,7 +57,7 @@ abstract class AbstractTagSniff extends AbstractSniff
     {
         $contents = [];
         $nextOrClosingPos = $this->file->findNext([T_DOC_COMMENT_CLOSE_TAG, T_DOC_COMMENT_TAG], $this->stackPos + 1);
-        $positionsTillEnd = TokenHelper::findNextAll($this->file->getBaseFile(), [T_DOC_COMMENT_STRING], $this->stackPos, $nextOrClosingPos);
+        $positionsTillEnd = TokenHelper::findNextAll($this->file, [T_DOC_COMMENT_STRING], $this->stackPos, $nextOrClosingPos);
 
         foreach ($positionsTillEnd as $position) {
             $contents[] = $this->tokens[$position]['content'];

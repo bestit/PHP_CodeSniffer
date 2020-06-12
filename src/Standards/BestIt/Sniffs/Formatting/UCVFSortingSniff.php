@@ -65,7 +65,7 @@ class UCVFSortingSniff extends AbstractSniff
     private function loadSubTokenPositions(): array
     {
         return TokenHelper::findNextAll(
-            $this->file->getBaseFile(),
+            $this->file,
             $this->sortedTokens,
             $this->stackPos,
             $this->token['scope_closer']

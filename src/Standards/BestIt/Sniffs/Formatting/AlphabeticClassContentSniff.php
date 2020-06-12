@@ -49,7 +49,7 @@ class AlphabeticClassContentSniff extends AbstractSniff
 
         foreach ($foundContentsOrg as $foundContentPos => $foundContent) {
             if ($foundContentsSorted[$checkIndex++] !== $foundContent) {
-                $this->file->getBaseFile()->addWarning(
+                $this->file->addWarning(
                     self::MESSAGE_SORT_ALPHABETICALLY,
                     $foundContentPos,
                     static::CODE_SORT_ALPHABETICALLY
@@ -85,7 +85,7 @@ class AlphabeticClassContentSniff extends AbstractSniff
     {
         $helper = new PropertyHelper($this->file);
         $tokenPoss = TokenHelper::findNextAll(
-            $this->file->getBaseFile(),
+            $this->file,
             [$token],
             $this->stackPos + 1,
             $this->token['scope_closer']

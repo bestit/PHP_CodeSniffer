@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace BestIt\CodeSniffer\Helper;
 
-use BestIt\CodeSniffer\File as FileDecorator;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Fixer;
 
@@ -41,7 +40,7 @@ class LineHelper
         $this->file = $file;
 
         if (!$fixer) {
-            $fixer = $file instanceof FileDecorator ? $file->getFixer() : $file->fixer;
+            $fixer = $file->fixer;
         }
 
         $this->fixer = $fixer;

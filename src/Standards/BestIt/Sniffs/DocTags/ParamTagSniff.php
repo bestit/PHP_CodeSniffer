@@ -188,7 +188,7 @@ class ParamTagSniff extends AbstractTagSniff
     protected function findAllVariablePositions(): array
     {
         return TokenHelper::findNextAll(
-            $this->file->getBaseFile(),
+            $this->file,
             [T_VARIABLE],
             $this->stackPos + 1,
             $this->file->findNext([T_CLOSE_PARENTHESIS], $this->stackPos + 1)
@@ -257,7 +257,7 @@ class ParamTagSniff extends AbstractTagSniff
     {
         // Give me the other tags of this doc block before this one.
         $tagPosBeforeThis = TokenHelper::findNextAll(
-            $this->file->getBaseFile(),
+            $this->file,
             $this->register(),
             $this->file->findPrevious([T_DOC_COMMENT_OPEN_TAG], $this->stackPos),
             $this->stackPos - 1

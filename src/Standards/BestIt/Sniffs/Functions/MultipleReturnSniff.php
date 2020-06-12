@@ -55,7 +55,7 @@ class MultipleReturnSniff extends AbstractSniff
     private function loadReturnsOfThisFunction(): array
     {
         $returnPositions = TokenHelper::findNextAll(
-            $this->file->getBaseFile(),
+            $this->file,
             [T_RETURN],
             $this->stackPos + 1,
             $this->token['scope_closer']

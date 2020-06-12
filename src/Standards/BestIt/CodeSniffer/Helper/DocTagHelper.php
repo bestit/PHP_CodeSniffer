@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace BestIt\CodeSniffer\Helper;
 
-use BestIt\CodeSniffer\File;
+use PHP_CodeSniffer\Files\File;
 use function array_key_exists;
 use function in_array;
 use const T_DOC_COMMENT_CLOSE_TAG;

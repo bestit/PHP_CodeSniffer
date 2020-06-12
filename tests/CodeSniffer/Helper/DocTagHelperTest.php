@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace BestIt\CodeSniffer\Helper;
 
-use BestIt\CodeSniffer\File;
+use PHP_CodeSniffer\Files\File;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -33,10 +33,7 @@ class DocTagHelperTest extends TestCase
     {
         $file = $this->getFile(__DIR__ . DIRECTORY_SEPARATOR . 'Fixtures/DocTagHelper/ORMJoinsOnMethod.php');
 
-        $this->fixture = new DocTagHelper(
-            new File($file),
-            23
-        );
+        $this->fixture = new DocTagHelper($file, 23);
     }
 
     /**

@@ -59,7 +59,7 @@ class TraitUseDeclarationSniff extends AbstractSniff
      */
     private function checkDeclaration(int $usePos): void
     {
-        $file = $this->getFile()->getBaseFile();
+        $file = $this->getFile();
 
         if (TokenHelper::findNextLocal($file, T_COMMA, $usePos + 1)) {
             $endPos = TokenHelper::findNext($file, [T_OPEN_CURLY_BRACKET, T_SEMICOLON], $usePos + 1);
@@ -96,7 +96,7 @@ class TraitUseDeclarationSniff extends AbstractSniff
     protected function fixeUse(int $endPos, int $usePos): void
     {
         $indentation = $this->getIndentationForFix($usePos);
-        $file = $this->getFile()->getBaseFile();
+        $file = $this->getFile();
         $fixer = $file->fixer;
 
         $fixer->beginChangeset();
@@ -122,7 +122,7 @@ class TraitUseDeclarationSniff extends AbstractSniff
      */
     private function getIndentationForFix(int $usePos): string
     {
-        $file = $this->getFile()->getBaseFile();
+        $file = $this->getFile();
         $indentation = '';
         $currentPointer = $usePos - 1;
         $tokens = $file->getTokens();

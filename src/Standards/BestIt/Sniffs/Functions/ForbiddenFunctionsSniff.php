@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace BestIt\Sniffs\Functions;
 
-use BestIt\CodeSniffer\File as FileDecorator;
 use BestIt\Sniffs\SuppressingTrait;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\ForbiddenFunctionsSniff as BaseSniff;
@@ -39,7 +38,7 @@ class ForbiddenFunctionsSniff extends BaseSniff
     /**
      * The used file.
      *
-     * @var FileDecorator|void
+     * @var File|void
      */
     protected $file;
 
@@ -67,9 +66,9 @@ class ForbiddenFunctionsSniff extends BaseSniff
     /**
      * Type-safe getter for the file.
      *
-     * @return FileDecorator
+     * @return File
      */
-    protected function getFile(): FileDecorator
+    protected function getFile(): File
     {
         return $this->file;
     }
@@ -89,21 +88,21 @@ class ForbiddenFunctionsSniff extends BaseSniff
      *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
      *
-     * @param File $phpcsFile The file being scanned.
+     * @param File $file The file being scanned.
      * @param int $stackPtr The position of the current token in the stack passed in $tokens.
      *
      * @return void
      */
-    public function process(File $phpcsFile, $stackPtr): void
+    public function process(File $file, $stackPtr): void
     {
-        $this->file = new FileDecorator($phpcsFile);
+        $this->file = $file;
         $this->stackPos = $stackPtr;
 
         if (
             !$this->isSniffSuppressed(static::CODE_DISCOURAGED_WITHOUT_ALTERNATIVE) &&
             !$this->isSniffSuppressed(static::CODE_DISCOURAGED_WITH_ALTERNATIVE)
         ) {
-            parent::process($phpcsFile, $stackPtr);
+            parent::process($file, $stackPtr);
         }
     }
 }

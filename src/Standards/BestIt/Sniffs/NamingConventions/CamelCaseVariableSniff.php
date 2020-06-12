@@ -63,10 +63,10 @@ class CamelCaseVariableSniff extends AbstractSniff
 
         // We need to check everything != $this.
         if ($return = $var !== '$this') {
-            $nextPos = (int) TokenHelper::findNextEffective($this->file->getBaseFile(), $this->stackPos + 1);
+            $nextPos = (int) TokenHelper::findNextEffective($this->file, $this->stackPos + 1);
 
             if ($nextPos > 0) {
-                $isProperty = PropertyHelper::isProperty($this->file->getBaseFile(), $this->stackPos);
+                $isProperty = PropertyHelper::isProperty($this->file, $this->stackPos);
                 $nextTokenCode = $this->tokens[$nextPos]['code'];
 
                 // The var should be followed by an "=" or can be followed by a semicolon if its a property.

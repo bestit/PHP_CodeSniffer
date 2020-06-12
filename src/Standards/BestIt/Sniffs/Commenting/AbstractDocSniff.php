@@ -111,7 +111,7 @@ abstract class AbstractDocSniff extends AbstractSniff
 
         $this->file->fixer->addContent(
             $position,
-            $this->file->getEolChar() . str_repeat('    ', $token['level']) . ' *'
+            $this->file->eolChar . str_repeat('    ', $token['level']) . ' *'
         );
 
         $this->file->fixer->endChangeset();
@@ -143,7 +143,7 @@ abstract class AbstractDocSniff extends AbstractSniff
         $istNextLineEmpty = true;
         $nextRelevantPos = $this->loadNextDocBlockContent($startPosition);
 
-        if ($nextRelevantPos !== -1) {
+        if ($nextRelevantPos !== false) {
             $istNextLineEmpty = $this->tokens[$startPosition]['line'] + 1 < $this->tokens[$nextRelevantPos]['line'];
         }
 
@@ -162,7 +162,7 @@ abstract class AbstractDocSniff extends AbstractSniff
         $isPrevLineEmpty = true;
         $posPrevContentPos = $this->loadPrevDocBlockContent($startPosition);
 
-        if ($posPrevContentPos !== -1) {
+        if ($posPrevContentPos !== false) {
             $isPrevLineEmpty = $this->tokens[$startPosition]['line'] - 1 > $this->tokens[$posPrevContentPos]['line'];
         }
 
@@ -186,9 +186,9 @@ abstract class AbstractDocSniff extends AbstractSniff
      *
      * @param int $startPosition
      *
-     * @return int
+     * @return int|bool
      */
-    private function loadNextDocBlockContent(int $startPosition): int
+    private function loadNextDocBlockContent(int $startPosition)
     {
         return $this->file->findNext(
             [
@@ -206,9 +206,9 @@ abstract class AbstractDocSniff extends AbstractSniff
      *
      * @param int $startPosition
      *
-     * @return int
+     * @return int|bool
      */
-    private function loadPrevDocBlockContent(int $startPosition): int
+    private function loadPrevDocBlockContent(int $startPosition)
     {
         return $this->file->findPrevious(
             [
@@ -232,7 +232,7 @@ abstract class AbstractDocSniff extends AbstractSniff
         $return = null;
         $possSummaryPos = $this->loadNextDocBlockContent($this->getDocCommentPos());
 
-        if ((int) $possSummaryPos > 0) {
+        if ($possSummaryPos !== false) {
             $possSummaryToken = $this->tokens[$possSummaryPos];
 
             $return = $this->isSimpleText($possSummaryToken) ? $possSummaryPos : null;
@@ -274,7 +274,7 @@ abstract class AbstractDocSniff extends AbstractSniff
     private function validateDescriptions(): self
     {
         $commentPoss = TokenHelper::findNextAll(
-            $this->file->getBaseFile(),
+            $this->file,
             [T_DOC_COMMENT_STRING, T_DOC_COMMENT_TAG],
             $this->getDocCommentPos(),
             $this->getDocHelper()->getBlockEndPosition()
@@ -346,7 +346,7 @@ abstract class AbstractDocSniff extends AbstractSniff
         $summaryPos = $this->getSummaryPosition();
         $nextPossiblePos = $this->loadNextDocBlockContent($summaryPos);
 
-        if ($nextPossiblePos > -1) {
+        if ($nextPossiblePos !== false) {
             $nextToken = $this->tokens[$nextPossiblePos];
 
             if (($nextToken['code'] === T_DOC_COMMENT_STRING) && !$this->isNextLineEmpty($summaryPos)) {

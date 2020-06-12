@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace BestIt\CodeSniffer\Helper;
 
-use BestIt\CodeSniffer\File;
 use BestIt\Sniffs\Commenting\AbstractDocSniff;
+use PHP_CodeSniffer\Files\File;
 
 /**
  * Class DocDescriptionHelper
@@ -261,14 +261,14 @@ class DocDescriptionHelper
         $descEndPtr = $this->getCommentDescriptionEndPointer();
         $descEndToken = $this->tokens[$descEndPtr];
 
-        $this->file->getFixer()->beginChangeset();
+        $this->file->fixer->beginChangeset();
 
-        $this->file->getFixer()->addContent(
+        $this->file->fixer->addContent(
             $descEndPtr,
-            $this->file->getEolChar() . str_repeat('    ', $descEndToken['level']) . ' *'
+            $this->file->eolChar . str_repeat('    ', $descEndToken['level']) . ' *'
         );
 
-        $this->file->getFixer()->endChangeset();
+        $this->file->fixer->endChangeset();
     }
 
     /**
@@ -281,11 +281,11 @@ class DocDescriptionHelper
      */
     private function fixMuchLinesAfterDescription(int $startLine, int $endLine): void
     {
-        $this->file->getFixer()->beginChangeset();
+        $this->file->fixer->beginChangeset();
 
         (new LineHelper($this->file))->removeLines($startLine, $endLine);
 
-        $this->file->getFixer()->endChangeset();
+        $this->file->fixer->endChangeset();
     }
 
     /**
@@ -299,13 +299,13 @@ class DocDescriptionHelper
     {
         $descStartToken = $this->tokens[$descriptionStartPtr];
 
-        $this->file->getFixer()->beginChangeset();
+        $this->file->fixer->beginChangeset();
 
-        $this->file->getFixer()->replaceToken(
+        $this->file->fixer->replaceToken(
             $descriptionStartPtr,
             ucfirst($descStartToken['content'])
         );
 
-        $this->file->getFixer()->endChangeset();
+        $this->file->fixer->endChangeset();
     }
 }
