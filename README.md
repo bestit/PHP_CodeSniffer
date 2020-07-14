@@ -310,9 +310,11 @@ We use [semantic versioning](https://semver.org) in correlation with the style e
 with our source code. This means, that there could be breaking change in our code, but as long as the style is not changed 
 heavily, then the breaking change will not be mirrored in our version number:
 
-- Patch-Version (last number): backwards-compatible bugfixes in our ruleset or source-code
-- Minor-Version (middle number): backwards-compatible features in our ruleset
+- Patch-Version (last number): backwards-compatible bugfixes in our ruleset
+- Minor-Version (middle number): backwards-compatible features in our ruleset (just warnings, deletions or auto-fixable errors)
 - Major-Version (first number): breaking change in our ruleset
+
+**We optimize our versioning for the usage of the sniffer, not for the development!**
 
 ## TODO 
 
