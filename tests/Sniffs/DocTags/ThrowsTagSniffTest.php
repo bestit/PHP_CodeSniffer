@@ -20,7 +20,7 @@ class ThrowsTagSniffTest extends AuthorTagSniffTest
     public function getRequiredConstantAsserts(): array
     {
         return parent::getRequiredConstantAsserts() + [
-            'CODE_TAG_MISSING_DESC_DESC' => ['CODE_TAG_MISSING_DESC_DESC', 'MissingThrowDescription']
+            'CODE_TAG_MISSING_DESC_DESC' => ['CODE_TAG_MISSING_DESC_DESC', 'MissingThrowDescription'],
         ];
     }
 

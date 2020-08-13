@@ -193,7 +193,7 @@ abstract class AbstractDocSniff extends AbstractSniff
         return $this->file->findNext(
             [
                 T_DOC_COMMENT_WHITESPACE,
-                T_DOC_COMMENT_STAR
+                T_DOC_COMMENT_STAR,
             ],
             $startPosition + 1,
             $this->getDocHelper()->getBlockEndPosition(),

@@ -31,7 +31,7 @@ class DeprecatedTagSniffTest extends SniffTestCase
     {
         return [
             'CODE_TAG_CONTENT_FORMAT_INVALID' => ['CODE_TAG_CONTENT_FORMAT_INVALID', 'TagContentFormatInvalid'],
-            'CODE_TAG_MISSING_DATES' => ['CODE_TAG_MISSING_DATES', 'MissingDates']
+            'CODE_TAG_MISSING_DATES' => ['CODE_TAG_MISSING_DATES', 'MissingDates'],
         ];
     }
 

@@ -49,7 +49,7 @@ class TraitUseDeclarationSniffTest extends SniffTestCase
     {
         return [
             'CODE_MULTIPLE_TRAITS_PER_DECLARATION' =>
-                ['CODE_MULTIPLE_TRAITS_PER_DECLARATION', 'MultipleTraitsPerDeclaration']
+                ['CODE_MULTIPLE_TRAITS_PER_DECLARATION', 'MultipleTraitsPerDeclaration'],
         ];
     }
 

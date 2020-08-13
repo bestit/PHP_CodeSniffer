@@ -30,7 +30,7 @@ class AlphabeticallySortedUsesSniffTest extends SniffTestCase
     public function getRequiredConstantAsserts(): array
     {
         return [
-            'CODE_INCORRECT_ORDER' => ['CODE_INCORRECT_ORDER', 'IncorrectlyOrderedUses']
+            'CODE_INCORRECT_ORDER' => ['CODE_INCORRECT_ORDER', 'IncorrectlyOrderedUses'],
         ];
     }
 

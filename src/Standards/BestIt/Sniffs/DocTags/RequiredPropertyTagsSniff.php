@@ -28,7 +28,7 @@ class RequiredPropertyTagsSniff extends AbstractRequiredTagsSniff
         return [
             'var' => [
                 'min' => 1,
-                'max' => 1
+                'max' => 1,
             ],
         ];
     }

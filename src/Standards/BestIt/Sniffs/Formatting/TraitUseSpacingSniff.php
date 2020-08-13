@@ -120,7 +120,7 @@ class TraitUseSpacingSniff extends AbstractSniff
                 self::CODE_INCORRECT_LINES_COUNT_AFTER_LAST_USE,
                 [
                     $requiredLinesAfter,
-                    $realLinesAfterUse
+                    $realLinesAfterUse,
                 ]
             );
 
@@ -149,7 +149,7 @@ class TraitUseSpacingSniff extends AbstractSniff
                 self::CODE_INCORRECT_LINES_COUNT_BEFORE_FIRST_USE,
                 [
                     self::LINES_BEFORE_FIRST_USE,
-                    $realLinesBeforeUse
+                    $realLinesBeforeUse,
                 ]
             );
 
@@ -196,8 +196,8 @@ class TraitUseSpacingSniff extends AbstractSniff
                     self::CODE_INCORRECT_LINES_COUNT_BETWEEN_USES,
                     [
                         self::LINES_BETWEEN_USES,
-                        $realLinesBetweenUse
-                    ]
+                        $realLinesBetweenUse,
+                    ],
                 ];
 
                 if ($previousUseEndPos !== $posBeforeUse) {

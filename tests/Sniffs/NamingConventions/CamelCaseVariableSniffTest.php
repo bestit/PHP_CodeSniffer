@@ -30,7 +30,7 @@ class CamelCaseVariableSniffTest extends SniffTestCase
     public function getRequiredConstantAsserts(): array
     {
         return [
-            'CODE_NOT_CAMEL_CASE' => ['CODE_NOT_CAMEL_CASE', 'NotCamelCase']
+            'CODE_NOT_CAMEL_CASE' => ['CODE_NOT_CAMEL_CASE', 'NotCamelCase'],
         ];
     }
 

@@ -50,17 +50,17 @@ class TraitUseSpacingSniffTest extends SniffTestCase
         return [
             'CODE_INCORRECT_LINES_COUNT_BEFORE_FIRST_USE' => [
                 'CODE_INCORRECT_LINES_COUNT_BEFORE_FIRST_USE',
-                'IncorrectLinesCountBeforeFirstUse'
+                'IncorrectLinesCountBeforeFirstUse',
 
             ],
             'CODE_INCORRECT_LINES_COUNT_BETWEEN_USES' => [
                 'CODE_INCORRECT_LINES_COUNT_BETWEEN_USES',
-                'IncorrectLinesCountBetweenUses'
+                'IncorrectLinesCountBetweenUses',
             ],
             'CODE_INCORRECT_LINES_COUNT_AFTER_LAST_USE' => [
                 'CODE_INCORRECT_LINES_COUNT_AFTER_LAST_USE',
-                'IncorrectLinesCountAfterLastUse'
-            ]
+                'IncorrectLinesCountAfterLastUse',
+            ],
         ];
     }
 

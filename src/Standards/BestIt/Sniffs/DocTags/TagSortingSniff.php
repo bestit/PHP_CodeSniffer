@@ -108,7 +108,7 @@ class TagSortingSniff extends AbstractSniff
                     $tokenPos,
                     static::CODE_MISSING_NEWLINE_BETWEEN_TAGS,
                     [
-                        $prevToken['content']
+                        $prevToken['content'],
                     ]
                 );
 

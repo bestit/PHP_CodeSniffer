@@ -22,7 +22,7 @@ class PropertyDocSniffTest extends AbstractDocSniffTest
     protected function getExpectedTokens(): array
     {
         return [
-            T_VARIABLE
+            T_VARIABLE,
         ];
     }
 

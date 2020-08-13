@@ -44,6 +44,6 @@ class DisallowedMethodTagsSniff extends AbstractDisallowedTagsSniff
         'uses',
         'var',
         'version',
-        'inheritdoc'
+        'inheritdoc',
     ];
 }

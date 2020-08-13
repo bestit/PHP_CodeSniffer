@@ -65,7 +65,7 @@ class AlphabeticallySortedUsesSniff extends AbstractSniff
             'compareUseStatementsByType',
             'compareUseStatementsByContent',
             // This will return something in any case!
-            'compareUseStatementsByNamespaceCount'
+            'compareUseStatementsByNamespaceCount',
         ];
 
         foreach ($callbacks as $callback) {

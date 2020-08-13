@@ -40,7 +40,7 @@ class ReturnTypeDeclarationSniffTest extends SniffTestCase
     public function getRequiredConstantAsserts(): array
     {
         return [
-            'CODE_MISSING_RETURN_TYPE' => ['CODE_MISSING_RETURN_TYPE', 'MissingReturnTypeHint']
+            'CODE_MISSING_RETURN_TYPE' => ['CODE_MISSING_RETURN_TYPE', 'MissingReturnTypeHint'],
         ];
     }
 

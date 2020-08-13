@@ -23,7 +23,7 @@ class ConstantDocSniffTest extends AbstractDocSniffTest
     protected function getExpectedTokens(): array
     {
         return [
-            T_CONST
+            T_CONST,
         ];
     }
 

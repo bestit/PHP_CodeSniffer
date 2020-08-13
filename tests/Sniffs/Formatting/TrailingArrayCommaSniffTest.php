@@ -8,39 +8,41 @@ use BestIt\Sniffs\DefaultSniffIntegrationTestTrait;
 use BestIt\Sniffs\TestTokenRegistrationTrait;
 use BestIt\SniffTestCase;
 use BestIt\TestRequiredConstantsTrait;
-use PHP_CodeSniffer\Util\Tokens;
+use const T_OPEN_SHORT_ARRAY;
 
 /**
- * Checks the use-,constant-,variable-,function-sorting Sniff.
+ * Test TrailingArrayCommaSniff
  *
  * @author blange <bjoern.lange@bestit-online.de>
  * @package BestIt\Sniffs\Formatting
  */
-class UCVFSortingSniffTest extends SniffTestCase
+class TrailingArrayCommaSniffTest extends SniffTestCase
 {
     use DefaultSniffIntegrationTestTrait;
-    use TestTokenRegistrationTrait;
     use TestRequiredConstantsTrait;
+    use TestTokenRegistrationTrait;
 
     /**
-     * Returns the tokens which should be checked.
+     * We register on arrays.
      *
-     * @return array Returns the expected token ids.
+     * @return array
      */
     protected function getExpectedTokens(): array
     {
-        return Tokens::$ooScopeTokens;
+        return [
+            T_OPEN_SHORT_ARRAY,
+        ];
     }
 
     /**
-     * Returns the names of the required constants.
+     * Checks the required constants.
      *
-     * @return array The required constants of a class. The second value is a possible value which should be checked.
+     * @return array
      */
     public function getRequiredConstantAsserts(): array
     {
         return [
-            'CODE_WRONG_POSITION' => ['CODE_WRONG_POSITION', 'WrongPosition'],
+            'CODE_MISSING_TRAILING_COMMA' => ['CODE_MISSING_TRAILING_COMMA', 'MissingTrailingComma'],
         ];
     }
 
@@ -53,6 +55,6 @@ class UCVFSortingSniffTest extends SniffTestCase
     {
         parent::setUp();
 
-        $this->fixture = new UCVFSortingSniff();
+        $this->fixture = new TrailingArrayCommaSniff();
     }
 }

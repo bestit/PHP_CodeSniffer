@@ -31,7 +31,7 @@ class TagSortingSniffTest extends SniffTestCase
     {
         return [
             'CODE_MISSING_NEWLINE_BETWEEN_TAGS' => ['CODE_MISSING_NEWLINE_BETWEEN_TAGS', 'MissingNewlineBetweenTags'],
-            'CODE_WRONG_TAG_SORTING' => ['CODE_WRONG_TAG_SORTING', 'WrongTagSorting']
+            'CODE_WRONG_TAG_SORTING' => ['CODE_WRONG_TAG_SORTING', 'WrongTagSorting'],
         ];
     }
 

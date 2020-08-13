@@ -40,6 +40,6 @@ class DisallowedClassTagsSniff extends AbstractDisallowedTagsSniff
         'todo',
         'uses',
         'var',
-        'inheritdoc'
+        'inheritdoc',
     ];
 }

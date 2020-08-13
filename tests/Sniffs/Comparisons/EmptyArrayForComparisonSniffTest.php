@@ -43,7 +43,7 @@ class EmptyArrayForComparisonSniffTest extends SniffTestCase
     public function getRequiredConstantAsserts(): array
     {
         return [
-            'EmptyArray' => ['CODE_EMPTY_ARRAY', 'EmptyArray']
+            'EmptyArray' => ['CODE_EMPTY_ARRAY', 'EmptyArray'],
         ];
     }
 
