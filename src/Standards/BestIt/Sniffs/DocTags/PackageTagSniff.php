@@ -62,7 +62,7 @@ class PackageTagSniff extends AbstractTagSniff
                 $this->stackPos,
                 static::CODE_TAG_WRONG_PACKAGE,
                 [
-                    $currentNamespace
+                    $currentNamespace,
                 ]
             );
 

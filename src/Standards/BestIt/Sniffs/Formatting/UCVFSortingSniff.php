@@ -54,7 +54,7 @@ class UCVFSortingSniff extends AbstractSniff
         T_USE,
         T_CONST,
         T_VARIABLE,
-        T_FUNCTION
+        T_FUNCTION,
     ];
 
     /**
@@ -204,7 +204,7 @@ class UCVFSortingSniff extends AbstractSniff
                     static::CODE_WRONG_POSITION,
                     [
                         $sortedToken['type'],
-                        $sortedToken['content']
+                        $sortedToken['content'],
                     ]
                 );
             }

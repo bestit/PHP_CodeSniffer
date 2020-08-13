@@ -53,7 +53,7 @@ class SpaceAfterDeclareSniff implements Sniff
     public function register(): array
     {
         return [
-            T_DECLARE
+            T_DECLARE,
         ];
     }
 

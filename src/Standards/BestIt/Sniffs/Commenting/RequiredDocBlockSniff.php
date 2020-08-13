@@ -62,7 +62,7 @@ class RequiredDocBlockSniff extends AbstractSniff
         T_INTERFACE => 'Interface',
         T_FUNCTION => 'Function',
         T_TRAIT => 'Trait',
-        T_VARIABLE => 'Variable'
+        T_VARIABLE => 'Variable',
     ];
 
     /**

@@ -110,7 +110,7 @@ class DocTagHelper
         foreach ($tagPositions as $tagPos) {
             if ($tagPos >= $iteratedPos) {
                 $tagTokens[$tagPos] = $this->tokens[$tagPos] + [
-                    'contents' => $this->loadTagContentTokens($tagPos, $iteratedPos)
+                    'contents' => $this->loadTagContentTokens($tagPos, $iteratedPos),
                 ];
             }
         }

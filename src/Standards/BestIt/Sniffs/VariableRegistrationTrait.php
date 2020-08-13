@@ -22,7 +22,7 @@ trait VariableRegistrationTrait
     public function register(): array
     {
         return [
-            T_VARIABLE
+            T_VARIABLE,
         ];
     }
 }

@@ -36,8 +36,8 @@ class AuthorTagSniff extends AbstractTagSniff
             static::CODE_TAG_CONTENT_FORMAT_INVALID,
             [
                 $tagContent,
-                $this->getValidPattern()
-            ]
+                $this->getValidPattern(),
+            ],
         ];
     }
 

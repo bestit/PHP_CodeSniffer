@@ -46,14 +46,14 @@ class RequiredClassTagsSniff extends AbstractRequiredTagsSniff
                 'max' => 1,
             ],
             'author' => [
-                'min' => 1
+                'min' => 1,
             ],
             'version' => [
-                'max' => 1
+                'max' => 1,
             ],
             'deprecated' => [
-                'max' => 1
-            ]
+                'max' => 1,
+            ],
         ];
     }
 }

@@ -53,7 +53,7 @@ class RequiredDocBlockSniffTest extends SniffTestCase
             T_INTERFACE,
             T_FUNCTION,
             T_TRAIT,
-            T_VARIABLE
+            T_VARIABLE,
         ];
     }
 

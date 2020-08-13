@@ -30,7 +30,7 @@ class RedundantWhitespaceSniffTest extends SniffTestCase
     public function getRequiredConstantAsserts(): array
     {
         return [
-            'CODE_ERROR_REDUNDANT_WHITESPACE' => ['CODE_ERROR_REDUNDANT_WHITESPACE', 'RedundantWhitespace']
+            'CODE_ERROR_REDUNDANT_WHITESPACE' => ['CODE_ERROR_REDUNDANT_WHITESPACE', 'RedundantWhitespace'],
         ];
     }
 
@@ -42,7 +42,7 @@ class RedundantWhitespaceSniffTest extends SniffTestCase
     protected function getExpectedTokens(): array
     {
         return [
-            T_DOC_COMMENT_STAR
+            T_DOC_COMMENT_STAR,
         ];
     }
 

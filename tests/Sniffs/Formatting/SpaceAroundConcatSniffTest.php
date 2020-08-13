@@ -40,7 +40,7 @@ class SpaceAroundConcatSniffTest extends SniffTestCase
     public function getRequiredConstantAsserts(): array
     {
         return [
-            'CODE_MISSING_SPACE_AROUND_CONCAT' => ['CODE_MISSING_SPACE_AROUND_CONCAT', 'MissingSpaceAroundConcat']
+            'CODE_MISSING_SPACE_AROUND_CONCAT' => ['CODE_MISSING_SPACE_AROUND_CONCAT', 'MissingSpaceAroundConcat'],
         ];
     }
 

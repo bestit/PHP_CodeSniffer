@@ -39,7 +39,7 @@ class FluentSetterSniffTest extends SniffTestCase
     protected function getExpectedTokens(): array
     {
         return [
-            T_FUNCTION
+            T_FUNCTION,
         ];
     }
 
@@ -64,7 +64,7 @@ class FluentSetterSniffTest extends SniffTestCase
     {
         return [
             'CODE_MUST_RETURN_THIS' => ['CODE_MUST_RETURN_THIS', 'MustReturnThis'],
-            'CODE_NO_RETURN_FOUND' => ['CODE_NO_RETURN_FOUND', 'NoReturnFound']
+            'CODE_NO_RETURN_FOUND' => ['CODE_NO_RETURN_FOUND', 'NoReturnFound'],
         ];
     }
 }

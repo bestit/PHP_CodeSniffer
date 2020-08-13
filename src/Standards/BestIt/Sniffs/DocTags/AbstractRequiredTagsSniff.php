@@ -107,7 +107,7 @@ abstract class AbstractRequiredTagsSniff extends AbstractSniff
                             [
                                 $tagContent,
                                 $maxCount,
-                                $tagCount
+                                $tagCount,
                             ]
                         );
                     }
@@ -144,7 +144,7 @@ abstract class AbstractRequiredTagsSniff extends AbstractSniff
                         [
                             $tag,
                             $minCount,
-                            $tagCount
+                            $tagCount,
                         ]
                     );
 

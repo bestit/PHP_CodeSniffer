@@ -30,7 +30,7 @@ class DisallowedClassTagsSniffTest extends SniffTestCase
     public function getRequiredConstantAsserts(): array
     {
         return [
-            'CODE_TAG_NOT_ALLOWED' => ['CODE_TAG_NOT_ALLOWED', 'TagNotAllowed']
+            'CODE_TAG_NOT_ALLOWED' => ['CODE_TAG_NOT_ALLOWED', 'TagNotAllowed'],
         ];
     }
 
