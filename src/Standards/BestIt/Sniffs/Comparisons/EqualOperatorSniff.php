@@ -47,7 +47,7 @@ class EqualOperatorSniff extends AbstractSniff
         $isFixing = $file->addFixableWarning(
             self::MESSAGE_EQUAL_OPERATOR_FOUND,
             $stackPos,
-            static::CODE_EQUAL_OPERATOR_FOUND
+            static::CODE_EQUAL_OPERATOR_FOUND,
         );
 
         $file->recordMetric($stackPos, 'Found not wanted T_IS_EQUAL', 'yes');

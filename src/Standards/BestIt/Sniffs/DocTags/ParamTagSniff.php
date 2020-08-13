@@ -131,7 +131,7 @@ class ParamTagSniff extends AbstractTagSniff
             throw (new CodeError(
                 static::CODE_TAG_MISSING_VARIABLE,
                 self::MESSAGE_TAG_MISSING_VARIABLE,
-                $this->stackPos
+                $this->stackPos,
             ))
                 ->setPayload([$tagContent])
                 ->setToken($this->token);
@@ -191,7 +191,7 @@ class ParamTagSniff extends AbstractTagSniff
             $this->file,
             [T_VARIABLE],
             $this->stackPos + 1,
-            $this->file->findNext([T_CLOSE_PARENTHESIS], $this->stackPos + 1)
+            $this->file->findNext([T_CLOSE_PARENTHESIS], $this->stackPos + 1),
         );
     }
 
@@ -237,7 +237,7 @@ class ParamTagSniff extends AbstractTagSniff
             throw (new CodeError(
                 static::CODE_TAG_MISSING_VARIABLES,
                 self::MESSAGE_TAG_MISSING_VARIABLES,
-                $this->stackPos
+                $this->stackPos,
             ))->setToken($this->token);
         }
 
@@ -260,7 +260,7 @@ class ParamTagSniff extends AbstractTagSniff
             $this->file,
             $this->register(),
             $this->file->findPrevious([T_DOC_COMMENT_OPEN_TAG], $this->stackPos),
-            $this->stackPos - 1
+            $this->stackPos - 1,
         );
 
         $tagPosBeforeThis = array_filter($tagPosBeforeThis, function (int $position) {

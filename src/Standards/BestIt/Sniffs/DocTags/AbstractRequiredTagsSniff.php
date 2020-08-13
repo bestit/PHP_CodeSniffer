@@ -108,11 +108,11 @@ abstract class AbstractRequiredTagsSniff extends AbstractSniff
                                 $tagContent,
                                 $maxCount,
                                 $tagCount,
-                            ]
+                            ],
                         );
                     }
                 }
-            }
+            },
         );
     }
 
@@ -152,7 +152,7 @@ abstract class AbstractRequiredTagsSniff extends AbstractSniff
                         $this->{$fixCallback}($this->getDocCommentPos(), $minCount, $tagCount, $tag);
                     }
                 }
-            }
+            },
         );
     }
 
@@ -251,7 +251,7 @@ abstract class AbstractRequiredTagsSniff extends AbstractSniff
         return (new DocTagHelper(
             $this->file,
             $this->getDocCommentPos(),
-            $this->tokens
+            $this->tokens,
         )
         )->getTagTokens();
     }

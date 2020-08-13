@@ -105,7 +105,7 @@ class OpenTagSniff implements Sniff
         $fixNotFirstStatement = $phpcsFile->addFixableError(
             self::ERROR_NOT_FIRST_STATEMENT,
             $stackPtr,
-            static::CODE_NOT_FIRST_STATEMENT
+            static::CODE_NOT_FIRST_STATEMENT,
         );
 
         if ($fixNotFirstStatement) {
@@ -131,7 +131,7 @@ class OpenTagSniff implements Sniff
         $fixNoSpaceAfterTag = $phpcsFile->addFixableError(
             self::ERROR_NO_SPACE_AFTER_OPEN_TAG,
             $whitespacePtr,
-            static::CODE_NO_SPACE_AFTER_OPEN_TAG
+            static::CODE_NO_SPACE_AFTER_OPEN_TAG,
         );
 
         if ($fixNoSpaceAfterTag) {
@@ -154,14 +154,14 @@ class OpenTagSniff implements Sniff
         $fixSpaceNotScndLine = $phpcsFile->addFixableError(
             self::ERROR_LINE_NOT_EMPTY,
             $whitespacePtr,
-            static::CODE_LINE_NOT_EMPTY
+            static::CODE_LINE_NOT_EMPTY,
         );
 
         if ($fixSpaceNotScndLine) {
             $phpcsFile->fixer->beginChangeset();
             $phpcsFile->fixer->replaceToken(
                 $whitespacePtr,
-                ''
+                '',
             );
             $phpcsFile->fixer->endChangeset();
         }

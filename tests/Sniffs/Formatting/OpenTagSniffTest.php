@@ -23,7 +23,7 @@ class OpenTagSniffTest extends SniffTestCase
     public function testCorrectSpaceAfterOpenTag(): void
     {
         $this->assertNoSniffErrorInFile(
-            $this->checkFile($this->getFixtureFilePath('Correct.php'))
+            $this->checkFile($this->getFixtureFilePath('Correct.php')),
         );
     }
 
@@ -35,13 +35,13 @@ class OpenTagSniffTest extends SniffTestCase
     public function testLineNotEmpty(): void
     {
         $report = $this->checkFile(
-            $this->getFixtureFilePath('LineNotEmpty.php')
+            $this->getFixtureFilePath('LineNotEmpty.php'),
         );
 
         $this->assertSniffError(
             $report,
             2,
-            OpenTagSniff::CODE_LINE_NOT_EMPTY
+            OpenTagSniff::CODE_LINE_NOT_EMPTY,
         );
 
         $this->assertAllFixedInFile($report);
@@ -55,13 +55,13 @@ class OpenTagSniffTest extends SniffTestCase
     public function testNoSpaceAfterOpenTag(): void
     {
         $report = $this->checkFile(
-            $this->getFixtureFilePath('NoSpaceAfterOpenTag.php')
+            $this->getFixtureFilePath('NoSpaceAfterOpenTag.php'),
         );
 
         $this->assertSniffError(
             $report,
             2,
-            OpenTagSniff::CODE_NO_SPACE_AFTER_OPEN_TAG
+            OpenTagSniff::CODE_NO_SPACE_AFTER_OPEN_TAG,
         );
 
         $this->assertAllFixedInFile($report);
@@ -75,13 +75,13 @@ class OpenTagSniffTest extends SniffTestCase
     public function testNotFirstStatement(): void
     {
         $report = $this->checkFile(
-            $this->getFixtureFilePath('NotFirstStatement.php')
+            $this->getFixtureFilePath('NotFirstStatement.php'),
         );
 
         $this->assertSniffError(
             $report,
             1,
-            OpenTagSniff::CODE_NOT_FIRST_STATEMENT
+            OpenTagSniff::CODE_NOT_FIRST_STATEMENT,
         );
 
         $this->assertAllFixedInFile($report);
@@ -104,7 +104,7 @@ class OpenTagSniffTest extends SniffTestCase
                 OpenTagSniff::CODE_LINE_NOT_EMPTY,
                 OpenTagSniff::CODE_NO_SPACE_AFTER_OPEN_TAG,
                 OpenTagSniff::CODE_NOT_FIRST_STATEMENT,
-            ]
+            ],
         );
     }
 }

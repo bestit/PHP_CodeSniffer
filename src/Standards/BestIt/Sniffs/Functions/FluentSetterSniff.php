@@ -88,7 +88,7 @@ class FluentSetterSniff extends MethodScopeSniff
                 self::ERROR_MUST_RETURN_THIS,
                 $functionPos,
                 static::CODE_MUST_RETURN_THIS,
-                $methodIdent
+                $methodIdent,
             );
 
             if ($fixMustReturnThis) {
@@ -122,7 +122,7 @@ class FluentSetterSniff extends MethodScopeSniff
                 self::ERROR_NO_RETURN_FOUND,
                 $functionPos,
                 static::CODE_NO_RETURN_FOUND,
-                $errorData
+                $errorData,
             );
 
             if ($fixNoReturnFound) {
@@ -198,7 +198,7 @@ class FluentSetterSniff extends MethodScopeSniff
         if (substr($methodName, 0, 3) === 'set') {
             // We define in our styleguide, that there is only one class per file!
             $properties = (new PropertyHelper($file))->getProperties(
-                $file->getTokens()[$classPosition]
+                $file->getTokens()[$classPosition],
             );
 
             // We require camelCase for methods and properties,
@@ -250,7 +250,7 @@ class FluentSetterSniff extends MethodScopeSniff
         $phpcsFile->fixer->beginChangeset();
         $phpcsFile->fixer->addContentBefore(
             $returnSemicolonPtr,
-            ' $this'
+            ' $this',
         );
         $phpcsFile->fixer->endChangeset();
     }

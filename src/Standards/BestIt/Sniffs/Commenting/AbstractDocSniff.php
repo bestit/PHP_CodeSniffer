@@ -111,7 +111,7 @@ abstract class AbstractDocSniff extends AbstractSniff
 
         $this->file->fixer->addContent(
             $position,
-            $this->file->eolChar . str_repeat('    ', $token['level']) . ' *'
+            $this->file->eolChar . str_repeat('    ', $token['level']) . ' *',
         );
 
         $this->file->fixer->endChangeset();
@@ -197,7 +197,7 @@ abstract class AbstractDocSniff extends AbstractSniff
             ],
             $startPosition + 1,
             $this->getDocHelper()->getBlockEndPosition(),
-            true
+            true,
         );
     }
 
@@ -218,7 +218,7 @@ abstract class AbstractDocSniff extends AbstractSniff
             ],
             $startPosition - 1,
             $this->getDocCommentPos(),
-            true
+            true,
         );
     }
 
@@ -277,7 +277,7 @@ abstract class AbstractDocSniff extends AbstractSniff
             $this->file,
             [T_DOC_COMMENT_STRING, T_DOC_COMMENT_TAG],
             $this->getDocCommentPos(),
-            $this->getDocHelper()->getBlockEndPosition()
+            $this->getDocHelper()->getBlockEndPosition(),
         );
 
         foreach ($commentPoss as $index => $commentPos) {
@@ -325,7 +325,7 @@ abstract class AbstractDocSniff extends AbstractSniff
                 $isFixing = $this->file->addFixableWarning(
                     self::MESSAGE_NO_LINE_AFTER_DOC_COMMENT,
                     $position,
-                    static::CODE_NO_LINE_AFTER_DOC_COMMENT
+                    static::CODE_NO_LINE_AFTER_DOC_COMMENT,
                 );
 
                 if ($isFixing) {
@@ -355,7 +355,7 @@ abstract class AbstractDocSniff extends AbstractSniff
                 $this->file->addWarning(
                     self::MESSAGE_SUMMARY_TOO_LONG,
                     $nextPossiblePos,
-                    static::CODE_SUMMARY_TOO_LONG
+                    static::CODE_SUMMARY_TOO_LONG,
                 );
             }
         }
@@ -378,7 +378,7 @@ abstract class AbstractDocSniff extends AbstractSniff
             throw new CodeWarning(
                 static::CODE_NO_SUMMARY,
                 self::MESSAGE_NO_SUMMARY,
-                $this->getDocCommentPos()
+                $this->getDocCommentPos(),
             );
         }
 
@@ -401,7 +401,7 @@ abstract class AbstractDocSniff extends AbstractSniff
             $isFixing = $this->file->addFixableWarning(
                 self::MESSAGE_DOC_COMMENT_UC_FIRST,
                 $position,
-                static::CODE_DOC_COMMENT_UC_FIRST
+                static::CODE_DOC_COMMENT_UC_FIRST,
             );
 
             if ($isFixing) {

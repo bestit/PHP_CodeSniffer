@@ -37,7 +37,7 @@ class RequiredMethodTagsSniff extends AbstractRequiredTagsSniff
 
         $returnTypeHint = FunctionHelper::findReturnTypeHint(
             $file,
-            $file->findNext([T_FUNCTION], $closePos + 1)
+            $file->findNext([T_FUNCTION], $closePos + 1),
         );
 
         $typeHint = $returnTypeHint ? $returnTypeHint->getTypeHint() : 'void';
@@ -48,7 +48,7 @@ class RequiredMethodTagsSniff extends AbstractRequiredTagsSniff
 
         $fixer->replaceToken(
             $closePos,
-            "*\n{$indent}* @return {$typeHint}\n{$indent}{$closeTag['content']}"
+            "*\n{$indent}* @return {$typeHint}\n{$indent}{$closeTag['content']}",
         );
 
         $fixer->endChangeset();
@@ -102,7 +102,7 @@ class RequiredMethodTagsSniff extends AbstractRequiredTagsSniff
         $functionNamePtr = $this->file->findNext(
             [T_STRING],
             $this->stackPos + 1,
-            $stackToken['parenthesis_opener']
+            $stackToken['parenthesis_opener'],
         );
 
         $functionNameToken = $this->tokens[$functionNamePtr];

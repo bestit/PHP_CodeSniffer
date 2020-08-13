@@ -69,13 +69,13 @@ class TraitUseDeclarationSniff extends AbstractSniff
                 $file->addError(
                     self::MESSAGE_MULTIPLE_TRAITS_PER_DECLARATION,
                     $usePos,
-                    static::CODE_MULTIPLE_TRAITS_PER_DECLARATION
+                    static::CODE_MULTIPLE_TRAITS_PER_DECLARATION,
                 );
             } else {
                 $fix = $file->addFixableError(
                     self::MESSAGE_MULTIPLE_TRAITS_PER_DECLARATION,
                     $usePos,
-                    static::CODE_MULTIPLE_TRAITS_PER_DECLARATION
+                    static::CODE_MULTIPLE_TRAITS_PER_DECLARATION,
                 );
 
                 if ($fix) {

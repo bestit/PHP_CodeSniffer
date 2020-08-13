@@ -47,7 +47,7 @@ class AlphabeticallySortedUsesSniff extends AbstractSniff
     {
         return (bool) $this->useStatements = UseStatementHelper::getUseStatementsForPointer(
             $this->getFile(),
-            $this->getStackPos()
+            $this->getStackPos(),
         );
     }
 
@@ -179,7 +179,7 @@ class AlphabeticallySortedUsesSniff extends AbstractSniff
 
         $file->fixer->addContent(
             $firstUseStatement->getPointer(),
-            $this->getNewUseStatements()
+            $this->getNewUseStatements(),
         );
 
         $file->fixer->endChangeset();
@@ -201,7 +201,7 @@ class AlphabeticallySortedUsesSniff extends AbstractSniff
             array_map(
                 function (UseStatement $useStatement) use ($file): string {
                     $unqualifiedName = NamespaceHelper::getUnqualifiedNameFromFullyQualifiedName(
-                        $useStatement->getFullyQualifiedTypeName()
+                        $useStatement->getFullyQualifiedTypeName(),
                     );
 
                     $useTypeName = UseStatementHelper::getTypeName($file, $useStatement);
@@ -211,17 +211,17 @@ class AlphabeticallySortedUsesSniff extends AbstractSniff
                         ? sprintf(
                             'use %s%s;',
                             $useTypeFormatted,
-                            $useStatement->getFullyQualifiedTypeName()
+                            $useStatement->getFullyQualifiedTypeName(),
                         )
                         : sprintf(
                             'use %s%s as %s;',
                             $useTypeFormatted,
                             $useStatement->getFullyQualifiedTypeName(),
-                            $useStatement->getNameAsReferencedInFile()
+                            $useStatement->getNameAsReferencedInFile(),
                         );
                 },
-                $this->useStatements
-            )
+                $this->useStatements,
+            ),
         );
     }
 
@@ -241,7 +241,7 @@ class AlphabeticallySortedUsesSniff extends AbstractSniff
                 $exception = new CodeError(
                     static::CODE_INCORRECT_ORDER,
                     'Use statements should be sorted alphabetically. The first wrong one is %s.',
-                    $useStatement->getPointer()
+                    $useStatement->getPointer(),
                 );
 
                 $exception

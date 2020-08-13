@@ -42,7 +42,7 @@ function getCodeDesc(string $fullQualifiedClassName, string $constant): string
     // $re = ;
     if (!$docComment = $constReflection->getDocComment()) {
         throw new DomainException(
-            sprintf('There should be a doc block for %s:%s', $fullQualifiedClassName, $constant)
+            sprintf('There should be a doc block for %s:%s', $fullQualifiedClassName, $constant),
         );
     }
 
@@ -51,8 +51,8 @@ function getCodeDesc(string $fullQualifiedClassName, string $constant): string
             sprintf(
                 'There should be a doc block with summary for %s:%s',
                 $fullQualifiedClassName,
-                $constant
-            )
+                $constant,
+            ),
         );
     }
 
@@ -80,7 +80,7 @@ function handleFiles(Iterator $regexIterator, string $baseFolder): array
         $hasSuppresses = (bool) preg_match_all(
             '/->isSniffSuppressed\((?P<code>\s*.*\s*)\)/mU',
             file_get_contents($file),
-            $suppresses
+            $suppresses,
         );
 
         try {
@@ -93,7 +93,7 @@ function handleFiles(Iterator $regexIterator, string $baseFolder): array
                     $sniffRule = sprintf(
                         'BestIt.%s.%s',
                         str_replace(DIRECTORY_SEPARATOR, '.', $simpleClassName),
-                        $constantValue
+                        $constantValue,
                     );
 
                     $codes[$sniffRule] = [$sniffDesc, $hasSuppresses];
@@ -112,7 +112,7 @@ function handleFiles(Iterator $regexIterator, string $baseFolder): array
                                     $codeHasMatchingSuppress = in_array(
                                         $foundSuppressValue,
                                         [$constant, $constantValue],
-                                        true
+                                        true,
                                     )
                                 ) {
                                     $codes[$sniffRule][1] = 'yes';
@@ -151,7 +151,7 @@ function outputCodesTable(array $codes): void
         <<<EOD
 | Sniff | Description | suppressable |
 | ----- | ----------- | ------------ |
-EOD
+EOD,
     );
 
     foreach ($codes as $code => $codeRule) {
@@ -163,9 +163,9 @@ EOD
                 "\n| %s | %s | %s |",
                 $code,
                 $description,
-                $hasSuppresses ?: 'no'
+                $hasSuppresses ?: 'no',
             ),
-            FILE_APPEND
+            FILE_APPEND,
         );
     }
 

@@ -208,7 +208,7 @@ trait DefaultSniffIntegrationTestTrait
     {
         return array_reverse(glob(sprintf(
             $this->getFixturePath() . '/with_%s/*.php',
-            $forErrors ? 'errors' : 'warnings'
+            $forErrors ? 'errors' : 'warnings',
         ))) ?: [];
     }
 

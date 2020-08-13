@@ -128,7 +128,7 @@ class SpaceAfterDeclareSniff implements Sniff
         $fixNoWhitespace = $phpcsFile->addFixableError(
             self::MESSAGE_NO_WHITESPACE_FOUND,
             $semicolonPtr,
-            static::CODE_NO_WHITESPACE_FOUND
+            static::CODE_NO_WHITESPACE_FOUND,
         );
 
         if ($fixNoWhitespace) {
@@ -157,7 +157,7 @@ class SpaceAfterDeclareSniff implements Sniff
         $fixMuchWhitespaces = $phpcsFile->addFixableError(
             self::MESSAGE_MUCH_WHITESPACE_FOUND,
             $semicolonPtr,
-            static::CODE_MUCH_WHITESPACE_FOUND
+            static::CODE_MUCH_WHITESPACE_FOUND,
         );
 
         if ($fixMuchWhitespaces) {
@@ -188,7 +188,7 @@ class SpaceAfterDeclareSniff implements Sniff
         $fixGroupBlankLines = $phpcsFile->addFixableError(
             self::MESSAGE_GROUP_BLANK_LINE_FOUND,
             $semicolonPtr,
-            static::CODE_GROUP_BLANK_LINE_FOUND
+            static::CODE_GROUP_BLANK_LINE_FOUND,
         );
 
         if ($fixGroupBlankLines) {

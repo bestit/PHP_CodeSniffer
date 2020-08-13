@@ -56,7 +56,7 @@ class ExceptionHelper
             $exception->getMessage(),
             $exception->getStackPosition(),
             $exception->getCode(),
-            $exception->getPayload()
+            $exception->getPayload(),
         );
     }
 }

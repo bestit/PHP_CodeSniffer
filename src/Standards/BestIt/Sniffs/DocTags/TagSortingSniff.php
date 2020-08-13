@@ -109,7 +109,7 @@ class TagSortingSniff extends AbstractSniff
                     static::CODE_MISSING_NEWLINE_BETWEEN_TAGS,
                     [
                         $prevToken['content'],
-                    ]
+                    ],
                 );
 
                 if ($isFixing) {
@@ -139,7 +139,7 @@ class TagSortingSniff extends AbstractSniff
             $error = (new CodeWarning(
                 static::CODE_WRONG_TAG_SORTING,
                 self::MESSAGE_WRONG_TAG_SORTING,
-                array_shift($orgTokens)['pointer']
+                array_shift($orgTokens)['pointer'],
             ))->setToken($this->token);
 
             $error->isFixable(true);
@@ -332,7 +332,7 @@ class TagSortingSniff extends AbstractSniff
 
         $fixer->addContentBefore(
             $token['pointer'],
-            $this->file->eolChar . $lineStartPadding . '* '
+            $this->file->eolChar . $lineStartPadding . '* ',
         );
 
         $fixer->endChangeset();
@@ -410,7 +410,7 @@ class TagSortingSniff extends AbstractSniff
         (new LineHelper($this->file))
             ->removeLines(
                 $firstTag['line'],
-                $this->tokens[$this->token['comment_closer']]['line']
+                $this->tokens[$this->token['comment_closer']]['line'],
             );
 
         return $firstTag;
@@ -428,7 +428,7 @@ class TagSortingSniff extends AbstractSniff
         $this->docTagHelper = new DocTagHelper(
             $this->file,
             $this->stackPos,
-            $this->tokens
+            $this->tokens,
         );
     }
 

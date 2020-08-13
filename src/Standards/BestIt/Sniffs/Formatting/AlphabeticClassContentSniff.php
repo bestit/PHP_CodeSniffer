@@ -52,7 +52,7 @@ class AlphabeticClassContentSniff extends AbstractSniff
                 $this->file->addWarning(
                     self::MESSAGE_SORT_ALPHABETICALLY,
                     $foundContentPos,
-                    static::CODE_SORT_ALPHABETICALLY
+                    static::CODE_SORT_ALPHABETICALLY,
                 );
             }
         }
@@ -88,7 +88,7 @@ class AlphabeticClassContentSniff extends AbstractSniff
             $this->file,
             [$token],
             $this->stackPos + 1,
-            $this->token['scope_closer']
+            $this->token['scope_closer'],
         );
 
         $foundContentsOrg = [];

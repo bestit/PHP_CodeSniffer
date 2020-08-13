@@ -41,7 +41,7 @@ trait SuppressingTrait
         $sniffClassName = preg_replace(
             '/Sniff$/',
             '',
-            str_replace(['\\', '.Sniffs'], ['.', ''], static::class)
+            str_replace(['\\', '.Sniffs'], ['.', ''], static::class),
         );
 
         if ($sniffName) {
@@ -85,7 +85,7 @@ trait SuppressingTrait
         return $this->getSuppressHelper()->isSniffSuppressed(
             $this->getFile(),
             $stackPos ?? $this->getStackPos(),
-            $this->getSniffName($rule)
+            $this->getSniffName($rule),
         );
     }
 }

@@ -39,7 +39,7 @@ class ThrowsTagSniff extends AbstractTagSniff
             $this->file->addWarning(
                 static::MESSAGE_CODE_TAG_MISSING_DESC_DESC,
                 $this->stackPos,
-                static::CODE_TAG_MISSING_DESC_DESC
+                static::CODE_TAG_MISSING_DESC_DESC,
             );
         }
     }
