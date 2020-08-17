@@ -58,7 +58,7 @@ class MultipleReturnSniff extends AbstractSniff
             $this->file,
             [T_RETURN],
             $this->stackPos + 1,
-            $this->token['scope_closer']
+            $this->token['scope_closer'],
         );
 
         return array_filter($returnPositions, function (int $returnPos): bool {
@@ -84,7 +84,7 @@ class MultipleReturnSniff extends AbstractSniff
                 $this->file->addWarning(
                     self::WARNING_MULTIPLE_RETURNS_FOUND,
                     $returnPos,
-                    static::CODE_MULTIPLE_RETURNS_FOUND
+                    static::CODE_MULTIPLE_RETURNS_FOUND,
                 );
             });
         }

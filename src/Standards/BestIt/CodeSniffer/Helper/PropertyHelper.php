@@ -76,7 +76,7 @@ class PropertyHelper
             [T_STATIC, T_WHITESPACE, T_COMMENT],
             $variablePtr - 1,
             null,
-            true
+            true,
         );
         $propertyToken = $tokens[$propertyPointer];
         $propertyCode = $propertyToken['code'];
@@ -89,7 +89,7 @@ class PropertyHelper
                 T_PUBLIC,
                 T_VAR,
             ],
-            true
+            true,
         );
     }
 }

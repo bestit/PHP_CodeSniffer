@@ -57,7 +57,7 @@ abstract class AbstractDocSniffTest extends SniffTestCase
     {
         static::assertTrue(
             defined(get_class($this->fixture) . '::' . $constant),
-            'Constant ' . $constant . ' is missing.'
+            'Constant ' . $constant . ' is missing.',
         );
     }
 }

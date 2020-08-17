@@ -31,7 +31,7 @@ class FileHelper
         $file = new File(
             $filePath,
             new Ruleset($config = new Config()),
-            $config
+            $config,
         );
 
         $file->setContent(file_get_contents($filePath));

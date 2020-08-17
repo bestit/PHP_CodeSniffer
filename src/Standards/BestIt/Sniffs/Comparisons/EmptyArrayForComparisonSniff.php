@@ -78,7 +78,7 @@ class EmptyArrayForComparisonSniff extends AbstractSniff
         $this->file->recordMetric(
             $searchPos,
             'Invalid array comparison',
-            $matchedEveryInvalidCode ? 'yes' : 'no'
+            $matchedEveryInvalidCode ? 'yes' : 'no',
         );
 
         if ($matchedEveryInvalidCode) {
@@ -107,7 +107,7 @@ class EmptyArrayForComparisonSniff extends AbstractSniff
             $this->file->recordMetric(
                 $startPos,
                 'Invalid array comparison',
-                'no'
+                'no',
             );
         }
     }

@@ -25,7 +25,7 @@ class RequiredClassTagsSniff extends AbstractRequiredTagsSniff
     {
         $namespacePtr = $this->file->findNext(
             [T_NAMESPACE],
-            0
+            0,
         );
 
         return (int) ($namespacePtr !== false);

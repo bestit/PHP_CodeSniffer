@@ -84,7 +84,7 @@ class EmptyLinesDocSniff extends AbstractSniff
 
         (new LineHelper($this->file))->removeLines(
             $currentToken['line'] + $movement,
-            $nextToken['line'] - 1
+            $nextToken['line'] - 1,
         );
 
         $phpcsFile->fixer->endChangeset();
@@ -108,7 +108,7 @@ class EmptyLinesDocSniff extends AbstractSniff
                 [T_DOC_COMMENT_WHITESPACE, T_DOC_COMMENT_STAR],
                 $searchPosition + 1,
                 $endOfDoc,
-                true
+                true,
             );
 
             if ($hasToken = ($nextTokenPosition > 0)) {
@@ -119,7 +119,7 @@ class EmptyLinesDocSniff extends AbstractSniff
                     $isFixing = $phpcsFile->addFixableError(
                         self::ERROR_EMPTY_LINES_FOUND,
                         $nextTokenPosition,
-                        static::CODE_EMPTY_LINES_FOUND
+                        static::CODE_EMPTY_LINES_FOUND,
                     );
 
                     if ($isFixing) {
@@ -130,7 +130,7 @@ class EmptyLinesDocSniff extends AbstractSniff
                 $phpcsFile->recordMetric(
                     $searchPosition,
                     'DocBlock has too many lines',
-                    $hasTooManyLines ? 'yes' : 'no'
+                    $hasTooManyLines ? 'yes' : 'no',
                 );
 
                 $searchPosition = $nextTokenPosition;

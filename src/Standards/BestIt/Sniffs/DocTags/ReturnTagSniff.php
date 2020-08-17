@@ -70,7 +70,7 @@ class ReturnTagSniff extends AbstractTagSniff
             throw (new CodeWarning(
                 static::CODE_MISSING_RETURN_DESC,
                 self::MESSAGE_MISSING_RETURN_DESC,
-                $this->stackPos
+                $this->stackPos,
             ))->setToken($this->token);
         }
     }

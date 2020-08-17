@@ -106,7 +106,7 @@ class ReturnTypeDeclarationSniff extends AbstractSniff
 
         $file->fixer->addContent(
             $this->token['parenthesis_closer'],
-            ': ' . $returnTypeHint
+            ': ' . $returnTypeHint,
         );
 
         $file->fixer->endChangeset();

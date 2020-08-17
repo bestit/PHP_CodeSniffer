@@ -121,7 +121,7 @@ class TraitUseSpacingSniff extends AbstractSniff
                 [
                     $requiredLinesAfter,
                     $realLinesAfterUse,
-                ]
+                ],
             );
 
             if ($fix) {
@@ -150,7 +150,7 @@ class TraitUseSpacingSniff extends AbstractSniff
                 [
                     self::LINES_BEFORE_FIRST_USE,
                     $realLinesBeforeUse,
-                ]
+                ],
             );
 
             if ($fix) {
@@ -179,12 +179,12 @@ class TraitUseSpacingSniff extends AbstractSniff
             $previousUseEndPos = TokenHelper::findNextLocal(
                 $file,
                 [T_SEMICOLON, T_OPEN_CURLY_BRACKET],
-                $previousUsePos + 1
+                $previousUsePos + 1,
             );
 
             $realLinesBetweenUse = $this->getRealLinesBetweenUses(
                 $previousUseEndPos,
-                $usePos
+                $usePos,
             );
 
             $previousUsePos = $usePos;
@@ -262,7 +262,7 @@ class TraitUseSpacingSniff extends AbstractSniff
             T_WHITESPACE,
             $file->eolChar,
             $firstUsePos,
-            $posBeforeFirstUse
+            $posBeforeFirstUse,
         );
 
         if ($posBeforeIndentation !== null) {
@@ -294,7 +294,7 @@ class TraitUseSpacingSniff extends AbstractSniff
             T_WHITESPACE,
             $file->eolChar,
             $usePos,
-            $previousUseEndPos
+            $previousUseEndPos,
         );
 
         $file->fixer->beginChangeset();
@@ -324,7 +324,7 @@ class TraitUseSpacingSniff extends AbstractSniff
         $lastUseEndPos = TokenHelper::findNextLocal(
             $file,
             [T_SEMICOLON, T_OPEN_CURLY_BRACKET],
-            $lastUsePos + 1
+            $lastUsePos + 1,
         );
 
         if ($tokens[$lastUseEndPos]['code'] === T_OPEN_CURLY_BRACKET) {
@@ -353,7 +353,7 @@ class TraitUseSpacingSniff extends AbstractSniff
                 T_WHITESPACE,
                 $file->eolChar,
                 $whitespaceEnd - 1,
-                $lastUseEndPos
+                $lastUseEndPos,
             );
             $whitespaceEnd = $lastEolPos ?? $lastUseEndPos;
         }
@@ -382,7 +382,7 @@ class TraitUseSpacingSniff extends AbstractSniff
             $whitespaceBeforeFirstUse .= TokenHelper::getContent(
                 $file,
                 $posBeforeFirstUse + 1,
-                $firstUsePos - 1
+                $firstUsePos - 1,
             );
         }
 

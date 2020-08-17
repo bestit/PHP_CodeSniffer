@@ -82,7 +82,7 @@ class TokenHelperTest extends TestCase
     public function testFindPreviousContentNone(): void
     {
         static::assertNull(
-            TokenHelper::findPreviousContent($this->file, [T_DOC_COMMENT_TAG], '@foobar', 45)
+            TokenHelper::findPreviousContent($this->file, [T_DOC_COMMENT_TAG], '@foobar', 45),
         );
     }
 
@@ -95,7 +95,7 @@ class TokenHelperTest extends TestCase
     {
         static::assertSame(
             38,
-            TokenHelper::findPreviousContent($this->file, [T_DOC_COMMENT_TAG], '@author', 45)
+            TokenHelper::findPreviousContent($this->file, [T_DOC_COMMENT_TAG], '@author', 45),
         );
     }
 

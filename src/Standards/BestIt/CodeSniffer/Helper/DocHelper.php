@@ -82,7 +82,7 @@ class DocHelper
     {
         if (!$this->hasDocBlock()) {
             throw new DomainException(
-                sprintf('Missing doc block for position %s of file %s.', $this->stackPos, $this->file->getFilename())
+                sprintf('Missing doc block for position %s of file %s.', $this->stackPos, $this->file->getFilename()),
             );
         }
 
@@ -150,8 +150,8 @@ class DocHelper
             TokenHelper::findPreviousExcluding(
                 $this->file,
                 TokenHelper::$ineffectiveTokenCodes + Tokens::$methodPrefixes,
-                $this->stackPos - 1
-            )
+                $this->stackPos - 1,
+            ),
         );
 
         return $endPos !== false ? $endPos : null;

@@ -62,14 +62,14 @@ trait TestRequiredConstantsTrait
 
         static::assertTrue(
             defined($fullConstantName),
-            'Constant ' . $fullConstantName . ' is missing.'
+            'Constant ' . $fullConstantName . ' is missing.',
         );
 
         if ($constantValue !== null) {
             static::assertSame(
                 constant($fullConstantName),
                 $constantValue,
-                'The value of the constants ' . $fullConstantName . ' was wrong.'
+                'The value of the constants ' . $fullConstantName . ' was wrong.',
             );
         }
     }

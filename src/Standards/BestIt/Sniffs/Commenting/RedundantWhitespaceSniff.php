@@ -44,7 +44,7 @@ class RedundantWhitespaceSniff extends AbstractSniff
             [T_DOC_COMMENT_WHITESPACE],
             $stackPos + 1,
             null,
-            true
+            true,
         );
 
         $nextToken = $this->tokens[$nextTokenContentPos];
@@ -55,7 +55,7 @@ class RedundantWhitespaceSniff extends AbstractSniff
             $file->addError(
                 self::MESSAGE_ERROR_REDUNDANT_WHITESPACE,
                 $stackPos,
-                static::CODE_ERROR_REDUNDANT_WHITESPACE
+                static::CODE_ERROR_REDUNDANT_WHITESPACE,
             );
         }
     }

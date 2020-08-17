@@ -47,12 +47,12 @@ class UseStatementHelperTest extends TestCase
             'foo\\bar',
             mt_rand(1, 1000),
             $type,
-            null
+            null,
         );
 
         static::assertSame(
             $type,
-            UseStatementHelper::getType($this->createMock(File::class), $useStatement)
+            UseStatementHelper::getType($this->createMock(File::class), $useStatement),
         );
     }
 
@@ -73,12 +73,12 @@ class UseStatementHelperTest extends TestCase
             'foo\\bar',
             mt_rand(1, 1000),
             $type,
-            null
+            null,
         );
 
         static::assertSame(
             $name,
-            UseStatementHelper::getTypeName($this->createMock(File::class), $useStatement)
+            UseStatementHelper::getTypeName($this->createMock(File::class), $useStatement),
         );
     }
 

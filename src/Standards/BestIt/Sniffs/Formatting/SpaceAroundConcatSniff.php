@@ -88,7 +88,7 @@ class SpaceAroundConcatSniff extends AbstractSniff
             $error = new CodeError(
                 static::CODE_MISSING_SPACE_AROUND_CONCAT,
                 self::MESSAGE_MISSING_SPACE_AROUND_CONCAT,
-                $this->stackPos
+                $this->stackPos,
             );
 
             $error->isFixable(true);

@@ -97,7 +97,7 @@ class CamelCaseVariableSniff extends AbstractSniff
                     static::CODE_NOT_CAMEL_CASE,
                     [
                         $var,
-                    ]
+                    ],
                 );
             }
         } else {

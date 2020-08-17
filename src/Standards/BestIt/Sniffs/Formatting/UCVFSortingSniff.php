@@ -68,7 +68,7 @@ class UCVFSortingSniff extends AbstractSniff
             $this->file,
             $this->sortedTokens,
             $this->stackPos,
-            $this->token['scope_closer']
+            $this->token['scope_closer'],
         );
     }
 
@@ -205,7 +205,7 @@ class UCVFSortingSniff extends AbstractSniff
                     [
                         $sortedToken['type'],
                         $sortedToken['content'],
-                    ]
+                    ],
                 );
             }
         }

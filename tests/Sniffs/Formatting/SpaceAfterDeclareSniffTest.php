@@ -23,7 +23,7 @@ class SpaceAfterDeclareSniffTest extends SniffTestCase
     public function testSpaceAfterDeclareCorrect(): void
     {
         $this->assertNoSniffErrorInFile(
-            $this->checkFile($this->getFixtureFilePath('Correct.php'))
+            $this->checkFile($this->getFixtureFilePath('Correct.php')),
         );
     }
 
@@ -35,7 +35,7 @@ class SpaceAfterDeclareSniffTest extends SniffTestCase
     public function testEarlyReturn(): void
     {
         $this->assertNoSniffErrorInFile(
-            $this->checkFile($this->getFixtureFilePath('NoFollowingStatement.php'))
+            $this->checkFile($this->getFixtureFilePath('NoFollowingStatement.php')),
         );
     }
 
@@ -51,7 +51,7 @@ class SpaceAfterDeclareSniffTest extends SniffTestCase
         $this->assertSniffError(
             $report,
             3,
-            SpaceAfterDeclareSniff::CODE_NO_WHITESPACE_FOUND
+            SpaceAfterDeclareSniff::CODE_NO_WHITESPACE_FOUND,
         );
 
         $this->assertAllFixedInFile($report);
@@ -69,7 +69,7 @@ class SpaceAfterDeclareSniffTest extends SniffTestCase
         $this->assertSniffError(
             $report,
             3,
-            SpaceAfterDeclareSniff::CODE_MUCH_WHITESPACE_FOUND
+            SpaceAfterDeclareSniff::CODE_MUCH_WHITESPACE_FOUND,
         );
 
         $this->assertAllFixedInFile($report);
@@ -83,19 +83,19 @@ class SpaceAfterDeclareSniffTest extends SniffTestCase
     public function testMultipleDeclareStatements(): void
     {
         $report = $this->checkFile(
-            $this->getFixtureFilePath('MultipleDeclareStatements.php')
+            $this->getFixtureFilePath('MultipleDeclareStatements.php'),
         );
 
         $this->assertSniffError(
             $report,
             3,
-            SpaceAfterDeclareSniff::CODE_GROUP_BLANK_LINE_FOUND
+            SpaceAfterDeclareSniff::CODE_GROUP_BLANK_LINE_FOUND,
         );
 
         $this->assertSniffError(
             $report,
             5,
-            SpaceAfterDeclareSniff::CODE_NO_WHITESPACE_FOUND
+            SpaceAfterDeclareSniff::CODE_NO_WHITESPACE_FOUND,
         );
 
         $this->assertAllFixedInFile($report);
@@ -118,7 +118,7 @@ class SpaceAfterDeclareSniffTest extends SniffTestCase
                 SpaceAfterDeclareSniff::CODE_NO_WHITESPACE_FOUND,
                 SpaceAfterDeclareSniff::CODE_MUCH_WHITESPACE_FOUND,
                 SpaceAfterDeclareSniff::CODE_GROUP_BLANK_LINE_FOUND,
-            ]
+            ],
         );
     }
 }

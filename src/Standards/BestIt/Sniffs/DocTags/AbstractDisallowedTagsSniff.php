@@ -72,7 +72,7 @@ abstract class AbstractDisallowedTagsSniff extends AbstractSniff
                     self::MESSAGE_TAG_NOT_ALLOWED,
                     $tagPos,
                     static::CODE_TAG_NOT_ALLOWED,
-                    [$tagContent]
+                    [$tagContent],
                 );
             }
         }
@@ -114,7 +114,7 @@ abstract class AbstractDisallowedTagsSniff extends AbstractSniff
         return (new DocTagHelper(
             $this->file,
             $this->getDocCommentPos(),
-            $this->tokens
+            $this->tokens,
         )
         )->getTagTokens();
     }

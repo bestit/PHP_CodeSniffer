@@ -101,7 +101,7 @@ class RequiredDocBlockSniff extends AbstractSniff
             throw (new CodeError(
                 static::CODE_MISSING_DOC_BLOCK_PREFIX . ucfirst($tokenIdent),
                 self::MESSAGE_MISSING_DOC_BLOCK,
-                $this->stackPos
+                $this->stackPos,
             ))->setPayload([lcfirst($tokenIdent)]);
         }
     }
@@ -125,7 +125,7 @@ class RequiredDocBlockSniff extends AbstractSniff
             $exception = (new CodeError(
                 static::CODE_NO_MULTI_LINE_DOC_BLOCK_PREFIX . ucfirst($tokenIdent),
                 self::MESSAGE_NO_MULTI_LINE_DOC_BLOCK_PREFIX,
-                $docCommentPos
+                $docCommentPos,
             ))->setPayload([lcfirst($tokenIdent)]);
 
             throw $exception;
