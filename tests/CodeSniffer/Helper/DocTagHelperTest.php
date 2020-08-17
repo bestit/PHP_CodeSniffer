@@ -195,7 +195,7 @@ class DocTagHelperTest extends TestCase
                 'length' => 62,
                 'level' => 1,
                 'conditions' => [16 => 364],
-                'contents' => []
+                'contents' => [],
             ],
             111 => [
                 'content' => '@throws',
@@ -216,7 +216,7 @@ class DocTagHelperTest extends TestCase
                         'length' => 16,
                         'level' => 1,
                         'conditions' => [16 => 364],
-                    ]
+                    ],
                 ],
             ],
             118 => [
@@ -405,7 +405,7 @@ class DocTagHelperTest extends TestCase
                         'conditions' => [16 => 364],
                     ],
                 ],
-            ]
+            ],
         ];
 
         static::assertSame($expectedArray, $this->fixture->getTagTokens());

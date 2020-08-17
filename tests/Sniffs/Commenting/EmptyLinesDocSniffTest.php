@@ -35,7 +35,7 @@ class EmptyLinesDocSniffTest extends SniffTestCase
     protected function getExpectedTokens(): array
     {
         return [
-            T_DOC_COMMENT_OPEN_TAG
+            T_DOC_COMMENT_OPEN_TAG,
         ];
     }
 

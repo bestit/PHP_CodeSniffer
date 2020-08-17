@@ -146,7 +146,7 @@ class EmptyArrayForComparisonSniff extends AbstractSniff
 
         $this->invalidStructure = [
             T_ARRAY => [T_OPEN_PARENTHESIS, T_CLOSE_PARENTHESIS],
-            T_OPEN_SHORT_ARRAY => [T_CLOSE_SHORT_ARRAY]
+            T_OPEN_SHORT_ARRAY => [T_CLOSE_SHORT_ARRAY],
         ];
     }
 }

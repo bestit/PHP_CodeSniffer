@@ -37,7 +37,7 @@ class PropertyTypeHintSniffTest extends SniffTestCase
             T_VAR,
             T_PUBLIC,
             T_PROTECTED,
-            T_PRIVATE
+            T_PRIVATE,
         ];
     }
 
@@ -49,7 +49,7 @@ class PropertyTypeHintSniffTest extends SniffTestCase
     public function getRequiredConstantAsserts(): array
     {
         return [
-            'CODE_MISSING_ANY_TYPE_HINT' => ['CODE_MISSING_ANY_TYPE_HINT', 'MissingAnyTypeHint']
+            'CODE_MISSING_ANY_TYPE_HINT' => ['CODE_MISSING_ANY_TYPE_HINT', 'MissingAnyTypeHint'],
         ];
     }
 

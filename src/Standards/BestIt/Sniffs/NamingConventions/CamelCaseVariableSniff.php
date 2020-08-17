@@ -96,7 +96,7 @@ class CamelCaseVariableSniff extends AbstractSniff
                     $this->stackPos,
                     static::CODE_NOT_CAMEL_CASE,
                     [
-                        $var
+                        $var,
                     ]
                 );
             }

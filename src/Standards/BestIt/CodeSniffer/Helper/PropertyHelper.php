@@ -87,7 +87,7 @@ class PropertyHelper
                 T_PRIVATE,
                 T_PROTECTED,
                 T_PUBLIC,
-                T_VAR
+                T_VAR,
             ],
             true
         );

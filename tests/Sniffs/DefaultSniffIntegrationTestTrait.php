@@ -71,7 +71,7 @@ trait DefaultSniffIntegrationTestTrait
                 $fileMetaData = [
                     $file,
                     $matches['code'],
-                    array_map('intval', $errorLines)
+                    array_map('intval', $errorLines),
                 ];
             }
         }

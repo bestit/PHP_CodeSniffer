@@ -59,7 +59,7 @@ class RequiredDocBlockSniffTest extends SniffTestCase
             T_PROTECTED,
             T_PUBLIC,
             T_TRAIT,
-            T_VARIABLE
+            T_VARIABLE,
         ];
     }
 

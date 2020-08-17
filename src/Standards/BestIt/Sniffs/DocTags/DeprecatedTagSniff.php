@@ -47,8 +47,8 @@ class DeprecatedTagSniff extends AbstractTagSniff
             $this->stackPos,
             static::CODE_TAG_MISSING_DATES,
             [
-                $this->getValidPattern()
-            ]
+                $this->getValidPattern(),
+            ],
         ];
     }
 

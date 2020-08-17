@@ -77,7 +77,7 @@ class RequiredMethodTagsSniff extends AbstractRequiredTagsSniff
             'return' => [
                 'min' => [$this, 'getReturnMinimumCount'],
                 'max' => 1,
-            ]
+            ],
         ];
     }
 

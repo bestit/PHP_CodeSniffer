@@ -23,7 +23,7 @@ class FunctionDocSniffTest extends AbstractDocSniffTest
     protected function getExpectedTokens(): array
     {
         return [
-            T_FUNCTION
+            T_FUNCTION,
         ];
     }
 
