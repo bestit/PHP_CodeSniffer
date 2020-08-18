@@ -15,7 +15,7 @@
     ],
     "autoload": {
         "psr-4": {
-          "BestIt\\": "src/Standards/BestIt"
+            "BestIt\\": "src/Standards/BestIt"
         }
     },
     "autoload-dev": {

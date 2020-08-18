@@ -13,5 +13,6 @@
     <exclude-pattern>*/Fixtures/*.php</exclude-pattern>
 
     <!-- So many copies of the original code from the sniffer/slevomat. Ignore it! -->
+    <exclude-pattern>*/ExplicitAssertionsSniff.php</exclude-pattern>
     <exclude-pattern>*/SniffTestCase.php</exclude-pattern>
 </ruleset>

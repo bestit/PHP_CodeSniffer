@@ -7,6 +7,7 @@ namespace BestIt\CodeSniffer\Helper;
 use PHP_CodeSniffer\Files\File;
 use function array_key_exists;
 use function in_array;
+use function is_int;
 use const T_DOC_COMMENT_CLOSE_TAG;
 use const T_DOC_COMMENT_STRING;
 use const T_DOC_COMMENT_TAG;
@@ -106,8 +107,8 @@ class DocTagHelper
         $tagPositions = $this->getCommentStartToken()['comment_tags'];
         $tagTokens = [];
 
-        /** @var int $tagPos */
         foreach ($tagPositions as $tagPos) {
+            assert(is_int($tagPos));
             if ($tagPos >= $iteratedPos) {
                 $tagTokens[$tagPos] = $this->tokens[$tagPos] + [
                     'contents' => $this->loadTagContentTokens($tagPos, $iteratedPos),
