@@ -157,6 +157,7 @@ The base for the BestIt Standard is [PSR-12](https://github.com/php-fig/fig-stan
 | BestIt.Functions.ForbiddenFunctions.Discouraged | You SHOULD not use eval. | yes |
 | BestIt.Functions.ForbiddenFunctions.DiscouragedWithAlternative | You SHOULD not use alias but the original function names. | yes |
 | BestIt.Functions.MultipleReturn.MultipleReturnsFound | You SHOULD only use a return per method. | no |
+| BestIt.Functions.NoSimplePropertyMethod.ShouldUseTypedPropertyDirectly | You SHOULD use the typed property directly instead of the the simple getter-/setter-combination. | yes |
 | BestIt.Functions.TrailingCommaInCall.MissingTrailingComma | You MUST append a trailing command in your multi line function calls. | no |
 | BestIt.NamingConventions.CamelCaseVariable.NotCamelCase | You MUST provide your vars in camel case, lower case first. | yes |
 | BestIt.TypeHints.ExplicitAssertions.RequiredExplicitAssertion | Use assertion instead of inline documentation comment. | no |

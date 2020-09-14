@@ -34,13 +34,6 @@
 
     <rule ref="rulesets/controversial.xml"/>
 
-    <!-- There seemed to be a phpmd bug which complained about AbstractSniff without change or real existing error -->
-    <rule ref="rulesets/design.xml/NumberOfChildren">
-        <properties>
-            <property name="minimum" value="20"/>
-        </properties>
-    </rule>
-
     <rule ref="rulesets/design.xml">
         <exclude name="NumberOfChildren" />
     </rule>

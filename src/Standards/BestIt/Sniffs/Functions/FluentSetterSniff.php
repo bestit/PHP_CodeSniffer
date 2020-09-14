@@ -202,7 +202,7 @@ class FluentSetterSniff extends MethodScopeSniff
             );
 
             // We require camelCase for methods and properties,
-            // so there should be an "lcfirst-Method" without set-prefix.
+            // so there should be an "lcfirst-property" without set-prefix.
             $isSetter = in_array(lcfirst(substr($methodName, 3)), $properties, true);
         }
 

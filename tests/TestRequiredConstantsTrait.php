@@ -42,9 +42,9 @@ trait TestRequiredConstantsTrait
     /**
      * Returns the names of the required constants.
      *
-     * @return array The required constants of a class. The second value is a possible value which should be checked.
+     * @return iterable The required constants of a class. The second value is a possible value which should be checked.
      */
-    abstract public function getRequiredConstantAsserts(): array;
+    abstract public function getRequiredConstantAsserts(): iterable;
 
     /**
      * Checks if the api is extended.
