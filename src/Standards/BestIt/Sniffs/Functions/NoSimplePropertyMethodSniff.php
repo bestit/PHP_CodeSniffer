@@ -235,14 +235,14 @@ class NoSimplePropertyMethodSniff extends AbstractSniff
                 self::ERROR_GETTER_TOO_SIMPLE,
                 $getterPosition,
                 static::CODE_SHOULD_USE_PROPERTY,
-                $propertyName,
+                [$propertyName],
             );
 
             $this->getFile()->addWarning(
                 self::ERROR_SETTER_TOO_SIMPLE,
                 $setterPosition,
                 static::CODE_SHOULD_USE_PROPERTY,
-                $propertyName,
+                [$propertyName],
             );
         }
     }

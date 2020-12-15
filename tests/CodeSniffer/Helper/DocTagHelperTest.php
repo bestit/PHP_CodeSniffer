@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace BestIt\CodeSniffer\Helper;
 
-use PHP_CodeSniffer\Files\File;
 use PHPUnit\Framework\TestCase;
+use const T_CLASS;
 
 /**
  * Tests DocTagHelper
@@ -52,7 +52,7 @@ class DocTagHelperTest extends TestCase
                 'column' => 8,
                 'length' => 61,
                 'level' => 1,
-                'conditions' => [16 => 364,],
+                'conditions' => [16 => T_CLASS,],
                 'contents' => [
                     42 => [
                         'content' => 'joinColumns={',
@@ -62,7 +62,7 @@ class DocTagHelperTest extends TestCase
                         'column' => 13,
                         'length' => 13,
                         'level' => 1,
-                        'conditions' => [16 => 364],
+                        'conditions' => [16 => T_CLASS],
                     ],
                     47 => [
                         'content' => '@ORM\\JoinColumn(',
@@ -72,7 +72,7 @@ class DocTagHelperTest extends TestCase
                         'column' => 17,
                         'length' => 16,
                         'level' => 1,
-                        'conditions' => [16 => 364],
+                        'conditions' => [16 => T_CLASS],
                     ],
                     52 => [
                         'content' => 'name="offering",',
@@ -82,7 +82,7 @@ class DocTagHelperTest extends TestCase
                         'column' => 21,
                         'length' => 16,
                         'level' => 1,
-                        'conditions' => [16 => 364],
+                        'conditions' => [16 => T_CLASS],
                     ],
                     57 => [
                         'content' => 'referencedColumnName="id"',
@@ -92,7 +92,7 @@ class DocTagHelperTest extends TestCase
                         'column' => 21,
                         'length' => 25,
                         'level' => 1,
-                        'conditions' => [16 => 364],
+                        'conditions' => [16 => T_CLASS],
                     ],
                     62 => [
                         'content' => ')',
@@ -102,7 +102,7 @@ class DocTagHelperTest extends TestCase
                         'column' => 17,
                         'length' => 1,
                         'level' => 1,
-                        'conditions' => [16 => 364],
+                        'conditions' => [16 => T_CLASS],
                     ],
                     67 => [
                         'content' => '},',
@@ -112,7 +112,7 @@ class DocTagHelperTest extends TestCase
                         'column' => 13,
                         'length' => 2,
                         'level' => 1,
-                        'conditions' => [16 => 364],
+                        'conditions' => [16 => T_CLASS],
                     ],
                     72 => [
                         'content' => 'inverseJoinColumns={',
@@ -122,7 +122,7 @@ class DocTagHelperTest extends TestCase
                         'column' => 13,
                         'length' => 20,
                         'level' => 1,
-                        'conditions' => [16 => 364],
+                        'conditions' => [16 => T_CLASS],
                     ],
                     77 => [
                         'content' => '@ORM\\JoinColumn(',
@@ -132,7 +132,7 @@ class DocTagHelperTest extends TestCase
                         'column' => 17,
                         'length' => 16,
                         'level' => 1,
-                        'conditions' => [16 => 364],
+                        'conditions' => [16 => T_CLASS],
                     ],
                     82 => [
                         'content' => 'name="article",',
@@ -142,7 +142,7 @@ class DocTagHelperTest extends TestCase
                         'column' => 21,
                         'length' => 15,
                         'level' => 1,
-                        'conditions' => [16 => 364],
+                        'conditions' => [16 => T_CLASS],
                     ],
                     87 => [
                         'content' => 'referencedColumnName="id"',
@@ -152,7 +152,7 @@ class DocTagHelperTest extends TestCase
                         'column' => 21,
                         'length' => 25,
                         'level' => 1,
-                        'conditions' => [16 => 364],
+                        'conditions' => [16 => T_CLASS],
                     ],
                     92 => [
                         'content' => ')',
@@ -162,7 +162,7 @@ class DocTagHelperTest extends TestCase
                         'column' => 17,
                         'length' => 1,
                         'level' => 1,
-                        'conditions' => [16 => 364],
+                        'conditions' => [16 => T_CLASS],
                     ],
                     97 => [
                         'content' => '}',
@@ -172,7 +172,7 @@ class DocTagHelperTest extends TestCase
                         'column' => 13,
                         'length' => 1,
                         'level' => 1,
-                        'conditions' => [16 => 364],
+                        'conditions' => [16 => T_CLASS],
                     ],
                     102 => [
                         'content' => ')',
@@ -182,7 +182,7 @@ class DocTagHelperTest extends TestCase
                         'column' => 8,
                         'length' => 1,
                         'level' => 1,
-                        'conditions' => [16 => 364],
+                        'conditions' => [16 => T_CLASS],
                     ],
                 ],
             ],
@@ -194,7 +194,7 @@ class DocTagHelperTest extends TestCase
                 'column' => 8,
                 'length' => 62,
                 'level' => 1,
-                'conditions' => [16 => 364],
+                'conditions' => [16 => T_CLASS],
                 'contents' => [],
             ],
             111 => [
@@ -205,7 +205,7 @@ class DocTagHelperTest extends TestCase
                 'column' => 8,
                 'length' => 7,
                 'level' => 1,
-                'conditions' => [16 => 364],
+                'conditions' => [16 => T_CLASS],
                 'contents' => [
                     114 => [
                         'content' => 'RuntimeException',
@@ -215,7 +215,7 @@ class DocTagHelperTest extends TestCase
                         'column' => 16,
                         'length' => 16,
                         'level' => 1,
-                        'conditions' => [16 => 364],
+                        'conditions' => [16 => T_CLASS],
                     ],
                 ],
             ],
@@ -227,7 +227,7 @@ class DocTagHelperTest extends TestCase
                 'column' => 8,
                 'length' => 4,
                 'level' => 1,
-                'conditions' => [16 => 364],
+                'conditions' => [16 => T_CLASS],
                 'contents' => [
                     121 => [
                         'content' => 'Collection Now that we know who you are, I know who I am. I\'m not a mistake! ' .
@@ -238,7 +238,7 @@ class DocTagHelperTest extends TestCase
                         'column' => 13,
                         'length' => 108,
                         'level' => 1,
-                        'conditions' => [16 => 364],
+                        'conditions' => [16 => T_CLASS],
                     ],
                     126 => [
                         'content' => 'you know how you can tell who the arch-villain\'s going to be? He\'s the exact ' .
@@ -249,7 +249,7 @@ class DocTagHelperTest extends TestCase
                         'column' => 13,
                         'length' => 107,
                         'level' => 1,
-                        'conditions' => [16 => 364],
+                        'conditions' => [16 => T_CLASS],
                     ],
                     131 => [
                         'content' => 'times they\'re friends, like you and me! I should\'ve known way back when... ' .
@@ -260,7 +260,7 @@ class DocTagHelperTest extends TestCase
                         'column' => 13,
                         'length' => 106,
                         'level' => 1,
-                        'conditions' => [16 => 364],
+                        'conditions' => [16 => T_CLASS],
                     ],
                     136 => [
                         'content' => 'the kids. They called me Mr Glass.',
@@ -270,7 +270,7 @@ class DocTagHelperTest extends TestCase
                         'column' => 13,
                         'length' => 34,
                         'level' => 1,
-                        'conditions' => [16 => 364],
+                        'conditions' => [16 => T_CLASS],
                     ],
                 ],
             ],
@@ -282,7 +282,7 @@ class DocTagHelperTest extends TestCase
                 'column' => 8,
                 'length' => 6,
                 'level' => 1,
-                'conditions' => [16 => 364],
+                'conditions' => [16 => T_CLASS],
                 'contents' => [
                     146 => [
                         'content' => 'string $param1',
@@ -292,7 +292,7 @@ class DocTagHelperTest extends TestCase
                         'column' => 15,
                         'length' => 14,
                         'level' => 1,
-                        'conditions' => [16 => 364],
+                        'conditions' => [16 => T_CLASS],
                     ],
                 ],
             ],
@@ -304,7 +304,7 @@ class DocTagHelperTest extends TestCase
                 'column' => 8,
                 'length' => 6,
                 'level' => 1,
-                'conditions' => [16 => 364],
+                'conditions' => [16 => T_CLASS],
                 'contents' => [
                     153 => [
                         'content' => 'string $param2',
@@ -314,7 +314,7 @@ class DocTagHelperTest extends TestCase
                         'column' => 15,
                         'length' => 14,
                         'level' => 1,
-                        'conditions' => [16 => 364],
+                        'conditions' => [16 => T_CLASS],
                     ],
                 ],
             ],
@@ -326,7 +326,7 @@ class DocTagHelperTest extends TestCase
                 'column' => 8,
                 'length' => 5,
                 'level' => 1,
-                'conditions' => [16 => 364],
+                'conditions' => [16 => T_CLASS],
                 'contents' => [
                     163 => [
                         'content' => 'Test1',
@@ -336,7 +336,7 @@ class DocTagHelperTest extends TestCase
                         'column' => 14,
                         'length' => 5,
                         'level' => 1,
-                        'conditions' => [16 => 364],
+                        'conditions' => [16 => T_CLASS],
                     ],
                 ],
             ],
@@ -348,7 +348,7 @@ class DocTagHelperTest extends TestCase
                 'column' => 8,
                 'length' => 5,
                 'level' => 1,
-                'conditions' => [16 => 364],
+                'conditions' => [16 => T_CLASS],
                 'contents' => [
                     170 => [
                         'content' => 'Test2',
@@ -358,7 +358,7 @@ class DocTagHelperTest extends TestCase
                         'column' => 14,
                         'length' => 5,
                         'level' => 1,
-                        'conditions' => [16 => 364],
+                        'conditions' => [16 => T_CLASS],
                     ],
                 ],
             ],
@@ -370,7 +370,7 @@ class DocTagHelperTest extends TestCase
                 'column' => 8,
                 'length' => 5,
                 'level' => 1,
-                'conditions' => [16 => 364],
+                'conditions' => [16 => T_CLASS],
                 'contents' => [
                     177 => [
                         'content' => 'Test3',
@@ -380,7 +380,7 @@ class DocTagHelperTest extends TestCase
                         'column' => 14,
                         'length' => 5,
                         'level' => 1,
-                        'conditions' => [16 => 364],
+                        'conditions' => [16 => T_CLASS],
                     ],
                 ],
             ],
@@ -392,7 +392,7 @@ class DocTagHelperTest extends TestCase
                 'column' => 8,
                 'length' => 7,
                 'level' => 1,
-                'conditions' => [16 => 364],
+                'conditions' => [16 => T_CLASS],
                 'contents' => [
                     187 => [
                         'content' => 'void',
@@ -402,7 +402,7 @@ class DocTagHelperTest extends TestCase
                         'column' => 16,
                         'length' => 4,
                         'level' => 1,
-                        'conditions' => [16 => 364],
+                        'conditions' => [16 => T_CLASS],
                     ],
                 ],
             ],
