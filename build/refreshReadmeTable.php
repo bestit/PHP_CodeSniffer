@@ -128,8 +128,8 @@ function handleFiles(Iterator $regexIterator, string $baseFolder): array
                     }
                 }
             }
-        } catch (ReflectionException $e) {
-            echo $e;
+        } catch (ReflectionException $exception) {
+            echo $exception;
         }
     }
     return $codes;

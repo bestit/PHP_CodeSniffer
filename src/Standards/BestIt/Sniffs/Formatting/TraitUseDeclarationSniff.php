@@ -105,8 +105,8 @@ class TraitUseDeclarationSniff extends AbstractSniff
         foreach ($commaPointers as $commaPos) {
             $pointerAfterComma = TokenHelper::findNextEffective($file, $commaPos + 1);
             $fixer->replaceToken($commaPos, ';' . $file->eolChar . $indentation . 'use ');
-            for ($i = $commaPos + 1; $i < $pointerAfterComma; $i++) {
-                $fixer->replaceToken($i, '');
+            for ($iteratedPointer = $commaPos + 1; $iteratedPointer < $pointerAfterComma; $iteratedPointer++) {
+                $fixer->replaceToken($iteratedPointer, '');
             }
         }
 
