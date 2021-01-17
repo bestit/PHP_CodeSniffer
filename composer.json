@@ -30,13 +30,16 @@
     "require": {
         "php": "^7.4",
         "slevomat/coding-standard": "^6.1",
-        "squizlabs/php_codesniffer": "^3.3",
-        "phpcompatibility/php-compatibility": "^9.0"
+        "squizlabs/php_codesniffer": "^3.3"
     },
     "require-dev": {
         "phpmd/phpmd": "^2.6",
         "sebastian/phpcpd": "^6.0.3",
         "phploc/phploc": "^7.0.2",
-        "phpunit/phpunit": "^9.3"
+        "phpunit/phpunit": "^9.3",
+        "phpcompatibility/php-compatibility": "^9.3"
+    },
+    "suggest": {
+        "phpcompatibility/php-compatibility": "If you want to check for php version compatibility. Please use at least ^9.0."
     }
 }

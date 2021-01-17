@@ -12,7 +12,6 @@
     <rule ref="PSR12">
         <exclude name="PSR12.Files.FileHeader.SpacingAfterBlock" />
     </rule>
-    <rule ref="PHPCompatibility" />
 
     <rule ref="SlevomatCodingStandard.Classes.ClassConstantVisibility">
         <properties>

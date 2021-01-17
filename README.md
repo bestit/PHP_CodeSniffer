@@ -36,6 +36,14 @@ If you want to sniff for special PHP Versions just declare a ["testVersion"](htt
 <config name="testVersion" value="7.1" />
 ```
 
+and include
+
+```xml
+<rule ref="PHPCompatibility" />
+```
+
+after you included our ruleset. (Don't forget to dev-require _phpcompatibility/php-compatibility:^9.0_.)      
+
 Execute the PHP_CodeSniffer (path can vary on your composer configuration):
 
 ```bash
