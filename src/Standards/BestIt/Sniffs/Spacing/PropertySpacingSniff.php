@@ -18,8 +18,8 @@ class PropertySpacingSniff extends BaseSniff
     /**
      * There MUST be a line even without comments.
      *
-     * @phpcsSuppress BestIt.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      * @var int
      */
+    // phpcs:ignore BestIt.TypeHints.PropertyTypeHint.MissingNativeTypeHint
     public $minLinesCountBeforeWithoutComment = 1;
 }

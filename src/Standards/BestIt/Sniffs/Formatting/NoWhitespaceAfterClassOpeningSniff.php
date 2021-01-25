@@ -19,6 +19,7 @@ class NoWhitespaceAfterClassOpeningSniff extends EmptyLinesAroundClassBracesSnif
      *
      * @var int
      */
+    // phpcs:ignore BestIt.TypeHints.PropertyTypeHint.MissingNativeTypeHint
     public $linesCountAfterOpeningBrace = 0;
 
     /**
@@ -26,5 +27,6 @@ class NoWhitespaceAfterClassOpeningSniff extends EmptyLinesAroundClassBracesSnif
      *
      * @var int
      */
+    // phpcs:ignore BestIt.TypeHints.PropertyTypeHint.MissingNativeTypeHint
     public $linesCountBeforeClosingBrace = 0;
 }

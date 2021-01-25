@@ -20,9 +20,9 @@ class DocTagHelperTest extends TestCase
     /**
      * The tested object.
      *
-     * @var DocTagHelper
+     * @var DocTagHelper|null
      */
-    private DocTagHelper $fixture;
+    private ?DocTagHelper $fixture = null;
 
     /**
      * Sets up the test.

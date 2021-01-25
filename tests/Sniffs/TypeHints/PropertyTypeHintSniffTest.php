@@ -50,6 +50,7 @@ class PropertyTypeHintSniffTest extends SniffTestCase
     {
         return [
             'CODE_MISSING_ANY_TYPE_HINT' => ['CODE_MISSING_ANY_TYPE_HINT', 'MissingAnyTypeHint'],
+            'CODE_MISSING_NATIVE_TYPE_HINT' => ['CODE_MISSING_NATIVE_TYPE_HINT', 'MissingNativeTypeHint'],
         ];
     }
 

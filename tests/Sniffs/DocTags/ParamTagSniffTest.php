@@ -25,13 +25,6 @@ class ParamTagSniffTest extends SniffTestCase
     use TestTokenRegistrationTrait;
 
     /**
-     * The tested class.
-     *
-     * @var ParamTagSniff|void
-     */
-    protected $fixture;
-
-    /**
      * Returns the tokens which should be checked.
      *
      * @return array Returns the expected token ids.

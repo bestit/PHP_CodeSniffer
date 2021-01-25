@@ -26,9 +26,9 @@ abstract class AbstractDocSniffTest extends SniffTestCase
      *
      * We use this var to reduce the hard dependencies on internals from a specific slevomat version.
      *
-     * @var Sniff|void
+     * @var Sniff|null
      */
-    protected $fixture;
+    protected ?Sniff $fixture = null;
 
     /**
      * Returns the names of the required constants.

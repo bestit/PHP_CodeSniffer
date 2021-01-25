@@ -21,9 +21,9 @@ class DocHelper
     /**
      * The position of the end token of the doc block.
      *
-     * @var int|null|bool If false then it will be loaded in the getter.
+     * @var int|null|false If false then it will be loaded in the getter.
      */
-    private $blockEndPosition = false;
+    private int|false|null $blockEndPosition = false;
 
     /**
      * The php cs file.
