@@ -31,6 +31,7 @@ class ForbiddenFunctionsSniff extends BaseSniff
     /**
      * If true, an error will be thrown; otherwise a warning.
      *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      * @var boolean
      */
     public $error = false;
@@ -38,15 +39,16 @@ class ForbiddenFunctionsSniff extends BaseSniff
     /**
      * The used file.
      *
-     * @var File|void
+     * @var File|null
      */
-    protected $file;
+    protected File|null $file = null;
 
     /**
      * A list of forbidden functions with their alternatives.
      *
      * The value is NULL if no alternative exists. IE, the function should just not be used.
      *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      * @var array<string, string|null>
      */
     public $forbiddenFunctions = [
@@ -59,7 +61,7 @@ class ForbiddenFunctionsSniff extends BaseSniff
     /**
      * Position of the listened token.
      *
-     * @var int|void
+     * @var int|null
      */
     protected ?int $stackPos = null;
 

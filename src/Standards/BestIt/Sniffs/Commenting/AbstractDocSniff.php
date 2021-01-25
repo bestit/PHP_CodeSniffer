@@ -66,9 +66,9 @@ abstract class AbstractDocSniff extends AbstractSniff
     /**
      * The cached position of the summary.
      *
-     * @var int|bool
+     * @var int|false|null
      */
-    private $summaryPosition = false;
+    private int|false|null $summaryPosition = false;
 
     /**
      * Returns true if there is a doc block.

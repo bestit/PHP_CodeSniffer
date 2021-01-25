@@ -30,7 +30,7 @@ class AuthorTagSniff extends AbstractTagSniff
      *
      * @param null|string $tagContent The content of the tag.
      *
-     * @return array|void
+     * @return array|null
      */
     protected function getReportData(?string $tagContent = null): ?array
     {

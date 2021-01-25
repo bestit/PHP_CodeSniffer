@@ -10,6 +10,11 @@ class Correct
     /**
      * @var int|string|array
      */
+    private int|string|array $longMixed;
+
+    /**
+     * @var int|string|array
+     */
     private mixed $mixed;
 
     /**

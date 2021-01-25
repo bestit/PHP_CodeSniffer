@@ -28,9 +28,9 @@ abstract class AbstractDocSniffsTest extends SniffTestCase
      * - String 1
      * - String 2
      *
-     * @var Sniff|void
+     * @var Sniff|null
      */
-    protected $fixture;
+    protected ?Sniff $fixture = null;
 
     /**
      * Returns the names of the required constants.

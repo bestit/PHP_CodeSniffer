@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace BestIt;
 
+use PHP_CodeSniffer\Sniffs\Sniff;
 use function constant;
 
 /**
@@ -19,9 +20,9 @@ trait TestRequiredConstantsTrait
      *
      * We use this var to reduce the hard dependencies on internals from a specific slevomat version.
      *
-     * @var mixed
+     * @var Sniff|null
      */
-    protected $fixture;
+    protected ?Sniff $fixture = null;
 
     /**
      * Asserts that two variables have the same type and value.

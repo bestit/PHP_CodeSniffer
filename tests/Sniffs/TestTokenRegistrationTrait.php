@@ -20,9 +20,9 @@ trait TestTokenRegistrationTrait
      * We use this var to reduce the hard dependencies on internals from a specific slevomat version and we get more
      * explicit and navigateable codes.
      *
-     * @var Sniff|void
+     * @var Sniff|null
      */
-    protected $fixture;
+    protected ?Sniff $fixture = null;
 
     /**
      * Asserts that two variables have the same type and value.
