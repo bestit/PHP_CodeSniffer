@@ -44,7 +44,6 @@
     <rule ref="Squiz.Strings.DoubleQuoteUsage.NotRequired" />
 
     <rule ref="BestIt.TypeHints.PropertyTypeHint">
-        <type>Warning</type>
         <exclude name="BestIt.TypeHints.PropertyTypeHint.UselessAnnotation"/>
         <exclude name="BestIt.TypeHints.PropertyTypeHint.MissingTraversableTypeHintSpecification"/>
     </rule>

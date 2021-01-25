@@ -35,16 +35,16 @@ class SpaceAroundConcatSniff extends AbstractSniff
     /**
      * Is the next token whitespace?
      *
-     * @var bool|void
+     * @var bool|null
      */
-    private $nextIsWhitespace;
+    private ?bool $nextIsWhitespace = null;
 
     /**
      * Is the prev token whitespace?
      *
-     * @var void|bool
+     * @var null|bool
      */
-    private $prevIsWhitespace;
+    private ?bool $prevIsWhitespace = null;
 
     /**
      * Adds whitespace around the concats.

@@ -18,9 +18,9 @@ trait DocPosProviderTrait
     /**
      * The position of the doc comment or null.
      *
-     * @var int|bool
+     * @var int|false|null
      */
-    private $docCommentPos = false;
+    private int|false|null $docCommentPos = false;
 
     /**
      * The used doc Helper.

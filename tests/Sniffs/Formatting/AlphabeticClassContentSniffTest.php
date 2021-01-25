@@ -23,15 +23,6 @@ class AlphabeticClassContentSniffTest extends SniffTestCase
     use TestTokenRegistrationTrait;
 
     /**
-     * The tested class.
-     *
-     * We use this var to reduce the hard dependencies on internals from a specific slevomat version.
-     *
-     * @var AlphabeticClassContentSniff|void
-     */
-    protected $fixture;
-
-    /**
      * Returns the tokens which should be checked.
      *
      * @return array The expected token ids.

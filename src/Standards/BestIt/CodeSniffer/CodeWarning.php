@@ -35,14 +35,14 @@ class CodeWarning extends Exception
      *
      * @var int
      */
-    private int $stackPosition;
+    private int $stackPosition = 0;
 
     /**
      * The erroneous token.
      *
-     * @var array|void
+     * @var array|null
      */
-    private $token;
+    private ?array $token = null;
 
     /**
      * CodeWarning constructor.

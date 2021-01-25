@@ -18,15 +18,6 @@ class ForbiddenFunctionsSniffTest extends SniffTestCase
     use DefaultSniffIntegrationTestTrait;
 
     /**
-     * The tested class.
-     *
-     * We use this var to reduce the hard dependencies on internals from a specific slevomat version.
-     *
-     * @var ForbiddenFunctionsSniff|void
-     */
-    protected $fixture;
-
-    /**
      * Sets up the test.
      *
      * @return void
