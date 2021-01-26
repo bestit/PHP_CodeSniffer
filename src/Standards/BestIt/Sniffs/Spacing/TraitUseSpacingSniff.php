@@ -226,7 +226,7 @@ class TraitUseSpacingSniff extends AbstractSniff
     private function fixLineAfterLastUse(
         int $lastUseEndPos,
         int $whitespaceEnd,
-        int $requiredLinesAfter
+        int $requiredLinesAfter,
     ): void {
         $file = $this->getFile();
 
@@ -253,7 +253,7 @@ class TraitUseSpacingSniff extends AbstractSniff
      */
     private function fixLinesBeforeFirstUse(
         int $firstUsePos,
-        int $posBeforeFirstUse
+        int $posBeforeFirstUse,
     ): void {
         $file = $this->getFile();
         $file->fixer->beginChangeset();

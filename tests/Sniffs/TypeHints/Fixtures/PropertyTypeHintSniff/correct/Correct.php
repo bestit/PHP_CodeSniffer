@@ -5,7 +5,12 @@ class Correct
     /**
      * @var int|string
      */
-    private $mixed;
+    private int|string $integerString;
+
+    /**
+     * @var int|string|array
+     */
+    private mixed $mixed;
 
     /**
      * @var int

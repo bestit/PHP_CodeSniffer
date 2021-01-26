@@ -154,6 +154,7 @@ The base for the BestIt Standard is [PSR-12](https://github.com/php-fig/fig-stan
 | BestIt.Formatting.ReturnTypeHintSpacingSniff.NoSpaceBetweenColonAndTypeHint | There MUST be no whitespace after the return type colon. |
 | BestIt.Formatting.ReturnTypeHintSpacingSniff.WhitespaceBeforeColon | There MUST be no whitespace before the return type colon. |
 | BestIt.Formatting.TrailingArrayComma.MissingTrailingComma | You MUST add a trailing comma to your multi line arrays. | no |
+| BestIt.Formatting.TrailingCommaInDeclaration.MissingTrailingComma | Enforces a trailing command in method declaration if there is a line wrap. | no |
 | BestIt.Formatting.TraitUseDeclaration.MultipleTraitsPerDeclaration | You MUST provide only one "use" per Line for importing traits etc. in classes. | no |
 | BestIt.Formatting.UCVFSorting.WrongPosition | You MUST sort the contents of your classes, traits, interface, etc. in the following order: T_USE, T_CONST, T_VARIABLE, T_FUNCTION. | no |
 | BestIt.Functions.FluentSetter.MustReturnThis | Every setter function MUST return $this if nothing else is returned. | no |

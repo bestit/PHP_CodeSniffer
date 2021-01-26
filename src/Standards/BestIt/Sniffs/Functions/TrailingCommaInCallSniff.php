@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace BestIt\Sniffs\Functions;
 
-use SlevomatCodingStandard\Sniffs\Functions\TrailingCommaInCallSniff as BaseSniff;
+use SlevomatCodingStandard\Sniffs\Functions\RequireTrailingCommaInCallSniff as BaseSniff;
 
 /**
  * You MUST append a trailing command in your multi line function calls.

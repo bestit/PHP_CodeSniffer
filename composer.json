@@ -1,5 +1,6 @@
 {
     "license": "MIT",
+    "minimum-stability": "dev",
     "name": "best-it/php_codesniffer",
     "description": "PHP_CodeSniffer ruleset and custom rules from best it.",
     "scripts": {
@@ -40,8 +41,7 @@
     "prefer-stable": true,
     "require": {
         "php": ">=8.0",
-        "slevomat/coding-standard": "^6.1",
-        "squizlabs/php_codesniffer": "^3.3"
+        "slevomat/coding-standard": "dev-master#47cf967b284f7ff41ab500ae55cdbcee986b1534"
     },
     "require-dev": {
         "phpmd/phpmd": "^2.6",

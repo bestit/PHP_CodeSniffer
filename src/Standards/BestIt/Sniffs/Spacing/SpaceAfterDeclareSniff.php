@@ -152,7 +152,7 @@ class SpaceAfterDeclareSniff implements Sniff
         File $phpcsFile,
         int $semicolonPtr,
         int $secondSpacePtr,
-        int $nextNonSpacePtr
+        int $nextNonSpacePtr,
     ): void {
         $fixMuchWhitespaces = $phpcsFile->addFixableError(
             self::MESSAGE_MUCH_WHITESPACE_FOUND,
@@ -183,7 +183,7 @@ class SpaceAfterDeclareSniff implements Sniff
         File $phpcsFile,
         int $semicolonPtr,
         int $secondSpacePtr,
-        int $nextNonSpacePtr
+        int $nextNonSpacePtr,
     ): void {
         $fixGroupBlankLines = $phpcsFile->addFixableError(
             self::MESSAGE_GROUP_BLANK_LINE_FOUND,

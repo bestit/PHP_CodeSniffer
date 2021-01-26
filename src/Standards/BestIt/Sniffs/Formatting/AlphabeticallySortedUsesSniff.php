@@ -120,7 +120,7 @@ class AlphabeticallySortedUsesSniff extends AbstractSniff
      */
     private function compareUseStatementsByNamespaceCount(
         UseStatement $prevStatement,
-        UseStatement $nextStatement
+        UseStatement $nextStatement,
     ): int {
         $aNameParts = explode(NamespaceHelper::NAMESPACE_SEPARATOR, $prevStatement->getFullyQualifiedTypeName());
         $bNameParts = explode(NamespaceHelper::NAMESPACE_SEPARATOR, $nextStatement->getFullyQualifiedTypeName());
@@ -144,7 +144,7 @@ class AlphabeticallySortedUsesSniff extends AbstractSniff
 
         if (!$prevStatement->hasSameType($nextStatement)) {
             $order = [
-                UseStatement::TYPE_DEFAULT => 1,
+                UseStatement::TYPE_CLASS => 1,
                 UseStatement::TYPE_FUNCTION => 2,
                 UseStatement::TYPE_CONSTANT => 3,
             ];
