@@ -155,6 +155,7 @@ The base for the BestIt Standard is [PSR-12](https://github.com/php-fig/fig-stan
 | BestIt.Formatting.SpaceAfterDeclare.NoWhitespaceFound | There MUST be one empty line after declare-statement. | no |
 | BestIt.Formatting.SpaceAroundConcat.MissingSpaceAroundConcat | You MUST wrap your concat-dot with a whitespace char. | no |
 | BestIt.Formatting.TrailingArrayComma.MissingTrailingComma | You MUST add a trailing comma to your multi line arrays. | no |
+| BestIt.Formatting.TrailingCommaInDeclaration.MissingTrailingComma | Enforces a trailing command in method declaration if there is a line wrap. | no |
 | BestIt.Formatting.TraitUseDeclaration.MultipleTraitsPerDeclaration | You MUST provide only one "use" per Line for importing traits etc. in classes. | no |
 | BestIt.Formatting.TraitUseSpacing.IncorrectLinesCountAfterLastUse | You MUST not provide additional lines after your last rait usage. | no |
 | BestIt.Formatting.TraitUseSpacing.IncorrectLinesCountBeforeFirstUse | You MUST not provide additional new lines before your first trait use. | no |
