@@ -136,7 +136,7 @@ trait DefaultSniffIntegrationTestTrait
         string $file,
         string $error,
         array $lines,
-        array $sniffProperties = []
+        array $sniffProperties = [],
     ): File;
 
     /**
@@ -238,6 +238,6 @@ trait DefaultSniffIntegrationTestTrait
         string $file,
         string $error,
         array $lines,
-        array $sniffProperties = []
+        array $sniffProperties = [],
     ): File;
 }
