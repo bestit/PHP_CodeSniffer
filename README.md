@@ -110,7 +110,7 @@ The base for the BestIt Standard is [PSR-12](https://github.com/php-fig/fig-stan
 | BestIt.Commenting.PropertyDoc.SummaryTooLong | The summary SHOULD be in one line. | no |
 | BestIt.Commenting.RedundantWhitespace.RedundantWhitespace | There MUST be no additonal spaces around your doc tags. | no |
 | BestIt.Comparisons.EmptyArrayForComparison.EmptyArray | You MUST not create an empty array, to check for an empty array. | no |
-| BestIt.Comparisons.EqualOperator.EqualOperatorFound | You SHOULD use the "Identical" operator (===). | no |
+| BestIt.Comparisons.EqualOperator.EqualOperatorFound | You MUST use the "Identical" operator (===). | yes |
 | BestIt.Comparisons.ParasOfNegativeInstanceOf.ParasAroundNegativeInstanceOfMissing | You MUST provide parentheses around your negative instanceof check. | no |
 | BestIt.DocTags.AuthorTag.TagContentFormatInvalid | You MUST commit to your codes and give an [author tag](http://docs.phpdoc.org/references/phpdoc/tags/author.html). | no |
 | BestIt.DocTags.DeprecatedTag.MissingDates | The error code for the missing dates. | no |
