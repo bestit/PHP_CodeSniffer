@@ -22,5 +22,10 @@ class Correct
         if ($a === $b) {
             return 'Success';
         }
+
+        /** @phpcsSuppress BestIt.Comparisons.EqualOperator.EqualOperatorFound */
+        if ($team != 'best it') {
+            return 'WHAT?!';
+        }
     }
 }

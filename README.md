@@ -112,7 +112,7 @@ The base for the BestIt Standard is [PSR-12](https://github.com/php-fig/fig-stan
 | BestIt.Commenting.RequiredDocBlock.MissingDocBlock* | There MUST be a doc block before a Class, Constant, Interface, Function, Trait, Variable. | no |
 | BestIt.Commenting.RequiredDocBlock.NoMultiLineDocBlock | The doc block before a Class, Constant, Interface, Function, Trait, Variable must be multi-line. | no |
 | BestIt.Comparisons.EmptyArrayForComparison.EmptyArray | You MUST not create an empty array, to check for an empty array. | no |
-| BestIt.Comparisons.EqualOperator.EqualOperatorFound | You SHOULD use the "Identical" operator (===). | no |
+| BestIt.Comparisons.EqualOperator.EqualOperatorFound | You MUST use the "Identical" operator (===). | yes |
 | BestIt.DocTags.AuthorTag.TagContentFormatInvalid | You MUST commit to your codes and give an [author tag](http://docs.phpdoc.org/references/phpdoc/tags/author.html). | no |
 | BestIt.DocTags.DeprecatedTag.MissingDates | The error code for the missing dates. | no |
 | BestIt.DocTags.DeprecatedTag.TagContentFormatInvalid | If you provide a deprecated tag, you MUST provide it with versions since when its deprecated and when it will be removed. | no |
