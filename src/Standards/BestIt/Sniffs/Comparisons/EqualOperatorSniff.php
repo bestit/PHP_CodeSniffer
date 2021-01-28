@@ -5,16 +5,22 @@ declare(strict_types=1);
 namespace BestIt\Sniffs\Comparisons;
 
 use BestIt\Sniffs\AbstractSniff;
+use BestIt\Sniffs\SuppressingTrait;
 use const T_IS_EQUAL;
+use const T_IS_NOT_EQUAL;
 
 /**
  * Class EqualOperatorSniff.
  *
- * @author Mika Bertels <mika.bertels@bestit-online.de>
  * @package BestIt\Sniffs\Comparisons
+ *
+ * @author blange <bjoern.lange@bestit-online.de>
+ * @author Mika Bertels <mika.bertels@bestit-online.de>
  */
 class EqualOperatorSniff extends AbstractSniff
 {
+    use SuppressingTrait;
+
     /**
      * You SHOULD use the "Identical" operator (===).
      */
@@ -28,13 +34,6 @@ class EqualOperatorSniff extends AbstractSniff
     private const MESSAGE_EQUAL_OPERATOR_FOUND = 'Please check if you could use the "Identical" operator (===).';
 
     /**
-     * Is this sniff allowed to fix?
-     *
-     * @var bool $isFixing
-     */
-    public bool $isFixable = false;
-
-    /**
      * Processes the token.
      *
      * @return void
@@ -44,16 +43,14 @@ class EqualOperatorSniff extends AbstractSniff
         $file = $this->getFile();
         $stackPos = $this->getStackPos();
 
-        $isFixing = $file->addFixableWarning(
-            self::MESSAGE_EQUAL_OPERATOR_FOUND,
-            $stackPos,
-            static::CODE_EQUAL_OPERATOR_FOUND,
-        );
-
         $file->recordMetric($stackPos, 'Found not wanted T_IS_EQUAL', 'yes');
 
-        if ($isFixing && $this->isFixable) {
-            $this->replaceToken();
+        if (!$this->isSniffSuppressed(static::CODE_EQUAL_OPERATOR_FOUND)) {
+            $file->addError(
+                self::MESSAGE_EQUAL_OPERATOR_FOUND,
+                $stackPos,
+                static::CODE_EQUAL_OPERATOR_FOUND,
+            );
         }
     }
 
@@ -77,20 +74,6 @@ class EqualOperatorSniff extends AbstractSniff
      */
     public function register(): array
     {
-        return [T_IS_EQUAL];
-    }
-
-    /**
-     * Replace token with the T_IS_IDENTIAL token.
-     *
-     * @return void
-     */
-    private function replaceToken(): void
-    {
-        $file = $this->getFile();
-
-        $file->fixer->beginChangeset();
-        $file->fixer->replaceToken($this->getStackPos(), '===');
-        $file->fixer->endChangeset();
+        return [T_IS_EQUAL, T_IS_NOT_EQUAL];
     }
 }

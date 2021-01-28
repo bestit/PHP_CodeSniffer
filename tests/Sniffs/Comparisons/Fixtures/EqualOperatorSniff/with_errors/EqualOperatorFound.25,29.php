@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace BestIt\Sniffs\Formatting\Fixtures\EqualOperatorSniff\with_warnings;
+namespace BestIt\Sniffs\Formatting\Fixtures\EqualOperatorSniff\with_errors;
 
 /**
  * Class EqualOperatorFound.
@@ -22,8 +22,12 @@ class EqualOperatorFound
      */
     function foo($a, $b): string
     {
-        if ($a === $b) {
-            return 'Error';
+        if ($a == $b) {
+            return 'Error 1';
+        }
+
+        if ($team != 'best it') {
+            return 'WHAT?!';
         }
     }
 }
