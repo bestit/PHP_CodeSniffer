@@ -5,7 +5,7 @@
     <rule ref="./src/Standards/BestIt/ruleset.xml" />
 
     <rule ref="PHPCompatibility" />
-    <config name="testVersion" value="7.4" />
+    <config name="testVersion" value="8.0" />
 
     <file>./build/</file>
     <file>./src/</file>
