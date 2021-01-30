@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace BestIt\Sniffs\Commenting;
 
+use BestIt\CodeSniffer\CodeError;
 use BestIt\CodeSniffer\CodeWarning;
 use BestIt\CodeSniffer\Helper\TokenHelper;
 use BestIt\Sniffs\AbstractSniff;
@@ -186,9 +187,9 @@ abstract class AbstractDocSniff extends AbstractSniff
      *
      * @param int $startPosition
      *
-     * @return int|bool
+     * @return int|false
      */
-    private function loadNextDocBlockContent(int $startPosition)
+    private function loadNextDocBlockContent(int $startPosition): int|false
     {
         return $this->file->findNext(
             [
@@ -206,9 +207,9 @@ abstract class AbstractDocSniff extends AbstractSniff
      *
      * @param int $startPosition
      *
-     * @return int|bool
+     * @return int|false
      */
-    private function loadPrevDocBlockContent(int $startPosition)
+    private function loadPrevDocBlockContent(int $startPosition): int|false
     {
         return $this->file->findPrevious(
             [
@@ -244,6 +245,7 @@ abstract class AbstractDocSniff extends AbstractSniff
     /**
      * Checks and registers errors if there are invalid doc comments.
      *
+     * @throws CodeError
      * @throws CodeWarning
      *
      * @return void
@@ -301,8 +303,6 @@ abstract class AbstractDocSniff extends AbstractSniff
         }
 
         return $this;
-
-        ;
     }
 
     /**
@@ -366,7 +366,7 @@ abstract class AbstractDocSniff extends AbstractSniff
     /**
      * Returns position to the comment summary or null.
      *
-     * @throws CodeWarning If there is no summary.
+     * @throws CodeError If there is no summary.
      *
      * @return $this
      */
@@ -375,11 +375,11 @@ abstract class AbstractDocSniff extends AbstractSniff
         $summaryPos = $this->getSummaryPosition();
 
         if (!$summaryPos) {
-            throw new CodeWarning(
-                static::CODE_NO_SUMMARY,
-                self::MESSAGE_NO_SUMMARY,
-                $this->getDocCommentPos(),
-            );
+                throw new CodeError(
+                    static::CODE_NO_SUMMARY,
+                    self::MESSAGE_NO_SUMMARY,
+                    $this->getDocCommentPos(),
+                );
         }
 
         return $this;

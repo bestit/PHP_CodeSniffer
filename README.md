@@ -93,24 +93,22 @@ The base for the BestIt Standard is [PSR-12](https://github.com/php-fig/fig-stan
 | ----- | ----------- | ------------ |
 | BestIt.Commenting.ClassDoc.DocCommentUcFirst | Every doc comment block SHOULD start ucfirst. | no |
 | BestIt.Commenting.ClassDoc.NoLineAfterDocComment | Every doc comment block (the summary or a long description paragrah) SHOULD finish with double newline. | no |
-| BestIt.Commenting.ClassDoc.NoSummary | There SHOULD be a summary. | no |
+| BestIt.Commenting.ClassDoc.NoSummary | There MUST be a summary. | no |
 | BestIt.Commenting.ClassDoc.SummaryTooLong | The summary SHOULD be in one line. | no |
 | BestIt.Commenting.ConstantDoc.DocCommentUcFirst | Every doc comment block SHOULD start ucfirst. | no |
 | BestIt.Commenting.ConstantDoc.NoLineAfterDocComment | Every doc comment block (the summary or a long description paragrah) SHOULD finish with double newline. | no |
-| BestIt.Commenting.ConstantDoc.NoSummary | There SHOULD be a summary. | no |
+| BestIt.Commenting.ConstantDoc.NoSummary | There MUST be a summary. | no |
 | BestIt.Commenting.ConstantDoc.SummaryTooLong | The summary SHOULD be in one line. | no |
 | BestIt.Commenting.EmptyLinesDoc.EmptyLinesFound | There MUST be no redundant lines in your doc block. | no |
 | BestIt.Commenting.FunctionDoc.DocCommentUcFirst | Every doc comment block SHOULD start ucfirst. | no |
 | BestIt.Commenting.FunctionDoc.NoLineAfterDocComment | Every doc comment block (the summary or a long description paragrah) SHOULD finish with double newline. | no |
-| BestIt.Commenting.FunctionDoc.NoSummary | There SHOULD be a summary. | no |
+| BestIt.Commenting.FunctionDoc.NoSummary | There MUST be a summary. | no |
 | BestIt.Commenting.FunctionDoc.SummaryTooLong | The summary SHOULD be in one line. | no |
 | BestIt.Commenting.PropertyDoc.DocCommentUcFirst | Every doc comment block SHOULD start ucfirst. | no |
 | BestIt.Commenting.PropertyDoc.NoLineAfterDocComment | Every doc comment block (the summary or a long description paragrah) SHOULD finish with double newline. | no |
-| BestIt.Commenting.PropertyDoc.NoSummary | There SHOULD be a summary. | no |
+| BestIt.Commenting.PropertyDoc.NoSummary | There MUST be a summary. | no |
 | BestIt.Commenting.PropertyDoc.SummaryTooLong | The summary SHOULD be in one line. | no |
 | BestIt.Commenting.RedundantWhitespace.RedundantWhitespace | There MUST be no additonal spaces around your doc tags. | no |
-| BestIt.Commenting.RequiredDocBlock.MissingDocBlock* | There MUST be a doc block before a Class, Constant, Interface, Function, Trait, Variable. | no |
-| BestIt.Commenting.RequiredDocBlock.NoMultiLineDocBlock | The doc block before a Class, Constant, Interface, Function, Trait, Variable must be multi-line. | no |
 | BestIt.Comparisons.EmptyArrayForComparison.EmptyArray | You MUST not create an empty array, to check for an empty array. | no |
 | BestIt.Comparisons.EqualOperator.EqualOperatorFound | You SHOULD use the "Identical" operator (===). | no |
 | BestIt.Comparisons.ParasOfNegativeInstanceOf.ParasAroundNegativeInstanceOfMissing | You MUST provide parentheses around your negative instanceof check. | no |
