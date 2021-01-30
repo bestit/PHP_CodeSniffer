@@ -79,7 +79,7 @@ class FluentSetterSniff extends MethodScopeSniff
         File $file,
         int $functionPos,
         int $returnPos,
-        string $methodIdent
+        string $methodIdent,
     ): void {
         $nextToken = $file->getTokens()[TokenHelper::findNextEffective($file, $returnPos + 1)];
 
@@ -169,7 +169,7 @@ class FluentSetterSniff extends MethodScopeSniff
     protected function processTokenWithinScope(
         File $file,
         $functionPos,
-        $classPos
+        $classPos,
     ): void {
         $this->file = $file;
         $this->stackPos = $functionPos;

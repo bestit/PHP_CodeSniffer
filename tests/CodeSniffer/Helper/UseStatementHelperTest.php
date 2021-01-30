@@ -27,7 +27,7 @@ class UseStatementHelperTest extends TestCase
     {
         return [
             UseStatement::TYPE_CONSTANT => [UseStatement::TYPE_CONSTANT, 'const'],
-            UseStatement::TYPE_DEFAULT => [UseStatement::TYPE_DEFAULT],
+            UseStatement::TYPE_CLASS => [UseStatement::TYPE_CLASS],
             UseStatement::TYPE_FUNCTION => [UseStatement::TYPE_FUNCTION, 'function'],
         ];
     }
