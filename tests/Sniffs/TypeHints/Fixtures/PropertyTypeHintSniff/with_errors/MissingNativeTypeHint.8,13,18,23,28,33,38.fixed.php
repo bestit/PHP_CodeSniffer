@@ -3,6 +3,21 @@
 class MissingNativeTypeHint
 {
     /**
+     * @var int|string
+     */
+    private int|string $intString;
+
+    /**
+     * @var int|string|array
+     */
+    private int|string|array $longMixed;
+
+    /**
+     * @var mixed
+     */
+    private mixed $mixed;
+
+    /**
      * @var int
      */
     private int $number;

@@ -26,7 +26,7 @@ abstract class SniffTestCase extends SlevomatTestCase
      *
      * @var string
      */
-    private $fixturePath;
+    private string $fixturePath = '';
 
     /**
      * Tests files with given error list and fixes them.

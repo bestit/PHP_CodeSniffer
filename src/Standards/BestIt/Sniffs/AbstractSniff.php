@@ -23,30 +23,30 @@ abstract class AbstractSniff implements Sniff
     /**
      * The used file.
      *
-     * @var File|void
+     * @var File|null
      */
-    protected $file;
+    protected File|null $file = null;
 
     /**
      * Position of the listened token.
      *
-     * @var int|void
+     * @var int|null
      */
-    protected $stackPos;
+    protected int|null $stackPos = 0;
 
     /**
      * The used token.
      *
-     * @var array|void
+     * @var array|null
      */
-    protected $token;
+    protected array|null $token = null;
 
     /**
      * All tokens of the class.
      *
-     * @var array|void The tokens of the class.
+     * @var array|null The tokens of the class.
      */
-    protected $tokens;
+    protected array|null $tokens = null;
 
     /**
      * Adds the pointer to all token data arrays.

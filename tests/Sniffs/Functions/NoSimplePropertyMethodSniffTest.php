@@ -26,15 +26,6 @@ class NoSimplePropertyMethodSniffTest extends SniffTestCase
     use TestTokenRegistrationTrait;
 
     /**
-     * The tested class.
-     *
-     * We use this var to reduce the hard dependencies on internals from a specific slevomat version.
-     *
-     * @var NoSimplePropertyMethodSniff|void
-     */
-    protected $fixture;
-
-    /**
      * We should check only functions.
      *
      * @return array
