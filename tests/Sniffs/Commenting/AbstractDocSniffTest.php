@@ -18,7 +18,6 @@ use function defined;
  */
 abstract class AbstractDocSniffTest extends SniffTestCase
 {
-    use DefaultSniffIntegrationTestTrait;
     use TestTokenRegistrationTrait;
 
     /**
