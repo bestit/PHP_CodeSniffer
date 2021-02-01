@@ -8,11 +8,10 @@ use BestIt\CodeSniffer\CodeError;
 use BestIt\CodeSniffer\CodeWarning;
 use BestIt\Sniffs\AbstractSniff;
 use BestIt\Sniffs\DocPosProviderTrait;
-use BestIt\Sniffs\FunctionRegistrationTrait;
 use BestIt\Sniffs\SuppressingTrait;
-use SlevomatCodingStandard\Helpers\Annotation;
 use SlevomatCodingStandard\Helpers\Annotation\ReturnAnnotation;
 use SlevomatCodingStandard\Helpers\FunctionHelper;
+use SlevomatCodingStandard\Helpers\TokenHelper;
 use SlevomatCodingStandard\Helpers\TypeHintHelper;
 use function array_filter;
 use function array_intersect;
@@ -23,6 +22,7 @@ use function phpversion;
 use function strtolower;
 use function substr;
 use function version_compare;
+use const T_FUNCTION;
 
 /**
  * Class ReturnTypeDeclarationSniff
@@ -33,7 +33,6 @@ use function version_compare;
 class ReturnTypeDeclarationSniff extends AbstractSniff
 {
     use DocPosProviderTrait;
-    use FunctionRegistrationTrait;
     use SuppressingTrait;
 
     /**
@@ -114,13 +113,12 @@ class ReturnTypeDeclarationSniff extends AbstractSniff
 
     /**
      * Returns true if this sniff may run.
-     *
      * @return bool
      */
     protected function areRequirementsMet(): bool
     {
         return !$this->isSniffSuppressed(static::CODE_MISSING_RETURN_TYPE) && !$this->hasReturnType() &&
-            !in_array($this->getFunctionName(), $this->methodsWithoutVoid);
+            $this->token['code'] === T_FUNCTION && !in_array($this->getFunctionName(), $this->methodsWithoutVoid);
     }
 
     /**
@@ -309,7 +307,7 @@ class ReturnTypeDeclarationSniff extends AbstractSniff
     /**
      * Loads the return annotation for this method.
      *
-     * @return null\ReturnAnnotation
+     * @return null|ReturnAnnotation
      */
     protected function loadReturnAnnotation(): ?ReturnAnnotation
     {
@@ -337,8 +335,13 @@ class ReturnTypeDeclarationSniff extends AbstractSniff
         }
     }
 
+    public function register(): array
+    {
+        return TokenHelper::$functionTokenCodes;
+    }
+
     /**
-     * Sets up the test.
+     * Sets up the sniff.
      *
      * @return void
      */

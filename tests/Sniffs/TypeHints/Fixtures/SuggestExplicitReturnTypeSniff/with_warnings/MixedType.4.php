@@ -1,10 +1,7 @@
 <?php
 
 class MixedType {
-    /**
-     * @return mixed
-     */
-    public function foo()
+    public function foo(): mixed
     {
         return 'string';
     }

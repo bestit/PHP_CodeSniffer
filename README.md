@@ -135,9 +135,6 @@ The base for the BestIt Standard is [PSR-12](https://github.com/php-fig/fig-stan
 | BestIt.DocTags.RequiredMethodTags.TagOccurrenceMin | You MUST provide the required tags. The error is registered for every tag specifically. | no |
 | BestIt.DocTags.RequiredPropertyTags.TagOccurrenceMax | You MUST provide only the maximum amount of required tags. For example, only one return per method is allowed. The error is registered for every tag specifically. | no |
 | BestIt.DocTags.RequiredPropertyTags.TagOccurrenceMin | You MUST provide the required tags. The error is registered for every tag specifically. | no |
-| BestIt.DocTags.ReturnTag.MissingReturnDescription | You SHOULD provide a description your return. | no |
-| BestIt.DocTags.ReturnTag.MixedType | You SHOULD provide a native return and prevent "mixed". | no |
-| BestIt.DocTags.ReturnTag.TagContentFormatInvalid | You MUST provide a special tag format. | no |
 | BestIt.DocTags.TagSorting.MissingNewlineBetweenTags | You SHOULD separate tag groups and the final return with a newline. | yes by class |
 | BestIt.DocTags.TagSorting.WrongTagSorting | You SHOULD sort the tags by their occurrence and then alphabetically, but @return SHOULD be the last. | yes by class |
 | BestIt.DocTags.ThrowsTag.MissingThrowDescription | You SHOULD provide a description your throw tag. | no |
@@ -187,6 +184,7 @@ The base for the BestIt Standard is [PSR-12](https://github.com/php-fig/fig-stan
 | BestIt.TypeHints.PropertyTypeHint.MissingAnyTypeHint | MUST have any type hint if possible. | yes |
 | BestIt.TypeHints.PropertyTypeHint.MissingNativeTypeHint | MUST have a native type hint (matching the doc block.) | yes |
 | BestIt.TypeHints.ReturnTypeDeclaration.MissingReturnTypeHint | Every function or method MUST have a type hint if the return annotation is valid. | yes |
+| BestIt.TypeHints.SuggestExplicitReturnType.MixedType | You SHOULD not use a mixed type but an explicit native return type. | yes |
 | Generic.Formatting.SpaceAfterCast | There MUST be a space after cast. |
 | Generic.Arrays.DisallowLongArraySyntax | Every array syntax MUST be in short array syntax. |
 | SlevomatCodingStandard.Classes.ClassConstantVisibility.MissingConstantVisibility | Constants MUST be marked with a visibility. |
