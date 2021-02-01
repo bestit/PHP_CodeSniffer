@@ -11,6 +11,16 @@ class TypeHintDeclarationSniff
     }
 
     /**
+     * Returns true if there is a matching tag.
+     *
+     * @return bool
+     */
+    protected function areRequirementsMet(): bool
+    {
+        return false;
+    }
+
+    /**
      * @return bool
      */
     public function testBoolMethod(): bool

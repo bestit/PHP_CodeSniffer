@@ -29,7 +29,11 @@ class ReturnTypeDeclarationSniffTest extends SniffTestCase
      */
     protected function getExpectedTokens(): array
     {
-        return [T_FUNCTION];
+        return [
+            T_FUNCTION,
+            T_CLOSURE,
+            T_FN,
+        ];
     }
 
     /**
