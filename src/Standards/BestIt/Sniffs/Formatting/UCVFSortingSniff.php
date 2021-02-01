@@ -166,7 +166,7 @@ class UCVFSortingSniff extends AbstractSniff
             $return = $leftToken['line'] <=> $rightToken['line'];
 
             // Sort by type
-            if ($leftToken['code'] != $rightToken['code']) {
+            if ($leftToken['code'] !== $rightToken['code']) {
                 $leftIndex = array_search($leftToken['code'], $this->sortedTokens);
                 $rightIndex = array_search($rightToken['code'], $this->sortedTokens);
 
