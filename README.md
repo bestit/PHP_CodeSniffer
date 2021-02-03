@@ -118,6 +118,7 @@ The base for the BestIt Standard is [PSR-12](https://github.com/php-fig/fig-stan
 | BestIt.DocTags.DisallowedConstantTags.TagNotAllowed | You MUST not give one of the disallowed tags in your doc comment. | no |
 | BestIt.DocTags.DisallowedMethodTags.TagNotAllowed | You MUST not give one of the disallowed tags in your doc comment. | no |
 | BestIt.DocTags.DisallowedPropertyTags.TagNotAllowed | You MUST not give one of the disallowed tags in your doc comment. | no |
+| BestIt.DocTags.DisallowLeadingAttribute.WrongAttrPos | You MUST put the PHP Attribute UNDER PHPDocs. | no |s
 | BestIt.DocTags.PackageTag.TagContentFormatInvalid | You MUST provide a special tag format. | no |
 | BestIt.DocTags.PackageTag.WrongPackage | If there is a namespace, you MUST provide this namespace as package tag. | no |
 | BestIt.DocTags.ParamTag.MissingDesc | You SHOULD provide a description for your parameter. | no |
