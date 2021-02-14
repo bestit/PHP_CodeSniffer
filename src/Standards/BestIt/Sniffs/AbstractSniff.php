@@ -49,18 +49,6 @@ abstract class AbstractSniff implements Sniff
     protected $tokens;
 
     /**
-     * Adds the pointer to all token data arrays.
-     *
-     * @return void
-     */
-    protected function addPointerToTokens(): void
-    {
-        foreach ($this->tokens as $tokenPtr => &$token) {
-            $token['pointer'] = $tokenPtr;
-        }
-    }
-
-    /**
      * Returns true if the requirements for this sniff are met.
      *
      * @return bool Are the requirements met and the sniff should proceed?

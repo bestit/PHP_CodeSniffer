@@ -12,6 +12,7 @@ use function array_values;
 use function in_array;
 use function preg_quote;
 use function strtolower;
+use const ARRAY_FILTER_USE_KEY;
 use const T_CLOSE_PARENTHESIS;
 use const T_DOC_COMMENT_OPEN_TAG;
 use const T_VARIABLE;
@@ -241,9 +242,13 @@ class ParamTagSniff extends AbstractTagSniff
             ))->setToken($this->token);
         }
 
-        $this->varTokens = array_filter($this->tokens, function (array $token) use ($varPositions): bool {
-            return in_array($token['pointer'], $varPositions, true);
-        });
+        $this->varTokens = array_filter(
+            $this->tokens,
+            function (int $tokenPos) use ($varPositions): bool {
+                return in_array($tokenPos, $varPositions, true);
+            },
+            ARRAY_FILTER_USE_KEY,
+        );
 
         return $varPositions;
     }
@@ -308,8 +313,6 @@ class ParamTagSniff extends AbstractTagSniff
     protected function setUp(): void
     {
         parent::setUp();
-
-        $this->addPointerToTokens();
 
         $this->argumentToken = null;
     }

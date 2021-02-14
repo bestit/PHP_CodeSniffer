@@ -15,6 +15,7 @@ use function array_keys;
 use function array_map;
 use function array_search;
 use function uasort;
+use const ARRAY_FILTER_USE_BOTH;
 use const T_CONST;
 use const T_FUNCTION;
 use const T_USE;
@@ -122,14 +123,14 @@ class UCVFSortingSniff extends AbstractSniff
      */
     private function removeUnwantedTokens(array $subTokens): array
     {
-        return array_filter($subTokens, function (array $subToken): bool {
+        return array_filter($subTokens, function (array $subToken, int $tokenPos): bool {
             switch ($subToken['code']) {
                 case T_VARIABLE:
-                    $return = (new PropertyHelper($this->file))->isProperty($subToken['pointer']);
+                    $return = (new PropertyHelper($this->file))->isProperty($tokenPos);
                     break;
 
                 case T_USE:
-                    $return = UseStatementHelper::isTraitUse($this->file, $subToken['pointer']);
+                    $return = UseStatementHelper::isTraitUse($this->file, $tokenPos);
                     break;
 
                 default:
@@ -137,19 +138,7 @@ class UCVFSortingSniff extends AbstractSniff
             }
 
             return $return;
-        });
-    }
-
-    /**
-     * This sniff needs the pointer marker so add it to the tokens.
-     *
-     * @return void
-     */
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->addPointerToTokens();
+        }, ARRAY_FILTER_USE_BOTH);
     }
 
     /**
