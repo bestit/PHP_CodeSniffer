@@ -16,7 +16,7 @@ use function str_pad;
 use function str_repeat;
 use function strcasecmp;
 use function strlen;
-use function usort;
+use function uasort;
 use const T_DOC_COMMENT_OPEN_TAG;
 
 /**
@@ -113,7 +113,7 @@ class TagSortingSniff extends AbstractSniff
                 );
 
                 if ($isFixing) {
-                    $this->insertNewLine($token);
+                    $this->insertNewLine($token, $tokenPos);
                 }
             }
 
@@ -135,11 +135,14 @@ class TagSortingSniff extends AbstractSniff
         $orgTokens = $this->getTagTokens();
         $sortedTokens = $this->sortTokens($orgTokens);
 
-        if (array_values($orgTokens) !== $sortedTokens) {
+        if (array_keys(($orgTokens)) !== array_keys($sortedTokens)) {
+            reset($orgTokens);
+            $firstTokenPos = key($orgTokens);
+
             $error = (new CodeWarning(
                 static::CODE_WRONG_TAG_SORTING,
                 self::MESSAGE_WRONG_TAG_SORTING,
-                array_shift($orgTokens)['pointer'],
+                $firstTokenPos,
             ))->setToken($this->token);
 
             $error->isFixable(true);
@@ -276,9 +279,9 @@ class TagSortingSniff extends AbstractSniff
 
         $fixer->beginChangeset();
 
-        $firstTag = $this->removeOldTagLines();
+        $firstTagPos = $this->removeOldTagLines();
 
-        $fixer->addContent($firstTag['pointer'] - 1, $this->createNewSortedTagsContent());
+        $fixer->addContent($firstTagPos - 1, $this->createNewSortedTagsContent());
 
         $fixer->endChangeset();
     }
@@ -317,10 +320,11 @@ class TagSortingSniff extends AbstractSniff
      * Insert the new line before the given token.
      *
      * @param array $token The token where a newline should be.
+     * @param int $tokenPos
      *
      * @return void
      */
-    private function insertNewLine(array $token): void
+    private function insertNewLine(array $token, int $tokenPos): void
     {
         $fixer = $this->file->fixer;
         $lineStartPadding = str_pad('', $token['column'] - 3, ' ');
@@ -328,10 +332,10 @@ class TagSortingSniff extends AbstractSniff
         $fixer->beginChangeset();
 
         // Remove the whitespace between the tag and the comments star.
-        $fixer->replaceToken($token['pointer'] - 1, '');
+        $fixer->replaceToken($tokenPos - 1, '');
 
         $fixer->addContentBefore(
-            $token['pointer'],
+            $tokenPos,
             $this->file->eolChar . $lineStartPadding . '* ',
         );
 
@@ -400,11 +404,14 @@ class TagSortingSniff extends AbstractSniff
     /**
      * Removed the lines with the wrongly sorted tags.
      *
-     * @return array The first tag token of this doc block.
+     * @return int Positon of the frst removed tag.
      */
-    private function removeOldTagLines(): array
+    private function removeOldTagLines(): int
     {
         $tags = $this->getTagTokens();
+
+        reset($tags);
+        $tokenPos = key($tags);
         $firstTag = array_shift($tags);
 
         (new LineHelper($this->file))
@@ -413,7 +420,7 @@ class TagSortingSniff extends AbstractSniff
                 $this->tokens[$this->token['comment_closer']]['line'],
             );
 
-        return $firstTag;
+        return $tokenPos;
     }
 
     /**
@@ -423,8 +430,6 @@ class TagSortingSniff extends AbstractSniff
      */
     protected function setUp(): void
     {
-        $this->addPointerToTokens();
-
         $this->docTagHelper = new DocTagHelper(
             $this->file,
             $this->stackPos,
@@ -443,7 +448,7 @@ class TagSortingSniff extends AbstractSniff
     {
         $tagCounts = $this->docTagHelper->getTagCounts($tokens);
 
-        usort($tokens, function (array $leftToken, array $rightToken) use ($tagCounts): int {
+        uasort($tokens, function (array $leftToken, array $rightToken) use ($tagCounts): int {
             return $this->compareTokensForSorting($leftToken, $rightToken, $tagCounts);
         });
 
