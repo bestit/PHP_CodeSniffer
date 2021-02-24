@@ -14,5 +14,4 @@ use SlevomatCodingStandard\Helpers\TokenHelper as BaseHelper;
  */
 class TokenHelper extends BaseHelper
 {
-
 }

@@ -14,5 +14,4 @@ use SlevomatCodingStandard\Sniffs\TypeHints\ReturnTypeHintSpacingSniff as BaseRe
  */
 class ReturnTypeHintSpacingSniff extends BaseReturnTypeHintSpacingSniff
 {
-
 }
