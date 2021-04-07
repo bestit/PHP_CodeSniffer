@@ -10,8 +10,4 @@ install:
   - composer install --no-interaction --prefer-source
 
 script:
-  - ./vendor/bin/phpcs -n
-  - ./vendor/bin/phpunit
-  - ./vendor/bin/phpmd build,src,tests text phpmd.xml.dist
-  - ./vendor/bin/phpcpd src
-  - ./vendor/bin/phpcpd tests
+  - composer low-level-checks

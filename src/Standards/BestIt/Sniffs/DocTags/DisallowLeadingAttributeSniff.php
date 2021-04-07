@@ -9,9 +9,11 @@ use BestIt\CodeSniffer\CodeWarning;
 use BestIt\CodeSniffer\Helper\TokenHelper;
 use BestIt\Sniffs\AbstractSniff;
 use function compact;
+use function in_array;
 use function sprintf;
 use function str_repeat;
 use const T_ATTRIBUTE;
+use const T_ATTRIBUTE_END;
 use const T_CLOSE_SQUARE_BRACKET;
 use const T_DOC_COMMENT_CLOSE_TAG;
 
@@ -46,8 +48,9 @@ class DisallowLeadingAttributeSniff extends AbstractSniff
     protected function processToken(): void
     {
         $prevTokenPos = TokenHelper::findPreviousEffective($this->getFile(), $this->getStackPos() - 1);
+        $undesiredPrevTokenCodes = [T_ATTRIBUTE_END, T_CLOSE_SQUARE_BRACKET];
 
-        if ($prevTokenPos && $this->tokens[$prevTokenPos]['code'] === T_CLOSE_SQUARE_BRACKET) {
+        if ($prevTokenPos && in_array($this->tokens[$prevTokenPos]['code'], $undesiredPrevTokenCodes, true)) {
             $error = new CodeError(
                 static::CODE_WRONG_ATTRIBUTE_POSITION,
                 self::MESSAGE_WRONG_ATTRIBUTE_POSITION,

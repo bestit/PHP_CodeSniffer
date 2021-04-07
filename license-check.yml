@@ -1,0 +1,11 @@
+allowed-licenses:
+    - Apache-2.0
+    - BSD
+    - BSD-3-Clause
+    - ISC
+    - MIT
+    - OSL-3.0
+
+allowed-packages:
+    composer:
+        - "@vendor[A-Z]/package1@"
