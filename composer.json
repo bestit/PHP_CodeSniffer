@@ -2,6 +2,15 @@
     "license": "MIT",
     "minimum-stability": "dev",
     "name": "best-it/php_codesniffer",
+    "scripts": {
+        "low-level-checks": [
+            "license-check",
+            "phpmd build,src,tests text phpmd.xml.dist",
+            "phpcpd src tests",
+            "phpcs --runtime-set ignore_warnings_on_exit 1",
+            "phpunit --coverage-xml=build/coverage/coverage-xml --log-junit=build/coverage/junit.xml"
+        ]
+    },
     "description": "PHP_CodeSniffer ruleset and custom rules from best it.",
     "type": "library",
     "authors": [
@@ -37,7 +46,9 @@
         "sebastian/phpcpd": "^6.0.3",
         "phploc/phploc": "^7.0.2",
         "phpunit/phpunit": "^9.3",
-        "phpcompatibility/php-compatibility": "^9.3"
+        "phpcompatibility/php-compatibility": "^9.3",
+        "best-it/license-check": "^0.1.0",
+        "pdepend/pdepend": "2.8.*"
     },
     "suggest": {
         "phpcompatibility/php-compatibility": "If you want to check for php version compatibility. Please use at least ^9.0."
