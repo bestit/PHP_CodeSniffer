@@ -63,6 +63,6 @@ class PropertyTypeHintSniffTest extends SniffTestCase
     {
         parent::setUp();
 
-        $this->fixture = new PropertyTypeHintSniff();
+        $this->testedObject = new PropertyTypeHintSniff();
     }
 }

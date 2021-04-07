@@ -32,7 +32,7 @@ class TrailingCommaInCallSniffTest extends SniffTestCase
     {
         parent::setUp();
 
-        $this->fixture = new TrailingCommaInCallSniff();
+        $this->testedObject = new TrailingCommaInCallSniff();
     }
 
     /**

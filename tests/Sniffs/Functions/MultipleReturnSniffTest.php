@@ -53,6 +53,6 @@ class MultipleReturnSniffTest extends SniffTestCase
     {
         parent::setUp();
 
-        $this->fixture = new MultipleReturnSniff();
+        $this->testedObject = new MultipleReturnSniff();
     }
 }

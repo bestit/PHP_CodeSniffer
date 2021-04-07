@@ -54,6 +54,6 @@ class DeprecatedTagSniffTest extends SniffTestCase
     {
         parent::setUp();
 
-        $this->fixture = new DeprecatedTagSniff();
+        $this->testedObject = new DeprecatedTagSniff();
     }
 }

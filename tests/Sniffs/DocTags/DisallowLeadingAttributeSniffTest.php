@@ -30,6 +30,6 @@ class DisallowLeadingAttributeSniffTest extends SniffTestCase
     {
         parent::setUp();
 
-        $this->fixture = new DisallowLeadingAttributeSniff();
+        $this->testedObject = new DisallowLeadingAttributeSniff();
     }
 }

@@ -59,9 +59,9 @@ class ParamTagSniffTest extends SniffTestCase
     {
         parent::setUp();
 
-        $this->fixture = new ParamTagSniff();
+        $this->testedObject = new ParamTagSniff();
 
-        $this->fixture->descAsWarning = true;
+        $this->testedObject->descAsWarning = true;
     }
 
     /**
@@ -94,6 +94,6 @@ class ParamTagSniffTest extends SniffTestCase
      */
     public function testType(): void
     {
-        static::assertInstanceOf(AbstractTagSniff::class, $this->fixture);
+        static::assertInstanceOf(AbstractTagSniff::class, $this->testedObject);
     }
 }

@@ -53,7 +53,7 @@ class DisallowedClassTagsSniffTest extends SniffTestCase
     {
         parent::setUp();
 
-        $this->fixture = new DisallowedClassTagsSniff();
+        $this->testedObject = new DisallowedClassTagsSniff();
     }
 
     /**
@@ -63,6 +63,6 @@ class DisallowedClassTagsSniffTest extends SniffTestCase
      */
     public function testType(): void
     {
-        static::assertInstanceOf(AbstractDisallowedTagsSniff::class, $this->fixture);
+        static::assertInstanceOf(AbstractDisallowedTagsSniff::class, $this->testedObject);
     }
 }

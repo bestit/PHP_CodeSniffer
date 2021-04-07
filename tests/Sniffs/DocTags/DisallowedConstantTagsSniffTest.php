@@ -33,6 +33,6 @@ class DisallowedConstantTagsSniffTest extends DisallowedClassTagsSniffTest
     {
         parent::setUp();
 
-        $this->fixture = new DisallowedConstantTagsSniff();
+        $this->testedObject = new DisallowedConstantTagsSniff();
     }
 }

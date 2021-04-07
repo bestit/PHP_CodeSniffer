@@ -53,6 +53,6 @@ class NoNamedArgumentsSniffTest extends SniffTestCase
     {
         parent::setUp();
 
-        $this->fixture = new NoNamedArgumentsSniff();
+        $this->testedObject = new NoNamedArgumentsSniff();
     }
 }

@@ -23,7 +23,7 @@ class ReturnTypeHintSpacingSniffTest extends SniffTestCase
      *
      * @var ReturnTypeHintSpacingSniff
      */
-    private ReturnTypeHintSpacingSniff $fixture;
+    private ReturnTypeHintSpacingSniff $testedObject;
 
     /**
      * Sets up the test.
@@ -32,7 +32,7 @@ class ReturnTypeHintSpacingSniffTest extends SniffTestCase
      */
     protected function setUp(): void
     {
-        $this->fixture = new ReturnTypeHintSpacingSniff();
+        $this->testedObject = new ReturnTypeHintSpacingSniff();
     }
 
     /**
@@ -42,6 +42,6 @@ class ReturnTypeHintSpacingSniffTest extends SniffTestCase
      */
     public function testInstance(): void
     {
-        static::assertInstanceOf(BaseReturnTypeHintSpacingSniff::class, $this->fixture);
+        static::assertInstanceOf(BaseReturnTypeHintSpacingSniff::class, $this->testedObject);
     }
 }

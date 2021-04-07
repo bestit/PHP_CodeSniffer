@@ -22,7 +22,7 @@ class DocTagHelperTest extends TestCase
      *
      * @var DocTagHelper|null
      */
-    private ?DocTagHelper $fixture = null;
+    private ?DocTagHelper $testedObject = null;
 
     /**
      * Sets up the test.
@@ -33,7 +33,7 @@ class DocTagHelperTest extends TestCase
     {
         $file = $this->getFile(__DIR__ . DIRECTORY_SEPARATOR . 'Fixtures/DocTagHelper/ORMJoinsOnMethod.php');
 
-        $this->fixture = new DocTagHelper($file, 23);
+        $this->testedObject = new DocTagHelper($file, 23);
     }
 
     /**
@@ -408,6 +408,6 @@ class DocTagHelperTest extends TestCase
             ],
         ];
 
-        static::assertSame($expectedArray, $this->fixture->getTagTokens());
+        static::assertSame($expectedArray, $this->testedObject->getTagTokens());
     }
 }

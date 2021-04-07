@@ -53,6 +53,6 @@ class EqualOperatorSniffTest extends SniffTestCase
     {
         parent::setUp();
 
-        $this->fixture = new EqualOperatorSniff();
+        $this->testedObject = new EqualOperatorSniff();
     }
 }

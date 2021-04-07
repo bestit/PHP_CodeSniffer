@@ -62,6 +62,6 @@ class TraitUseDeclarationSniffTest extends SniffTestCase
     {
         parent::setUp();
 
-        $this->fixture = new TraitUseDeclarationSniff();
+        $this->testedObject = new TraitUseDeclarationSniff();
     }
 }

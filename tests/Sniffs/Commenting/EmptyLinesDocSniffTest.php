@@ -60,6 +60,6 @@ class EmptyLinesDocSniffTest extends SniffTestCase
     {
         parent::setUp();
 
-        $this->fixture = new EmptyLinesDocSniff();
+        $this->testedObject = new EmptyLinesDocSniff();
     }
 }

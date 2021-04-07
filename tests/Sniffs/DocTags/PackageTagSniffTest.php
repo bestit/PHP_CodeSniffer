@@ -21,6 +21,6 @@ class PackageTagSniffTest extends AuthorTagSniffTest
     {
         parent::setUp();
 
-        $this->fixture = new PackageTagSniff();
+        $this->testedObject = new PackageTagSniff();
     }
 }

@@ -55,6 +55,6 @@ class RedundantWhitespaceSniffTest extends SniffTestCase
     {
         parent::setUp();
 
-        $this->fixture = new RedundantWhitespaceSniff();
+        $this->testedObject = new RedundantWhitespaceSniff();
     }
 }

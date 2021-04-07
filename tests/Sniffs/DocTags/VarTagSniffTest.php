@@ -21,6 +21,6 @@ class VarTagSniffTest extends AuthorTagSniffTest
     {
         parent::setUp();
 
-        $this->fixture = new VarTagSniff();
+        $this->testedObject = new VarTagSniff();
     }
 }

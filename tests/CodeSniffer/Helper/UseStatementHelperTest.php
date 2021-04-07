@@ -89,8 +89,8 @@ class UseStatementHelperTest extends TestCase
      */
     public function testType(): void
     {
-        $fixture = new UseStatementHelper();
+        $testedObject = new UseStatementHelper();
 
-        static::assertInstanceOf(BaseHelper::class, $fixture);
+        static::assertInstanceOf(BaseHelper::class, $testedObject);
     }
 }

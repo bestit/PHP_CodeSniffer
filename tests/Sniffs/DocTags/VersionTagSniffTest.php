@@ -21,6 +21,6 @@ class VersionTagSniffTest extends AuthorTagSniffTest
     {
         parent::setUp();
 
-        $this->fixture = new VersionTagSniff();
+        $this->testedObject = new VersionTagSniff();
     }
 }

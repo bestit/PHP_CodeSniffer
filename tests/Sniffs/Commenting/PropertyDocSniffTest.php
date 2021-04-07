@@ -35,6 +35,6 @@ class PropertyDocSniffTest extends AbstractDocSniffTest
     {
         parent::setUp();
 
-        $this->fixture = new PropertyDocSniff();
+        $this->testedObject = new PropertyDocSniff();
     }
 }

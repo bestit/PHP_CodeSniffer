@@ -43,7 +43,7 @@ class FluentSetterSniffTest extends SniffTestCase
     {
         parent::setUp();
 
-        $this->fixture = new FluentSetterSniff();
+        $this->testedObject = new FluentSetterSniff();
     }
 
     /**

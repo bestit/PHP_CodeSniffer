@@ -33,6 +33,6 @@ class DisallowedPropertyTagsSniffTest extends DisallowedClassTagsSniffTest
     {
         parent::setUp();
 
-        $this->fixture = new DisallowedPropertyTagsSniff();
+        $this->testedObject = new DisallowedPropertyTagsSniff();
     }
 }
