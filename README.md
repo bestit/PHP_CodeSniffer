@@ -91,6 +91,8 @@ The base for the BestIt Standard is [PSR-12](https://github.com/php-fig/fig-stan
 
 | Sniff | Description | suppressable |
 | ----- | ----------- | ------------ |
+| BestIt.Classes.ModernClassNameReference.ClassNameReferencedViaFunctionCall | You MUST use ::class instead of functions. | no |
+| BestIt.Classes.ModernClassNameReference.ClassNameReferencedViaMagicConstant | You MUST use ::class instead of __CLASS__. | no |
 | BestIt.Commenting.ClassDoc.DocCommentUcFirst | Every doc comment block SHOULD start ucfirst. | no |
 | BestIt.Commenting.ClassDoc.NoLineAfterDocComment | Every doc comment block (the summary or a long description paragrah) SHOULD finish with double newline. | no |
 | BestIt.Commenting.ClassDoc.NoSummary | There MUST be a summary. | no |
