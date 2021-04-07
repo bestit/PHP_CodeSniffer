@@ -53,6 +53,6 @@ class SpaceAroundConcatSniffTest extends SniffTestCase
     {
         parent::setUp();
 
-        $this->fixture = new SpaceAroundConcatSniff();
+        $this->testedObject = new SpaceAroundConcatSniff();
     }
 }

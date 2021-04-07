@@ -22,7 +22,7 @@ trait TestTokenRegistrationTrait
      *
      * @var Sniff|null
      */
-    protected ?Sniff $fixture = null;
+    protected ?Sniff $testedObject = null;
 
     /**
      * Asserts that two variables have the same type and value.
@@ -54,6 +54,6 @@ trait TestTokenRegistrationTrait
      */
     public function testRegisteredTokens(): void
     {
-        static::assertSame($this->getExpectedTokens(), $this->fixture->register());
+        static::assertSame($this->getExpectedTokens(), $this->testedObject->register());
     }
 }

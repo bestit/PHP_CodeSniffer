@@ -73,6 +73,6 @@ class TraitUseSpacingSniffTest extends SniffTestCase
     {
         parent::setUp();
 
-        $this->fixture = new TraitUseSpacingSniff();
+        $this->testedObject = new TraitUseSpacingSniff();
     }
 }

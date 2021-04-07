@@ -60,6 +60,6 @@ class NoWhitespaceAfterClassOpeningSniffTest extends SniffTestCase
     {
         parent::setUp();
 
-        $this->fixture = new NoWhitespaceAfterClassOpeningSniff();
+        $this->testedObject = new NoWhitespaceAfterClassOpeningSniff();
     }
 }

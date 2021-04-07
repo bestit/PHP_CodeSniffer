@@ -43,6 +43,6 @@ class ModernClassNameReferenceSniffTest extends SniffTestCase
     {
         parent::setUp();
 
-        $this->fixture = new ModernClassNameReferenceSniff();
+        $this->testedObject = new ModernClassNameReferenceSniff();
     }
 }

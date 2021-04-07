@@ -54,6 +54,6 @@ class RequiredClassTagsSniffTest extends SniffTestCase
     {
         parent::setUp();
 
-        $this->fixture = new RequiredClassTagsSniff();
+        $this->testedObject = new RequiredClassTagsSniff();
     }
 }

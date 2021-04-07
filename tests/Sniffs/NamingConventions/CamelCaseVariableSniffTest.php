@@ -53,6 +53,6 @@ class CamelCaseVariableSniffTest extends SniffTestCase
     {
         parent::setUp();
 
-        $this->fixture = new CamelCaseVariableSniff();
+        $this->testedObject = new CamelCaseVariableSniff();
     }
 }

@@ -22,7 +22,7 @@ trait TestRequiredConstantsTrait
      *
      * @var Sniff|null
      */
-    protected ?Sniff $fixture = null;
+    protected ?Sniff $testedObject = null;
 
     /**
      * Asserts that two variables have the same type and value.
@@ -59,7 +59,7 @@ trait TestRequiredConstantsTrait
      */
     public function testRequiredConstants(string $constant, ?string $constantValue = null): void
     {
-        $fullConstantName = get_class($this->fixture) . '::' . $constant;
+        $fullConstantName = get_class($this->testedObject) . '::' . $constant;
 
         static::assertTrue(
             defined($fullConstantName),

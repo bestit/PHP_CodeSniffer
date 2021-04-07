@@ -53,6 +53,6 @@ class UCVFSortingSniffTest extends SniffTestCase
     {
         parent::setUp();
 
-        $this->fixture = new UCVFSortingSniff();
+        $this->testedObject = new UCVFSortingSniff();
     }
 }

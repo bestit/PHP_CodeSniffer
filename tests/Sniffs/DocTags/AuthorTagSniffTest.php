@@ -53,7 +53,7 @@ class AuthorTagSniffTest extends SniffTestCase
     {
         parent::setUp();
 
-        $this->fixture = new AuthorTagSniff();
+        $this->testedObject = new AuthorTagSniff();
     }
 
     /**
@@ -63,6 +63,6 @@ class AuthorTagSniffTest extends SniffTestCase
      */
     public function testType(): void
     {
-        static::assertInstanceOf(AbstractTagSniff::class, $this->fixture);
+        static::assertInstanceOf(AbstractTagSniff::class, $this->testedObject);
     }
 }

@@ -54,6 +54,6 @@ class TagSortingSniffTest extends SniffTestCase
     {
         parent::setUp();
 
-        $this->fixture = new TagSortingSniff();
+        $this->testedObject = new TagSortingSniff();
     }
 }

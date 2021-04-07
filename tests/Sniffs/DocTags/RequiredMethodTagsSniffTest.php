@@ -33,6 +33,6 @@ class RequiredMethodTagsSniffTest extends RequiredClassTagsSniffTest
     {
         parent::setUp();
 
-        $this->fixture = new RequiredMethodTagsSniff();
+        $this->testedObject = new RequiredMethodTagsSniff();
     }
 }

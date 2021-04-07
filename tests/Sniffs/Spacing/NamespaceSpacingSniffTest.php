@@ -62,6 +62,6 @@ class NamespaceSpacingSniffTest extends SniffTestCase
     {
         parent::setUp();
 
-        $this->fixture = new NamespaceSpacingSniff();
+        $this->testedObject = new NamespaceSpacingSniff();
     }
 }

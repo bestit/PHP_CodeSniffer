@@ -56,6 +56,6 @@ class EmptyArrayForComparisonSniffTest extends SniffTestCase
     {
         parent::setUp();
 
-        $this->fixture = new EmptyArrayForComparisonSniff();
+        $this->testedObject = new EmptyArrayForComparisonSniff();
     }
 }

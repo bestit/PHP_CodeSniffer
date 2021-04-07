@@ -36,6 +36,6 @@ class ConstantDocSniffTest extends AbstractDocSniffTest
     {
         parent::setUp();
 
-        $this->fixture = new ConstantDocSniff();
+        $this->testedObject = new ConstantDocSniff();
     }
 }

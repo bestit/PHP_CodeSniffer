@@ -53,6 +53,6 @@ class ReturnTypeDeclarationSniffTest extends SniffTestCase
     {
         parent::setUp();
 
-        $this->fixture = new ReturnTypeDeclarationSniff();
+        $this->testedObject = new ReturnTypeDeclarationSniff();
     }
 }

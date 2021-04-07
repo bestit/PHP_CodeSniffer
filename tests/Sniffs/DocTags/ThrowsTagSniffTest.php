@@ -33,6 +33,6 @@ class ThrowsTagSniffTest extends AuthorTagSniffTest
     {
         parent::setUp();
 
-        $this->fixture = new ThrowsTagSniff();
+        $this->testedObject = new ThrowsTagSniff();
     }
 }

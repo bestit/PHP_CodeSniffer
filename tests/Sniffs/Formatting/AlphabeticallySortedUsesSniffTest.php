@@ -55,6 +55,6 @@ class AlphabeticallySortedUsesSniffTest extends SniffTestCase
     {
         parent::setUp();
 
-        $this->fixture = new AlphabeticallySortedUsesSniff();
+        $this->testedObject = new AlphabeticallySortedUsesSniff();
     }
 }

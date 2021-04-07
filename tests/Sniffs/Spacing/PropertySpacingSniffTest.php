@@ -64,6 +64,6 @@ class PropertySpacingSniffTest extends SniffTestCase
     {
         parent::setUp();
 
-        $this->fixture = new PropertySpacingSniff();
+        $this->testedObject = new PropertySpacingSniff();
     }
 }

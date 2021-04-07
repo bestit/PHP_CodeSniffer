@@ -53,6 +53,6 @@ class ExplicitAssertionsSniffTest extends SniffTestCase
      */
     protected function setUp(): void
     {
-        $this->fixture = new ExplicitAssertionsSniff();
+        $this->testedObject = new ExplicitAssertionsSniff();
     }
 }

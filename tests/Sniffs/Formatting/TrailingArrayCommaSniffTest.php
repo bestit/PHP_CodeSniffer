@@ -55,6 +55,6 @@ class TrailingArrayCommaSniffTest extends SniffTestCase
     {
         parent::setUp();
 
-        $this->fixture = new TrailingArrayCommaSniff();
+        $this->testedObject = new TrailingArrayCommaSniff();
     }
 }

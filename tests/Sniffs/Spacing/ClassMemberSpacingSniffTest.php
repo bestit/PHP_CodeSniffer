@@ -64,6 +64,6 @@ class ClassMemberSpacingSniffTest extends SniffTestCase
     {
         parent::setUp();
 
-        $this->fixture = new ClassMemberSpacingSniff();
+        $this->testedObject = new ClassMemberSpacingSniff();
     }
 }

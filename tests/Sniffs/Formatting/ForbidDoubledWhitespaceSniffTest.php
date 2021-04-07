@@ -44,7 +44,7 @@ class ForbidDoubledWhitespaceSniffTest extends SniffTestCase
     {
         parent::setUp();
 
-        $this->fixture = new ForbidDoubledWhitespaceSniff();
+        $this->testedObject = new ForbidDoubledWhitespaceSniff();
     }
 
     /**
@@ -56,7 +56,7 @@ class ForbidDoubledWhitespaceSniffTest extends SniffTestCase
     {
         static::assertInstanceOf(
             DuplicateSpacesSniff::class,
-            $this->fixture,
+            $this->testedObject,
         );
     }
 }

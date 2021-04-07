@@ -41,7 +41,7 @@ class AlphabeticClassContentSniffTest extends SniffTestCase
     {
         parent::setUp();
 
-        $this->fixture = new AlphabeticClassContentSniff();
+        $this->testedObject = new AlphabeticClassContentSniff();
     }
 
     /**

@@ -64,6 +64,6 @@ class NoSimplePropertyMethodSniffTest extends SniffTestCase
     {
         parent::setUp();
 
-        $this->fixture = new NoSimplePropertyMethodSniff();
+        $this->testedObject = new NoSimplePropertyMethodSniff();
     }
 }

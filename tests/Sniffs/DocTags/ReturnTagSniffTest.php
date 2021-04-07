@@ -37,7 +37,7 @@ class ReturnTagSniffTest extends AuthorTagSniffTest
     {
         parent::setUp();
 
-        $this->fixture = new ReturnTagSniff();
+        $this->testedObject = new ReturnTagSniff();
     }
 
     /**

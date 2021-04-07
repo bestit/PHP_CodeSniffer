@@ -58,6 +58,6 @@ class ConstantSpacingSniffTest extends SniffTestCase
     {
         parent::setUp();
 
-        $this->fixture = new ConstantSpacingSniff();
+        $this->testedObject = new ConstantSpacingSniff();
     }
 }

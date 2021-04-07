@@ -70,6 +70,6 @@ class UseSpacingSniffTest extends SniffTestCase
     {
         parent::setUp();
 
-        $this->fixture = new UseSpacingSniff();
+        $this->testedObject = new UseSpacingSniff();
     }
 }

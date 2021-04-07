@@ -27,7 +27,7 @@ abstract class AbstractDocSniffTest extends SniffTestCase
      *
      * @var Sniff|null
      */
-    protected ?Sniff $fixture = null;
+    protected ?Sniff $testedObject = null;
 
     /**
      * Returns the names of the required constants.
@@ -55,7 +55,7 @@ abstract class AbstractDocSniffTest extends SniffTestCase
     public function testRequiredConstants(string $constant): void
     {
         static::assertTrue(
-            defined(get_class($this->fixture) . '::' . $constant),
+            defined(get_class($this->testedObject) . '::' . $constant),
             'Constant ' . $constant . ' is missing.',
         );
     }

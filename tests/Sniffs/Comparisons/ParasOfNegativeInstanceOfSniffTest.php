@@ -56,6 +56,6 @@ class ParasOfNegativeInstanceOfSniffTest extends SniffTestCase
     {
         parent::setUp();
 
-        $this->fixture = new ParasOfNegativeInstanceOfSniff();
+        $this->testedObject = new ParasOfNegativeInstanceOfSniff();
     }
 }

@@ -56,6 +56,6 @@ class ConcatCalculationSniffTest extends SniffTestCase
     {
         parent::setUp();
 
-        $this->fixture = new ConcatCalculationSniff();
+        $this->testedObject = new ConcatCalculationSniff();
     }
 }
