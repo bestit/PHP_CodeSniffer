@@ -20,7 +20,7 @@
         "enabled": true,
         "actions": [
             {
-                "action": "composer run-script low-level-checks",
+                "action": "composer run-script high-level-checks",
                 "options": [],
                 "conditions": []
             }

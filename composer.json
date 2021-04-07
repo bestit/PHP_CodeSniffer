@@ -13,6 +13,10 @@
             "phpcpd src tests",
             "phpcs --ignore=\"**.js\" --runtime-set ignore_warnings_on_exit 1",
             "phpunit --coverage-xml=build/coverage/coverage-xml --log-junit=build/coverage/junit.xml"
+        ],
+        "high-level-checks": [
+            "@low-level-checks",
+            "infection --only-covered -s --no-progress --no-ansi --no-interaction --min-msi=75 --min-covered-msi=75 --skip-initial-tests --coverage=build/coverage"
         ]
     },
     "type": "library",
@@ -52,6 +56,7 @@
         "phpcompatibility/php-compatibility": "^9.3",
         "captainhook/plugin-composer": "^5.3",
         "best-it/license-check": "^0.1.0",
+        "infection/infection": "^0.21.5",
         "pdepend/pdepend": "2.8.*"
     },
     "suggest": {
