@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 namespace BestIt\Sniffs\Formatting;
+
 use SlevomatCodingStandard\Sniffs\Classes\EmptyLinesAroundClassBracesSniff;
 
 /**

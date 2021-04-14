@@ -2,12 +2,13 @@
 
 declare(strict_types=1);
 
-namespace BestIt\Sniffs\Formatting;
+namespace BestIt\Sniffs\Spacing;
 
 use BestIt\CodeSniffer\Helper\ClassHelper;
 use BestIt\CodeSniffer\Helper\TokenHelper;
 use BestIt\Sniffs\AbstractSniff;
 use BestIt\Sniffs\ClassRegistrationTrait;
+use function count;
 use function substr_count;
 use const T_CLOSE_CURLY_BRACKET;
 use const T_OPEN_CURLY_BRACKET;
@@ -17,10 +18,10 @@ use const T_WHITESPACE;
 /**
  * Checks the newlines between the trait uses.
  *
- * This is a refactores copy of the slevomat code sniff.
+ * This is a refactored copy of the slevomat code sniff.
  *
  * @author blange <bjoern.lange@bestit-online.de>
- * @package BestIt\Sniffs\Formatting
+ * @package BestIt\Sniffs\Spacing
  */
 class TraitUseSpacingSniff extends AbstractSniff
 {
@@ -107,7 +108,7 @@ class TraitUseSpacingSniff extends AbstractSniff
     {
         $lastUseEndPos = $this->getLastUseEndPos($lastUsePos);
 
-        list($realLinesAfterUse, $whitespaceEnd) = $this->getRealLinesAfterLastUse($lastUseEndPos);
+        [$realLinesAfterUse, $whitespaceEnd] = $this->getRealLinesAfterLastUse($lastUseEndPos);
 
         $requiredLinesAfter = $this->isEndOfClass($lastUseEndPos)
             ? self::LINES_AFTER_LAST_USE_WHEN_LAST_IN_CLASS

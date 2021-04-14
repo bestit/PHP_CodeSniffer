@@ -25,7 +25,6 @@ class VarTagSniff extends AbstractTagSniff
      */
     public const CODE_TAG_CONTENT_FORMAT_INVALID = 'TagContentFormatInvalid';
 
-
     /**
      * Returns a pattern to check if the content is valid.
      *

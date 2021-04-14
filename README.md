@@ -152,15 +152,8 @@ The base for the BestIt Standard is [PSR-12](https://github.com/php-fig/fig-stan
 | BestIt.Formatting.OpenTag.OpenTagNotFirstStatement | After the open tag there MUST be an empty line. | no |
 | BestIt.Formatting.ReturnTypeHintSpacingSniff.NoSpaceBetweenColonAndTypeHint | There MUST be no whitespace after the return type colon. |
 | BestIt.Formatting.ReturnTypeHintSpacingSniff.WhitespaceBeforeColon | There MUST be no whitespace before the return type colon. |
-| BestIt.Formatting.SpaceAfterDeclare.GroupBlankLineFound | Multiple declare-statements SHOULD be grouped without a blank line. | no |
-| BestIt.Formatting.SpaceAfterDeclare.MuchWhitespaceFound | THERE MUST be just one single line after the declare statement. | no |
-| BestIt.Formatting.SpaceAfterDeclare.NoWhitespaceFound | There MUST be one empty line after declare-statement. | no |
-| BestIt.Formatting.SpaceAroundConcat.MissingSpaceAroundConcat | You MUST wrap your concat-dot with a whitespace char. | no |
 | BestIt.Formatting.TrailingArrayComma.MissingTrailingComma | You MUST add a trailing comma to your multi line arrays. | no |
 | BestIt.Formatting.TraitUseDeclaration.MultipleTraitsPerDeclaration | You MUST provide only one "use" per Line for importing traits etc. in classes. | no |
-| BestIt.Formatting.TraitUseSpacing.IncorrectLinesCountAfterLastUse | You MUST not provide additional lines after your last rait usage. | no |
-| BestIt.Formatting.TraitUseSpacing.IncorrectLinesCountBeforeFirstUse | You MUST not provide additional new lines before your first trait use. | no |
-| BestIt.Formatting.TraitUseSpacing.IncorrectLinesCountBetweenUses | You MUST not provide additional new lines between trait usages. | no |
 | BestIt.Formatting.UCVFSorting.WrongPosition | You MUST sort the contents of your classes, traits, interface, etc. in the following order: T_USE, T_CONST, T_VARIABLE, T_FUNCTION. | no |
 | BestIt.Functions.FluentSetter.MustReturnThis | Every setter function MUST return $this if nothing else is returned. | no |
 | BestIt.Functions.FluentSetter.NoReturnFound | Your method MUST contain a return. | yes |
@@ -170,6 +163,22 @@ The base for the BestIt Standard is [PSR-12](https://github.com/php-fig/fig-stan
 | BestIt.Functions.NoSimplePropertyMethod.ShouldUseTypedPropertyDirectly | You SHOULD use the typed property directly instead of the the simple getter-/setter-combination. | yes |
 | BestIt.Functions.TrailingCommaInCall.MissingTrailingComma | You MUST append a trailing command in your multi line function calls. | no |
 | BestIt.NamingConventions.CamelCaseVariable.NotCamelCase | You MUST provide your vars in camel case, lower case first. | yes |
+| BestIt.Spacing.ClassMemberSpacing.IncorrectCountOfBlankLinesBetweenMembers | Class members MUST be separated with one line. | no |
+| BestIt.Spacing.ConstantSpacing.IncorrectCountOfBlankLinesAfterConstant | A constant MUST be separated with one line. | no |
+| BestIt.Spacing.NamespaceSpacing.IncorrectLinesCountAfterNamespace | There MUST be one line after the namespace. | no |
+| BestIt.Spacing.NamespaceSpacing.IncorrectLinesCountBeforeNamespace | There MUST be one line before the namespace. | no |
+| BestIt.Spacing.PropertySpacing.IncorrectCountOfBlankLinesAfterProperty | There MUST be one line after a property. | no |
+| BestIt.Spacing.SpaceAfterDeclare.GroupBlankLineFound | Multiple declare-statements SHOULD be grouped without a blank line. | no |
+| BestIt.Spacing.SpaceAfterDeclare.MuchWhitespaceFound | THERE MUST be just one single line after the declare statement. | no |
+| BestIt.Spacing.SpaceAfterDeclare.NoWhitespaceFound | There MUST be one empty line after declare-statement. | no |
+| BestIt.Spacing.SpaceAroundConcat.MissingSpaceAroundConcat | You MUST wrap your concat-dot with a whitespace char. | no |
+| BestIt.Spacing.TraitUseSpacing.IncorrectLinesCountAfterLastUse | You MUST not provide additional lines after your last rait usage. | no |
+| BestIt.Spacing.TraitUseSpacing.IncorrectLinesCountBeforeFirstUse | You MUST not provide additional new lines before your first trait use. | no |
+| BestIt.Spacing.TraitUseSpacing.IncorrectLinesCountBetweenUses | You MUST not provide additional new lines between trait usages. | no |
+| BestIt.Spacing.UseSpacing.IncorrectLinesCountAfterLastUse | There MUST be one line after the last usage. | no |
+| BestIt.Spacing.UseSpacing.IncorrectLinesCountBeforeFirstUse | There MUST be one line before the first usage. | no |
+| BestIt.Spacing.UseSpacing.IncorrectLinesCountBetweenDifferentTypeOfUse | There must be no line betweeen different usages. | no |
+| BestIt.Spacing.UseSpacing.IncorrectLinesCountBetweenSameTypeOfUse | The MUST be no line between same usages. | no |
 | BestIt.TypeHints.ExplicitAssertions.RequiredExplicitAssertion | Use assertion instead of inline documentation comment. | no |
 | BestIt.TypeHints.ReturnTypeDeclaration.MissingReturnTypeHint | Every function or method MUST have a type hint if the return annotation is valid. | yes |
 | Generic.Formatting.SpaceAfterCast | There MUST be a space after cast. |

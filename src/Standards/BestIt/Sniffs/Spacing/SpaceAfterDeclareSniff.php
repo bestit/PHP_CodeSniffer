@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace BestIt\Sniffs\Formatting;
+namespace BestIt\Sniffs\Spacing;
 
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
@@ -11,7 +11,7 @@ use PHP_CodeSniffer\Sniffs\Sniff;
  * Class SpaceAfterDeclareSniff
  *
  * @author Nick Lubisch <nick.lubisch@bestit-online.de>
- * @package BestIt\Sniffs\Formatting
+ * @package BestIt\Sniffs\Spacing
  */
 class SpaceAfterDeclareSniff implements Sniff
 {
