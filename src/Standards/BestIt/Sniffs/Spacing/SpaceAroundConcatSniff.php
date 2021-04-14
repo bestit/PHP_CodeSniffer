@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace BestIt\Sniffs\Formatting;
+namespace BestIt\Sniffs\Spacing;
 
 use BestIt\CodeSniffer\CodeError;
 use BestIt\CodeSniffer\CodeWarning;
@@ -14,7 +14,7 @@ use const T_WHITESPACE;
  * Checks for the space around concat dots and fixes them if they are missing.
  *
  * @author blange <bjoern.lange@bestit-online.de>
- * @package BestIt\Sniffs\Formatting
+ * @package BestIt\Sniffs\Spacing
  */
 class SpaceAroundConcatSniff extends AbstractSniff
 {

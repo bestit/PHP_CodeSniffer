@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace BestIt\Sniffs\Formatting;
+namespace BestIt\Sniffs\Spacing;
 
 use BestIt\Sniffs\DefaultSniffIntegrationTestTrait;
 use BestIt\Sniffs\TestTokenRegistrationTrait;
@@ -14,7 +14,7 @@ use const T_STRING_CONCAT;
  * Class SpaceAroundConcatSniffTest.
  *
  * @author blange <bjoern.lange@bestit-online.de>
- * @package BestIt\Sniffs\Formatting
+ * @package BestIt\Sniffs\Spacing
  */
 class SpaceAroundConcatSniffTest extends SniffTestCase
 {
