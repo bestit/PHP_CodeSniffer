@@ -14,5 +14,4 @@ namespace BestIt\CodeSniffer;
  */
 class CodeError extends CodeWarning
 {
-
 }

@@ -14,5 +14,4 @@ use SlevomatCodingStandard\Sniffs\Arrays\TrailingArrayCommaSniff as BaseSniff;
  */
 class TrailingArrayCommaSniff extends BaseSniff
 {
-
 }
