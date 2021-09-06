@@ -242,7 +242,7 @@ abstract class AbstractDocSniff extends AbstractSniff
     }
 
     /**
-     * Checks and registers errors  if there are invalid doc comments.
+     * Checks and registers errors if there are invalid doc comments.
      *
      * @throws CodeWarning
      *

@@ -71,7 +71,7 @@ class EqualOperatorSniff extends AbstractSniff
      *           );
      * </code>
      *
-     * @see    Tokens.php
+     * @see Tokens.php
      *
      * @return int[]
      */

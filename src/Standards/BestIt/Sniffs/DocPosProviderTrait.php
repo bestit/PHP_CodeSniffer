@@ -11,7 +11,7 @@ use PHP_CodeSniffer\Files\File;
  * Trait DocPosProviderTrait.
  *
  * @author blange <bjoern.lange@bestit-online.de>
- * @package  BestIt\Sniffs
+ * @package BestIt\Sniffs
  */
 trait DocPosProviderTrait
 {

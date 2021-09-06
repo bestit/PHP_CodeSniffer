@@ -36,7 +36,7 @@ class ReturnTypeHintSpacingSniffTest extends SniffTestCase
     }
 
     /**
-     * Checks the inheritance of  the class.
+     * Checks the inheritance of the class.
      *
      * @return void
      */

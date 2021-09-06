@@ -382,7 +382,7 @@ class TagSortingSniff extends AbstractSniff
             $this->checkAndRegisterSortingError();
 
             $this->checkAndRegisterLineBreakErrors();
-        } catch (CodeWarning  $exception) {
+        } catch (CodeWarning $exception) {
             $fixable = $this->getExceptionHandler()->handleException($exception);
 
             if ($fixable) {

@@ -10,7 +10,7 @@ use const T_CONST;
  * Integration test for ConstantSummarySniffTest.
  *
  * @author blange <bjoern.lange@bestit-online.de>
- * @package  BestIt\Sniffs\Commenting
+ * @package BestIt\Sniffs\Commenting
  * @see ConstantDocSniff
  */
 class ConstantDocSniffTest extends AbstractDocSniffTest

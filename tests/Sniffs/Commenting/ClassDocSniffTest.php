@@ -10,7 +10,7 @@ use PHP_CodeSniffer\Util\Tokens;
  * Test for ClassSummarySniffTest.
  *
  * @author blange <bjoern.lange@bestit-online.de>
- * @package  BestIt\Sniffs\Commenting
+ * @package BestIt\Sniffs\Commenting
  * @see ClassDocSniff
  */
 class ClassDocSniffTest extends AbstractDocSniffTest

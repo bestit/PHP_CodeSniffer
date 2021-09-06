@@ -14,7 +14,7 @@ use function defined;
  * Basic test for the summary sniffs.
  *
  * @author blange <bjoern.lange@bestit-online.de>
- * @package  BestIt\Sniffs\Commenting
+ * @package BestIt\Sniffs\Commenting
  */
 abstract class AbstractDocSniffTest extends SniffTestCase
 {

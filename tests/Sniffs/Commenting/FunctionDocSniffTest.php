@@ -10,7 +10,7 @@ use const T_FUNCTION;
  * Integration test for FunctionSummarySniffTest.
  *
  * @author blange <bjoern.lange@bestit-online.de>
- * @package  BestIt\Sniffs\Commenting
+ * @package BestIt\Sniffs\Commenting
  * @see FunctionDocSniff
  */
 class FunctionDocSniffTest extends AbstractDocSniffTest
