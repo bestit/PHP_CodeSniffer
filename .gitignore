@@ -2,4 +2,5 @@
 /composer.phar
 /vendor/
 .phpunit.result.cache
+captainhook.config.json
 composer.lock
