@@ -29,27 +29,6 @@ abstract class SniffTestCase extends SlevomatTestCase
     private string $fixturePath = '';
 
     /**
-     * Tests files with given error list and fixes them.
-     *
-     * @param string $file File to test
-     * @param string $error Error code
-     * @param int[] $lines All lines where the error code occurs
-     * @param array $sniffProperties Array of sniff properties
-     *
-     * @return void
-     */
-    protected function assertFixableErrorsInFile(
-        string $file,
-        string $error,
-        array $lines,
-        array $sniffProperties = []
-    ): void {
-        $report = $this->assertErrorsInFile($file, $error, $lines, $sniffProperties);
-
-        $this->assertAllFixedInFile($report);
-    }
-
-    /**
      * Asserts all errors in a given file.
      *
      * @param string $file Filename of the fixture
@@ -63,7 +42,7 @@ abstract class SniffTestCase extends SlevomatTestCase
         string $file,
         string $error,
         array $lines,
-        array $sniffProperties = []
+        array $sniffProperties = [],
     ): File {
         if ((!$dirname = dirname($file)) || ($dirname === '.')) {
             $file = $this->getFixtureFilePath($file);
@@ -75,38 +54,7 @@ abstract class SniffTestCase extends SlevomatTestCase
             $this->assertSniffError(
                 $report,
                 $line,
-                $error
-            );
-        }
-
-        return $report;
-    }
-
-    /**
-     * Asserts all warnings in a given file.
-     *
-     * @throws Exception
-     *
-     * @param string $file Filename of the fixture
-     * @param string $warning Code of the warning
-     * @param int[] $lines Array of lines where the error code occurs
-     * @param array $sniffProperties Array of sniff properties
-     *
-     * @return File The php cs file
-     */
-    protected function assertWarningsInFile(
-        string $file,
-        string $warning,
-        array $lines,
-        array $sniffProperties = []
-    ): File {
-        $report = $this->checkFile($file, $sniffProperties);
-
-        foreach ($lines as $line) {
-            $this->assertSniffWarning(
-                $report,
-                $line,
-                $warning
+                $error,
             );
         }
 
@@ -129,91 +77,49 @@ abstract class SniffTestCase extends SlevomatTestCase
     }
 
     /**
-     * Processes the fixture path.
+     * Tests files with given error list and fixes them.
      *
-     * @return string Fixture path
+     * @param string $file File to test
+     * @param string $error Error code
+     * @param int[] $lines All lines where the error code occurs
+     * @param array $sniffProperties Array of sniff properties
+     *
+     * @return void
      */
-    protected function getFixturePath(): string
-    {
-        if (!$this->fixturePath) {
-            $this->fixturePath = $this->loadFixturePath();
-        }
+    protected function assertFixableErrorsInFile(
+        string $file,
+        string $error,
+        array $lines,
+        array $sniffProperties = [],
+    ): void {
+        $report = $this->assertErrorsInFile($file, $error, $lines, $sniffProperties);
 
-        return $this->fixturePath;
+        $this->assertAllFixedInFile($report);
     }
 
     /**
-     * Returns fixture file path by given file name.
+     * Copied from slevomat but changed to warnings.
      *
-     * @param string $fixture Filename of fixture
+     * @see SlevomatTestCase::assertNoSniffError()
      *
-     * @return string Filepath to fixture
+     * @param File $codeSnifferFile
+     * @param int $line
+     *
+     * @return void
      */
-    protected function getFixtureFilePath(string $fixture): string
+    protected static function assertNoSniffWarning(File $codeSnifferFile, int $line): void
     {
-        return $this->getFixturePath() . '/' . $fixture;
-    }
-
-    protected static function getSniffName(): string
-    {
-        return preg_replace(
-            [
-                '~\\\~',
-                '~\.Sniffs~',
-                '~Sniff$~',
-            ],
-            [
-                '.',
-                '',
-                '',
-            ],
-            self::getSniffClassName(),
+        $warnings = $codeSnifferFile->getWarnings();
+        self::assertFalse(
+            isset($warnings[$line]),
+            sprintf(
+                'Expected no warning on line %s, but found:%s%s%s',
+                $line,
+                PHP_EOL . PHP_EOL,
+                isset($warnings[$line]) ? self::getFormattedWarnings($warnings[$line]) : '',
+                PHP_EOL,
+            ),
         );
-    }
-
-    protected static function getSniffClassName(): string
-    {
-        return substr(static::class, 0, -strlen('Test'));
-    }
-
-    /**
-     * Returns a list of files which start with correct*
-     *
-     * @return array With the path to a file as the first parameter.
-     */
-    public function getCorrectFileList(): array
-    {
-        $providerFiles = [];
-
-        foreach (glob($this->getFixturePath() . DIRECTORY_SEPARATOR . 'Correct*.php') as $file) {
-            $providerFiles[basename($file)] = [$file];
-        }
-
-        return $providerFiles;
-    }
-
-    /**
-     * Returns the path to the fixture folder for this sniff.
-     *
-     * @return string The path to the fixture folder for this sniff.
-     */
-    protected function loadFixturePath(): string
-    {
-        $basePathParts = [];
-
-        try {
-            $reflection = new ReflectionClass(static::class);
-
-            $basePathParts = [
-                dirname($reflection->getFileName()),
-                'Fixtures',
-                substr($reflection->getShortName(), 0, -4)
-            ];
-        } catch (ReflectionException $e) {
-            // Do nothing, this class exists!
-        }
-
-        return implode(DIRECTORY_SEPARATOR, $basePathParts);
     }
 
     /**
@@ -251,7 +157,7 @@ abstract class SniffTestCase extends SlevomatTestCase
         File $codeSnifferFile,
         int $line,
         string $code,
-        ?string $message = null
+        ?string $message = null,
     ): void {
         $warnings = $codeSnifferFile->getWarnings();
         self::assertTrue(isset($warnings[$line]), sprintf('Expected warning on line %s, but none found.', $line));
@@ -269,33 +175,120 @@ abstract class SniffTestCase extends SlevomatTestCase
                 $line,
                 PHP_EOL,
                 self::getFormattedWarnings($warnings[$line]),
-                PHP_EOL
-            )
+                PHP_EOL,
+            ),
         );
+    }
+
+    /**
+     * Asserts all warnings in a given file.
+     *
+     * @throws Exception
+     *
+     * @param string $file Filename of the fixture
+     * @param string $warning Code of the warning
+     * @param int[] $lines Array of lines where the error code occurs
+     * @param array $sniffProperties Array of sniff properties
+     *
+     * @return File The php cs file
+     */
+    protected function assertWarningsInFile(
+        string $file,
+        string $warning,
+        array $lines,
+        array $sniffProperties = [],
+    ): File {
+        $report = $this->checkFile($file, $sniffProperties);
+
+        foreach ($lines as $line) {
+            $this->assertSniffWarning(
+                $report,
+                $line,
+                $warning,
+            );
+        }
+
+        return $report;
+    }
+
+    /**
+     * Returns a list of files which start with correct*
+     *
+     * @return array With the path to a file as the first parameter.
+     */
+    public function getCorrectFileList(): array
+    {
+        $providerFiles = [];
+
+        foreach (glob($this->getFixturePath() . DIRECTORY_SEPARATOR . 'Correct*.php') as $file) {
+            $providerFiles[basename($file)] = [$file];
+        }
+
+        return $providerFiles;
+    }
+
+    /**
+     * Returns fixture file path by given file name.
+     *
+     * @param string $fixture Filename of fixture
+     *
+     * @return string Filepath to fixture
+     */
+    protected function getFixtureFilePath(string $fixture): string
+    {
+        return $this->getFixturePath() . '/' . $fixture;
+    }
+
+    /**
+     * Processes the fixture path.
+     *
+     * @return string Fixture path
+     */
+    protected function getFixturePath(): string
+    {
+        if (!$this->fixturePath) {
+            $this->fixturePath = $this->loadFixturePath();
+        }
+
+        return $this->fixturePath;
     }
 
     /**
      * Copied from slevomat but changed to warnings.
      *
-     * @see SlevomatTestCase::assertNoSniffError()
+     * @param array $warnings
+     * @see SlevomatTestCase::getFormattedErrors()
      *
-     * @param File $codeSnifferFile
-     * @param int $line
-     *
-     * @return void
+     * @return string
      */
-    protected static function assertNoSniffWarning(File $codeSnifferFile, int $line): void
+    private static function getFormattedWarnings(array $warnings): string
     {
-        $warnings = $codeSnifferFile->getWarnings();
-        self::assertFalse(
-            isset($warnings[$line]),
-            sprintf(
-                'Expected no warning on line %s, but found:%s%s%s',
-                $line,
-                PHP_EOL . PHP_EOL,
-                isset($warnings[$line]) ? self::getFormattedWarnings($warnings[$line]) : '',
-                PHP_EOL
-            )
+        return implode(PHP_EOL, array_map(function (array $warnings): string {
+            return implode(PHP_EOL, array_map(function (array $warning): string {
+                return sprintf("\t%s: %s", $warning['source'], $warning['message']);
+            }, $warnings));
+        }, $warnings));
+    }
+
+    protected static function getSniffClassName(): string
+    {
+        return substr(static::class, 0, -strlen('Test'));
+    }
+
+    protected static function getSniffName(): string
+    {
+        return preg_replace(
+            [
+                '~\\\~',
+                '~\.Sniffs~',
+                '~Sniff$~',
+            ],
+            [
+                '.',
+                '',
+                '',
+            ],
+            self::getSniffClassName(),
         );
     }
 
@@ -314,10 +307,9 @@ abstract class SniffTestCase extends SlevomatTestCase
     {
         foreach ($warningsOnLine as $warningsOnPosition) {
             foreach ($warningsOnPosition as $warning) {
-                if (!(
-                    $warning['source'] === $sniffCode
-                    && ($message === null || strpos($warning['message'], $message) !== false)
-                )) {
+                $isSniffCode = $warning['source'] === $sniffCode;
+
+                if (!($isSniffCode && ($message === null || strpos($warning['message'], $message) !== false))) {
                     continue;
                 }
 
@@ -329,19 +321,26 @@ abstract class SniffTestCase extends SlevomatTestCase
     }
 
     /**
-     * Copied from slevomat but changed to warnings.
+     * Returns the path to the fixture folder for this sniff.
      *
-     * @param array $warnings
-     * @see SlevomatTestCase::getFormattedErrors()
-     *
-     * @return string
+     * @return string The path to the fixture folder for this sniff.
      */
-    private static function getFormattedWarnings(array $warnings): string
+    protected function loadFixturePath(): string
     {
-        return implode(PHP_EOL, array_map(function (array $warnings): string {
-            return implode(PHP_EOL, array_map(function (array $warning): string {
-                return sprintf("\t%s: %s", $warning['source'], $warning['message']);
-            }, $warnings));
-        }, $warnings));
+        $basePathParts = [];
+
+        try {
+            $reflection = new ReflectionClass(static::class);
+
+            $basePathParts = [
+                dirname($reflection->getFileName()),
+                'Fixtures',
+                substr($reflection->getShortName(), 0, -4),
+            ];
+        } catch (ReflectionException $e) {
+            // Do nothing, this class exists!
+        }
+
+        return implode(DIRECTORY_SEPARATOR, $basePathParts);
     }
 }
