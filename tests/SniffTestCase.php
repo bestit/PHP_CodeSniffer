@@ -154,6 +154,28 @@ abstract class SniffTestCase extends SlevomatTestCase
         return $this->getFixturePath() . '/' . $fixture;
     }
 
+    protected static function getSniffName(): string
+    {
+        return preg_replace(
+            [
+                '~\\\~',
+                '~\.Sniffs~',
+                '~Sniff$~',
+            ],
+            [
+                '.',
+                '',
+                '',
+            ],
+            self::getSniffClassName(),
+        );
+    }
+
+    protected static function getSniffClassName(): string
+    {
+        return substr(static::class, 0, -strlen('Test'));
+    }
+
     /**
      * Returns a list of files which start with correct*
      *

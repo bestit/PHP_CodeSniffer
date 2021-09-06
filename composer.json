@@ -46,7 +46,7 @@
     "prefer-stable": true,
     "require": {
         "php": ">=8.0",
-        "slevomat/coding-standard": "dev-master#47cf967b284f7ff41ab500ae55cdbcee986b1534"
+        "slevomat/coding-standard": "^7.0"
     },
     "require-dev": {
         "phpmd/phpmd": "^2.6",
