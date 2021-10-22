@@ -180,6 +180,7 @@ The base for the BestIt Standard is [PSR-12](https://github.com/php-fig/fig-stan
 | BestIt.Spacing.UseSpacing.IncorrectLinesCountBeforeFirstUse | There MUST be one line before the first usage. | no |
 | BestIt.Spacing.UseSpacing.IncorrectLinesCountBetweenDifferentTypeOfUse | There must be no line betweeen different usages. | no |
 | BestIt.Spacing.UseSpacing.IncorrectLinesCountBetweenSameTypeOfUse | The MUST be no line between same usages. | no |
+| BestIt.Strings.ConcatCalculationSniff.CalculationWithoutBrackets | You MUST encapsulate your calculation with brackets. | no |
 | BestIt.TypeHints.ExplicitAssertions.RequiredExplicitAssertion | Use assertion instead of inline documentation comment. | no |
 | BestIt.TypeHints.ReturnTypeDeclaration.MissingReturnTypeHint | Every function or method MUST have a type hint if the return annotation is valid. | yes |
 | Generic.Formatting.SpaceAfterCast | There MUST be a space after cast. |
