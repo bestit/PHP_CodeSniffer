@@ -6,10 +6,15 @@ namespace BestIt\Sniffs\Strings;
 
 use BestIt\CodeSniffer\CodeError;
 use BestIt\Sniffs\AbstractSniff;
+use const T_CLOSE_CURLY_BRACKET;
 use const T_CLOSE_PARENTHESIS;
+use const T_CLOSE_SHORT_ARRAY;
+use const T_DIVIDE;
 use const T_MINUS;
+use const T_MULTIPLY;
 use const T_OPEN_CURLY_BRACKET;
 use const T_OPEN_PARENTHESIS;
+use const T_OPEN_SHORT_ARRAY;
 use const T_PLUS;
 use const T_SEMICOLON;
 use const T_STRING_CONCAT;
@@ -46,21 +51,28 @@ class ConcatCalculationSniff extends AbstractSniff
     /**
      * Checks for a possible wrong calculation after the token.
      *
-     * @return void
      * @throws CodeError
      *
+     * @return void
      */
-    protected function checkForCalculationAfterToken(): void
+    private function checkForCalculationAfterToken(): void
     {
-        $nextClosingPos = $this->file->findNext(
-            [T_OPEN_PARENTHESIS, T_SEMICOLON, T_STRING_CONCAT],
+        $nextDelimiterPos = $this->file->findNext(
+            [
+                T_CLOSE_CURLY_BRACKET,
+                T_CLOSE_PARENTHESIS,
+                T_CLOSE_SHORT_ARRAY,
+                T_OPEN_PARENTHESIS,
+                T_SEMICOLON,
+                T_STRING_CONCAT,
+            ],
             $this->getStackPos() + 1,
         );
 
         $nextMathPos = $this->file->findNext(
-            [T_MINUS, T_PLUS],
+            [T_DIVIDE, T_MINUS, T_MULTIPLY, T_PLUS],
             $this->getStackPos() + 1,
-            (int) $nextClosingPos,
+            (int) $nextDelimiterPos,
         );
 
         if ($nextMathPos !== false) {
@@ -75,21 +87,29 @@ class ConcatCalculationSniff extends AbstractSniff
     /**
      * Checks for a possible wrong calculation before the token.
      *
-     * @return $this
      * @throws CodeError
      *
+     * @return $this
      */
-    protected function checkForCalculationBeforeToken(): self
+    private function checkForCalculationBeforeToken(): self
     {
-        $prevClosingPos = $this->file->findPrevious(
-            [T_CLOSE_PARENTHESIS, T_OPEN_CURLY_BRACKET, T_SEMICOLON],
-            $this->getStackPos() + 1,
+        $prevDelimiterPos = $this->file->findPrevious(
+            [
+                T_CLOSE_PARENTHESIS,
+                T_OPEN_PARENTHESIS,
+                T_OPEN_CURLY_BRACKET,
+                T_OPEN_PARENTHESIS,
+                T_OPEN_SHORT_ARRAY,
+                T_SEMICOLON,
+                T_STRING_CONCAT,
+            ],
+            $this->getStackPos() - 1,
         );
 
         $prevMathPos = $this->file->findPrevious(
-            [T_MINUS, T_PLUS],
-            $this->getStackPos() + 1,
-            (int) $prevClosingPos,
+            [T_DIVIDE, T_MINUS, T_MULTIPLY, T_PLUS],
+            $this->getStackPos() - 1,
+            (int) $prevDelimiterPos,
         );
 
         if (($prevMathPos !== false) && !$this->isCheckAlreadyDone($prevMathPos)) {
@@ -106,19 +126,16 @@ class ConcatCalculationSniff extends AbstractSniff
     /**
      * Checks if the check for the given position in the actual file was already done.
      *
-     * @param int $prevMathPos
-     * @param bool $withSave
+     * @param int $mathPos
      *
      * @return bool
      */
-    private function isCheckAlreadyDone(int $prevMathPos, bool $withSave = true): bool
+    private function isCheckAlreadyDone(int $mathPos): bool
     {
-        $checkMarker = $this->file->getFilename() . $prevMathPos;
+        $checkMarker = $this->file->getFilename() . $mathPos;
         $isDone = @self::$alreadyDoneChecks[$checkMarker];
 
-        if ($withSave) {
-            self::$alreadyDoneChecks[$checkMarker] = true;
-        }
+        self::$alreadyDoneChecks[$checkMarker] = true;
 
         return (bool) $isDone;
     }
@@ -126,9 +143,9 @@ class ConcatCalculationSniff extends AbstractSniff
     /**
      * Processes the token.
      *
-     * @return void
      * @throws CodeError
      *
+     * @return void
      */
     protected function processToken(): void
     {
