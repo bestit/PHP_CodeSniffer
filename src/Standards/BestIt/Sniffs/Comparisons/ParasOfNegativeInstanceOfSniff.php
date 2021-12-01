@@ -8,8 +8,13 @@ use BestIt\CodeSniffer\CodeError;
 use BestIt\CodeSniffer\CodeWarning;
 use BestIt\CodeSniffer\Helper\TokenHelper;
 use BestIt\Sniffs\AbstractSniff;
+use function array_merge;
+use const T_ASPERAND;
 use const T_BOOLEAN_NOT;
 use const T_INSTANCEOF;
+use const T_OBJECT_OPERATOR;
+use const T_STRING;
+use const T_VARIABLE;
 
 /**
  * You MUST provide parentheses around your negative instanceof check.
@@ -117,9 +122,13 @@ class ParasOfNegativeInstanceOfSniff extends AbstractSniff
     {
         $file = $this->getFile();
         $stackPosition = $this->getStackPos();
-        $prevToken = TokenHelper::findPreviousEffective($file, $stackPosition - 1);
 
-        return (int) TokenHelper::findPreviousEffective($file, $prevToken - 1);
+        return TokenHelper::findPreviousExcluding(
+            $file,
+            // And skip object property accesses
+            array_merge(TokenHelper::$ineffectiveTokenCodes, [T_ASPERAND, T_OBJECT_OPERATOR, T_STRING, T_VARIABLE]),
+            $stackPosition - 1,
+        );
     }
 
     /**
