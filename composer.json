@@ -61,5 +61,12 @@
     },
     "suggest": {
         "phpcompatibility/php-compatibility": "If you want to check for php version compatibility. Please use at least ^9.0."
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "infection/extension-installer": true,
+            "captainhook/plugin-composer": true
+        }
     }
 }
