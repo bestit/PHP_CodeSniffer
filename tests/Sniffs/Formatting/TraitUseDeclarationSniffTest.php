@@ -10,26 +10,16 @@ use BestIt\SniffTestCase;
 use BestIt\TestRequiredConstantsTrait;
 use const T_ANON_CLASS;
 use const T_CLASS;
+use const T_ENUM;
 use const T_INTERFACE;
 use const T_TRAIT;
 
-/**
- * Test TraitUseDeclarationSniff.
- *
- * @author blange <bjoern.lange@bestit-online.de>
- * @package BestIt\Sniffs\Formatting
- */
 class TraitUseDeclarationSniffTest extends SniffTestCase
 {
     use DefaultSniffIntegrationTestTrait;
     use TestRequiredConstantsTrait;
     use TestTokenRegistrationTrait;
 
-    /**
-     * Returns the tokens which should be checked.
-     *
-     * @return array Returns the expected token ids.
-     */
     protected function getExpectedTokens(): array
     {
         return [
@@ -37,14 +27,10 @@ class TraitUseDeclarationSniffTest extends SniffTestCase
             T_ANON_CLASS => T_ANON_CLASS,
             T_INTERFACE => T_INTERFACE,
             T_TRAIT => T_TRAIT,
+            T_ENUM => T_ENUM,
         ];
     }
 
-    /**
-     * Returns the names of the required constants.
-     *
-     * @return array The required constants of a class. The second value is a possible value which should be checked.
-     */
     public function getRequiredConstantAsserts(): array
     {
         return [
@@ -53,11 +39,6 @@ class TraitUseDeclarationSniffTest extends SniffTestCase
         ];
     }
 
-    /**
-     * Sets up the test.
-     *
-     * @return void
-     */
     protected function setUp(): void
     {
         parent::setUp();

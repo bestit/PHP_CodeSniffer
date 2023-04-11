@@ -17,6 +17,8 @@ class ForbiddenFunctionsSniffTest extends SniffTestCase
 {
     use DefaultSniffIntegrationTestTrait;
 
+    private ForbiddenFunctionsSniff $testedClass;
+
     /**
      * Sets up the test.
      *
@@ -26,6 +28,6 @@ class ForbiddenFunctionsSniffTest extends SniffTestCase
     {
         parent::setUp();
 
-        $this->fixture = new ForbiddenFunctionsSniff();
+        $this->testedClass = new ForbiddenFunctionsSniff();
     }
 }

@@ -11,26 +11,16 @@ use BestIt\TestRequiredConstantsTrait;
 use const T_PRIVATE;
 use const T_PROTECTED;
 use const T_PUBLIC;
+use const T_READONLY;
+use const T_STATIC;
 use const T_VAR;
 
-/**
- * Class PropertyTypeHintSniffTest
- *
- * @author Stefan Haeling <stefan.haeling@bestit.de>
- *
- * @package BestIt\Sniffs\TypeHints
- */
 class PropertyTypeHintSniffTest extends SniffTestCase
 {
     use DefaultSniffIntegrationTestTrait;
     use TestRequiredConstantsTrait;
     use TestTokenRegistrationTrait;
 
-    /**
-     * Returns the tokens which should be checked.
-     *
-     * @return array Returns the expected token ids.
-     */
     protected function getExpectedTokens(): array
     {
         return [
@@ -38,14 +28,10 @@ class PropertyTypeHintSniffTest extends SniffTestCase
             T_PUBLIC,
             T_PROTECTED,
             T_PRIVATE,
+            T_STATIC,
         ];
     }
 
-    /**
-     * Returns the names of the required constants.
-     *
-     * @return array The required constants of a class. The second value is a possible value which should be checked.
-     */
     public function getRequiredConstantAsserts(): array
     {
         return [
@@ -54,11 +40,6 @@ class PropertyTypeHintSniffTest extends SniffTestCase
         ];
     }
 
-    /**
-     * Sets up the test.
-     *
-     * @return void
-     */
     protected function setUp(): void
     {
         parent::setUp();

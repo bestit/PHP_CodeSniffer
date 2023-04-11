@@ -11,25 +11,16 @@ use BestIt\TestRequiredConstantsTrait;
 use const T_PRIVATE;
 use const T_PROTECTED;
 use const T_PUBLIC;
+use const T_READONLY;
+use const T_STATIC;
 use const T_VAR;
 
-/**
- * Test PropertySpacingSniff
- *
- * @author blange <bjoern.lange@bestit-online.de>
- * @package BestIt\Sniffs\Spacing
- */
 class PropertySpacingSniffTest extends SniffTestCase
 {
     use DefaultSniffIntegrationTestTrait;
     use TestTokenRegistrationTrait;
     use TestRequiredConstantsTrait;
 
-    /**
-     * Which tokens are expected?
-     *
-     * @return array
-     */
     protected function getExpectedTokens(): array
     {
         return [
@@ -37,14 +28,11 @@ class PropertySpacingSniffTest extends SniffTestCase
             T_PUBLIC,
             T_PROTECTED,
             T_PRIVATE,
+            T_READONLY,
+            T_STATIC,
         ];
     }
 
-    /**
-     * Checks which constants are required.
-     *
-     * @return iterable
-     */
     public function getRequiredConstantAsserts(): iterable
     {
         return [
@@ -55,11 +43,6 @@ class PropertySpacingSniffTest extends SniffTestCase
         ];
     }
 
-    /**
-     * Sets up the test.
-     *
-     * @return void
-     */
     protected function setUp(): void
     {
         parent::setUp();

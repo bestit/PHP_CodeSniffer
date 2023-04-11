@@ -8,37 +8,23 @@ use BestIt\Sniffs\DefaultSniffIntegrationTestTrait;
 use BestIt\Sniffs\TestTokenRegistrationTrait;
 use BestIt\SniffTestCase;
 use BestIt\TestRequiredConstantsTrait;
+use const T_ARRAY;
 use const T_OPEN_SHORT_ARRAY;
 
-/**
- * Test TrailingArrayCommaSniff
- *
- * @author blange <bjoern.lange@bestit-online.de>
- * @package BestIt\Sniffs\Formatting
- */
 class TrailingArrayCommaSniffTest extends SniffTestCase
 {
     use DefaultSniffIntegrationTestTrait;
     use TestRequiredConstantsTrait;
     use TestTokenRegistrationTrait;
 
-    /**
-     * We register on arrays.
-     *
-     * @return array
-     */
     protected function getExpectedTokens(): array
     {
         return [
+            T_ARRAY,
             T_OPEN_SHORT_ARRAY,
         ];
     }
 
-    /**
-     * Checks the required constants.
-     *
-     * @return array
-     */
     public function getRequiredConstantAsserts(): array
     {
         return [
@@ -46,11 +32,6 @@ class TrailingArrayCommaSniffTest extends SniffTestCase
         ];
     }
 
-    /**
-     * Sets up the test.
-     *
-     * @return void
-     */
     protected function setUp(): void
     {
         parent::setUp();
